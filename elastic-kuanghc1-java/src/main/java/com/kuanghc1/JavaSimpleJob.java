@@ -1,4 +1,4 @@
-/*
+package com.kuanghc1;/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,15 +15,17 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.elasticjob.cloud.example;
+import org.apache.shardingsphere.elasticjob.api.ShardingContext;
+import org.apache.shardingsphere.elasticjob.simple.job.SimpleJob;
 
-import org.apache.shardingsphere.elasticjob.cloud.api.JobBootstrap;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public final class CloudJobMain {
-    
-    // CHECKSTYLE:OFF
-    public static void main(final String[] args) {
-    // CHECKSTYLE:OFF
-        JobBootstrap.execute("SCRIPT");
+public class JavaSimpleJob implements SimpleJob {
+
+    @Override
+    public void execute(final ShardingContext shardingContext) {
+        System.out.printf("Item: %s | Time: %s | Thread: %s | %s%n",
+                shardingContext.getShardingItem(), new SimpleDateFormat("HH:mm:ss").format(new Date()), Thread.currentThread().getId(), "SIMPLE");
     }
 }

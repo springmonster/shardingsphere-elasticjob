@@ -86,7 +86,7 @@ public final class CloudJobConfigurationListener implements CuratorCacheListener
             // CHECKSTYLE:OFF
         } catch (final Exception ex) {
             log.warn("Wrong Cloud Job Configuration with:", ex);
-            // CHECKSTYLE:ON
+            // CHECKSTYLE:OFF
             return null;
         }
     }

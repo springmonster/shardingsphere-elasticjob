@@ -94,7 +94,7 @@ public final class ElasticJobExecutor {
             jobFacade.beforeJobExecuted(shardingContexts);
             //CHECKSTYLE:OFF
         } catch (final Throwable cause) {
-            //CHECKSTYLE:ON
+            //CHECKSTYLE:OFF
             jobErrorHandler.handleException(jobConfig.getJobName(), cause);
         }
         execute(jobConfig, shardingContexts, ExecutionSource.NORMAL_TRIGGER);
@@ -107,7 +107,7 @@ public final class ElasticJobExecutor {
             jobFacade.afterJobExecuted(shardingContexts);
             //CHECKSTYLE:OFF
         } catch (final Throwable cause) {
-            //CHECKSTYLE:ON
+            //CHECKSTYLE:OFF
             jobErrorHandler.handleException(jobConfig.getJobName(), cause);
         }
     }
@@ -175,7 +175,7 @@ public final class ElasticJobExecutor {
             jobFacade.postJobExecutionEvent(completeEvent);
             // CHECKSTYLE:OFF
         } catch (final Throwable cause) {
-            // CHECKSTYLE:ON
+            // CHECKSTYLE:OFF
             completeEvent = startEvent.executionFailure(ExceptionUtils.transform(cause));
             jobFacade.postJobExecutionEvent(completeEvent);
             itemErrorMessages.put(item, ExceptionUtils.transform(cause));

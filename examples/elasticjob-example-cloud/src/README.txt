@@ -28,7 +28,7 @@ curl -l -H "Content-type: application/json" -X POST -d '{"appName":"exampleApp",
 
 2. Java启动方式作业注册:
 
-curl -l -H "Content-type: application/json" -X POST -d '{"jobName":"test_job_simple","appName":"exampleApp","jobExecutionType":"TRANSIENT","jobClass":"org.apache.shardingsphere.elasticjob.lite.example.job.simple.JavaSimpleJob","cron":"0/10 * * * * ?","shardingTotalCount":1,"cpuCount":0.1,"memoryMB":64.0}' http://localhost:8899/api/job/register
+curl -l -H "Content-type: application/json" -X POST -d '{"jobName":"test_job_simple","appName":"exampleApp","jobExecutionType":"TRANSIENT","jobClass":"org.apache.shardingsphere.elasticjob.lite.example.job.simple.com.kuanghc1.JavaSimpleJob","cron":"0/10 * * * * ?","shardingTotalCount":1,"cpuCount":0.1,"memoryMB":64.0}' http://localhost:8899/api/job/register
 
 curl -l -H "Content-type: application/json" -X POST -d '{"jobName":"test_job_dataflow","appName":"exampleApp","jobExecutionType":"DAEMON","jobClass":"org.apache.shardingsphere.elasticjob.lite.example.job.dataflow.JavaDataflowJob","cron":"0/10 * * * * ?","shardingTotalCount":3,"cpuCount":0.1,"memoryMB":64.0}' http://localhost:8899/api/job/register
 

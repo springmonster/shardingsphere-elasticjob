@@ -43,7 +43,7 @@ public abstract class AbstractEmbedZookeeperBaseTest {
             testingServer = new TestingServer(PORT, new File(String.format("target/test_zk_data/%s/", System.nanoTime())));
             // CHECKSTYLE:OFF
         } catch (final Exception ex) {
-            // CHECKSTYLE:ON
+            // CHECKSTYLE:OFF
             RegExceptionHandler.handleException(ex);
         } finally {
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {

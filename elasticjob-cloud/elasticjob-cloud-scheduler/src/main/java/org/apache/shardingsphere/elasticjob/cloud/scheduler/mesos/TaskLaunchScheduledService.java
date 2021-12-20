@@ -126,7 +126,7 @@ public final class TaskLaunchScheduledService extends AbstractScheduledService {
             }
             //CHECKSTYLE:OFF
         } catch (Throwable throwable) {
-            //CHECKSTYLE:ON
+            //CHECKSTYLE:OFF
             log.error("Launch task error", throwable);
         } finally {
             AppConstraintEvaluator.getInstance().clearAppRunningState();

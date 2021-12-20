@@ -1,4 +1,4 @@
-/*
+package com.kuanghc1;/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,12 +15,9 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.elasticjob.lite.example;
-
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.shardingsphere.elasticjob.api.JobConfiguration;
 import org.apache.shardingsphere.elasticjob.lite.api.bootstrap.impl.ScheduleJobBootstrap;
-import org.apache.shardingsphere.elasticjob.lite.example.job.simple.JavaSimpleJob;
 import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
 import org.apache.shardingsphere.elasticjob.reg.zookeeper.ZookeeperConfiguration;
 import org.apache.shardingsphere.elasticjob.reg.zookeeper.ZookeeperRegistryCenter;
@@ -54,7 +51,6 @@ public final class JavaMain {
     // CHECKSTYLE:OFF
     public static void main(final String[] args) throws IOException {
         // CHECKSTYLE:OFF
-//        EmbedZookeeperServer.start(EMBED_ZOOKEEPER_PORT);
         CoordinatorRegistryCenter regCenter = setUpRegistryCenter();
 
         TracingConfiguration<DataSource> tracingConfig = new TracingConfiguration<>("RDB", setUpEventTraceDataSource());
@@ -101,7 +97,7 @@ public final class JavaMain {
     private static void setUpSimpleJob(final CoordinatorRegistryCenter regCenter, final TracingConfiguration<DataSource> tracingConfig) {
         // 这里的tracingConfig是DataSource的信息
         JobConfiguration jobConfiguration = JobConfiguration
-                .newBuilder("javaSimpleJob", 3)
+                .newBuilder("kuanghc1-job", 3)
                 .cron("0/5 * * * * ?")
                 .shardingItemParameters("0=Beijing,1=Shanghai,2=Shenzhen")
                 .addExtraConfigurations(tracingConfig)
@@ -122,7 +118,7 @@ public final class JavaMain {
 //    }
 //
 //    private static void setUpOneOffJob(final CoordinatorRegistryCenter regCenter, final TracingConfiguration<DataSource> tracingConfig) {
-//        new OneOffJobBootstrap(regCenter, new JavaSimpleJob(), JobConfiguration.newBuilder("javaOneOffSimpleJob", 3)
+//        new OneOffJobBootstrap(regCenter, new com.kuanghc1.JavaSimpleJob(), JobConfiguration.newBuilder("javaOneOffSimpleJob", 3)
 //                .shardingItemParameters("0=Beijing,1=Shanghai,2=Guangzhou").addExtraConfigurations(tracingConfig).build()).execute();
 //    }
 //
@@ -173,9 +169,9 @@ public final class JavaMain {
 
 //    private static String buildScriptCommandLine() throws IOException {
 //        if (System.getProperties().getProperty("os.name").contains("Windows")) {
-//            return Paths.get(JavaMain.class.getResource("/script/demo.bat").getPath().substring(1)).toString();
+//            return Paths.get(com.kuanghc1.JavaMain.class.getResource("/script/demo.bat").getPath().substring(1)).toString();
 //        }
-//        Path result = Paths.get(JavaMain.class.getResource("/script/demo.sh").getPath());
+//        Path result = Paths.get(com.kuanghc1.JavaMain.class.getResource("/script/demo.sh").getPath());
 //        Files.setPosixFilePermissions(result, PosixFilePermissions.fromString("rwxr-xr-x"));
 //        return result.toString();
 //    }

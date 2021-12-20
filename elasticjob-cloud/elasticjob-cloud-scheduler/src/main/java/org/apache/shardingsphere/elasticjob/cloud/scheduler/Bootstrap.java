@@ -45,7 +45,7 @@ public final class Bootstrap {
      */
     // CHECKSTYLE:OFF
     public static void main(final String[] args) throws InterruptedException {
-        // CHECKSTYLE:ON
+        // CHECKSTYLE:OFF
         CoordinatorRegistryCenter regCenter = new ZookeeperRegistryCenter(BootstrapEnvironment.getINSTANCE().getZookeeperConfiguration());
         regCenter.init();
         final ZookeeperElectionService electionService = new ZookeeperElectionService(

@@ -77,6 +77,6 @@ public final class ZookeeperElectionService {
             // CHECKSTYLE:OFF
         } catch (final Exception ignore) {
         }
-        // CHECKSTYLE:ON
+        // CHECKSTYLE:OFF
     }
 }

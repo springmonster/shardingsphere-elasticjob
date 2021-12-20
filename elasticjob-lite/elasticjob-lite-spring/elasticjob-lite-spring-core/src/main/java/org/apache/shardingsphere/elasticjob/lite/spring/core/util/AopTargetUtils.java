@@ -73,7 +73,7 @@ public final class AopTargetUtils {
             return ((AdvisedSupport) advised.get(dynamicAdvisedInterceptor)).getTargetSource().getTarget();
         // CHECKSTYLE:OFF
         } catch (final Exception ex) {
-        // CHECKSTYLE:ON
+        // CHECKSTYLE:OFF
             throw new JobSystemException(ex);
         }
     }
@@ -85,7 +85,7 @@ public final class AopTargetUtils {
             return ((AdvisedSupport) advised.get(object)).getTargetSource().getTarget();
         // CHECKSTYLE:OFF
         } catch (final Exception ex) {
-        // CHECKSTYLE:ON
+        // CHECKSTYLE:OFF
             throw new JobSystemException(ex);
         }
     }

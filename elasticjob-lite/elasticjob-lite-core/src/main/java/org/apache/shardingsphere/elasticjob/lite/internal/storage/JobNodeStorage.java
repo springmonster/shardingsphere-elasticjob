@@ -194,7 +194,7 @@ public final class JobNodeStorage {
             client.transaction().forOperations(operations);
         //CHECKSTYLE:OFF
         } catch (final Exception ex) {
-        //CHECKSTYLE:ON
+        //CHECKSTYLE:OFF
             RegExceptionHandler.handleException(ex);
         }
     }
@@ -212,7 +212,7 @@ public final class JobNodeStorage {
             callback.execute();
         //CHECKSTYLE:OFF
         } catch (final Exception ex) {
-        //CHECKSTYLE:ON
+        //CHECKSTYLE:OFF
             handleException(ex);
         }
     }

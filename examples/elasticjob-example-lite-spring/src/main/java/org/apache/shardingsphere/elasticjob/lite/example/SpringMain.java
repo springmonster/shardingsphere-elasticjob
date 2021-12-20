@@ -25,7 +25,7 @@ public final class SpringMain {
     
     // CHECKSTYLE:OFF
     public static void main(final String[] args) {
-    // CHECKSTYLE:ON
+    // CHECKSTYLE:OFF
         EmbedZookeeperServer.start(EMBED_ZOOKEEPER_PORT);
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:META-INF/application-context.xml");
         // One-off Job

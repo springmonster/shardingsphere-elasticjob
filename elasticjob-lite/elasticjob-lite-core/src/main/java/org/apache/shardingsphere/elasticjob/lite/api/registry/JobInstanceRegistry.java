@@ -85,7 +85,7 @@ public final class JobInstanceRegistry {
                 return (ElasticJob) Class.forName(clazz).newInstance();
                 //CHECKSTYLE:OFF
             } catch (final Exception ex) {
-                //CHECKSTYLE:ON
+                //CHECKSTYLE:OFF
                 throw new RuntimeException(String.format("new elastic job instance by class '%s' failure", clazz), ex);
             }
         }
