@@ -39,7 +39,9 @@ public final class TracingConfiguration<T> implements JobExtraConfiguration {
     @SuppressWarnings("unchecked")
     public TracingConfiguration(final String type, final T storage) {
         this.type = type;
-        this.tracingStorageConfiguration = TracingStorageConverterFactory.findConverter((Class<T>) storage.getClass())
-                .orElseThrow(() -> new TracingStorageConverterNotFoundException(storage.getClass())).convertObjectToConfiguration(storage);
+        this.tracingStorageConfiguration = TracingStorageConverterFactory
+                .findConverter((Class<T>) storage.getClass())
+                .orElseThrow(() -> new TracingStorageConverterNotFoundException(storage.getClass()))
+                .convertObjectToConfiguration(storage);
     }
 }

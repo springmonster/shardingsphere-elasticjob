@@ -27,6 +27,7 @@ import org.apache.shardingsphere.elasticjob.reg.exception.RegException;
 import java.util.concurrent.CountDownLatch;
 
 /**
+ * kuanghc1:选举的服务
  * Use {@link LeaderSelector} to implement election service.
  */
 @Slf4j

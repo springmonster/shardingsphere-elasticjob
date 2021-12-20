@@ -33,7 +33,7 @@ public final class JavaMain {
 
 //    private static final int EMBED_ZOOKEEPER_PORT = 4181;
 
-//    private static final String ZOOKEEPER_CONNECTION_STRING = "10.122.111.97:2181";
+    //    private static final String ZOOKEEPER_CONNECTION_STRING = "10.122.111.97:2181";
     private static final String ZOOKEEPER_CONNECTION_STRING = "127.0.0.1:2181";
 //    private static final String ZOOKEEPER_CONNECTION_STRING = "10.122.111.95:2181";
 
@@ -99,13 +99,20 @@ public final class JavaMain {
      * @param tracingConfig
      */
     private static void setUpSimpleJob(final CoordinatorRegistryCenter regCenter, final TracingConfiguration<DataSource> tracingConfig) {
-        new ScheduleJobBootstrap(regCenter, new JavaSimpleJob(), JobConfiguration.newBuilder("javaSimpleJob", 3)
+        // 这里的tracingConfig是DataSource的信息
+        JobConfiguration jobConfiguration = JobConfiguration
+                .newBuilder("javaSimpleJob", 3)
                 .cron("0/5 * * * * ?")
                 .shardingItemParameters("0=Beijing,1=Shanghai,2=Shenzhen")
-//                .shardingItemParameters("0=Beijing,1=Shanghai")
-//                .shardingItemParameters("0=Beijing")
-                .addExtraConfigurations(tracingConfig).build())
-                .schedule();
+                .addExtraConfigurations(tracingConfig)
+                .build();
+
+        /**
+         * 1. 注册中心
+         * 2. SimpleJob的子类
+         * 3. JobConfiguration，包含TracingConfig的信息（Database的信息）
+         */
+        new ScheduleJobBootstrap(regCenter, new JavaSimpleJob(), jobConfiguration).schedule();
     }
 
 //    private static void setUpDataflowJob(final CoordinatorRegistryCenter regCenter, final TracingConfiguration<DataSource> tracingConfig) {
