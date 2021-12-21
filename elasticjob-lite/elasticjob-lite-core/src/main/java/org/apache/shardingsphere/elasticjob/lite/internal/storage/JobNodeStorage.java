@@ -146,6 +146,7 @@ public final class JobNodeStorage {
      * @param node node
      * @param value data of job node
      */
+
     public void fillEphemeralJobNode(final String node, final Object value) {
         regCenter.persistEphemeral(jobNodePath.getFullPath(node), value.toString());
     }
