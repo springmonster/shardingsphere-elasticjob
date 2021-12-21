@@ -23,16 +23,17 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 
 /**
+ * kuanghc1:这里通过JobRunShell进行调用
  * Lite job class.
  */
 @Setter
 public final class LiteJob implements Job {
-    
+
     private ElasticJobExecutor jobExecutor;
-    
+
     @Override
     public void execute(final JobExecutionContext context) {
         jobExecutor.execute();
     }
-    
+
 }

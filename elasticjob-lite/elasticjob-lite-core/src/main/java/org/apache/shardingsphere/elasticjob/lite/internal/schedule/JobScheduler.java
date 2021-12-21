@@ -152,6 +152,13 @@ public final class JobScheduler {
         return result;
     }
 
+    /**
+     * kuanghc1:这里就会创建
+     * @see SimpleThreadPool#initialize()
+     * @see SimpleThreadPool 277行
+     *
+     * @return
+     */
     private Scheduler createScheduler() {
         Scheduler result;
         try {
