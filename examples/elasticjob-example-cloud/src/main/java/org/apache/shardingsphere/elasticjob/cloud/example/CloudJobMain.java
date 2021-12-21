@@ -21,9 +21,9 @@ import org.apache.shardingsphere.elasticjob.cloud.api.JobBootstrap;
 
 public final class CloudJobMain {
     
-    // CHECKSTYLE:OFF
+    
     public static void main(final String[] args) {
-    // CHECKSTYLE:OFF
+    
         JobBootstrap.execute("SCRIPT");
     }
 }

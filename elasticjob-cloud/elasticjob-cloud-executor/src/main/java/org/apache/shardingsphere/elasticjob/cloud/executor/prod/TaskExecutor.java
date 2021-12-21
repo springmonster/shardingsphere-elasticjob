@@ -140,9 +140,9 @@ public final class TaskExecutor implements Executor {
                 } else {
                     new DaemonTaskScheduler(elasticJob, elasticJobType, jobConfig, jobFacade, executorDriver, taskInfo.getTaskId()).init();
                 }
-                // CHECKSTYLE:OFF
+                
             } catch (final Throwable ex) {
-                // CHECKSTYLE:OFF
+                
                 log.error("ElasticJob-Cloud Executor error:", ex);
                 executorDriver.sendStatusUpdate(Protos.TaskStatus.newBuilder().setTaskId(taskInfo.getTaskId()).setState(Protos.TaskState.TASK_ERROR).setMessage(ExceptionUtils.transform(ex)).build());
                 executorDriver.stop();

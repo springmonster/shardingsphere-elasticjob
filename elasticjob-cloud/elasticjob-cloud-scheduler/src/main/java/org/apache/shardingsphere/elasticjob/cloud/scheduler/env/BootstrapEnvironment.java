@@ -157,10 +157,10 @@ public final class BootstrapEnvironment {
      *
      * @return map of the rdb config
      */
-    // CHECKSTYLE:OFF
+    
     public HashMap<String, String> getJobEventRdbConfigurationMap() {
         HashMap<String, String> result = new HashMap<>(4, 1);
-        // CHECKSTYLE:OFF
+        
         result.put(EnvironmentArgument.EVENT_TRACE_RDB_DRIVER.getKey(), getValue(EnvironmentArgument.EVENT_TRACE_RDB_DRIVER));
         result.put(EnvironmentArgument.EVENT_TRACE_RDB_URL.getKey(), getValue(EnvironmentArgument.EVENT_TRACE_RDB_URL));
         result.put(EnvironmentArgument.EVENT_TRACE_RDB_USERNAME.getKey(), getValue(EnvironmentArgument.EVENT_TRACE_RDB_USERNAME));

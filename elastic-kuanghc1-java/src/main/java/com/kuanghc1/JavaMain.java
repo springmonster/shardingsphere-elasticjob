@@ -28,29 +28,18 @@ import java.io.IOException;
 
 public final class JavaMain {
 
-//    private static final int EMBED_ZOOKEEPER_PORT = 4181;
-
-    //    private static final String ZOOKEEPER_CONNECTION_STRING = "10.122.111.97:2181";
+    // Zookeeper相关
     private static final String ZOOKEEPER_CONNECTION_STRING = "127.0.0.1:2181";
-//    private static final String ZOOKEEPER_CONNECTION_STRING = "10.122.111.95:2181";
-
     private static final String JOB_NAMESPACE = "elastic-job-mysql";
 
-    // switch to MySQL by yourself
-//    private static final String EVENT_RDB_STORAGE_DRIVER = "com.mysql.jdbc.Driver";
-//    private static final String EVENT_RDB_STORAGE_URL = "jdbc:mysql://localhost:3306/elastic_job_log";
-
+    // MySQL相关
     private static final String EVENT_RDB_STORAGE_DRIVER = "com.mysql.cj.jdbc.Driver";
-
     private static final String EVENT_RDB_STORAGE_URL = "jdbc:mysql://10.122.111.97:3306/elasticjob?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true";
-
     private static final String EVENT_RDB_STORAGE_USERNAME = "appadmin";
-
     private static final String EVENT_RDB_STORAGE_PASSWORD = "appadmin";
 
-    // CHECKSTYLE:OFF
     public static void main(final String[] args) throws IOException {
-        // CHECKSTYLE:OFF
+        
         CoordinatorRegistryCenter regCenter = setUpRegistryCenter();
 
         // kuanghc1:配置Database，这里是通过数据库记录log

@@ -71,9 +71,9 @@ public final class AopTargetUtils {
             Field advised = dynamicAdvisedInterceptor.getClass().getDeclaredField("advised");
             advised.setAccessible(true);
             return ((AdvisedSupport) advised.get(dynamicAdvisedInterceptor)).getTargetSource().getTarget();
-        // CHECKSTYLE:OFF
+        
         } catch (final Exception ex) {
-        // CHECKSTYLE:OFF
+        
             throw new JobSystemException(ex);
         }
     }
@@ -83,9 +83,9 @@ public final class AopTargetUtils {
             Field advised = object.getClass().getDeclaredField("advised");
             advised.setAccessible(true);
             return ((AdvisedSupport) advised.get(object)).getTargetSource().getTarget();
-        // CHECKSTYLE:OFF
+        
         } catch (final Exception ex) {
-        // CHECKSTYLE:OFF
+        
             throw new JobSystemException(ex);
         }
     }

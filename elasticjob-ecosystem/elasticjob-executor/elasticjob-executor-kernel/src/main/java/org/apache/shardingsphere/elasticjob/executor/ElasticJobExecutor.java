@@ -210,9 +210,9 @@ public final class ElasticJobExecutor {
             log.info("Job '{}' executed, item is: '{}'.", jobConfig.getJobName(), item);
 
             jobFacade.postJobExecutionEvent(completeEvent);
-            // CHECKSTYLE:OFF
+            
         } catch (final Throwable cause) {
-            // CHECKSTYLE:OFF
+            
             // 这里如果失败了，那么就产生一个失败的消息
             completeEvent = startEvent.executionFailure(ExceptionUtils.transform(cause));
             jobFacade.postJobExecutionEvent(completeEvent);

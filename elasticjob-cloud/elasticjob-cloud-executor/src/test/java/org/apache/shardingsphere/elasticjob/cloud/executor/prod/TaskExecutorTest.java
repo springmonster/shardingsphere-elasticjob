@@ -83,9 +83,9 @@ public final class TaskExecutorTest {
     
     @Test
     public void assertRegisteredWithoutData() {
-        // CHECKSTYLE:OFF
+        
         HashMap<String, String> data = new HashMap<>(4, 1);
-        // CHECKSTYLE:OFF
+        
         data.put("event_trace_rdb_driver", "org.h2.Driver");
         data.put("event_trace_rdb_url", "jdbc:h2:mem:test_executor");
         data.put("event_trace_rdb_username", "sa");

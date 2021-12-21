@@ -23,9 +23,9 @@ public final class SpringMain {
     
     private static final int EMBED_ZOOKEEPER_PORT = 5181;
     
-    // CHECKSTYLE:OFF
+    
     public static void main(final String[] args) {
-    // CHECKSTYLE:OFF
+    
         EmbedZookeeperServer.start(EMBED_ZOOKEEPER_PORT);
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:META-INF/application-context.xml");
         // One-off Job

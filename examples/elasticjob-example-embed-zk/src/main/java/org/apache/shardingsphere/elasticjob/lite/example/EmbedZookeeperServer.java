@@ -41,9 +41,9 @@ public final class EmbedZookeeperServer {
     public static void start(final int port) {
         try {
             testingServer = new TestingServer(port, new File(String.format("target/test_zk_data/%s/", System.nanoTime())));
-        // CHECKSTYLE:OFF
+        
         } catch (final Exception ex) {
-        // CHECKSTYLE:OFF
+        
             ex.printStackTrace();
         } finally {
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {

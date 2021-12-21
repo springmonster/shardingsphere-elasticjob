@@ -82,9 +82,9 @@ public final class TaskExecutorThreadTest {
     }
     
     private byte[] serialize(final String jobConfigurationYaml) {
-        // CHECKSTYLE:OFF
+        
         LinkedHashMap<String, Object> result = new LinkedHashMap<>(2, 1);
-        // CHECKSTYLE:OFF
+        
         ShardingContexts shardingContexts = new ShardingContexts(taskId, "test_job", 1, "", Collections.singletonMap(1, "a"));
         result.put("shardingContext", shardingContexts);
         result.put("jobConfigContext", jobConfigurationYaml);
