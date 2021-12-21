@@ -167,12 +167,12 @@ public final class ElasticJobExecutor {
     @SuppressWarnings("unchecked")
     private void process(final JobConfiguration jobConfig, final ShardingContexts shardingContexts, final int item, final JobExecutionEvent startEvent) {
         jobFacade.postJobExecutionEvent(startEvent);
-        log.trace("Job '{}' executing, item is: '{}'.", jobConfig.getJobName(), item);
+        log.info("Job '{}' executing, item is: '{}'.", jobConfig.getJobName(), item);
         JobExecutionEvent completeEvent;
         try {
             jobItemExecutor.process(elasticJob, jobConfig, jobFacade, shardingContexts.createShardingContext(item));
             completeEvent = startEvent.executionSuccess();
-            log.trace("Job '{}' executed, item is: '{}'.", jobConfig.getJobName(), item);
+            log.info("Job '{}' executed, item is: '{}'.", jobConfig.getJobName(), item);
             jobFacade.postJobExecutionEvent(completeEvent);
             // CHECKSTYLE:OFF
         } catch (final Throwable cause) {
