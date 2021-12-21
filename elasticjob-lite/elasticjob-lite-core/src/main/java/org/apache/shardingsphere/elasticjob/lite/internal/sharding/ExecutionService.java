@@ -55,6 +55,7 @@ public final class ExecutionService {
         if (!configService.load(true).isMonitorExecution()) {
             return;
         }
+        // 这里是0，1，2
         for (int each : shardingContexts.getShardingItemParameters().keySet()) {
             jobNodeStorage.fillEphemeralJobNode(ShardingNode.getRunningNode(each), "");
         }

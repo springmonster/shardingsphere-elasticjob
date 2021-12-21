@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * kuanghc1:这个很重要！！！
  * Lite job facade.
  */
 @Slf4j

@@ -192,6 +192,7 @@ public final class ZookeeperRegistryCenter implements CoordinatorRegistryCenter 
     @Override
     public boolean isExisted(final String key) {
         try {
+            log.info("client.checkExists().forPath(key) is {} ", client.checkExists().forPath(key));
             return null != client.checkExists().forPath(key);
             //CHECKSTYLE:OFF
         } catch (final Exception ex) {

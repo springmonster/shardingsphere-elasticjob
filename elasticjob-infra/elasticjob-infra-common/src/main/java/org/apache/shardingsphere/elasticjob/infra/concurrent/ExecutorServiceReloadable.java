@@ -43,7 +43,13 @@ public final class ExecutorServiceReloadable implements Reloadable<ExecutorServi
                 ? JobExecutorServiceHandlerFactory.DEFAULT_HANDLER : jobConfig.getJobExecutorServiceHandlerType();
         executorService = JobExecutorServiceHandlerFactory.getHandler(jobExecutorServiceHandlerType).createExecutorService(jobConfig.getJobName());
     }
-    
+
+    /**
+     * kuanghc1:这里为啥要reload？？？
+     *
+     *
+     * @param jobConfig
+     */
     @Override
     public synchronized void reloadIfNecessary(final JobConfiguration jobConfig) {
         String newJobExecutorServiceHandlerType = Strings.isNullOrEmpty(jobConfig.getJobExecutorServiceHandlerType())
