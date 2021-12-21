@@ -157,6 +157,11 @@ public final class JobScheduler {
      * @see SimpleThreadPool#initialize()
      * @see SimpleThreadPool 277行
      *
+     * @see StdSchedulerFactory 1333行，QuartzScheduler的初始化
+     * 然后初始化QuartzSchedulerThread
+     * 398行，执行JobRunShell，if (qsRsrcs.getThreadPool().runInThread(shell) == false) {
+     * 然后调用，ElasticJobExecutor，JobItemExecutor，SimpleJobExecutor，然后就调用到了JavaSimpleJob
+     *
      * @return
      */
     private Scheduler createScheduler() {
