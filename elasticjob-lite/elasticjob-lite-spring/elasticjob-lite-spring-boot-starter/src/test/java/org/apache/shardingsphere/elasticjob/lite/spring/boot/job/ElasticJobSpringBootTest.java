@@ -149,14 +149,14 @@ public class ElasticJobSpringBootTest extends AbstractJUnit4SpringContextTests {
         Field jobSchedulerField = customTestJobBootstrap.getClass().getDeclaredField("jobScheduler");
         jobSchedulerField.setAccessible(true);
         Collection<JobExtraConfiguration> extraConfigurations =
-                ((JobScheduler) jobSchedulerField.get(customTestJobBootstrap)).getJobConfig().getExtraConfigurations();
+                ((JobScheduler) jobSchedulerField.get(customTestJobBootstrap)).getJobConfiguration().getExtraConfigurations();
         assertThat(extraConfigurations.size(), is(0));
         OneOffJobBootstrap printTestJobBootstrap =
                 applicationContext.getBean("printTestJobBean", OneOffJobBootstrap.class);
         jobSchedulerField = printTestJobBootstrap.getClass().getDeclaredField("jobScheduler");
         jobSchedulerField.setAccessible(true);
         extraConfigurations =
-                ((JobScheduler) jobSchedulerField.get(printTestJobBootstrap)).getJobConfig().getExtraConfigurations();
+                ((JobScheduler) jobSchedulerField.get(printTestJobBootstrap)).getJobConfiguration().getExtraConfigurations();
         assertThat(extraConfigurations.size(), is(1));
     }
 

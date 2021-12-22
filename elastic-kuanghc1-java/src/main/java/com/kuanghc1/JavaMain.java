@@ -39,7 +39,7 @@ public final class JavaMain {
     private static final String EVENT_RDB_STORAGE_PASSWORD = "appadmin";
 
     public static void main(final String[] args) throws IOException {
-        
+
         CoordinatorRegistryCenter regCenter = setUpRegistryCenter();
 
         // kuanghc1:配置Database，这里是通过数据库记录log
@@ -54,6 +54,55 @@ public final class JavaMain {
 //        setUpOneOffJobWithWechat(regCenter, tracingConfig);
     }
 
+    /**
+     * result = {ZookeeperRegistryCenter@3649}
+     * zkConfig = {ZookeeperConfiguration@3651}
+     * serverLists = "127.0.0.1:2181"
+     * namespace = "elastic-job-mysql"
+     * baseSleepTimeMilliseconds = 1000
+     * maxSleepTimeMilliseconds = 3000
+     * maxRetries = 3
+     * sessionTimeoutMilliseconds = 0
+     * connectionTimeoutMilliseconds = 0
+     * digest = null
+     * caches = {ConcurrentHashMap@3652}  size = 0
+     * client = {CuratorFrameworkImpl@3653}
+     * log = {Logger@3658} "Logger[org.apache.curator.framework.imps.CuratorFrameworkImpl]"
+     * client = {CuratorZookeeperClient@3659}
+     * listeners = {StandardListenerManager@3660}
+     * unhandledErrorListeners = {StandardListenerManager@3661}
+     * threadFactory = {ThreadFactoryBuilder$1@3662}
+     * maxCloseWaitMs = 1000
+     * backgroundOperations = {DelayQueue@3663}  size = 0
+     * forcedSleepOperations = {LinkedBlockingQueue@3664}  size = 0
+     * namespace = {NamespaceImpl@3665}
+     * connectionStateManager = {ConnectionStateManager@3666}
+     * authInfos = {RegularImmutableList@3667}  size = 0
+     * defaultData = {byte[9]@3668} [49, 50, 55, 46, 48, 46, 48, 46, 49]
+     * failedDeleteManager = {FailedDeleteManager@3669}
+     * failedRemoveWatcherManager = {FailedRemoveWatchManager@3670}
+     * compressionProvider = {GzipCompressionProvider@3671}
+     * aclProvider = {DefaultACLProvider@3672}
+     * namespaceFacadeCache = {NamespaceFacadeCache@3673}
+     * useContainerParentsIfAvailable = true
+     * connectionStateErrorPolicy = {StandardConnectionStateErrorPolicy@3674}
+     * currentInstanceIndex = {AtomicLong@3675} "1"
+     * internalConnectionHandler = {StandardInternalConnectionHandler@3676}
+     * ensembleTracker = {EnsembleTracker@3677}
+     * schemaSet = {SchemaSet$2@3678}
+     * runSafeService = {Executors$FinalizableDelegatedExecutorService@3679}
+     * executorService = {Executors$DelegatedScheduledExecutorService@3680}
+     * logAsErrorConnectionErrors = {AtomicBoolean@3681} "true"
+     * debugListener = null
+     * debugUnhandledErrorListener = null
+     * state = {AtomicReference@3682} "STARTED"
+     * debugCheckBackgroundRetryLatch = null
+     * debugCheckBackgroundRetryReadyLatch = null
+     * injectedCode = null
+     * sleepAndQueueOperationSeconds = 1
+     *
+     * @return
+     */
     private static CoordinatorRegistryCenter setUpRegistryCenter() {
         ZookeeperConfiguration zkConfig = new ZookeeperConfiguration(ZOOKEEPER_CONNECTION_STRING, JOB_NAMESPACE);
         CoordinatorRegistryCenter result = new ZookeeperRegistryCenter(zkConfig);
@@ -79,7 +128,6 @@ public final class JavaMain {
 //    }
 
     /**
-     *
      * @param regCenter
      * @param tracingConfig
      */

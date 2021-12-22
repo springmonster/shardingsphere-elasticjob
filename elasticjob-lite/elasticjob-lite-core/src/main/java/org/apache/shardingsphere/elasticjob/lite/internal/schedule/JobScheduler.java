@@ -59,70 +59,70 @@ public final class JobScheduler {
     private static final String JOB_EXECUTOR_DATA_MAP_KEY = "jobExecutor";
 
     @Getter
-    private final CoordinatorRegistryCenter regCenter;
+    private final CoordinatorRegistryCenter coordinatorRegistryCenter;
 
     @Getter
-    private final JobConfiguration jobConfig;
+    private final JobConfiguration jobConfiguration;
 
     private final SetUpFacade setUpFacade;
 
     private final SchedulerFacade schedulerFacade;
 
-    private final LiteJobFacade jobFacade;
+    private final LiteJobFacade liteJobFacade;
 
-    private final ElasticJobExecutor jobExecutor;
+    private final ElasticJobExecutor elasticJobExecutor;
 
     @Getter
     private final JobScheduleController jobScheduleController;
 
-    public JobScheduler(final CoordinatorRegistryCenter regCenter, final ElasticJob elasticJob, final JobConfiguration jobConfig) {
+    public JobScheduler(final CoordinatorRegistryCenter coordinatorRegistryCenter, final ElasticJob elasticJob, final JobConfiguration jobConfiguration) {
         Preconditions.checkArgument(null != elasticJob, "Elastic job cannot be null.");
 
-        this.regCenter = regCenter;
+        this.coordinatorRegistryCenter = coordinatorRegistryCenter;
 
-        Collection<ElasticJobListener> jobListeners = getElasticJobListeners(jobConfig);
+        Collection<ElasticJobListener> jobListeners = getElasticJobListeners(jobConfiguration);
 
-        setUpFacade = new SetUpFacade(regCenter, jobConfig.getJobName(), jobListeners);
+        setUpFacade = new SetUpFacade(coordinatorRegistryCenter, jobConfiguration.getJobName(), jobListeners);
 
         String jobClassName = JobClassNameProviderFactory.getProvider().getJobClassName(elasticJob);
 
-        this.jobConfig = setUpFacade.setUpJobConfiguration(jobClassName, jobConfig);
+        this.jobConfiguration = setUpFacade.setUpJobConfiguration(jobClassName, jobConfiguration);
 
-        schedulerFacade = new SchedulerFacade(regCenter, jobConfig.getJobName());
+        schedulerFacade = new SchedulerFacade(coordinatorRegistryCenter, jobConfiguration.getJobName());
 
-        jobFacade = new LiteJobFacade(regCenter, jobConfig.getJobName(), jobListeners, findTracingConfiguration().orElse(null));
+        liteJobFacade = new LiteJobFacade(coordinatorRegistryCenter, jobConfiguration.getJobName(), jobListeners, findTracingConfiguration().orElse(null));
 
         validateJobProperties();
 
-        jobExecutor = new ElasticJobExecutor(elasticJob, this.jobConfig, jobFacade);
+        elasticJobExecutor = new ElasticJobExecutor(elasticJob, this.jobConfiguration, liteJobFacade);
 
-        setGuaranteeServiceForElasticJobListeners(regCenter, jobListeners);
+        setGuaranteeServiceForElasticJobListeners(coordinatorRegistryCenter, jobListeners);
 
         jobScheduleController = createJobScheduleController();
     }
 
     public JobScheduler(final CoordinatorRegistryCenter regCenter, final String elasticJobType, final JobConfiguration jobConfig) {
         Preconditions.checkArgument(!Strings.isNullOrEmpty(elasticJobType), "Elastic job type cannot be null or empty.");
-        this.regCenter = regCenter;
+        this.coordinatorRegistryCenter = regCenter;
         Collection<ElasticJobListener> jobListeners = getElasticJobListeners(jobConfig);
         setUpFacade = new SetUpFacade(regCenter, jobConfig.getJobName(), jobListeners);
-        this.jobConfig = setUpFacade.setUpJobConfiguration(elasticJobType, jobConfig);
+        this.jobConfiguration = setUpFacade.setUpJobConfiguration(elasticJobType, jobConfig);
         schedulerFacade = new SchedulerFacade(regCenter, jobConfig.getJobName());
-        jobFacade = new LiteJobFacade(regCenter, jobConfig.getJobName(), jobListeners, findTracingConfiguration().orElse(null));
+        liteJobFacade = new LiteJobFacade(regCenter, jobConfig.getJobName(), jobListeners, findTracingConfiguration().orElse(null));
         validateJobProperties();
-        jobExecutor = new ElasticJobExecutor(elasticJobType, this.jobConfig, jobFacade);
+        elasticJobExecutor = new ElasticJobExecutor(elasticJobType, this.jobConfiguration, liteJobFacade);
         setGuaranteeServiceForElasticJobListeners(regCenter, jobListeners);
         jobScheduleController = createJobScheduleController();
     }
 
-    private Collection<ElasticJobListener> getElasticJobListeners(final JobConfiguration jobConfig) {
-        return jobConfig.getJobListenerTypes().stream()
+    private Collection<ElasticJobListener> getElasticJobListeners(final JobConfiguration jobConfiguration) {
+        return jobConfiguration.getJobListenerTypes().stream()
                 .map(type -> ElasticJobListenerFactory.createListener(type).orElseThrow(() -> new IllegalArgumentException(String.format("Can not find job listener type '%s'.", type))))
                 .collect(Collectors.toList());
     }
 
     private Optional<TracingConfiguration<?>> findTracingConfiguration() {
-        return jobConfig.getExtraConfigurations().stream().filter(each -> each instanceof TracingConfiguration).findFirst().map(extraConfig -> (TracingConfiguration<?>) extraConfig);
+        return jobConfiguration.getExtraConfigurations().stream().filter(each -> each instanceof TracingConfiguration).findFirst().map(extraConfig -> (TracingConfiguration<?>) extraConfig);
     }
 
     private void validateJobProperties() {
@@ -130,14 +130,14 @@ public final class JobScheduler {
     }
 
     private void validateJobErrorHandlerProperties() {
-        if (null != jobConfig.getJobErrorHandlerType()) {
-            ElasticJobServiceLoader.newTypedServiceInstance(JobErrorHandlerPropertiesValidator.class, jobConfig.getJobErrorHandlerType(), jobConfig.getProps())
-                    .ifPresent(validator -> validator.validate(jobConfig.getProps()));
+        if (null != jobConfiguration.getJobErrorHandlerType()) {
+            ElasticJobServiceLoader.newTypedServiceInstance(JobErrorHandlerPropertiesValidator.class, jobConfiguration.getJobErrorHandlerType(), jobConfiguration.getProps())
+                    .ifPresent(validator -> validator.validate(jobConfiguration.getProps()));
         }
     }
 
     private void setGuaranteeServiceForElasticJobListeners(final CoordinatorRegistryCenter regCenter, final Collection<ElasticJobListener> elasticJobListeners) {
-        GuaranteeService guaranteeService = new GuaranteeService(regCenter, jobConfig.getJobName());
+        GuaranteeService guaranteeService = new GuaranteeService(regCenter, jobConfiguration.getJobName());
         for (ElasticJobListener each : elasticJobListeners) {
             if (each instanceof AbstractDistributeOnceElasticJobListener) {
                 ((AbstractDistributeOnceElasticJobListener) each).setGuaranteeService(guaranteeService);
@@ -145,24 +145,73 @@ public final class JobScheduler {
         }
     }
 
+    /**
+     * result = {JobScheduleController@4868}
+     *  scheduler = {StdScheduler@4064}
+     *  jobDetail = {JobDetailImpl@4869} "JobDetail 'DEFAULT.kuanghc1-job':  jobClass: 'org.apache.shardingsphere.elasticjob.lite.internal.schedule.LiteJob concurrentExectionDisallowed: false persistJobDataAfterExecution: false isDurable: false requestsRecovers: false"
+     *   name = "kuanghc1-job"
+     *   group = "DEFAULT"
+     *   description = null
+     *   jobClass = {Class@4873} "class org.apache.shardingsphere.elasticjob.lite.internal.schedule.LiteJob"
+     *   jobDataMap = {JobDataMap@4874}  size = 1
+     *    "jobExecutor" -> {ElasticJobExecutor@3987}
+     *     key = "jobExecutor"
+     *     value = {ElasticJobExecutor@3987}
+     *      elasticJob = {JavaSimpleJob@3988}
+     *      jobFacade = {LiteJobFacade@3479}
+     *      jobItemExecutor = {SimpleJobExecutor@3989}
+     *      executorContext = {ExecutorContext@3990}
+     *      itemErrorMessages = {ConcurrentHashMap@4888}  size = 0
+     *   durability = false
+     *   shouldRecover = false
+     *   key = {JobKey@4875} "DEFAULT.kuanghc1-job"
+     *    name = "kuanghc1-job"
+     *    group = "DEFAULT"
+     *  triggerIdentity = "kuanghc1-job"
+     *
+     * @return
+     */
     private JobScheduleController createJobScheduleController() {
-        JobScheduleController result = new JobScheduleController(createScheduler(), createJobDetail(), getJobConfig().getJobName());
-        JobRegistry.getInstance().registerJob(getJobConfig().getJobName(), result);
+        JobScheduleController result = new JobScheduleController(createScheduler(), createJobDetail(), this.getJobConfiguration().getJobName());
+        JobRegistry.getInstance().registerJob(this.getJobConfiguration().getJobName(), result);
         registerStartUpInfo();
         return result;
     }
 
     /**
      * kuanghc1:这里就会创建
+     *
+     * result = {StdScheduler@4064}
+     *  sched = {QuartzScheduler@4065}
+     *   resources = {QuartzSchedulerResources@4066}
+     *   schedThread = {QuartzSchedulerThread@4047} "Thread[kuanghc1-job_QuartzSchedulerThread,5,QuartzScheduler:kuanghc1-job]"
+     *   threadGroup = {ThreadGroup@4067} "java.lang.ThreadGroup[name=QuartzScheduler:kuanghc1-job,maxpri=10]"
+     *   context = {SchedulerContext@4068}  size = 0
+     *   listenerManager = {ListenerManagerImpl@4069}
+     *   internalJobListeners = {HashMap@4070}  size = 1
+     *   internalTriggerListeners = {HashMap@4071}  size = 0
+     *   internalSchedulerListeners = {ArrayList@4072}  size = 1
+     *   jobFactory = {PropertySettingJobFactory@4073}
+     *   jobMgr = {ExecutingJobsManager@4074}
+     *   errLogger = {ErrorLogger@4075}
+     *   signaler = {SchedulerSignalerImpl@4076}
+     *   random = {Random@4077}
+     *   holdToPreventGC = {ArrayList@4078}  size = 1
+     *   signalOnSchedulingChange = true
+     *   closed = false
+     *   shuttingDown = false
+     *   boundRemotely = false
+     *   jmxBean = null
+     *   initialStart = null
+     *   log = {Logger@4079} "Logger[org.quartz.core.QuartzScheduler]"
+     *
+     * @return
      * @see SimpleThreadPool#initialize()
      * @see SimpleThreadPool 277行
-     *
      * @see StdSchedulerFactory 1333行，QuartzScheduler的初始化
      * 然后初始化QuartzSchedulerThread
      * 398行，执行JobRunShell，if (qsRsrcs.getThreadPool().runInThread(shell) == false) {
      * 然后调用，ElasticJobExecutor，JobItemExecutor，SimpleJobExecutor，然后就调用到了JavaSimpleJob
-     *
-     * @return
      */
     private Scheduler createScheduler() {
         Scheduler result;
@@ -181,7 +230,7 @@ public final class JobScheduler {
         Properties result = new Properties();
         result.put("org.quartz.threadPool.class", SimpleThreadPool.class.getName());
         result.put("org.quartz.threadPool.threadCount", "1");
-        result.put("org.quartz.scheduler.instanceName", getJobConfig().getJobName());
+        result.put("org.quartz.scheduler.instanceName", this.getJobConfiguration().getJobName());
         result.put("org.quartz.jobStore.misfireThreshold", "1");
         result.put("org.quartz.plugin.shutdownhook.class", JobShutdownHookPlugin.class.getName());
         result.put("org.quartz.plugin.shutdownhook.cleanShutdown", Boolean.TRUE.toString());
@@ -189,16 +238,16 @@ public final class JobScheduler {
     }
 
     private JobDetail createJobDetail() {
-        JobDetail result = JobBuilder.newJob(LiteJob.class).withIdentity(getJobConfig().getJobName()).build();
-        result.getJobDataMap().put(JOB_EXECUTOR_DATA_MAP_KEY, jobExecutor);
+        JobDetail result = JobBuilder.newJob(LiteJob.class).withIdentity(this.getJobConfiguration().getJobName()).build();
+        result.getJobDataMap().put(JOB_EXECUTOR_DATA_MAP_KEY, elasticJobExecutor);
         return result;
     }
 
     private void registerStartUpInfo() {
-        JobRegistry.getInstance().registerRegistryCenter(jobConfig.getJobName(), regCenter);
-        JobRegistry.getInstance().addJobInstance(jobConfig.getJobName(), new JobInstance());
-        JobRegistry.getInstance().setCurrentShardingTotalCount(jobConfig.getJobName(), jobConfig.getShardingTotalCount());
-        setUpFacade.registerStartUpInfo(!jobConfig.isDisabled());
+        JobRegistry.getInstance().registerRegistryCenter(jobConfiguration.getJobName(), coordinatorRegistryCenter);
+        JobRegistry.getInstance().addJobInstance(jobConfiguration.getJobName(), new JobInstance());
+        JobRegistry.getInstance().setCurrentShardingTotalCount(jobConfiguration.getJobName(), jobConfiguration.getShardingTotalCount());
+        setUpFacade.registerStartUpInfo(!jobConfiguration.isDisabled());
     }
 
     /**
@@ -207,6 +256,6 @@ public final class JobScheduler {
     public void shutdown() {
         setUpFacade.tearDown();
         schedulerFacade.shutdownInstance();
-        jobExecutor.shutdown();
+        elasticJobExecutor.shutdown();
     }
 }

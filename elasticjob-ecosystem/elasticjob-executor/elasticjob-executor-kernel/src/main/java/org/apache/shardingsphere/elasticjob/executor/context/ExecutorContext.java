@@ -41,7 +41,22 @@ public final class ExecutorContext {
     }
     
     private final Map<String, Reloadable<?>> reloadableItems = new LinkedHashMap<>();
-    
+
+    /**
+     * executorContext = {ExecutorContext@4126}
+     *  reloadableItems = {LinkedHashMap@4127}  size = 2
+     *   "java.util.concurrent.ExecutorService" -> {ExecutorServiceReloadable@4133}
+     *    key = "java.util.concurrent.ExecutorService"
+     *    value = {ExecutorServiceReloadable@4133}
+     *   "org.apache.shardingsphere.elasticjob.error.handler.JobErrorHandler" -> {JobErrorHandlerReloadable@4135}
+     *    key = "org.apache.shardingsphere.elasticjob.error.handler.JobErrorHandler"
+     *    value = {JobErrorHandlerReloadable@4135}
+     *     jobErrorHandlerType = "LOG"
+     *     props = {Properties@4152}  size = 0
+     *     jobErrorHandler = {LogJobErrorHandler@4153}
+     *
+     * @param jobConfig
+     */
     public ExecutorContext(final JobConfiguration jobConfig) {
         ServiceLoader.load(Reloadable.class).forEach(each -> {
             ElasticJobServiceLoader.newTypedServiceInstance(Reloadable.class, each.getType(), new Properties())

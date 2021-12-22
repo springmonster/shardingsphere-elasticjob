@@ -31,21 +31,35 @@ import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
 public final class ScheduleJobBootstrap implements JobBootstrap {
     
     private final JobScheduler jobScheduler;
-    
-    public ScheduleJobBootstrap(final CoordinatorRegistryCenter regCenter, final ElasticJob elasticJob, final JobConfiguration jobConfig) {
-        jobScheduler = new JobScheduler(regCenter, elasticJob, jobConfig);
+
+    /**
+     * jobScheduler = {JobScheduler@3946}
+     *  coordinatorRegistryCenter = {ZookeeperRegistryCenter@3947}
+     *  jobConfiguration = {JobConfiguration@3948}
+     *  setUpFacade = {SetUpFacade@3949}
+     *  schedulerFacade = {SchedulerFacade@3950}
+     *  liteJobFacade = {LiteJobFacade@3951}
+     *  elasticJobExecutor = {ElasticJobExecutor@3952}
+     *  jobScheduleController = {JobScheduleController@4027}
+     *
+     * @param coordinatorRegistryCenter
+     * @param elasticJob
+     * @param jobConfiguration
+     */
+    public ScheduleJobBootstrap(final CoordinatorRegistryCenter coordinatorRegistryCenter, final ElasticJob elasticJob, final JobConfiguration jobConfiguration) {
+        jobScheduler = new JobScheduler(coordinatorRegistryCenter, elasticJob, jobConfiguration);
     }
     
-    public ScheduleJobBootstrap(final CoordinatorRegistryCenter regCenter, final String elasticJobType, final JobConfiguration jobConfig) {
-        jobScheduler = new JobScheduler(regCenter, elasticJobType, jobConfig);
+    public ScheduleJobBootstrap(final CoordinatorRegistryCenter coordinatorRegistryCenter, final String elasticJobType, final JobConfiguration jobConfiguration) {
+        jobScheduler = new JobScheduler(coordinatorRegistryCenter, elasticJobType, jobConfiguration);
     }
     
     /**
      * Schedule job.
      */
     public void schedule() {
-        Preconditions.checkArgument(!Strings.isNullOrEmpty(jobScheduler.getJobConfig().getCron()), "Cron can not be empty.");
-        jobScheduler.getJobScheduleController().scheduleJob(jobScheduler.getJobConfig().getCron(), jobScheduler.getJobConfig().getTimeZone());
+        Preconditions.checkArgument(!Strings.isNullOrEmpty(jobScheduler.getJobConfiguration().getCron()), "Cron can not be empty.");
+        jobScheduler.getJobScheduleController().scheduleJob(jobScheduler.getJobConfiguration().getCron(), jobScheduler.getJobConfiguration().getTimeZone());
     }
     
     @Override

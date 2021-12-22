@@ -45,7 +45,70 @@ public final class SetUpFacade {
     private final ReconcileService reconcileService;
     
     private final ListenerManager listenerManager;
-    
+
+    /**
+     * configService = {ConfigurationService@3009}
+     *  timeService = {TimeService@3017}
+     *  jobNodeStorage = {JobNodeStorage@3018}
+     *   regCenter = {ZookeeperRegistryCenter@2936}
+     *   jobName = "kuanghc1-job"
+     *   jobNodePath = {JobNodePath@3019}
+     *    jobName = "kuanghc1-job"
+     *
+     * leaderService = {LeaderService@3011}
+     *  jobName = "kuanghc1-job"
+     *  serverService = {ServerService@3026}
+     *   jobName = "kuanghc1-job"
+     *   jobNodeStorage = {JobNodeStorage@3028}
+     *    regCenter = {ZookeeperRegistryCenter@2936}
+     *    jobName = "kuanghc1-job"
+     *    jobNodePath = {JobNodePath@3030}
+     *     jobName = "kuanghc1-job"
+     *   serverNode = {ServerNode@3029}
+     *    jobName = "kuanghc1-job"
+     *    jobNodePath = {JobNodePath@3031}
+     *     jobName = "kuanghc1-job"
+     *  jobNodeStorage = {JobNodeStorage@3027}
+     *   regCenter = {ZookeeperRegistryCenter@2936}
+     *   jobName = "kuanghc1-job"
+     *   jobNodePath = {JobNodePath@3032}
+     *    jobName = "kuanghc1-job"
+     *
+     * serverService = {ServerService@3012}
+     *  jobName = "kuanghc1-job"
+     *  jobNodeStorage = {JobNodeStorage@3033}
+     *  serverNode = {ServerNode@3034}
+     *
+     *  instanceService = {InstanceService@3013}
+     *  jobNodeStorage = {JobNodeStorage@3035}
+     *  instanceNode = {InstanceNode@3036}
+     *  triggerNode = {TriggerNode@3037}
+     *  serverService = {ServerService@3038}
+     *
+     *  reconcileService = {ReconcileService@3014} "ReconcileService [NEW]"
+     *  lastReconcileTime = 1640152767612
+     *  configService = {ConfigurationService@3047}
+     *  shardingService = {ShardingService@3048}
+     *  jobNodePath = {JobNodePath@3049}
+     *  regCenter = {ZookeeperRegistryCenter@2936}
+     *  delegate = {AbstractScheduledService$ServiceDelegate@3050} "ReconcileService [NEW]"
+     *
+     *  listenerManager = {ListenerManager@3015}
+     *  jobNodeStorage = {JobNodeStorage@3024}
+     *  electionListenerManager = {ElectionListenerManager@3025}
+     *  shardingListenerManager = {ShardingListenerManager@3026}
+     *  failoverListenerManager = {FailoverListenerManager@3027}
+     *  monitorExecutionListenerManager = {MonitorExecutionListenerManager@3028}
+     *  shutdownListenerManager = {ShutdownListenerManager@3029}
+     *  triggerListenerManager = {TriggerListenerManager@3030}
+     *  rescheduleListenerManager = {RescheduleListenerManager@3031}
+     *  guaranteeListenerManager = {GuaranteeListenerManager@3032}
+     *  regCenterConnectionStateListener = {RegistryCenterConnectionStateListener@3033}
+     *
+     * @param regCenter
+     * @param jobName
+     * @param elasticJobListeners
+     */
     public SetUpFacade(final CoordinatorRegistryCenter regCenter, final String jobName, final Collection<ElasticJobListener> elasticJobListeners) {
         configService = new ConfigurationService(regCenter, jobName);
         leaderService = new LeaderService(regCenter, jobName);
@@ -57,6 +120,30 @@ public final class SetUpFacade {
     
     /**
      * Set up job configuration.
+     *
+     * this.jobConfiguration = {JobConfiguration@3354}
+     *  jobName = "kuanghc1-job"
+     *  cron = "0/5 * * * * ?"
+     *  timeZone = null
+     *  shardingTotalCount = 3
+     *  shardingItemParameters = "0=Beijing,1=Shanghai,2=Shenzhen"
+     *  jobParameter = ""
+     *  monitorExecution = true
+     *  failover = false
+     *  misfire = true
+     *  maxTimeDiffSeconds = -1
+     *  reconcileIntervalMinutes = 10
+     *  jobShardingStrategyType = null
+     *  jobExecutorServiceHandlerType = null
+     *  jobErrorHandlerType = null
+     *  jobListenerTypes = {ArrayList@3359}  size = 0
+     *  extraConfigurations = {LinkedList@3360}  size = 1
+     *  description = ""
+     *  props = {Properties@3362}  size = 0
+     *  disabled = false
+     *  overwrite = false
+     *  label = null
+     *  staticSharding = false
      *
      * @param jobClassName job class name
      * @param jobConfig job configuration to be updated

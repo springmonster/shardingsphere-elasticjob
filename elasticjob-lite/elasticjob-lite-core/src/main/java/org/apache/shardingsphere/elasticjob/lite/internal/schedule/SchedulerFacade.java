@@ -34,7 +34,32 @@ public final class SchedulerFacade {
     private final ShardingService shardingService;
     
     private final ExecutionService executionService;
-    
+
+    /**
+     * schedulerFacade = {SchedulerFacade@3372}
+     *  jobName = "kuanghc1-job"
+     *  leaderService = {LeaderService@3373}
+     *   jobName = "kuanghc1-job"
+     *   serverService = {ServerService@3376}
+     *   jobNodeStorage = {JobNodeStorage@3377}
+     *  shardingService = {ShardingService@3374}
+     *   jobName = "kuanghc1-job"
+     *   jobNodeStorage = {JobNodeStorage@3378}
+     *   leaderService = {LeaderService@3379}
+     *   configService = {ConfigurationService@3380}
+     *   instanceService = {InstanceService@3381}
+     *   instanceNode = {InstanceNode@3382}
+     *   serverService = {ServerService@3383}
+     *   executionService = {ExecutionService@3384}
+     *   jobNodePath = {JobNodePath@3385}
+     *  executionService = {ExecutionService@3375}
+     *   jobName = "kuanghc1-job"
+     *   jobNodeStorage = {JobNodeStorage@3386}
+     *   configService = {ConfigurationService@3387}
+     *
+     * @param regCenter
+     * @param jobName
+     */
     public SchedulerFacade(final CoordinatorRegistryCenter regCenter, final String jobName) {
         this.jobName = jobName;
         leaderService = new LeaderService(regCenter, jobName);
