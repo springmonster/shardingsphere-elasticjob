@@ -172,6 +172,7 @@ public final class JobScheduler {
      * @return
      */
     private JobScheduleController createJobScheduleController() {
+        // kuanghc1：这里的 createScheduler() 启动了quartz的任务
         JobScheduleController result = new JobScheduleController(createScheduler(), createJobDetail(), this.getJobConfiguration().getJobName());
         JobRegistry.getInstance().registerJob(this.getJobConfiguration().getJobName(), result);
         registerStartUpInfo();
@@ -208,9 +209,13 @@ public final class JobScheduler {
      * @return
      * @see SimpleThreadPool#initialize()
      * @see SimpleThreadPool 277行
-     * @see StdSchedulerFactory 1333行，QuartzScheduler的初始化
-     * 然后初始化QuartzSchedulerThread
-     * 398行，执行JobRunShell，if (qsRsrcs.getThreadPool().runInThread(shell) == false) {
+     * @see StdSchedulerFactory
+     * 1333行，QuartzScheduler 的初始化
+     * QuartzScheduler 的215行初始化 QuartzSchedulerThread ，217行启动 QuartzSchedulerThread
+     * 然后初始化 QuartzSchedulerThread
+     * QuartzSchedulerThread 的398行，执行 JobRunShell，if (qsRsrcs.getThreadPool().runInThread(shell) == false) {
+     * 在 SimpleThreadPool 中，427行左右，JobRunShell
+     * JobRunShell 的 202行，到LiteJob，
      * 然后调用，ElasticJobExecutor，JobItemExecutor，SimpleJobExecutor，然后就调用到了JavaSimpleJob
      */
     private Scheduler createScheduler() {
