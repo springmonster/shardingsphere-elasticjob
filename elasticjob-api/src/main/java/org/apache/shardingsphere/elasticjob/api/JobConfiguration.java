@@ -53,8 +53,14 @@ public final class JobConfiguration {
 
     private final boolean monitorExecution;
 
+    /**
+     * 是否开启作业执行失效转移。开启表示如果作业在一次作业执行中途宕机，允许将该次未完成的作业在另一作业节点上补偿执行
+     */
     private final boolean failover;
 
+    /**
+     * 是否开启错过作业重新执行
+     */
     private final boolean misfire;
 
     private final int maxTimeDiffSeconds;

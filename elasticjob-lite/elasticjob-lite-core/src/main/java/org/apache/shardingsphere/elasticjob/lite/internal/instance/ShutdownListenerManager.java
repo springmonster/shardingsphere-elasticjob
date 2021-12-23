@@ -17,6 +17,7 @@
 
 package org.apache.shardingsphere.elasticjob.lite.internal.instance;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.elasticjob.lite.internal.listener.AbstractJobListener;
 import org.apache.shardingsphere.elasticjob.lite.internal.listener.AbstractListenerManager;
 import org.apache.shardingsphere.elasticjob.lite.internal.schedule.JobRegistry;
@@ -26,6 +27,7 @@ import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
 /**
  * Job instance shutdown listener manager.
  */
+@Slf4j
 public final class ShutdownListenerManager extends AbstractListenerManager {
     
     private final String jobName;
@@ -53,6 +55,7 @@ public final class ShutdownListenerManager extends AbstractListenerManager {
         
         @Override
         protected void dataChanged(final String path, final Type eventType, final String data) {
+            log.info("khc InstanceShutdownStatusJobListener dataChanged path: {} , eventType: {} , data: {}", path, eventType, data);
             if (!JobRegistry.getInstance().isShutdown(jobName) && !JobRegistry.getInstance().getJobScheduleController(jobName).isPaused()
                     && isRemoveInstance(path, eventType) && !isReconnectedRegistryCenter()) {
                 schedulerFacade.shutdownInstance();

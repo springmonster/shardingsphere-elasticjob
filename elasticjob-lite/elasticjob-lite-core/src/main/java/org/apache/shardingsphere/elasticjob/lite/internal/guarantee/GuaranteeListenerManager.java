@@ -17,6 +17,7 @@
 
 package org.apache.shardingsphere.elasticjob.lite.internal.guarantee;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.elasticjob.infra.listener.ElasticJobListener;
 import org.apache.shardingsphere.elasticjob.lite.api.listener.AbstractDistributeOnceElasticJobListener;
 import org.apache.shardingsphere.elasticjob.lite.internal.listener.AbstractJobListener;
@@ -28,6 +29,7 @@ import java.util.Collection;
 /**
  * Guarantee listener manager.
  */
+@Slf4j
 public final class GuaranteeListenerManager extends AbstractListenerManager {
     
     private final GuaranteeNode guaranteeNode;
@@ -50,6 +52,8 @@ public final class GuaranteeListenerManager extends AbstractListenerManager {
         
         @Override
         protected void dataChanged(final String path, final Type eventType, final String data) {
+            log.info("khc StartedNodeRemovedJobListener dataChanged path: {} , eventType: {} , data: {}", path, eventType, data);
+
             if (Type.NODE_DELETED == eventType && guaranteeNode.isStartedRootNode(path)) {
                 for (ElasticJobListener each : elasticJobListeners) {
                     if (each instanceof AbstractDistributeOnceElasticJobListener) {
@@ -64,6 +68,8 @@ public final class GuaranteeListenerManager extends AbstractListenerManager {
         
         @Override
         protected void dataChanged(final String path, final Type eventType, final String data) {
+            log.info("khc CompletedNodeRemovedJobListener dataChanged path: {} , eventType: {} , data: {}", path, eventType, data);
+
             if (Type.NODE_DELETED == eventType && guaranteeNode.isCompletedRootNode(path)) {
                 for (ElasticJobListener each : elasticJobListeners) {
                     if (each instanceof AbstractDistributeOnceElasticJobListener) {

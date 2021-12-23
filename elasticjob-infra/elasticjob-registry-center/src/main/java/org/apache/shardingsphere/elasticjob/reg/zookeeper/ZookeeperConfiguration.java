@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,11 +27,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
+/**
+ * 这里如果有标记为final，则证明必须构造函数初始化
+ */
 public final class ZookeeperConfiguration {
-    
+
     /**
      * Server list of ZooKeeper.
-     * 
+     *
      * <p>
      * Include IP addresses and ports,
      * Multiple IP address split by comma.
@@ -39,37 +42,37 @@ public final class ZookeeperConfiguration {
      * </p>
      */
     private final String serverLists;
-    
+
     /**
      * Namespace.
      */
     private final String namespace;
-    
+
     /**
-     * Base sleep time milliseconds. 
+     * Base sleep time milliseconds.
      */
     private int baseSleepTimeMilliseconds = 1000;
-    
+
     /**
      * Max sleep time milliseconds.
      */
     private int maxSleepTimeMilliseconds = 3000;
-    
+
     /**
      * Max retry times.
      */
     private int maxRetries = 3;
-    
+
     /**
      * Session timeout milliseconds.
      */
     private int sessionTimeoutMilliseconds;
-    
+
     /**
      * Connection timeout milliseconds.
      */
     private int connectionTimeoutMilliseconds;
-    
+
     /**
      * Zookeeper digest.
      */

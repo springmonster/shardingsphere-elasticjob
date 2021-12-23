@@ -17,6 +17,7 @@
 
 package org.apache.shardingsphere.elasticjob.lite.internal.election;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.elasticjob.infra.handler.sharding.JobInstance;
 import org.apache.shardingsphere.elasticjob.lite.internal.listener.AbstractJobListener;
 import org.apache.shardingsphere.elasticjob.lite.internal.listener.AbstractListenerManager;
@@ -31,6 +32,7 @@ import java.util.Objects;
 /**
  * Election listener manager.
  */
+@Slf4j
 public final class ElectionListenerManager extends AbstractListenerManager {
     
     private final String jobName;
@@ -62,6 +64,8 @@ public final class ElectionListenerManager extends AbstractListenerManager {
         
         @Override
         protected void dataChanged(final String path, final Type eventType, final String data) {
+            log.info("khc LeaderElectionJobListener dataChanged path: {} , eventType: {} , data: {}", path, eventType, data);
+
             if (!JobRegistry.getInstance().isShutdown(jobName) && (isActiveElection(path, data) || isPassiveElection(path, eventType))) {
                 leaderService.electLeader();
             }
@@ -89,6 +93,8 @@ public final class ElectionListenerManager extends AbstractListenerManager {
         
         @Override
         protected void dataChanged(final String path, final Type eventType, final String data) {
+            log.info("khc LeaderAbdicationJobListener dataChanged path: {} , eventType: {} , data: {}", path, eventType, data);
+
             if (leaderService.isLeader() && isLocalServerDisabled(path, data)) {
                 leaderService.removeLeader();
             }

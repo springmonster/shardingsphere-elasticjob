@@ -148,6 +148,7 @@ public final class ConfigurationService {
 
     /**
      * kuanghc1:检查作业服务器和注册中心之间可容忍的最大时间不同秒数。
+     *
      * Check max time different seconds tolerable between job server and registry center.
      *
      * @throws JobExecutionEnvironmentException throe JobExecutionEnvironmentException if exceed max time different seconds

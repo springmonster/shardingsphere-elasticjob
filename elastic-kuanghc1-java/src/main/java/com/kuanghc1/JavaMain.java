@@ -134,9 +134,10 @@ public final class JavaMain {
     private static void setUpSimpleJob(final CoordinatorRegistryCenter regCenter, final TracingConfiguration<DataSource> tracingConfig) {
         // kuanghc1:这里如果shardingItemParameters和shardingTotalCount的数目不相等会怎么样
         JobConfiguration jobConfiguration = JobConfiguration
-                .newBuilder("kuanghc1-job", 3)
+                .newBuilder("kuanghc1-job-1222", 1)
                 .cron("0/5 * * * * ?")
-                .shardingItemParameters("0=Beijing,1=Shanghai,2=Shenzhen")
+//                .shardingItemParameters("0=Beijing,1=Shanghai,2=Shenzhen")
+                .shardingItemParameters("0=Beijing")
                 .addExtraConfigurations(tracingConfig)
                 .build();
 

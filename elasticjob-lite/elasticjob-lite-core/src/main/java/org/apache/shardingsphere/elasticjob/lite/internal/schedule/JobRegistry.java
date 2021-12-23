@@ -68,6 +68,7 @@ public final class JobRegistry {
      */
     public void registerRegistryCenter(final String jobName, final CoordinatorRegistryCenter regCenter) {
         regCenterMap.put(jobName, regCenter);
+        // kuanghc1:！！！这里是关键，注册进zk，然后从 AbstractJobListener 就能收到监听事件
         regCenter.addCacheData("/" + jobName);
     }
 

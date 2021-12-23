@@ -17,6 +17,7 @@
 
 package org.apache.shardingsphere.elasticjob.lite.internal.trigger;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.elasticjob.lite.internal.listener.AbstractJobListener;
 import org.apache.shardingsphere.elasticjob.lite.internal.listener.AbstractListenerManager;
 import org.apache.shardingsphere.elasticjob.lite.internal.schedule.JobRegistry;
@@ -25,6 +26,7 @@ import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
 /**
  * Job trigger listener manager.
  */
+@Slf4j
 public final class TriggerListenerManager extends AbstractListenerManager {
     
     private final String jobName;
@@ -49,6 +51,7 @@ public final class TriggerListenerManager extends AbstractListenerManager {
         
         @Override
         protected void dataChanged(final String path, final Type eventType, final String data) {
+            log.info("khc JobTriggerStatusJobListener dataChanged path: {} , eventType: {} , data: {}", path, eventType, data);
             if (!triggerNode.isLocalTriggerPath(path) || Type.NODE_CREATED != eventType) {
                 return;
             }

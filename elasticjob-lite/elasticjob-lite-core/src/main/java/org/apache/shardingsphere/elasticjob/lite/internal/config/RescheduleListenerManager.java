@@ -17,6 +17,7 @@
 
 package org.apache.shardingsphere.elasticjob.lite.internal.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shardingsphere.elasticjob.api.JobConfiguration;
 import org.apache.shardingsphere.elasticjob.infra.yaml.YamlEngine;
@@ -29,6 +30,7 @@ import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
 /**
  * Reschedule listener manager.
  */
+@Slf4j
 public final class RescheduleListenerManager extends AbstractListenerManager {
     
     private final ConfigurationNode configNode;
@@ -50,6 +52,8 @@ public final class RescheduleListenerManager extends AbstractListenerManager {
         
         @Override
         protected void dataChanged(final String path, final Type eventType, final String data) {
+            log.info("khc CronSettingAndJobEventChangedJobListener dataChanged path: {} , eventType: {} , data: {}", path, eventType, data);
+
             if (configNode.isConfigPath(path) && Type.NODE_CHANGED == eventType && !JobRegistry.getInstance().isShutdown(jobName)) {
                 JobConfiguration jobConfiguration = YamlEngine.unmarshal(data, JobConfigurationPOJO.class).toJobConfiguration();
                 if (StringUtils.isEmpty(jobConfiguration.getCron())) {

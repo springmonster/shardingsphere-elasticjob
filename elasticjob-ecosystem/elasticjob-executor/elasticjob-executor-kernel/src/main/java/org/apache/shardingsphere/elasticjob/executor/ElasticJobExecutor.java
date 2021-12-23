@@ -72,7 +72,7 @@ public final class ElasticJobExecutor {
     }
 
     /**
-     * kuanghc1:这里需要重点关注
+     * kuanghc1:!!!这里需要重点关注
      * <p>
      * Execute job.
      */
@@ -83,6 +83,8 @@ public final class ElasticJobExecutor {
         executorContext.reloadIfNecessary(jobConfig);
         JobErrorHandler jobErrorHandler = executorContext.get(JobErrorHandler.class);
         try {
+            // 检查本机与服务器的时间差
+            // Elastic-Job-Lite 作业触发是依赖本机时间，相同集群使用注册中心时间为基准，校验本机与注册中心的时间误差是否在允许范围内
             jobFacade.checkJobExecutionEnvironment();
         } catch (final JobExecutionEnvironmentException cause) {
             jobErrorHandler.handleException(jobConfig.getJobName(), cause);

@@ -17,6 +17,7 @@
 
 package org.apache.shardingsphere.elasticjob.lite.internal.listener;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.state.ConnectionState;
 import org.apache.curator.framework.state.ConnectionStateListener;
@@ -28,21 +29,24 @@ import org.apache.shardingsphere.elasticjob.lite.internal.sharding.ExecutionServ
 import org.apache.shardingsphere.elasticjob.lite.internal.sharding.ShardingService;
 import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
 
+import java.util.Collection;
+
 /**
  * Registry center connection state listener.
  */
+@Slf4j
 public final class RegistryCenterConnectionStateListener implements ConnectionStateListener {
-    
+
     private final String jobName;
-    
+
     private final ServerService serverService;
-    
+
     private final InstanceService instanceService;
-    
+
     private final ShardingService shardingService;
-    
+
     private final ExecutionService executionService;
-    
+
     public RegistryCenterConnectionStateListener(final CoordinatorRegistryCenter regCenter, final String jobName) {
         this.jobName = jobName;
         serverService = new ServerService(regCenter, jobName);
@@ -50,9 +54,11 @@ public final class RegistryCenterConnectionStateListener implements ConnectionSt
         shardingService = new ShardingService(regCenter, jobName);
         executionService = new ExecutionService(regCenter, jobName);
     }
-    
+
     @Override
     public void stateChanged(final CuratorFramework client, final ConnectionState newState) {
+        log.info("khc RegistryCenterConnectionStateListener stateChanged");
+
         if (JobRegistry.getInstance().isShutdown(jobName)) {
             return;
         }
@@ -63,6 +69,10 @@ public final class RegistryCenterConnectionStateListener implements ConnectionSt
             serverService.persistOnline(serverService.isEnableServer(JobRegistry.getInstance().getJobInstance(jobName).getServerIp()));
             instanceService.persistOnline();
             executionService.clearRunningInfo(shardingService.getLocalShardingItems());
+            /**
+             * 当这里调用时，会调用到
+             * @see ExecutionService#setMisfire(Collection)
+             */
             jobScheduleController.resumeJob();
         }
     }

@@ -17,6 +17,7 @@
 
 package org.apache.shardingsphere.elasticjob.lite.internal.sharding;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.elasticjob.infra.yaml.YamlEngine;
 import org.apache.shardingsphere.elasticjob.lite.internal.config.ConfigurationNode;
 import org.apache.shardingsphere.elasticjob.infra.pojo.JobConfigurationPOJO;
@@ -27,6 +28,7 @@ import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
 /**
  * Monitor execution listener manager.
  */
+@Slf4j
 public final class MonitorExecutionListenerManager extends AbstractListenerManager {
     
     private final ExecutionService executionService;
@@ -48,6 +50,8 @@ public final class MonitorExecutionListenerManager extends AbstractListenerManag
         
         @Override
         protected void dataChanged(final String path, final Type eventType, final String data) {
+            log.info("khc MonitorExecutionSettingsChangedJobListener dataChanged path: {} , eventType: {} , data: {}", path, eventType, data);
+
             if (configNode.isConfigPath(path) && Type.NODE_CHANGED == eventType && !YamlEngine.unmarshal(data, JobConfigurationPOJO.class).toJobConfiguration().isMonitorExecution()) {
                 executionService.clearAllRunningInfo();
             }

@@ -35,27 +35,27 @@ import java.util.Collection;
  * Listener manager facade.
  */
 public final class ListenerManager {
-    
+
     private final JobNodeStorage jobNodeStorage;
-    
+
     private final ElectionListenerManager electionListenerManager;
-    
+
     private final ShardingListenerManager shardingListenerManager;
-    
+
     private final FailoverListenerManager failoverListenerManager;
-    
+
     private final MonitorExecutionListenerManager monitorExecutionListenerManager;
-    
+
     private final ShutdownListenerManager shutdownListenerManager;
-    
+
     private final TriggerListenerManager triggerListenerManager;
-    
+
     private final RescheduleListenerManager rescheduleListenerManager;
 
     private final GuaranteeListenerManager guaranteeListenerManager;
-    
+
     private final RegistryCenterConnectionStateListener regCenterConnectionStateListener;
-    
+
     public ListenerManager(final CoordinatorRegistryCenter regCenter, final String jobName, final Collection<ElasticJobListener> elasticJobListeners) {
         jobNodeStorage = new JobNodeStorage(regCenter, jobName);
         electionListenerManager = new ElectionListenerManager(regCenter, jobName);
@@ -68,8 +68,10 @@ public final class ListenerManager {
         guaranteeListenerManager = new GuaranteeListenerManager(regCenter, jobName, elasticJobListeners);
         regCenterConnectionStateListener = new RegistryCenterConnectionStateListener(regCenter, jobName);
     }
-    
+
     /**
+     * kuanghc1:这对Listener是干什么的？？？
+     * <p>
      * Start all listeners.
      */
     public void startAllListeners() {
