@@ -23,6 +23,8 @@ import org.apache.shardingsphere.elasticjob.lite.internal.sharding.ShardingServi
 import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
 
 /**
+ * khc:------> SchedulerFacade 和 LiteJobFacade，看起来很相近，实际差别很大。它们分别为调度器、作业提供需要的方法。下文也会体现这一特点。
+ *
  * Scheduler facade.
  */
 public final class SchedulerFacade {
@@ -46,11 +48,11 @@ public final class SchedulerFacade {
      *   jobName = "kuanghc1-job"
      *   jobNodeStorage = {JobNodeStorage@3378}
      *   leaderService = {LeaderService@3379}
-     *   configService = {ConfigurationService@3380}
-     *   instanceService = {InstanceService@3381}
+     *   configService = {ConfigurationService@3380}  作业配置服务
+     *   instanceService = {InstanceService@3381} 作业运行实例服务
      *   instanceNode = {InstanceNode@3382}
      *   serverService = {ServerService@3383}
-     *   executionService = {ExecutionService@3384}
+     *   executionService = {ExecutionService@3384}  执行作业服务
      *   jobNodePath = {JobNodePath@3385}
      *  executionService = {ExecutionService@3375}
      *   jobName = "kuanghc1-job"

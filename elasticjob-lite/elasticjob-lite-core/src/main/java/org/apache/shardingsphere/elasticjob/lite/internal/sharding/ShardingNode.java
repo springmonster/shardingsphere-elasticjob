@@ -40,9 +40,11 @@ public final class ShardingNode {
     private static final String DISABLED = ROOT + "/%s/disabled";
     
     private static final String LEADER_ROOT = LeaderNode.ROOT + "/" + ROOT;
-    
+
+    // leader/sharding/necessary
     static final String NECESSARY = LEADER_ROOT + "/necessary";
-    
+
+    // leader/sharding/processing
     static final String PROCESSING = LEADER_ROOT + "/processing";
     
     private final JobNodePath jobNodePath;

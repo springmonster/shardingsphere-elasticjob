@@ -175,6 +175,7 @@ public final class ConfigurationService {
         if (0 > maxTimeDiffSeconds) {
             return;
         }
+        // 获取服务器时间和本机时间的时间差，如果时间差大于预设的值，则抛出异常
         long timeDiff = Math.abs(timeService.getCurrentMillis() - jobNodeStorage.getRegistryCenterTime());
         if (timeDiff > maxTimeDiffSeconds * 1000L) {
             throw new JobExecutionEnvironmentException(

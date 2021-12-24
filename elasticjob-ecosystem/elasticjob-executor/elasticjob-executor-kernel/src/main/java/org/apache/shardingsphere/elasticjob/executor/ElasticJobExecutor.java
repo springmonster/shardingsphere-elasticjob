@@ -73,33 +73,46 @@ public final class ElasticJobExecutor {
 
     /**
      * kuanghc1:!!!这里需要重点关注
+     * khc:------>JobRunShell，LiteJob，ElasticJobExecutor
      * <p>
      * Execute job.
      */
     public void execute() {
         // 这里是获取元信息，可以决定是否从缓存
-        JobConfiguration jobConfig = jobFacade.loadJobConfiguration(true);
+        JobConfiguration jobConfiguration = jobFacade.loadJobConfiguration(true);
+
         // 是否重载，分为CPU和LOG
-        executorContext.reloadIfNecessary(jobConfig);
+        executorContext.reloadIfNecessary(jobConfiguration);
         JobErrorHandler jobErrorHandler = executorContext.get(JobErrorHandler.class);
         try {
             // 检查本机与服务器的时间差
             // Elastic-Job-Lite 作业触发是依赖本机时间，相同集群使用注册中心时间为基准，校验本机与注册中心的时间误差是否在允许范围内
+            // 可能会抛出异常
             jobFacade.checkJobExecutionEnvironment();
         } catch (final JobExecutionEnvironmentException cause) {
-            jobErrorHandler.handleException(jobConfig.getJobName(), cause);
+            jobErrorHandler.handleException(jobConfiguration.getJobName(), cause);
         }
         /**
-         * ShardingContexts(taskId=kuanghc1-job@-@@-@READY@-@10.109.71.139@-@38896, jobName=kuanghc1-job, shardingTotalCount=3, jobParameter=, shardingItemParameters={}, jobEventSamplingCount=0, currentJobEventSamplingCount=0, allowSendJobEvent=true)
+         * result = {ShardingContexts@5199} "ShardingContexts(taskId=kuanghc1-1224-3@-@0,1,2@-@READY@-@10.109.71.139@-@54196, jobName=kuanghc1-1224-3, shardingTotalCount=3, jobParameter=, shardingItemParameters={0=Beijing, 1=Shanghai, 2=Shenzhen}, jobEventSamplingCount=0, currentJobEventSamplingCount=0, allowSendJobEvent=true)"
+         *  taskId = "kuanghc1-1224-3@-@0,1,2@-@READY@-@10.109.71.139@-@54196"
+         *  jobName = "kuanghc1-1224-3"
+         *  shardingTotalCount = 3
+         *  jobParameter = ""
+         *  shardingItemParameters = {HashMap@5209}  size = 3
+         *  jobEventSamplingCount = 0
+         *  currentJobEventSamplingCount = 0
+         *  allowSendJobEvent = true
          */
         ShardingContexts shardingContexts = jobFacade.getShardingContexts();
+
         // 发送job的状态，这里会保存到数据库
-        jobFacade.postJobStatusTraceEvent(shardingContexts.getTaskId(), State.TASK_STAGING, String.format("Job '%s' execute begin.", jobConfig.getJobName()));
+        jobFacade.postJobStatusTraceEvent(shardingContexts.getTaskId(), State.TASK_STAGING, String.format("Job '%s' execute begin.", jobConfiguration.getJobName()));
 
         // 这里没看懂
+        // TODO: 2021/12/24
         if (jobFacade.misfireIfRunning(shardingContexts.getShardingItemParameters().keySet())) {
             jobFacade.postJobStatusTraceEvent(shardingContexts.getTaskId(), State.TASK_FINISHED, String.format(
-                    "Previous job '%s' - shardingItems '%s' is still running, misfired job will start after previous job completed.", jobConfig.getJobName(),
+                    "Previous job '%s' - shardingItems '%s' is still running, misfired job will start after previous job completed.", jobConfiguration.getJobName(),
                     shardingContexts.getShardingItemParameters().keySet()));
             return;
         }
@@ -109,20 +122,25 @@ public final class ElasticJobExecutor {
             //CHECKSTYLE:OFF
         } catch (final Throwable cause) {
             //CHECKSTYLE:OFF
-            jobErrorHandler.handleException(jobConfig.getJobName(), cause);
+            jobErrorHandler.handleException(jobConfiguration.getJobName(), cause);
         }
-        execute(jobConfig, shardingContexts, ExecutionSource.NORMAL_TRIGGER);
+
+        // 正常执行
+        execute(jobConfiguration, shardingContexts, ExecutionSource.NORMAL_TRIGGER);
+
         while (jobFacade.isExecuteMisfired(shardingContexts.getShardingItemParameters().keySet())) {
             jobFacade.clearMisfire(shardingContexts.getShardingItemParameters().keySet());
-            execute(jobConfig, shardingContexts, ExecutionSource.MISFIRE);
+            execute(jobConfiguration, shardingContexts, ExecutionSource.MISFIRE);
         }
+
         jobFacade.failoverIfNecessary();
+
         try {
             jobFacade.afterJobExecuted(shardingContexts);
             //CHECKSTYLE:OFF
         } catch (final Throwable cause) {
             //CHECKSTYLE:OFF
-            jobErrorHandler.handleException(jobConfig.getJobName(), cause);
+            jobErrorHandler.handleException(jobConfiguration.getJobName(), cause);
         }
     }
 
@@ -133,9 +151,12 @@ public final class ElasticJobExecutor {
         }
         // 这里是去sharding下面写入有几个分区，例如[0，1，2]
         jobFacade.registerJobBegin(shardingContexts);
+
         String taskId = shardingContexts.getTaskId();
+
         // 又发送，可能又写数据库，需要验证！！！
         jobFacade.postJobStatusTraceEvent(taskId, State.TASK_RUNNING, "");
+
         try {
             process(jobConfig, shardingContexts, executionSource);
         } finally {
@@ -152,13 +173,17 @@ public final class ElasticJobExecutor {
 
     private void process(final JobConfiguration jobConfig, final ShardingContexts shardingContexts, final ExecutionSource executionSource) {
         Collection<Integer> items = shardingContexts.getShardingItemParameters().keySet();
+
         log.info("分片的大小是 {} ", items.size());
+
+        // 如果分片大小是1，直接执行
         if (1 == items.size()) {
             int item = shardingContexts.getShardingItemParameters().keySet().iterator().next();
             JobExecutionEvent jobExecutionEvent = new JobExecutionEvent(IpUtils.getHostName(), IpUtils.getIp(), shardingContexts.getTaskId(), jobConfig.getJobName(), executionSource, item);
             process(jobConfig, shardingContexts, item, jobExecutionEvent);
             return;
         }
+        // 否则启动CountDownLatch
         CountDownLatch latch = new CountDownLatch(items.size());
         for (int each : items) {
             /**
@@ -189,6 +214,7 @@ public final class ElasticJobExecutor {
             });
         }
         try {
+            // 都执行完才算结束！
             latch.await();
         } catch (final InterruptedException ex) {
             Thread.currentThread().interrupt();
@@ -199,6 +225,7 @@ public final class ElasticJobExecutor {
     private void process(final JobConfiguration jobConfig, final ShardingContexts shardingContexts, final int item, final JobExecutionEvent startEvent) {
         // 又是发消息
         jobFacade.postJobExecutionEvent(startEvent);
+
         log.info("Job '{}' executing, item is: '{}'.", jobConfig.getJobName(), item);
 
         JobExecutionEvent completeEvent;
@@ -212,9 +239,9 @@ public final class ElasticJobExecutor {
             log.info("Job '{}' executed, item is: '{}'.", jobConfig.getJobName(), item);
 
             jobFacade.postJobExecutionEvent(completeEvent);
-            
+
         } catch (final Throwable cause) {
-            
+
             // 这里如果失败了，那么就产生一个失败的消息
             completeEvent = startEvent.executionFailure(ExceptionUtils.transform(cause));
             jobFacade.postJobExecutionEvent(completeEvent);

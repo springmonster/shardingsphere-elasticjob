@@ -148,6 +148,7 @@ public final class JobNodeStorage {
      */
     // jobNodePath.getFullPath(node) 是 kuanghc1-1224-2/leader/election/instance
     // value 是 10.109.71.139@-@64236
+    // leader/sharding/processing
     public void fillEphemeralJobNode(final String node, final Object value) {
         regCenter.persistEphemeral(jobNodePath.getFullPath(node), value.toString());
     }
@@ -193,6 +194,7 @@ public final class JobNodeStorage {
             TransactionOp transactionOp = client.transactionOp();
             operations.add(transactionOp.check().forPath("/"));
             operations.addAll(callback.createCuratorOperators(transactionOp));
+            // 这里应该是给zk发送网络请求了
             client.transaction().forOperations(operations);
             //CHECKSTYLE:OFF
         } catch (final Exception ex) {

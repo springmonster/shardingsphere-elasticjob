@@ -35,10 +35,10 @@
             <version>${project.parent.version}</version>
         </dependency>
         
-        <dependency>
-            <groupId>org.apache.shardingsphere.elasticjob</groupId>
-            <artifactId>elasticjob-cloud-executor</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.shardingsphere.elasticjob</groupId>-->
+<!--            <artifactId>elasticjob-cloud-executor</artifactId>-->
+<!--        </dependency>-->
         
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -57,7 +57,7 @@
             <artifactId>logback-classic</artifactId>
         </dependency>
     </dependencies>
-    
+
     <build>
         <plugins>
             <plugin>

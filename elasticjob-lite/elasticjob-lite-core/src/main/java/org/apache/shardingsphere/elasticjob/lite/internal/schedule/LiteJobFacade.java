@@ -45,6 +45,12 @@ import java.util.stream.Collectors;
 
 /**
  * kuanghc1:这个很重要！！！
+ * <p>
+ * khc:------> SchedulerFacade 和 LiteJobFacade，看起来很相近，实际差别很大。它们分别为调度器、作业提供需要的方法。下文也会体现这一特点。
+ *
+ * <p>
+ * 为作业提供内部服务的门面类
+ * <p>
  * Lite job facade.
  */
 @Slf4j
@@ -65,22 +71,21 @@ public final class LiteJobFacade implements JobFacade {
     private final JobTracingEventBus jobTracingEventBus;
 
     /**
-     *
      * liteJobFacade = {LiteJobFacade@3602}
-     *  configService = {ConfigurationService@3603}
-     *  shardingService = {ShardingService@3604}
-     *  executionContextService = {ExecutionContextService@3605}
-     *  executionService = {ExecutionService@3606}
-     *  failoverService = {FailoverService@3607}
-     *  elasticJobListeners = {ArrayList@3608}  size = 0
-     *  jobTracingEventBus = {JobTracingEventBus@3609}
-     *   eventBus = {AsyncEventBus@3614} "AsyncEventBus{default}"
-     *    identifier = "default"
-     *    executor = {MoreExecutors$ListeningDecorator@3619}
-     *    exceptionHandler = {EventBus$LoggingHandler@3620}
-     *    subscribers = {SubscriberRegistry@3621}
-     *    dispatcher = {Dispatcher$LegacyAsyncDispatcher@3622}
-     *   isRegistered = true
+     * configService = {ConfigurationService@3603}
+     * shardingService = {ShardingService@3604}
+     * executionContextService = {ExecutionContextService@3605}
+     * executionService = {ExecutionService@3606}
+     * failoverService = {FailoverService@3607}
+     * elasticJobListeners = {ArrayList@3608}  size = 0
+     * jobTracingEventBus = {JobTracingEventBus@3609}
+     * eventBus = {AsyncEventBus@3614} "AsyncEventBus{default}"
+     * identifier = "default"
+     * executor = {MoreExecutors$ListeningDecorator@3619}
+     * exceptionHandler = {EventBus$LoggingHandler@3620}
+     * subscribers = {SubscriberRegistry@3621}
+     * dispatcher = {Dispatcher$LegacyAsyncDispatcher@3622}
+     * isRegistered = true
      *
      * @param regCenter
      * @param jobName
@@ -129,19 +134,28 @@ public final class LiteJobFacade implements JobFacade {
 
     @Override
     public ShardingContexts getShardingContexts() {
+        // 是否失效转移
         boolean isFailover = configService.load(true).isFailover();
+
+        // 如果失效转移，去sharding/xxx/failover下面去查找
         if (isFailover) {
             List<Integer> failoverShardingItems = failoverService.getLocalFailoverItems();
+
             if (!failoverShardingItems.isEmpty()) {
                 return executionContextService.getJobShardingContext(failoverShardingItems);
             }
         }
+
         shardingService.shardingIfNecessary();
+
         List<Integer> shardingItems = shardingService.getLocalShardingItems();
+
         if (isFailover) {
             shardingItems.removeAll(failoverService.getLocalTakeOffItems());
         }
+
         shardingItems.removeAll(executionService.getDisabledItems(shardingItems));
+
         return executionContextService.getJobShardingContext(shardingItems);
     }
 

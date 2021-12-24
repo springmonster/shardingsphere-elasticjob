@@ -34,17 +34,39 @@ public final class JobRegistry {
 
     private static volatile JobRegistry instance;
 
+    /**
+     * 作业调度控制器集合
+     * key：作业名称
+     */
     private final Map<String, JobScheduleController> schedulerMap = new ConcurrentHashMap<>();
 
+    /**
+     * 注册中心集合
+     * key：作业名称
+     */
     private final Map<String, CoordinatorRegistryCenter> regCenterMap = new ConcurrentHashMap<>();
 
+    /**
+     * 作业运行实例集合
+     * key：作业名称
+     */
     private final Map<String, JobInstance> jobInstanceMap = new ConcurrentHashMap<>();
 
+    /**
+     * 运行中作业集合
+     * key：作业名字
+     */
     private final Map<String, Boolean> jobRunningMap = new ConcurrentHashMap<>();
 
+    /**
+     * 作业总分片数量集合
+     * key：作业名字
+     */
     private final Map<String, Integer> currentShardingTotalCountMap = new ConcurrentHashMap<>();
 
     /**
+     * 单例模式
+     * <p>
      * Get instance of job registry.
      *
      * @return instance of job registry
@@ -63,7 +85,7 @@ public final class JobRegistry {
     /**
      * Register registry center.
      *
-     * @param jobName job name
+     * @param jobName   job name
      * @param regCenter registry center
      */
     public void registerRegistryCenter(final String jobName, final CoordinatorRegistryCenter regCenter) {
@@ -74,16 +96,16 @@ public final class JobRegistry {
 
     /**
      * Register job.
-     *
+     * <p>
      * schedulerMap = {ConcurrentHashMap@4891}  size = 1
-     *  "kuanghc1-job" -> {JobScheduleController@4868}
-     *   key = "kuanghc1-job"
-     *   value = {JobScheduleController@4868}
-     *    scheduler = {StdScheduler@4064}
-     *    jobDetail = {JobDetailImpl@4869} "JobDetail 'DEFAULT.kuanghc1-job':  jobClass: 'org.apache.shardingsphere.elasticjob.lite.internal.schedule.LiteJob concurrentExectionDisallowed: false persistJobDataAfterExecution: false isDurable: false requestsRecovers: false"
-     *    triggerIdentity = "kuanghc1-job"
+     * "kuanghc1-job" -> {JobScheduleController@4868}
+     * key = "kuanghc1-job"
+     * value = {JobScheduleController@4868}
+     * scheduler = {StdScheduler@4064}
+     * jobDetail = {JobDetailImpl@4869} "JobDetail 'DEFAULT.kuanghc1-job':  jobClass: 'org.apache.shardingsphere.elasticjob.lite.internal.schedule.LiteJob concurrentExectionDisallowed: false persistJobDataAfterExecution: false isDurable: false requestsRecovers: false"
+     * triggerIdentity = "kuanghc1-job"
      *
-     * @param jobName job name
+     * @param jobName               job name
      * @param jobScheduleController job schedule controller
      */
     public void registerJob(final String jobName, final JobScheduleController jobScheduleController) {
@@ -113,7 +135,7 @@ public final class JobRegistry {
     /**
      * Add job instance.
      *
-     * @param jobName job name
+     * @param jobName     job name
      * @param jobInstance job instance
      */
     public void addJobInstance(final String jobName, final JobInstance jobInstance) {
@@ -143,7 +165,7 @@ public final class JobRegistry {
     /**
      * Set job running status.
      *
-     * @param jobName job name
+     * @param jobName   job name
      * @param isRunning job running status
      */
     public void setJobRunning(final String jobName, final boolean isRunning) {
@@ -163,7 +185,7 @@ public final class JobRegistry {
     /**
      * Set sharding total count which running on current job server.
      *
-     * @param jobName job name
+     * @param jobName                   job name
      * @param currentShardingTotalCount sharding total count which running on current job server
      */
     public void setCurrentShardingTotalCount(final String jobName, final int currentShardingTotalCount) {

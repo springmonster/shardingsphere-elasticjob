@@ -50,6 +50,8 @@ public final class ServerService {
      */
     public void persistOnline(final boolean enabled) {
         if (!JobRegistry.getInstance().isShutdown(jobName)) {
+            // 这里enable然后保存的value是什么意思？
+            // TODO: 2021/12/24
             jobNodeStorage.fillJobNode(serverNode.getServerNode(JobRegistry.getInstance().getJobInstance(jobName).getServerIp()), enabled ? ServerStatus.ENABLED.name() : ServerStatus.DISABLED.name());
         }
     }

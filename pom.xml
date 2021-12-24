@@ -35,7 +35,7 @@
         <module>elasticjob-infra</module>
 
         <module>elasticjob-lite</module>
-        <module>elasticjob-cloud</module>
+<!--        <module>elasticjob-cloud</module>-->
 
         <module>elasticjob-distribution</module>
         <module>elasticjob-ecosystem</module>
@@ -43,7 +43,7 @@
         <module>examples/elasticjob-example-lite-java</module>
         <module>examples/elasticjob-example-jobs</module>
         <module>examples/elasticjob-example-embed-zk</module>
-        <module>examples/elasticjob-example-cloud</module>
+<!--        <module>examples/elasticjob-example-cloud</module>-->
         <module>examples/elasticjob-example-lite-spring</module>
         <module>examples/elasticjob-example-lite-springboot</module>
         <module>elastic-kuanghc1-java</module>

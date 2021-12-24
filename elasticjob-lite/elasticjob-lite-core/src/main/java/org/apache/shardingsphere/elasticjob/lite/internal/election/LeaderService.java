@@ -58,6 +58,7 @@ public final class LeaderService {
      *
      * <p>
      * If leader is electing, this method will block until leader elected success.
+     * 如果leader正在被选举，则阻塞
      * </p>
      *
      * @return current server is leader or not
@@ -66,7 +67,8 @@ public final class LeaderService {
         while (!hasLeader() && serverService.hasAvailableServers()) {
             log.info("Leader is electing, waiting for {} ms", 100);
             BlockUtils.waitingShortTime();
-            if (!JobRegistry.getInstance().isShutdown(jobName) && serverService.isAvailableServer(JobRegistry.getInstance().getJobInstance(jobName).getServerIp())) {
+            if (!JobRegistry.getInstance().isShutdown(jobName)
+                    && serverService.isAvailableServer(JobRegistry.getInstance().getJobInstance(jobName).getServerIp())) {
                 electLeader();
             }
         }

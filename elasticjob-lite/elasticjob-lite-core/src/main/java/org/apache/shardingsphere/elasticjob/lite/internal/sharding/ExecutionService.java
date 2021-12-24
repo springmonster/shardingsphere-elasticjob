@@ -52,8 +52,10 @@ public final class ExecutionService {
      */
     public void registerJobBegin(final ShardingContexts shardingContexts) {
         JobRegistry.getInstance().setJobRunning(jobName, true);
+
         if (!configService.load(true).isMonitorExecution()) {
             return;
+
         }
         // 这里是0，1，2
         for (int each : shardingContexts.getShardingItemParameters().keySet()) {

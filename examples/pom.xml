@@ -34,7 +34,7 @@
         <module>elasticjob-example-lite-spring</module>
         <module>elasticjob-example-lite-springboot</module>
         
-        <module>elasticjob-example-cloud</module>
+<!--        <module>elasticjob-example-cloud</module>-->
     </modules>
     
     <properties>
@@ -69,11 +69,11 @@
                 <version>${revision}</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.apache.shardingsphere.elasticjob</groupId>
-                <artifactId>elasticjob-cloud-executor</artifactId>
-                <version>${revision}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.apache.shardingsphere.elasticjob</groupId>-->
+<!--                <artifactId>elasticjob-cloud-executor</artifactId>-->
+<!--                <version>${revision}</version>-->
+<!--            </dependency>-->
             
             <dependency>
                 <groupId>org.apache.curator</groupId>

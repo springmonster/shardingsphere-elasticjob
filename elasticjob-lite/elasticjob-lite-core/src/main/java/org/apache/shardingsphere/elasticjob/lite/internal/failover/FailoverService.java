@@ -36,22 +36,22 @@ import java.util.List;
  */
 @Slf4j
 public final class FailoverService {
-    
+
     private final String jobName;
-    
+
     private final JobNodeStorage jobNodeStorage;
-    
+
     private final ShardingService shardingService;
-    
+
     public FailoverService(final CoordinatorRegistryCenter regCenter, final String jobName) {
         this.jobName = jobName;
         jobNodeStorage = new JobNodeStorage(regCenter, jobName);
         shardingService = new ShardingService(regCenter, jobName);
     }
-    
+
     /**
      * set crashed failover flag.
-     * 
+     *
      * @param item crashed job item
      */
     public void setCrashedFailoverFlag(final int item) {
@@ -72,7 +72,7 @@ public final class FailoverService {
     private boolean isFailoverAssigned(final Integer item) {
         return jobNodeStorage.isJobNodeExisted(FailoverNode.getExecutionFailoverNode(item));
     }
-    
+
     /**
      * Failover if necessary.
      */
@@ -81,15 +81,15 @@ public final class FailoverService {
             jobNodeStorage.executeInLeader(FailoverNode.LATCH, new FailoverLeaderExecutionCallback());
         }
     }
-    
+
     private boolean needFailover() {
         return jobNodeStorage.isJobNodeExisted(FailoverNode.ITEMS_ROOT) && !jobNodeStorage.getJobNodeChildrenKeys(FailoverNode.ITEMS_ROOT).isEmpty()
                 && !JobRegistry.getInstance().isJobRunning(jobName);
     }
-    
+
     /**
      * Update sharding items status when failover execution complete.
-     * 
+     *
      * @param items sharding items of failover execution completed
      */
     public void updateFailoverComplete(final Collection<Integer> items) {
@@ -98,7 +98,7 @@ public final class FailoverService {
             jobNodeStorage.removeJobNodeIfExisted(FailoverNode.getExecutingFailoverNode(each));
         }
     }
-    
+
     /**
      * Get failover items.
      *
@@ -106,11 +106,15 @@ public final class FailoverService {
      * @return failover items
      */
     public List<Integer> getFailoverItems(final String jobInstanceId) {
+        // TODO: 2021/12/24
         List<String> items = jobNodeStorage.getJobNodeChildrenKeys(ShardingNode.ROOT);
         List<Integer> result = new ArrayList<>(items.size());
         for (String each : items) {
             int item = Integer.parseInt(each);
+            // sharding/xxx/failover代表有失败的任务
             String node = FailoverNode.getExecutionFailoverNode(item);
+
+            // 只有是失败的任务存在
             if (jobNodeStorage.isJobNodeExisted(node) && jobInstanceId.equals(jobNodeStorage.getJobNodeDataDirectly(node))) {
                 result.add(item);
             }
@@ -138,10 +142,10 @@ public final class FailoverService {
         Collections.sort(result);
         return result;
     }
-    
+
     /**
      * Get failover items which execute on localhost.
-     * 
+     *
      * @return failover items which execute on localhost
      */
     public List<Integer> getLocalFailoverItems() {
@@ -150,10 +154,10 @@ public final class FailoverService {
         }
         return getFailoverItems(JobRegistry.getInstance().getJobInstance(jobName).getJobInstanceId());
     }
-    
+
     /**
      * Get failover items which crashed on localhost.
-     * 
+     *
      * @return failover items which crashed on localhost
      */
     public List<Integer> getLocalTakeOffItems() {
@@ -166,7 +170,7 @@ public final class FailoverService {
         }
         return result;
     }
-    
+
     /**
      * Remove failover info.
      */
@@ -175,9 +179,9 @@ public final class FailoverService {
             jobNodeStorage.removeJobNodeIfExisted(FailoverNode.getExecutionFailoverNode(Integer.parseInt(each)));
         }
     }
-    
+
     class FailoverLeaderExecutionCallback implements LeaderExecutionCallback {
-        
+
         @Override
         public void execute() {
             if (JobRegistry.getInstance().isShutdown(jobName) || !needFailover()) {

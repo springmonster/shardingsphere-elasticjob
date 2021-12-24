@@ -26,55 +26,79 @@ import org.apache.shardingsphere.elasticjob.lite.internal.schedule.JobRegistry;
 import org.apache.shardingsphere.elasticjob.lite.internal.storage.JobNodeStorage;
 import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * Execution context service.
  */
 public final class ExecutionContextService {
-    
+
     private final String jobName;
-    
+
     private final JobNodeStorage jobNodeStorage;
-    
+
     private final ConfigurationService configService;
-    
+
     public ExecutionContextService(final CoordinatorRegistryCenter regCenter, final String jobName) {
         this.jobName = jobName;
         jobNodeStorage = new JobNodeStorage(regCenter, jobName);
         configService = new ConfigurationService(regCenter, jobName);
     }
-    
+
     /**
      * Get job sharding context.
-     * 
+     *
      * @param shardingItems sharding items
      * @return job sharding context
      */
     public ShardingContexts getJobShardingContext(final List<Integer> shardingItems) {
-        JobConfiguration jobConfig = configService.load(false);
-        removeRunningIfMonitorExecution(jobConfig.isMonitorExecution(), shardingItems);
+        // 需要从zk获取configuration的信息
+        JobConfiguration jobConfiguration = configService.load(false);
+
+        removeRunningIfMonitorExecution(jobConfiguration.isMonitorExecution(), shardingItems);
+
+        // TODO: 2021/12/24  
         if (shardingItems.isEmpty()) {
-            return new ShardingContexts(buildTaskId(jobConfig, shardingItems), jobConfig.getJobName(), jobConfig.getShardingTotalCount(), 
-                    jobConfig.getJobParameter(), Collections.emptyMap());
+            return new ShardingContexts(
+                    buildTaskId(jobConfiguration, shardingItems),
+                    jobConfiguration.getJobName(),
+                    jobConfiguration.getShardingTotalCount(),
+                    jobConfiguration.getJobParameter(),
+                    Collections.emptyMap());
         }
-        Map<Integer, String> shardingItemParameterMap = new ShardingItemParameters(jobConfig.getShardingItemParameters()).getMap();
-        return new ShardingContexts(buildTaskId(jobConfig, shardingItems), jobConfig.getJobName(), jobConfig.getShardingTotalCount(), 
-                jobConfig.getJobParameter(), getAssignedShardingItemParameterMap(shardingItems, shardingItemParameterMap));
+
+        Map<Integer, String> shardingItemParameterMap = new ShardingItemParameters(jobConfiguration.getShardingItemParameters()).getMap();
+
+        // TODO: 2021/12/24
+        return new ShardingContexts(
+//                kuanghc1-1224-3@-@0,1,2@-@READY@-@10.109.71.139@-@54196
+                buildTaskId(jobConfiguration, shardingItems),
+                jobConfiguration.getJobName(),
+                jobConfiguration.getShardingTotalCount(),
+                jobConfiguration.getJobParameter(),
+                getAssignedShardingItemParameterMap(shardingItems, shardingItemParameterMap));
     }
-    
+
     private String buildTaskId(final JobConfiguration jobConfig, final List<Integer> shardingItems) {
+        /**
+         * jobInstance = {JobInstance@5187}
+         *  jobInstanceId = "10.109.71.139@-@50114"
+         *  labels = null
+         *  serverIp = "10.109.71.139" 这里是本机的IP
+         */
         JobInstance jobInstance = JobRegistry.getInstance().getJobInstance(jobName);
         String shardingItemsString = shardingItems.stream().map(Object::toString).collect(Collectors.joining(","));
         String jobInstanceId = null == jobInstance || null == jobInstance.getJobInstanceId() ? "127.0.0.1@-@1" : jobInstance.getJobInstanceId();
-        return String.join("@-@", jobConfig.getJobName(), shardingItemsString, "READY", jobInstanceId); 
+        return String.join("@-@", jobConfig.getJobName(), shardingItemsString, "READY", jobInstanceId);
     }
-    
+
+    /**
+     * 任务失效了，但是正在运行了，得从失效列表中移除
+     *
+     * @param monitorExecution
+     * @param shardingItems
+     */
     private void removeRunningIfMonitorExecution(final boolean monitorExecution, final List<Integer> shardingItems) {
         if (!monitorExecution) {
             return;
@@ -87,11 +111,11 @@ public final class ExecutionContextService {
         }
         shardingItems.removeAll(runningShardingItems);
     }
-    
+
     private boolean isRunning(final int shardingItem) {
         return jobNodeStorage.isJobNodeExisted(ShardingNode.getRunningNode(shardingItem));
     }
-    
+
     private Map<Integer, String> getAssignedShardingItemParameterMap(final List<Integer> shardingItems, final Map<Integer, String> shardingItemParameterMap) {
         Map<Integer, String> result = new HashMap<>(shardingItems.size(), 1);
         for (int each : shardingItems) {
