@@ -19,31 +19,31 @@ package org.apache.shardingsphere.elasticjob.lite.internal.election;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shardingsphere.elasticjob.infra.concurrent.BlockUtils;
 import org.apache.shardingsphere.elasticjob.lite.internal.schedule.JobRegistry;
 import org.apache.shardingsphere.elasticjob.lite.internal.server.ServerService;
 import org.apache.shardingsphere.elasticjob.lite.internal.storage.JobNodeStorage;
 import org.apache.shardingsphere.elasticjob.lite.internal.storage.LeaderExecutionCallback;
 import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
-import org.apache.shardingsphere.elasticjob.infra.concurrent.BlockUtils;
 
 /**
  * Leader service.
  */
 @Slf4j
 public final class LeaderService {
-    
+
     private final String jobName;
-    
+
     private final ServerService serverService;
-    
+
     private final JobNodeStorage jobNodeStorage;
-    
+
     public LeaderService(final CoordinatorRegistryCenter regCenter, final String jobName) {
         this.jobName = jobName;
         jobNodeStorage = new JobNodeStorage(regCenter, jobName);
         serverService = new ServerService(regCenter, jobName);
     }
-    
+
     /**
      * Elect leader.
      */
@@ -52,14 +52,14 @@ public final class LeaderService {
         jobNodeStorage.executeInLeader(LeaderNode.LATCH, new LeaderElectionExecutionCallback());
         log.debug("Leader election completed.");
     }
-    
+
     /**
      * Judge current server is leader or not.
-     * 
+     *
      * <p>
      * If leader is electing, this method will block until leader elected success.
      * </p>
-     * 
+     *
      * @return current server is leader or not
      */
     public boolean isLeaderUntilBlock() {
@@ -72,7 +72,7 @@ public final class LeaderService {
         }
         return isLeader();
     }
-    
+
     /**
      * Judge current server is leader or not.
      *
@@ -81,28 +81,30 @@ public final class LeaderService {
     public boolean isLeader() {
         return !JobRegistry.getInstance().isShutdown(jobName) && JobRegistry.getInstance().getJobInstance(jobName).getJobInstanceId().equals(jobNodeStorage.getJobNodeData(LeaderNode.INSTANCE));
     }
-    
+
     /**
      * Judge has leader or not in current time.
-     * 
+     *
      * @return has leader or not in current time
      */
     public boolean hasLeader() {
         return jobNodeStorage.isJobNodeExisted(LeaderNode.INSTANCE);
     }
-    
+
     /**
      * Remove leader and trigger leader election.
      */
     public void removeLeader() {
         jobNodeStorage.removeJobNodeIfExisted(LeaderNode.INSTANCE);
     }
-    
+
     @RequiredArgsConstructor
     class LeaderElectionExecutionCallback implements LeaderExecutionCallback {
-        
+
         @Override
         public void execute() {
+            log.info("khc 这里是选取leader {} ", hasLeader());
+
             if (!hasLeader()) {
                 jobNodeStorage.fillEphemeralJobNode(LeaderNode.INSTANCE, JobRegistry.getInstance().getJobInstance(jobName).getJobInstanceId());
             }

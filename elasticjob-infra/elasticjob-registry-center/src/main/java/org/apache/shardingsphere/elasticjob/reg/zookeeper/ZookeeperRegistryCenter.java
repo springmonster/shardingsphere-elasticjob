@@ -68,16 +68,23 @@ public final class ZookeeperRegistryCenter implements CoordinatorRegistryCenter 
     @Override
     public void init() {
         log.info("Elastic job: zookeeper registry center init, server lists is: {}.", zkConfig.getServerLists());
+
         CuratorFrameworkFactory.Builder builder = CuratorFrameworkFactory.builder()
                 .connectString(zkConfig.getServerLists())
                 .retryPolicy(new ExponentialBackoffRetry(zkConfig.getBaseSleepTimeMilliseconds(), zkConfig.getMaxRetries(), zkConfig.getMaxSleepTimeMilliseconds()))
                 .namespace(zkConfig.getNamespace());
+
         if (0 != zkConfig.getSessionTimeoutMilliseconds()) {
             builder.sessionTimeoutMs(zkConfig.getSessionTimeoutMilliseconds());
         }
+
         if (0 != zkConfig.getConnectionTimeoutMilliseconds()) {
             builder.connectionTimeoutMs(zkConfig.getConnectionTimeoutMilliseconds());
         }
+
+        /**
+         * zk的做认证
+         */
         if (!Strings.isNullOrEmpty(zkConfig.getDigest())) {
             builder.authorization("digest", zkConfig.getDigest().getBytes(StandardCharsets.UTF_8))
                     .aclProvider(new ACLProvider() {
@@ -93,6 +100,7 @@ public final class ZookeeperRegistryCenter implements CoordinatorRegistryCenter 
                         }
                     });
         }
+
         client = builder.build();
         client.start();
         try {
@@ -129,9 +137,16 @@ public final class ZookeeperRegistryCenter implements CoordinatorRegistryCenter 
         }
     }
 
+    /**
+     * 先从CuratorCache中查找
+     *
+     * @param key key
+     * @return
+     */
     @Override
     public String get(final String key) {
         CuratorCache cache = findCuratorCache(key);
+        // 如果缓存不存在，再去zk查找
         if (null == cache) {
             return getDirectly(key);
         }
@@ -206,6 +221,8 @@ public final class ZookeeperRegistryCenter implements CoordinatorRegistryCenter 
     public void persist(final String key, final String value) {
         try {
             if (!isExisted(key)) {
+                // client.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT)
+                //
                 client.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath(key, value.getBytes(StandardCharsets.UTF_8));
             } else {
                 update(key, value);
@@ -217,6 +234,12 @@ public final class ZookeeperRegistryCenter implements CoordinatorRegistryCenter 
         }
     }
 
+    /**
+     * 将zk中的信息进行更改
+     *
+     * @param key   key
+     * @param value value
+     */
     @Override
     public void update(final String key, final String value) {
         try {
@@ -307,6 +330,7 @@ public final class ZookeeperRegistryCenter implements CoordinatorRegistryCenter 
             //CHECKSTYLE:OFF
             RegExceptionHandler.handleException(ex);
         }
+        // cache是CuratorCacheImpl
         caches.put(cachePath + "/", cache);
     }
 

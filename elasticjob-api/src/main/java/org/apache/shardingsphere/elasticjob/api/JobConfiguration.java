@@ -40,7 +40,7 @@ public final class JobConfiguration {
     private final String timeZone;
 
     /**
-     *
+     * 分片的数量
      */
     private final int shardingTotalCount;
 
@@ -51,6 +51,10 @@ public final class JobConfiguration {
 
     private final String jobParameter;
 
+    /**
+     * 监控作业运行时状态
+     */
+    // TODO: 2021/12/24
     private final boolean monitorExecution;
 
     /**
@@ -63,8 +67,14 @@ public final class JobConfiguration {
      */
     private final boolean misfire;
 
+    /**
+     * 设置最大容忍的本机与注册中心的时间误差秒数。默认为 -1，不检查时间误差。选填。
+     */
     private final int maxTimeDiffSeconds;
 
+    /**
+     * 修复作业服务器不一致状态服务调度间隔时间，配置为小于1的任意值表示不执行修复。默认为 10
+     */
     private final int reconcileIntervalMinutes;
 
     private final String jobShardingStrategyType;
@@ -85,8 +95,14 @@ public final class JobConfiguration {
 
     private final Properties props;
 
+    /**
+     * 作业是否禁用执行。默认为 false。选填。
+     */
     private final boolean disabled;
 
+    /**
+     * 设置使用本地作业配置覆盖注册中心的作业配置。默认为 false。选填。建议使用运维平台( console )配置作业配置，统一管理。
+     */
     private final boolean overwrite;
 
     private final String label;

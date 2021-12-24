@@ -52,7 +52,9 @@ public final class MonitorExecutionListenerManager extends AbstractListenerManag
         protected void dataChanged(final String path, final Type eventType, final String data) {
             log.info("khc MonitorExecutionSettingsChangedJobListener dataChanged path: {} , eventType: {} , data: {}", path, eventType, data);
 
-            if (configNode.isConfigPath(path) && Type.NODE_CHANGED == eventType && !YamlEngine.unmarshal(data, JobConfigurationPOJO.class).toJobConfiguration().isMonitorExecution()) {
+            if (configNode.isConfigPath(path)
+                    && Type.NODE_CHANGED == eventType
+                    && !YamlEngine.unmarshal(data, JobConfigurationPOJO.class).toJobConfiguration().isMonitorExecution()) {
                 executionService.clearAllRunningInfo();
             }
         }

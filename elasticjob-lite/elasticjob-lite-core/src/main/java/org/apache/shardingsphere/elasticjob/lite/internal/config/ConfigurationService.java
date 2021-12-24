@@ -48,6 +48,7 @@ public final class ConfigurationService {
      */
     public JobConfiguration load(final boolean fromCache) {
         String result;
+
         if (fromCache) {
             result = jobNodeStorage.getJobNodeData(ConfigurationNode.ROOT);
             if (null == result) {
@@ -121,25 +122,41 @@ public final class ConfigurationService {
     /**
      * Set up job configuration.
      *
-     * @param jobClassName job class name
-     * @param jobConfig    job configuration to be updated
+     * @param jobClassName     job class name
+     * @param jobConfiguration job configuration to be updated
      * @return accepted job configuration
      */
-    public JobConfiguration setUpJobConfiguration(final String jobClassName, final JobConfiguration jobConfig) {
-        checkConflictJob(jobClassName, jobConfig);
-        if (!jobNodeStorage.isJobNodeExisted(ConfigurationNode.ROOT) || jobConfig.isOverwrite()) {
-            jobNodeStorage.replaceJobNode(ConfigurationNode.ROOT, YamlEngine.marshal(JobConfigurationPOJO.fromJobConfiguration(jobConfig)));
+    public JobConfiguration setUpJobConfiguration(final String jobClassName, final JobConfiguration jobConfiguration) {
+        checkConflictJob(jobClassName, jobConfiguration);
+
+        // jobNode包含的是zk信息，job的名字，node的path
+        // 如果zk的config下不存在配置文件信息
+        // 如果job需要被覆盖
+        // zk不存在
+        if (!jobNodeStorage.isJobNodeExisted(ConfigurationNode.ROOT) || jobConfiguration.isOverwrite()) {
+            jobNodeStorage.replaceJobNode(ConfigurationNode.ROOT, YamlEngine.marshal(JobConfigurationPOJO.fromJobConfiguration(jobConfiguration)));
+            // 这里没看懂。。。
+            // TODO: 2021/12/24
             jobNodeStorage.replaceJobRootNode(jobClassName);
-            return jobConfig;
+            return jobConfiguration;
         }
         return load(false);
     }
 
+    /**
+     * 检查注册中心是不是没有这个job以及响应的配置
+     *
+     * @param newJobClassName
+     * @param jobConfig
+     */
     private void checkConflictJob(final String newJobClassName, final JobConfiguration jobConfig) {
+        // 如果job不存在就返回
         if (!jobNodeStorage.isJobRootNodeExisted()) {
             return;
         }
+
         String originalJobClassName = jobNodeStorage.getJobRootNodeData();
+
         if (null != originalJobClassName && !originalJobClassName.equals(newJobClassName)) {
             throw new JobConfigurationException(
                     "Job conflict with register center. The job '%s' in register center's class is '%s', your job class is '%s'", jobConfig.getJobName(), originalJobClassName, newJobClassName);
@@ -148,7 +165,7 @@ public final class ConfigurationService {
 
     /**
      * kuanghc1:检查作业服务器和注册中心之间可容忍的最大时间不同秒数。
-     *
+     * <p>
      * Check max time different seconds tolerable between job server and registry center.
      *
      * @throws JobExecutionEnvironmentException throe JobExecutionEnvironmentException if exceed max time different seconds

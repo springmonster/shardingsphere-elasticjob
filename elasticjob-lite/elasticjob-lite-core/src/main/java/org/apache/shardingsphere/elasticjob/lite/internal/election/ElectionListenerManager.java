@@ -88,7 +88,7 @@ public final class ElectionListenerManager extends AbstractListenerManager {
             return serverNode.isLocalServerPath(path) && !ServerStatus.DISABLED.name().equals(data);
         }
     }
-    
+    // 领导退位工作监听器
     class LeaderAbdicationJobListener extends AbstractJobListener {
         
         @Override

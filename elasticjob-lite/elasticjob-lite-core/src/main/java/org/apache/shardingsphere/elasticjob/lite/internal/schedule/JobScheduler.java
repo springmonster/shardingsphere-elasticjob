@@ -86,6 +86,7 @@ public final class JobScheduler {
 
         String jobClassName = JobClassNameProviderFactory.getProvider().getJobClassName(elasticJob);
 
+        // 这里是设置JobConfiguration
         this.jobConfiguration = setUpFacade.setUpJobConfiguration(jobClassName, jobConfiguration);
 
         schedulerFacade = new SchedulerFacade(coordinatorRegistryCenter, jobConfiguration.getJobName());
@@ -94,6 +95,7 @@ public final class JobScheduler {
 
         validateJobProperties();
 
+        // 这里还会读取jobConfiguration
         elasticJobExecutor = new ElasticJobExecutor(elasticJob, this.jobConfiguration, liteJobFacade);
 
         setGuaranteeServiceForElasticJobListeners(coordinatorRegistryCenter, jobListeners);
@@ -176,6 +178,10 @@ public final class JobScheduler {
         JobScheduleController result = new JobScheduleController(createScheduler(), createJobDetail(), this.getJobConfiguration().getJobName());
         JobRegistry.getInstance().registerJob(this.getJobConfiguration().getJobName(), result);
         registerStartUpInfo();
+        // 到这里的时候，zk中的结构是
+        // namespace/job/instances
+        // namespace/job/leader
+        // namespace/job/servers
         return result;
     }
 
