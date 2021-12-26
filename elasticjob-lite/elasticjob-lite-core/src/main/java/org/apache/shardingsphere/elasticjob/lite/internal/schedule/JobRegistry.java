@@ -199,6 +199,7 @@ public final class JobRegistry {
      */
     public void shutdown(final String jobName) {
         Optional.ofNullable(schedulerMap.remove(jobName)).ifPresent(JobScheduleController::shutdown);
+        // evictCacheData，驱逐缓存数据
         Optional.ofNullable(regCenterMap.remove(jobName)).ifPresent(regCenter -> regCenter.evictCacheData("/" + jobName));
         jobInstanceMap.remove(jobName);
         jobRunningMap.remove(jobName);

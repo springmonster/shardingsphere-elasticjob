@@ -30,7 +30,8 @@ public final class LeaderNode {
 
     // leader/election/instance
     static final String INSTANCE = ELECTION_ROOT + "/instance";
-    
+
+    // leader/election/latch
     static final String LATCH = ELECTION_ROOT + "/latch";
     
     private final JobNodePath jobNodePath;
