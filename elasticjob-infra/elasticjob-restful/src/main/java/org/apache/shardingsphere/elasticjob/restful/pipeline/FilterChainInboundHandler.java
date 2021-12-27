@@ -37,9 +37,9 @@ import java.util.List;
 @Sharable
 @RequiredArgsConstructor
 public final class FilterChainInboundHandler extends ChannelInboundHandlerAdapter {
-    
+
     private final List<Filter> filterInstances;
-    
+
     @SuppressWarnings({"NullableProblems", "unchecked"})
     @Override
     public void channelRead(final ChannelHandlerContext ctx, final Object msg) {

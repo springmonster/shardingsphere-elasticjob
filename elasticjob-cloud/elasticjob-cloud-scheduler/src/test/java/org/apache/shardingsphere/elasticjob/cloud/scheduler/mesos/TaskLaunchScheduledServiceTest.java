@@ -59,33 +59,33 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public final class TaskLaunchScheduledServiceTest {
-    
+
     @Mock
     private SchedulerDriver schedulerDriver;
-    
+
     @Mock
     private TaskScheduler taskScheduler;
-    
+
     @Mock
     private FacadeService facadeService;
-    
+
     @Mock
     private JobTracingEventBus jobTracingEventBus;
-    
+
     private TaskLaunchScheduledService taskLaunchScheduledService;
-    
+
     @Before
     public void setUp() {
         when(facadeService.loadAppConfig("test_app")).thenReturn(Optional.of(CloudAppConfigurationBuilder.createCloudAppConfiguration("test_app")));
         taskLaunchScheduledService = new TaskLaunchScheduledService(schedulerDriver, taskScheduler, facadeService, jobTracingEventBus);
         taskLaunchScheduledService.startUp();
     }
-    
+
     @After
     public void tearDown() {
         taskLaunchScheduledService.shutDown();
     }
-    
+
     @Test
     public void assertRunOneIteration() {
         when(facadeService.getEligibleJobContext()).thenReturn(
@@ -102,7 +102,7 @@ public final class TaskLaunchScheduledServiceTest {
         verify(facadeService).loadAppConfig("test_app");
         verify(jobTracingEventBus).post(ArgumentMatchers.<JobStatusTraceEvent>any());
     }
-    
+
     @Test
     public void assertRunOneIterationWithScriptJob() {
         when(facadeService.getEligibleJobContext()).thenReturn(
@@ -120,18 +120,18 @@ public final class TaskLaunchScheduledServiceTest {
         verify(facadeService).loadAppConfig("test_app");
         verify(jobTracingEventBus).post(ArgumentMatchers.<JobStatusTraceEvent>any());
     }
-    
+
     private TaskAssignmentResult mockTaskAssignmentResult(final String taskName, final ExecutionType executionType) {
         TaskAssignmentResult result = mock(TaskAssignmentResult.class);
         when(result.getTaskId()).thenReturn(String.format("%s@-@0@-@%s@-@unassigned-slave@-@0", taskName, executionType.name()));
-        return result; 
+        return result;
     }
-    
+
     @Test
     public void assertScheduler() {
         assertThat(taskLaunchScheduledService.scheduler(), instanceOf(Scheduler.class));
     }
-    
+
     @Test
     public void assertServiceName() {
         assertThat(taskLaunchScheduledService.serviceName(), is("task-launch-processor"));

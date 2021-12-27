@@ -27,9 +27,9 @@ import java.util.Set;
  */
 @NoArgsConstructor
 public final class SupportedExtractionType {
-    
+
     private static final Set<String> EXTRACTION_TYPES = new HashSet<>(9, 1);
-    
+
     static {
         EXTRACTION_TYPES.add(".tar");
         EXTRACTION_TYPES.add(".tar.gz");
@@ -41,7 +41,7 @@ public final class SupportedExtractionType {
         EXTRACTION_TYPES.add(".txz");
         EXTRACTION_TYPES.add(".zip");
     }
-    
+
     /**
      * Check whether the url is supported to extract or not.
      *

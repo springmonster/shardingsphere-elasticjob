@@ -22,12 +22,10 @@ import org.apache.shardingsphere.elasticjob.tracing.fixture.JobEventCaller;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public final class YamlTracingConfigurationConverterTest {
-    
+
     @Test
     public void assertConvertTracingConfiguration() {
         JobEventCaller expectedStorage = () -> {

@@ -335,13 +335,13 @@ select[multiple=multiple]:focus {
     color: #777 !important;
 }
 
-#sidebar h5+ul.topics {
+#sidebar h5 + ul.topics {
     display: none;
     margin-top: 0;
 }
 
-#sidebar h5.parent+ul.topics,
-#sidebar h5.active+ul.topics {
+#sidebar h5.parent + ul.topics,
+#sidebar h5.active + ul.topics {
     display: block;
 }
 
@@ -380,27 +380,27 @@ select[multiple=multiple]:focus {
     padding-bottom: 0;
 }
 
-#sidebar ul.topics li.parent>ul,
-#sidebar ul.topics>li.active>ul {
+#sidebar ul.topics li.parent > ul,
+#sidebar ul.topics > li.active > ul {
     display: block;
 }
 
-#sidebar ul.topics>li>a {
+#sidebar ul.topics > li > a {
     line-height: 2rem;
     font-size: 1.1rem;
 }
 
-#sidebar ul.topics>li>a b {
+#sidebar ul.topics > li > a b {
     opacity: 0.5;
     font-weight: normal;
 }
 
-#sidebar ul.topics>li>a .fa {
+#sidebar ul.topics > li > a .fa {
     margin-top: 9px;
 }
 
-#sidebar ul.topics>li.parent,
-#sidebar ul.topics>li.active {
+#sidebar ul.topics > li.parent,
+#sidebar ul.topics > li.active {
     /* background: #251f29; */
     background: rgba(88, 100, 120, 0.41);
     margin-left: -1rem;
@@ -409,7 +409,7 @@ select[multiple=multiple]:focus {
     padding-right: 1rem;
 }
 
-#sidebar ul li.active>a {
+#sidebar ul li.active > a {
     background: #fff;
     color: #777 !important;
     margin-left: -1rem;
@@ -422,7 +422,7 @@ select[multiple=multiple]:focus {
     padding: 0;
 }
 
-#sidebar ul li.visited+span {
+#sidebar ul li.visited + span {
     margin-right: 16px;
 }
 
@@ -438,11 +438,11 @@ select[multiple=multiple]:focus {
     display: block;
 }
 
-#sidebar ul li>a {
+#sidebar ul li > a {
     padding: 4px 0;
 }
 
-#sidebar ul li.visited>a .read-icon {
+#sidebar ul li.visited > a .read-icon {
     color: #9c6fb6;
     display: inline;
 }
@@ -510,7 +510,7 @@ select[multiple=multiple]:focus {
     }
 }
 
-#body h1+hr {
+#body h1 + hr {
     margin-top: -1.7rem;
     margin-bottom: 3rem;
 }
@@ -536,7 +536,7 @@ select[multiple=multiple]:focus {
     text-align: center;
 }
 
-#body .nav>i {
+#body .nav > i {
     display: table-cell;
     vertical-align: middle;
     text-align: center;
@@ -554,7 +554,7 @@ select[multiple=multiple]:focus {
         padding-top: 0;
     }
 
-    #body .nav>i {
+    #body .nav > i {
         display: inline-block;
     }
 }
@@ -835,7 +835,7 @@ code {
     padding: 0px 5px;
 }
 
-code+.copy-to-clipboard {
+code + .copy-to-clipboard {
     margin-left: -1px;
     border-left: 0 !important;
     font-size: inherit !important;
@@ -1237,43 +1237,43 @@ td {
     right: 2rem !important;
 }
 
-.lifecycle #body-inner .level-1+ol {
+.lifecycle #body-inner .level-1 + ol {
     background: #f6fefc;
     border: 4px solid #1ABC9C;
     color: #16A085;
 }
 
-.lifecycle #body-inner .level-1+ol h3 {
+.lifecycle #body-inner .level-1 + ol h3 {
     background: #2ECC71;
 }
 
-.lifecycle #body-inner .level-2+ol {
+.lifecycle #body-inner .level-2 + ol {
     background: #f7fdf9;
     border: 4px solid #2ECC71;
     color: #27AE60;
 }
 
-.lifecycle #body-inner .level-2+ol h3 {
+.lifecycle #body-inner .level-2 + ol h3 {
     background: #3498DB;
 }
 
-.lifecycle #body-inner .level-3+ol {
+.lifecycle #body-inner .level-3 + ol {
     background: #f3f9fd;
     border: 4px solid #3498DB;
     color: #2980B9;
 }
 
-.lifecycle #body-inner .level-3+ol h3 {
+.lifecycle #body-inner .level-3 + ol h3 {
     background: #34495E;
 }
 
-.lifecycle #body-inner .level-4+ol {
+.lifecycle #body-inner .level-4 + ol {
     background: #e4eaf0;
     border: 4px solid #34495E;
     color: #2C3E50;
 }
 
-.lifecycle #body-inner .level-4+ol h3 {
+.lifecycle #body-inner .level-4 + ol h3 {
     background: #34495E;
 }
 
@@ -1400,7 +1400,7 @@ pre .copy-to-clipboard:hover {
     transform-style: preserve-3d;
 }
 
-#sidebar ul.topics>li>a .read-icon {
+#sidebar ul.topics > li > a .read-icon {
     margin-top: 9px;
 }
 
@@ -1424,7 +1424,7 @@ pre .copy-to-clipboard:hover {
     text-align: right;
 }
 
-#sidebar ul li.visited>a .read-icon {
+#sidebar ul li.visited > a .read-icon {
     color: #00bdf3;
     display: inline;
 }

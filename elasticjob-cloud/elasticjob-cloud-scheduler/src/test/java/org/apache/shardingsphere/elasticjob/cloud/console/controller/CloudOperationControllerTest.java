@@ -31,21 +31,21 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CloudOperationControllerTest extends AbstractCloudControllerTest {
-    
+
     @Test
     public void assertExplicitReconcile() {
         ReflectionUtils.setFieldValue(new CloudOperationController(), "lastReconcileTime", 0);
         assertThat(HttpTestUtil.post("http://127.0.0.1:19000/api/operate/reconcile/explicit", ""), is(200));
         assertThat(HttpTestUtil.post("http://127.0.0.1:19000/api/operate/reconcile/explicit", ""), is(500));
     }
-    
+
     @Test
     public void assertImplicitReconcile() {
         ReflectionUtils.setFieldValue(new CloudOperationController(), "lastReconcileTime", 0);
         assertThat(HttpTestUtil.post("http://127.0.0.1:19000/api/operate/reconcile/implicit", ""), is(200));
         assertThat(HttpTestUtil.post("http://127.0.0.1:19000/api/operate/reconcile/implicit", ""), is(500));
     }
-    
+
     @Test
     public void assertSandbox() {
         when(getRegCenter().getDirectly(HANode.FRAMEWORK_ID_NODE)).thenReturn("d8701508-41b7-471e-9b32-61cf824a660d-0000");
@@ -53,12 +53,12 @@ public class CloudOperationControllerTest extends AbstractCloudControllerTest {
                 + "\"path\":\"/slaves/d8701508-41b7-471e-9b32-61cf824a660d-S0/frameworks/d8701508-41b7-471e-9b32-61cf824a660d-0000/executors/foo_app@-@"
                 + "d8701508-41b7-471e-9b32-61cf824a660d-S0/runs/53fb4af7-aee2-44f6-9e47-6f418d9f27e1\"}]"));
     }
-    
+
     @Test
     public void assertNoFrameworkSandbox() {
         assertThat(HttpTestUtil.get("http://127.0.0.1:19000/api/operate/sandbox?appName=foo_app"), is("[]"));
         when(getRegCenter().getDirectly(HANode.FRAMEWORK_ID_NODE)).thenReturn("not-exists");
         assertThat(HttpTestUtil.get("http://127.0.0.1:19000/api/operate/sandbox?appName=foo_app"), is("[]"));
     }
-    
+
 }

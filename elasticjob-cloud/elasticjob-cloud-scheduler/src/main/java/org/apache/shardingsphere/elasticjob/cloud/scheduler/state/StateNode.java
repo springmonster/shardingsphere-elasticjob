@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class StateNode {
-    
+
     /**
      * Root state node.
      */

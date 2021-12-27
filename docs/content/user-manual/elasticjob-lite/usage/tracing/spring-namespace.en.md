@@ -1,8 +1,5 @@
-+++
-title = "Use Spring Namespace"
-weight = 3
-chapter = true
-+++
++++ title = "Use Spring Namespace"
+weight = 3 chapter = true +++
 
 ## Import Maven Dependency
 
@@ -49,5 +46,5 @@ chapter = true
 
 ## Job Start
 
-If the Spring container start, the `XML` that configures the Spring namespace will be loaded, and the job will be automatically started.
-
+If the Spring container start, the `XML` that configures the Spring namespace will be loaded, and the job will be
+automatically started.

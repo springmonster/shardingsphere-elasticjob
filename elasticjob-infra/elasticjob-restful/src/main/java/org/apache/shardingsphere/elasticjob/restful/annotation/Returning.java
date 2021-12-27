@@ -30,14 +30,14 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Returning {
-    
+
     /**
      * HTTP status code to return after handling.
      *
      * @return Http status code
      */
     int code() default 200;
-    
+
     /**
      * HTTP content type of response.
      *

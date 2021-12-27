@@ -37,15 +37,15 @@ import java.util.concurrent.ConcurrentHashMap;
 @SuppressWarnings("UnstableApiUsage")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class RegistryCenterFactory {
-    
+
     private static final Map<HashCode, CoordinatorRegistryCenter> REG_CENTER_REGISTRY = new ConcurrentHashMap<>();
-    
+
     /**
      * Create a {@link CoordinatorRegistryCenter} or return the existing one if there is one set up with the same {@code connectionString}, {@code namespace} and {@code digest} already.
      *
      * @param connectString registry center connect string
-     * @param namespace registry center namespace
-     * @param digest registry center digest
+     * @param namespace     registry center namespace
+     * @param digest        registry center digest
      * @return registry center
      */
     public static CoordinatorRegistryCenter createCoordinatorRegistryCenter(final String connectString, final String namespace, final String digest) {
@@ -60,7 +60,7 @@ public final class RegistryCenterFactory {
             return result;
         });
     }
-    
+
     private static CoordinatorRegistryCenter newCoordinatorRegistryCenter(final String connectString,
                                                                           final String namespace,
                                                                           final String digest) {

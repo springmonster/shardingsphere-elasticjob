@@ -22,7 +22,7 @@ import org.apache.shardingsphere.elasticjob.restful.RestfulController;
 import org.apache.shardingsphere.elasticjob.restful.annotation.Mapping;
 
 public class MesosSlaveServerMock implements RestfulController {
-    
+
     /**
      * Check slave server state.
      *

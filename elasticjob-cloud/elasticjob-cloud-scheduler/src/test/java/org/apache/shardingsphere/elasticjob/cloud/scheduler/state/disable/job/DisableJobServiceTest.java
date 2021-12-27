@@ -31,37 +31,37 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public final class DisableJobServiceTest {
-    
+
     @Mock
     private CoordinatorRegistryCenter regCenter;
-    
+
     private DisableJobService disableJobService;
-    
+
     @Before
     public void setUp() {
         disableJobService = new DisableJobService(regCenter);
     }
-    
+
     @Test
     public void assertAdd() {
         disableJobService.add("test_job");
         verify(regCenter).isExisted("/state/disable/job/test_job");
         verify(regCenter).persist("/state/disable/job/test_job", "test_job");
     }
-    
+
     @Test
     public void assertRemove() {
         disableJobService.remove("test_job");
         verify(regCenter).remove("/state/disable/job/test_job");
     }
-    
+
     @Test
     public void assertIsDisabled() {
         when(regCenter.isExisted("/state/disable/job/test_job")).thenReturn(true);
         assertTrue(disableJobService.isDisabled("test_job"));
         verify(regCenter).isExisted("/state/disable/job/test_job");
     }
-    
+
     @Test
     public void assertIsEnabled() {
         when(regCenter.isExisted("/state/disable/job/test_job")).thenReturn(false);

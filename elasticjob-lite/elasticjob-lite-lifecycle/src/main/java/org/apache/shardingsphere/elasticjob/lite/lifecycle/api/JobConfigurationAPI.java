@@ -23,7 +23,7 @@ import org.apache.shardingsphere.elasticjob.infra.pojo.JobConfigurationPOJO;
  * Job configuration API.
  */
 public interface JobConfigurationAPI {
-    
+
     /**
      * get job configuration.
      *
@@ -31,14 +31,14 @@ public interface JobConfigurationAPI {
      * @return job configuration
      */
     JobConfigurationPOJO getJobConfiguration(String jobName);
-    
+
     /**
      * Update job configuration.
      *
      * @param jobConfig job configuration
      */
     void updateJobConfiguration(JobConfigurationPOJO jobConfig);
-    
+
     /**
      * Remove job configuration.
      *

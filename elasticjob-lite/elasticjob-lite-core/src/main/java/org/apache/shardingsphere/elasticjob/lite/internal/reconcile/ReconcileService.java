@@ -31,17 +31,17 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 public final class ReconcileService extends AbstractScheduledService {
-    
+
     private long lastReconcileTime;
-    
+
     private final ConfigurationService configService;
-    
+
     private final ShardingService shardingService;
-    
+
     private final JobNodePath jobNodePath;
-    
+
     private final CoordinatorRegistryCenter regCenter;
-    
+
     public ReconcileService(final CoordinatorRegistryCenter regCenter, final String jobName) {
         this.regCenter = regCenter;
         lastReconcileTime = System.currentTimeMillis();
@@ -49,7 +49,7 @@ public final class ReconcileService extends AbstractScheduledService {
         shardingService = new ShardingService(regCenter, jobName);
         jobNodePath = new JobNodePath(jobName);
     }
-    
+
     @Override
     protected void runOneIteration() {
         int reconcileIntervalMinutes = configService.load(true).getReconcileIntervalMinutes();
@@ -61,15 +61,15 @@ public final class ReconcileService extends AbstractScheduledService {
             }
         }
     }
-    
+
     private boolean isStaticSharding() {
         return configService.load(true).isStaticSharding();
     }
-    
+
     private boolean hasShardingInfo() {
         return !regCenter.getChildrenKeys(jobNodePath.getShardingNodePath()).isEmpty();
     }
-    
+
     @Override
     protected Scheduler scheduler() {
         return Scheduler.newFixedDelaySchedule(0, 1, TimeUnit.MINUTES);

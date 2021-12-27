@@ -27,37 +27,37 @@ import org.apache.shardingsphere.elasticjob.cloud.statistics.StatisticInterval;
 import org.junit.Test;
 
 public class StatisticTimeUtilsTest {
-    
+
     @Test
     public void assertGetCurrentStatisticTime() {
         assertThat(getTimeStr(StatisticTimeUtils.getCurrentStatisticTime(StatisticInterval.MINUTE), StatisticInterval.MINUTE), is(getTimeStr(getNow(), StatisticInterval.MINUTE)));
         assertThat(getTimeStr(StatisticTimeUtils.getCurrentStatisticTime(StatisticInterval.HOUR), StatisticInterval.HOUR), is(getTimeStr(getNow(), StatisticInterval.HOUR)));
         assertThat(getTimeStr(StatisticTimeUtils.getCurrentStatisticTime(StatisticInterval.DAY), StatisticInterval.DAY), is(getTimeStr(getNow(), StatisticInterval.DAY)));
     }
-    
+
     @Test
     public void assertGetStatisticTime() {
         assertThat(getTimeStr(StatisticTimeUtils.getStatisticTime(StatisticInterval.MINUTE, -1), StatisticInterval.MINUTE), is(getTimeStr(getLastMinute(), StatisticInterval.MINUTE)));
         assertThat(getTimeStr(StatisticTimeUtils.getStatisticTime(StatisticInterval.HOUR, -1), StatisticInterval.HOUR), is(getTimeStr(getLastHour(), StatisticInterval.HOUR)));
         assertThat(getTimeStr(StatisticTimeUtils.getStatisticTime(StatisticInterval.DAY, -1), StatisticInterval.DAY), is(getTimeStr(getYesterday(), StatisticInterval.DAY)));
     }
-    
+
     private Date getNow() {
         return new Date();
     }
-    
+
     private Date getLastMinute() {
         return new Date(getNow().getTime() - 60 * 1000);
     }
-    
+
     private Date getLastHour() {
         return new Date(getNow().getTime() - 60 * 60 * 1000);
     }
-    
+
     private Date getYesterday() {
         return new Date(getNow().getTime() - 24 * 60 * 60 * 1000);
     }
-    
+
     private String getTimeStr(final Date time, final StatisticInterval interval) {
         switch (interval) {
             case DAY:

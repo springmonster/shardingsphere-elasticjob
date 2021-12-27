@@ -28,24 +28,24 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class BaseStatisticJobTest {
-    
+
     private TestStatisticJob testStatisticJob;
-    
+
     @Before
     public void setUp() {
         testStatisticJob = new TestStatisticJob();
     }
-    
+
     @Test
     public void assertGetTriggerName() {
         assertThat(testStatisticJob.getTriggerName(), is(TestStatisticJob.class.getSimpleName() + "Trigger"));
     }
-    
+
     @Test
     public void assertGetJobName() {
         assertThat(testStatisticJob.getJobName(), is(TestStatisticJob.class.getSimpleName()));
     }
-    
+
     @Test
     public void assertFindBlankStatisticTimes() {
         for (StatisticInterval each : StatisticInterval.values()) {

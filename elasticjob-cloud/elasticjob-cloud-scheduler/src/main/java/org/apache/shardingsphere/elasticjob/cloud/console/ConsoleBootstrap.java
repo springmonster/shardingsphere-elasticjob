@@ -35,9 +35,9 @@ import org.apache.shardingsphere.elasticjob.restful.RestfulService;
  * Console bootstrap for Cloud.
  */
 public class ConsoleBootstrap {
-    
+
     private final RestfulService restfulService;
-    
+
     public ConsoleBootstrap(final CoordinatorRegistryCenter regCenter, final RestfulServerConfiguration config, final ProducerManager producerManager, final ReconcileService reconcileService) {
         CloudJobController.init(regCenter, producerManager);
         CloudAppController.init(regCenter, producerManager);
@@ -48,14 +48,14 @@ public class ConsoleBootstrap {
         restfulServiceConfiguration.addFilterInstances(new AuthenticationFilter(new AuthenticationService()));
         restfulService = new NettyRestfulService(restfulServiceConfiguration);
     }
-    
+
     /**
      * Startup RESTful server.
      */
     public void start() {
         restfulService.startup();
     }
-    
+
     /**
      * Stop RESTful server.
      */

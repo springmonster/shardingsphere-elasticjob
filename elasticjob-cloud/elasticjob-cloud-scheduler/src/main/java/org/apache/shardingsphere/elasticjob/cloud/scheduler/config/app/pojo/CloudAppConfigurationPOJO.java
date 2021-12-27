@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,21 +27,21 @@ import org.apache.shardingsphere.elasticjob.cloud.scheduler.config.app.CloudAppC
 @Getter
 @Setter
 public final class CloudAppConfigurationPOJO {
-    
+
     private String appName;
-    
+
     private String appURL;
-    
+
     private String bootstrapScript;
-    
+
     private double cpuCount = 1d;
-    
+
     private double memoryMB = 128d;
-    
+
     private boolean appCacheEnable = true;
-    
+
     private int eventTraceSamplingCount;
-    
+
     /**
      * Convert to cloud app configuration.
      *
@@ -50,7 +50,7 @@ public final class CloudAppConfigurationPOJO {
     public CloudAppConfiguration toCloudAppConfiguration() {
         return new CloudAppConfiguration(appName, appURL, bootstrapScript, cpuCount, memoryMB, appCacheEnable, eventTraceSamplingCount);
     }
-    
+
     /**
      * Convert from cloud app configuration.
      *

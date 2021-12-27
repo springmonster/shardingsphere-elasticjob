@@ -1,10 +1,8 @@
-+++
-title = "Spring Namespace"
-weight = 2
-chapter = true
-+++
++++ title = "Spring Namespace"
+weight = 2 chapter = true +++
 
-To use the Spring namespace, user need to add the dependency of the `elasticjob-lite-spring` module in the `pom.xml` file.
+To use the Spring namespace, user need to add the dependency of the `elasticjob-lite-spring` module in the `pom.xml`
+file.
 
 ```xml
 <dependency>
@@ -14,13 +12,14 @@ To use the Spring namespace, user need to add the dependency of the `elasticjob-
 </dependency>
 ```
 
-Spring namespace: [http://shardingsphere.apache.org/schema/elasticjob/elasticjob.xsd](http://shardingsphere.apache.org/schema/elasticjob/elasticjob.xsd)
+Spring
+namespace: [http://shardingsphere.apache.org/schema/elasticjob/elasticjob.xsd](http://shardingsphere.apache.org/schema/elasticjob/elasticjob.xsd)
 
 ## Registry Center Configuration
 
 \<elasticjob:zookeeper />
 
-Configuration: 
+Configuration:
 
 | Name                            | Required |
 | ------------------------------- |:-------- |
@@ -38,7 +37,7 @@ Configuration:
 
 \<elasticjob:job />
 
-Configuration: 
+Configuration:
 
 | Name                              | Required |
 | --------------------------------- |:-------- |
@@ -80,7 +79,7 @@ Configuration:
 
 \<elasticjob:snapshot />
 
-Configuration: 
+Configuration:
 
 | Name                | Data Type   | Required | Default Value | Description                                                                     |
 | ------------------- |:----------- |:-------- |:------------- |:------------------------------------------------------------------------------- |

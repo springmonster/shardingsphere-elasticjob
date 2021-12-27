@@ -30,11 +30,11 @@ import java.util.concurrent.ConcurrentMap;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DataSourceRegistry {
-    
+
     private static volatile DataSourceRegistry instance;
-    
+
     private final ConcurrentMap<DataSourceConfiguration, DataSource> dataSources = new ConcurrentHashMap<>();
-    
+
     /**
      * Get instance of {@link DataSourceRegistry}.
      *
@@ -50,11 +50,11 @@ public final class DataSourceRegistry {
         }
         return instance;
     }
-    
+
     void registerDataSource(final DataSourceConfiguration configuration, final DataSource dataSource) {
         dataSources.putIfAbsent(configuration, dataSource);
     }
-    
+
     /**
      * Get {@link DataSource} by {@link TracingStorageConfiguration}.
      *

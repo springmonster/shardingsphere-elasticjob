@@ -32,14 +32,14 @@ import java.util.Map;
  */
 @RequiredArgsConstructor
 public final class TaskInfoData {
-    
+
     private final ShardingContexts shardingContexts;
-    
+
     private final CloudJobConfiguration cloudJobConfig;
-    
+
     /**
      * Serialize.
-     * 
+     *
      * @return byte array
      */
     public byte[] serialize() {

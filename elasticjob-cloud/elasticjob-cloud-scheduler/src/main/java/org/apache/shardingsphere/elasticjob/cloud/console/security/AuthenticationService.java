@@ -28,13 +28,13 @@ import org.apache.shardingsphere.elasticjob.cloud.scheduler.env.BootstrapEnviron
  * User authentication service.
  */
 public final class AuthenticationService {
-    
+
     private final Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-    
+
     private final Base64 base64 = new Base64();
-    
+
     private final BootstrapEnvironment env = BootstrapEnvironment.getINSTANCE();
-    
+
     /**
      * Check auth.
      *
@@ -48,7 +48,7 @@ public final class AuthenticationService {
         AuthConfiguration userAuthConfiguration = env.getUserAuthConfiguration();
         return userAuthConfiguration.getAuthUsername().equals(authenticationInfo.getUsername()) && userAuthConfiguration.getAuthPassword().equals(authenticationInfo.getPassword());
     }
-    
+
     /**
      * Get user authentication token.
      *

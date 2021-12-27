@@ -24,7 +24,7 @@ package org.apache.shardingsphere.elasticjob.restful.handler;
  * @param <E> Type of Exception
  */
 public interface ExceptionHandler<E extends Throwable> {
-    
+
     /**
      * Handler for specific Exception.
      *

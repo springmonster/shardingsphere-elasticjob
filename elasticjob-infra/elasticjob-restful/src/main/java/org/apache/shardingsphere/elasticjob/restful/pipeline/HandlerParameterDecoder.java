@@ -50,9 +50,9 @@ import java.util.Optional;
 @Slf4j
 @Sharable
 public final class HandlerParameterDecoder extends ChannelInboundHandlerAdapter {
-    
+
     private final PathMatcher pathMatcher = new RegexPathMatcher();
-    
+
     @SuppressWarnings({"unchecked", "NullableProblems"})
     @Override
     public void channelRead(final ChannelHandlerContext ctx, final Object msg) {
@@ -63,7 +63,7 @@ public final class HandlerParameterDecoder extends ChannelInboundHandlerAdapter 
         handleContext.setArgs(arguments);
         ctx.fireChannelRead(handleContext);
     }
-    
+
     private Object[] prepareArguments(final FullHttpRequest httpRequest, final MappingContext<Handler> mappingContext) {
         Handler handler = mappingContext.payload();
         List<HandlerParameter> handlerParameters = handler.getHandlerParameters();
@@ -120,12 +120,12 @@ public final class HandlerParameterDecoder extends ChannelInboundHandlerAdapter 
         }
         return result;
     }
-    
+
     private Map<String, List<String>> parseQuery(final String uri) {
         QueryStringDecoder queryStringDecoder = new QueryStringDecoder(uri);
         return queryStringDecoder.parameters();
     }
-    
+
     private Object deserializeQueryParameter(final Class<?> targetType, final List<String> queryValues) {
         if (null == queryValues || queryValues.isEmpty()) {
             return null;
@@ -135,7 +135,7 @@ public final class HandlerParameterDecoder extends ChannelInboundHandlerAdapter 
         }
         throw new UnsupportedOperationException("Multi value query doesn't support yet.");
     }
-    
+
     private Object deserializeBuiltInType(final Class<?> targetType, final String value) {
         Preconditions.checkArgument(!value.isEmpty(), "Cannot deserialize empty value.");
         if (String.class.equals(targetType)) {

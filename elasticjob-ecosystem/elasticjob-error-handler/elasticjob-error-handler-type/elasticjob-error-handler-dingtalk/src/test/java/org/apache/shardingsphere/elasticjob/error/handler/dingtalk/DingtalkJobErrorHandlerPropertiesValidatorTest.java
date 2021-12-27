@@ -28,12 +28,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public final class DingtalkJobErrorHandlerPropertiesValidatorTest {
-    
+
     @Before
     public void startup() {
         ElasticJobServiceLoader.registerTypedService(JobErrorHandlerPropertiesValidator.class);
     }
-    
+
     @Test
     public void assertValidateWithNormal() {
         Properties properties = new Properties();
@@ -43,13 +43,13 @@ public final class DingtalkJobErrorHandlerPropertiesValidatorTest {
         DingtalkJobErrorHandlerPropertiesValidator actual = getValidator();
         actual.validate(properties);
     }
-    
+
     @Test(expected = NullPointerException.class)
     public void assertValidateWithPropsIsNull() {
         DingtalkJobErrorHandlerPropertiesValidator actual = getValidator();
         actual.validate(null);
     }
-    
+
     @Test
     public void assertValidateWithWebhookIsNull() {
         DingtalkJobErrorHandlerPropertiesValidator actual = getValidator();
@@ -59,7 +59,7 @@ public final class DingtalkJobErrorHandlerPropertiesValidatorTest {
             assertThat(e.getMessage(), is(String.format("The property `%s` is required.", DingtalkPropertiesConstants.WEBHOOK)));
         }
     }
-    
+
     private DingtalkJobErrorHandlerPropertiesValidator getValidator() {
         return (DingtalkJobErrorHandlerPropertiesValidator) ElasticJobServiceLoader.newTypedServiceInstance(JobErrorHandlerPropertiesValidator.class, "DINGTALK", null).get();
     }

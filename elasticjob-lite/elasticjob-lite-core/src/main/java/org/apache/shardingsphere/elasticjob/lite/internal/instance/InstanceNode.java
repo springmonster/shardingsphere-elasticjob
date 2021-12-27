@@ -25,20 +25,20 @@ import org.apache.shardingsphere.elasticjob.lite.internal.storage.JobNodePath;
  * Instance node.
  */
 public final class InstanceNode {
-    
+
     public static final String ROOT = "instances";
-    
+
     private static final String INSTANCES = ROOT + "/%s";
-    
+
     private final String jobName;
-    
+
     private final JobNodePath jobNodePath;
-    
+
     public InstanceNode(final String jobName) {
         this.jobName = jobName;
         jobNodePath = new JobNodePath(jobName);
     }
-    
+
     /**
      * Get job instance full path.
      *
@@ -47,7 +47,7 @@ public final class InstanceNode {
     public String getInstanceFullPath() {
         return jobNodePath.getFullPath(InstanceNode.ROOT);
     }
-    
+
     /**
      * Judge path is job instance path or not.
      *
@@ -57,11 +57,11 @@ public final class InstanceNode {
     public boolean isInstancePath(final String path) {
         return path.startsWith(jobNodePath.getFullPath(InstanceNode.ROOT));
     }
-    
+
     boolean isLocalInstancePath(final String path) {
         return path.equals(jobNodePath.getFullPath(String.format(INSTANCES, JobRegistry.getInstance().getJobInstance(jobName).getJobInstanceId())));
     }
-    
+
     /**
      * Get local instance path.
      *
@@ -70,7 +70,7 @@ public final class InstanceNode {
     public String getLocalInstancePath() {
         return getInstancePath(JobRegistry.getInstance().getJobInstance(jobName).getJobInstanceId());
     }
-    
+
     /**
      * Get local instance value.
      *
@@ -79,7 +79,7 @@ public final class InstanceNode {
     public String getLocalInstanceValue() {
         return YamlEngine.marshal(JobRegistry.getInstance().getJobInstance(jobName));
     }
-    
+
     /**
      * Get instance path.
      *

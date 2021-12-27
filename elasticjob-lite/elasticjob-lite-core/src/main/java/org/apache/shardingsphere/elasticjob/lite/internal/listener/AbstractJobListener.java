@@ -24,11 +24,11 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * kuanghc1：！！！貌似找到了，这里在不停地接收zk的信息
- *
+ * <p>
  * Job Listener.
  */
 public abstract class AbstractJobListener implements CuratorCacheListener {
-    
+
     @Override
     public final void event(final Type type, final ChildData oldData, final ChildData newData) {
         if (null == newData && null == oldData) {
@@ -41,7 +41,7 @@ public abstract class AbstractJobListener implements CuratorCacheListener {
         }
         dataChanged(path, type, null == data ? "" : new String(data, StandardCharsets.UTF_8));
     }
-    
+
     protected abstract void dataChanged(String path, Type eventType, String data);
 
     /**

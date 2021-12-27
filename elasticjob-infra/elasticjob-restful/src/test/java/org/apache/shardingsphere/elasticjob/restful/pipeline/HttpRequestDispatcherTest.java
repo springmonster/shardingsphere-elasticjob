@@ -29,7 +29,7 @@ import org.apache.shardingsphere.elasticjob.restful.handler.HandlerNotFoundExcep
 import org.junit.Test;
 
 public final class HttpRequestDispatcherTest {
-    
+
     @Test(expected = HandlerNotFoundException.class)
     public void assertDispatcherHandlerNotFound() {
         EmbeddedChannel channel = new EmbeddedChannel(new HttpRequestDispatcher(Lists.newArrayList(new JobController()), false));

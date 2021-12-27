@@ -26,14 +26,14 @@ import org.apache.shardingsphere.elasticjob.restful.serializer.ResponseBodySeria
  * @see org.apache.shardingsphere.elasticjob.restful.serializer.ResponseBodySerializerFactory
  */
 public interface SerializerFactory {
-    
+
     /**
      * Specify which type would be serialized by the serializer created by this factory.
      *
      * @return MIME type
      */
     String mimeType();
-    
+
     /**
      * Serializer factory method.
      *

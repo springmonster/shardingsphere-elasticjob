@@ -27,11 +27,11 @@ import java.io.IOException;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class EmbedTestingServer {
-    
+
     private static final int PORT = 10181;
-    
+
     private static volatile TestingServer testingServer;
-    
+
     /**
      * Start the embed server.
      */
@@ -41,9 +41,9 @@ public final class EmbedTestingServer {
         }
         try {
             testingServer = new TestingServer(PORT, new File(String.format("target/test_zk_data/%s/", System.nanoTime())));
-            
+
         } catch (final Exception ex) {
-            
+
             RegExceptionHandler.handleException(ex);
         } finally {
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -55,7 +55,7 @@ public final class EmbedTestingServer {
             }));
         }
     }
-    
+
     /**
      * Get the connection string.
      *

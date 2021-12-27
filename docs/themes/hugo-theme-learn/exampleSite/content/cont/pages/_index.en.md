@@ -1,14 +1,14 @@
 ---
-date: 2016-04-09T16:50:16+02:00
-title: Pages organization
-weight: 5
+date: 2016-04-09T16:50:16+02:00 title: Pages organization weight: 5
 ---
 
-In **Hugo**, pages are the core of your site. Once it is configured, pages are definitely the added value to your documentation site.
+In **Hugo**, pages are the core of your site. Once it is configured, pages are definitely the added value to your
+documentation site.
 
 ## Folders
 
-Organize your site like [any other Hugo project](https://gohugo.io/content/organization/). Typically, you will have a *content* folder with all your pages.
+Organize your site like [any other Hugo project](https://gohugo.io/content/organization/). Typically, you will have a *
+content* folder with all your pages.
 
     content
     ├── level-one 
@@ -35,24 +35,22 @@ Organize your site like [any other Hugo project](https://gohugo.io/content/organ
     └── page-top.md                     <-- /page-top
 
 {{% notice note %}}
-`_index.md` is required in each folder, it’s your “folder home page”
-{{% /notice %}}
+`_index.md` is required in each folder, it’s your “folder home page” {{% /notice %}}
 
 ## Types
 
-**Hugo-theme-learn** defines two types of pages. *Default* and *Chapter*. Both can be used at any level of the documentation, the only difference being layout display.
+**Hugo-theme-learn** defines two types of pages. *Default* and *Chapter*. Both can be used at any level of the
+documentation, the only difference being layout display.
 
-A **Chapter** displays a page meant to be used as introduction for a set of child pages. Commonly, it contains a simple title and a catch line to define content that can be found under it.
-You can define any HTML as prefix for the menu. In the example below, it's just a number but that could be an [icon](https://fortawesome.github.io/Font-Awesome/).
+A **Chapter** displays a page meant to be used as introduction for a set of child pages. Commonly, it contains a simple
+title and a catch line to define content that can be found under it. You can define any HTML as prefix for the menu. In
+the example below, it's just a number but that could be an [icon](https://fortawesome.github.io/Font-Awesome/).
 
 ![Chapter page](/cont/pages/images/pages-chapter.png?width=50pc)
 
 ```markdown
-+++
-title = "Basics"
-chapter = true
-weight = 5
-pre = "<b>1. </b>"
++++ title = "Basics"
+chapter = true weight = 5 pre = "<b>1. </b>"
 +++
 
 ### Chapter 1
@@ -75,7 +73,8 @@ weight = 15
 +++
 ```
 
-The following steps are here to help you initialize your new website. If you don't know Hugo at all, we strongly suggest you to train by following this [great documentation for beginners](https://gohugo.io/overview/quickstart/).
+The following steps are here to help you initialize your new website. If you don't know Hugo at all, we strongly suggest
+you to train by following this [great documentation for beginners](https://gohugo.io/overview/quickstart/).
 
 ## Create your project
 
@@ -85,7 +84,8 @@ Hugo provides a `new` command to create a new website.
 hugo new site <new_project>
 ```
 
-**Hugo-theme-learn** provides [archetypes]({{< relref "cont/archetypes.fr.md" >}}) to help you create this kind of pages.
+**Hugo-theme-learn** provides [archetypes]({{< relref "cont/archetypes.fr.md" >}}) to help you create this kind of
+pages.
 
 ## Front Matter configuration
 
@@ -117,7 +117,8 @@ LastModifierEmail = ""
 
 ### Add icon to a menu entry
 
-In the page frontmatter, add a `pre` param to insert any HTML code before the menu label. The example below uses the Github icon.
+In the page frontmatter, add a `pre` param to insert any HTML code before the menu label. The example below uses the
+Github icon.
 
 ```toml
 +++
@@ -148,7 +149,7 @@ By default, **Hugo-theme-learn** will use a page's `title` attribute for the men
 But a page's title has to be descriptive on its own while the menu is a hierarchy.  
 We've added the `menuTitle` parameter for that purpose:
 
-For example (for a page named `content/install/linux.md`): 
+For example (for a page named `content/install/linux.md`):
 
 ```toml
 +++

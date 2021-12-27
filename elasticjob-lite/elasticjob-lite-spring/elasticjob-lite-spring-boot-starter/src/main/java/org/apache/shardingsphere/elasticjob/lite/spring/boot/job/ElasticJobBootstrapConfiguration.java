@@ -45,7 +45,7 @@ public class ElasticJobBootstrapConfiguration implements SmartInitializingSingle
 
     @Setter
     private ApplicationContext applicationContext;
-    
+
     @Override
     public void afterSingletonsInstantiated() {
         log.info("creating Job Bootstrap Beans");
@@ -63,7 +63,7 @@ public class ElasticJobBootstrapConfiguration implements SmartInitializingSingle
         TracingConfiguration<?> tracingConfig = getTracingConfiguration();
         constructJobBootstraps(elasticJobProperties, singletonBeanRegistry, registryCenter, tracingConfig);
     }
-    
+
     @SuppressWarnings("rawtypes")
     private TracingConfiguration<?> getTracingConfiguration() {
         Map<String, TracingConfiguration> tracingConfigurationBeans = applicationContext.getBeansOfType(TracingConfiguration.class);
@@ -76,7 +76,7 @@ public class ElasticJobBootstrapConfiguration implements SmartInitializingSingle
         throw new BeanCreationException("More than one [org.apache.shardingsphere.elasticjob.tracing.api.TracingConfiguration] beans found. "
                 + "Consider disabling [org.apache.shardingsphere.elasticjob.tracing.boot.ElasticJobTracingAutoConfiguration].");
     }
-    
+
     private void constructJobBootstraps(final ElasticJobProperties elasticJobProperties, final SingletonBeanRegistry singletonBeanRegistry,
                                         final CoordinatorRegistryCenter registryCenter, final TracingConfiguration<?> tracingConfig) {
         for (Map.Entry<String, ElasticJobConfigurationProperties> entry : elasticJobProperties.getJobs().entrySet()) {
@@ -94,7 +94,7 @@ public class ElasticJobBootstrapConfiguration implements SmartInitializingSingle
             }
         }
     }
-    
+
     private void registerClassedJob(final String jobName, final String jobBootstrapBeanName, final SingletonBeanRegistry singletonBeanRegistry, final CoordinatorRegistryCenter registryCenter,
                                     final TracingConfiguration<?> tracingConfig, final ElasticJobConfigurationProperties jobConfigurationProperties) {
         JobConfiguration jobConfig = jobConfigurationProperties.toJobConfiguration(jobName);
@@ -108,7 +108,7 @@ public class ElasticJobBootstrapConfiguration implements SmartInitializingSingle
             singletonBeanRegistry.registerSingleton(beanName, new ScheduleJobBootstrap(registryCenter, elasticJob, jobConfig));
         }
     }
-    
+
     private void registerTypedJob(final String jobName, final String jobBootstrapBeanName, final SingletonBeanRegistry singletonBeanRegistry, final CoordinatorRegistryCenter registryCenter,
                                   final TracingConfiguration<?> tracingConfig, final ElasticJobConfigurationProperties jobConfigurationProperties) {
         JobConfiguration jobConfig = jobConfigurationProperties.toJobConfiguration(jobName);
@@ -121,7 +121,7 @@ public class ElasticJobBootstrapConfiguration implements SmartInitializingSingle
             singletonBeanRegistry.registerSingleton(beanName, new ScheduleJobBootstrap(registryCenter, jobConfigurationProperties.getElasticJobType(), jobConfig));
         }
     }
-    
+
     private void jobExtraConfigurations(final JobConfiguration jobConfig, final TracingConfiguration<?> tracingConfig) {
         if (null == tracingConfig) {
             return;

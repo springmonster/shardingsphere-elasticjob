@@ -24,6 +24,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -32,19 +33,19 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class IOUtils {
-    
+
     /**
      * Convert InputStream to String.
      *
      * @param inputStream input stream
-     * @param encoding encoding
+     * @param encoding    encoding
      * @return result of the String type
      * @throws IOException IOException
      */
     public static String toString(final InputStream inputStream, final String encoding) throws IOException {
         return (null == encoding) ? toString(new InputStreamReader(inputStream, StandardCharsets.UTF_8)) : toString(new InputStreamReader(inputStream, encoding));
     }
-    
+
     /**
      * Convert Reader to String.
      *
@@ -57,10 +58,10 @@ public final class IOUtils {
         copy(reader, charArrayWriter);
         return charArrayWriter.toString();
     }
-    
+
     private static void copy(final Reader input, final Writer output) throws IOException {
         char[] buffer = new char[4096];
-        for (int length; (length = input.read(buffer)) >= 0;) {
+        for (int length; (length = input.read(buffer)) >= 0; ) {
             output.write(buffer, 0, length);
         }
     }

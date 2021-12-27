@@ -26,7 +26,7 @@ import org.yaml.snakeyaml.representer.Representer;
  * ElasticJob YAML representer.
  */
 public final class ElasticJobYamlRepresenter extends Representer {
-    
+
     @Override
     protected NodeTuple representJavaBeanProperty(final Object javaBean, final Property property, final Object propertyValue, final Tag customTag) {
         return new DefaultYamlTupleProcessor().process(super.representJavaBeanProperty(javaBean, property, propertyValue, customTag));

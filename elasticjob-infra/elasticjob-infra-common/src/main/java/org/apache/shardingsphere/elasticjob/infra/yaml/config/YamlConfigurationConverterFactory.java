@@ -30,19 +30,19 @@ import java.util.ServiceLoader;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class YamlConfigurationConverterFactory {
-    
+
     private static final Map<Class<?>, YamlConfigurationConverter<?, ?>> CONVERTERS = new LinkedHashMap<>();
-    
+
     static {
         ServiceLoader.load(YamlConfigurationConverter.class).forEach(each -> CONVERTERS.put(each.configurationType(), each));
     }
-    
+
     /**
      * Find {@link YamlConfigurationConverter} for specific configuration type.
      *
      * @param configurationType type of configuration
-     * @param <T> type of configuration
-     * @param <Y> type of YAML configuration
+     * @param <T>               type of configuration
+     * @param <Y>               type of YAML configuration
      * @return converter for specific configuration type
      */
     @SuppressWarnings("unchecked")

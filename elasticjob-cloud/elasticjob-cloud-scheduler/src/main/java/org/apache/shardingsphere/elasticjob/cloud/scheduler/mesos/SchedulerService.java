@@ -46,33 +46,33 @@ import java.util.Optional;
 @Slf4j
 @AllArgsConstructor
 public final class SchedulerService {
-    
+
     private static final String WEB_UI_PROTOCOL = "http://";
-    
+
     private final BootstrapEnvironment env;
-    
+
     private final FacadeService facadeService;
-    
+
     private final SchedulerDriver schedulerDriver;
-    
+
     private final ProducerManager producerManager;
-    
+
     private final StatisticManager statisticManager;
-    
+
     private final CloudJobConfigurationListener cloudJobConfigurationListener;
-    
+
     private final Service taskLaunchScheduledService;
-    
+
     private final ConsoleBootstrap consoleBootstrap;
-    
+
     private final ReconcileService reconcileService;
-    
+
     private final CloudJobDisableListener cloudJobDisableListener;
-    
+
     private final CloudAppConfigurationListener cloudAppConfigurationListener;
-    
+
     private final CloudAppDisableListener cloudAppDisableListener;
-    
+
     public SchedulerService(final CoordinatorRegistryCenter regCenter) {
         env = BootstrapEnvironment.getINSTANCE();
         facadeService = new FacadeService(regCenter);
@@ -89,7 +89,7 @@ public final class SchedulerService {
         reconcileService = new ReconcileService(schedulerDriver, facadeService);
         consoleBootstrap = new ConsoleBootstrap(regCenter, env.getRestfulServerConfiguration(), producerManager, reconcileService);
     }
-    
+
     private SchedulerDriver getSchedulerDriver(final TaskScheduler taskScheduler, final JobTracingEventBus jobTracingEventBus, final FrameworkIDService frameworkIDService) {
         Protos.FrameworkInfo.Builder builder = Protos.FrameworkInfo.newBuilder();
         frameworkIDService.fetch().ifPresent(frameworkID -> builder.setId(Protos.FrameworkID.newBuilder().setValue(frameworkID).build()));
@@ -106,7 +106,7 @@ public final class SchedulerService {
                 .setWebuiUrl(WEB_UI_PROTOCOL + env.getFrameworkHostPort()).setCheckpoint(true).build();
         return new MesosSchedulerDriver(new SchedulerEngine(taskScheduler, facadeService, jobTracingEventBus, frameworkIDService, statisticManager), frameworkInfo, mesosConfig.getUrl());
     }
-    
+
     private TaskScheduler getTaskScheduler() {
         return new TaskScheduler.Builder()
                 .withLeaseOfferExpirySecs(1000000000L)
@@ -115,12 +115,12 @@ public final class SchedulerService {
                     schedulerDriver.declineOffer(lease.getOffer().getId());
                 }).build();
     }
-    
+
     private JobTracingEventBus getJobTracingEventBus() {
         Optional<TracingConfiguration<?>> tracingConfiguration = env.getTracingConfiguration();
         return tracingConfiguration.map(JobTracingEventBus::new).orElseGet(JobTracingEventBus::new);
     }
-    
+
     /**
      * Start as a daemon.
      */
@@ -139,7 +139,7 @@ public final class SchedulerService {
             reconcileService.startAsync();
         }
     }
-    
+
     /**
      * Stop.
      */

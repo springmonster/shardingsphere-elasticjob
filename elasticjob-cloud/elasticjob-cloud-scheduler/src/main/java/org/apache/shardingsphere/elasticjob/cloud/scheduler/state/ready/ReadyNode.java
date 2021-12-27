@@ -26,11 +26,11 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 final class ReadyNode {
-    
+
     static final String ROOT = StateNode.ROOT + "/ready";
-    
+
     private static final String READY_JOB = ROOT + "/%s";
-    
+
     static String getReadyJobNodePath(final String jobName) {
         return String.format(READY_JOB, jobName);
     }

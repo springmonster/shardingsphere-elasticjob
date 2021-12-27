@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -33,77 +33,77 @@ import java.util.Collection;
  * Set up facade.
  */
 public final class SetUpFacade {
-    
+
     private final ConfigurationService configService;
-    
+
     private final LeaderService leaderService;
-    
+
     private final ServerService serverService;
-    
+
     private final InstanceService instanceService;
-    
+
     private final ReconcileService reconcileService;
-    
+
     private final ListenerManager listenerManager;
 
     /**
      * configService = {ConfigurationService@3009}
-     *  timeService = {TimeService@3017}
-     *  jobNodeStorage = {JobNodeStorage@3018}
-     *   regCenter = {ZookeeperRegistryCenter@2936}
-     *   jobName = "kuanghc1-job"
-     *   jobNodePath = {JobNodePath@3019}
-     *    jobName = "kuanghc1-job"
-     *
+     * timeService = {TimeService@3017}
+     * jobNodeStorage = {JobNodeStorage@3018}
+     * regCenter = {ZookeeperRegistryCenter@2936}
+     * jobName = "kuanghc1-job"
+     * jobNodePath = {JobNodePath@3019}
+     * jobName = "kuanghc1-job"
+     * <p>
      * leaderService = {LeaderService@3011}
-     *  jobName = "kuanghc1-job"
-     *  serverService = {ServerService@3026}
-     *   jobName = "kuanghc1-job"
-     *   jobNodeStorage = {JobNodeStorage@3028}
-     *    regCenter = {ZookeeperRegistryCenter@2936}
-     *    jobName = "kuanghc1-job"
-     *    jobNodePath = {JobNodePath@3030}
-     *     jobName = "kuanghc1-job"
-     *   serverNode = {ServerNode@3029}
-     *    jobName = "kuanghc1-job"
-     *    jobNodePath = {JobNodePath@3031}
-     *     jobName = "kuanghc1-job"
-     *  jobNodeStorage = {JobNodeStorage@3027}
-     *   regCenter = {ZookeeperRegistryCenter@2936}
-     *   jobName = "kuanghc1-job"
-     *   jobNodePath = {JobNodePath@3032}
-     *    jobName = "kuanghc1-job"
-     *
+     * jobName = "kuanghc1-job"
+     * serverService = {ServerService@3026}
+     * jobName = "kuanghc1-job"
+     * jobNodeStorage = {JobNodeStorage@3028}
+     * regCenter = {ZookeeperRegistryCenter@2936}
+     * jobName = "kuanghc1-job"
+     * jobNodePath = {JobNodePath@3030}
+     * jobName = "kuanghc1-job"
+     * serverNode = {ServerNode@3029}
+     * jobName = "kuanghc1-job"
+     * jobNodePath = {JobNodePath@3031}
+     * jobName = "kuanghc1-job"
+     * jobNodeStorage = {JobNodeStorage@3027}
+     * regCenter = {ZookeeperRegistryCenter@2936}
+     * jobName = "kuanghc1-job"
+     * jobNodePath = {JobNodePath@3032}
+     * jobName = "kuanghc1-job"
+     * <p>
      * serverService = {ServerService@3012}
-     *  jobName = "kuanghc1-job"
-     *  jobNodeStorage = {JobNodeStorage@3033}
-     *  serverNode = {ServerNode@3034}
-     *
-     *  instanceService = {InstanceService@3013}
-     *  jobNodeStorage = {JobNodeStorage@3035}
-     *  instanceNode = {InstanceNode@3036}
-     *  triggerNode = {TriggerNode@3037}
-     *  serverService = {ServerService@3038}
-     *
-     *  reconcileService = {ReconcileService@3014} "ReconcileService [NEW]"
-     *  lastReconcileTime = 1640152767612
-     *  configService = {ConfigurationService@3047}
-     *  shardingService = {ShardingService@3048}
-     *  jobNodePath = {JobNodePath@3049}
-     *  regCenter = {ZookeeperRegistryCenter@2936}
-     *  delegate = {AbstractScheduledService$ServiceDelegate@3050} "ReconcileService [NEW]"
-     *
-     *  listenerManager = {ListenerManager@3015}
-     *  jobNodeStorage = {JobNodeStorage@3024}
-     *  electionListenerManager = {ElectionListenerManager@3025}
-     *  shardingListenerManager = {ShardingListenerManager@3026}
-     *  failoverListenerManager = {FailoverListenerManager@3027}
-     *  monitorExecutionListenerManager = {MonitorExecutionListenerManager@3028}
-     *  shutdownListenerManager = {ShutdownListenerManager@3029}
-     *  triggerListenerManager = {TriggerListenerManager@3030}
-     *  rescheduleListenerManager = {RescheduleListenerManager@3031}
-     *  guaranteeListenerManager = {GuaranteeListenerManager@3032}
-     *  regCenterConnectionStateListener = {RegistryCenterConnectionStateListener@3033}
+     * jobName = "kuanghc1-job"
+     * jobNodeStorage = {JobNodeStorage@3033}
+     * serverNode = {ServerNode@3034}
+     * <p>
+     * instanceService = {InstanceService@3013}
+     * jobNodeStorage = {JobNodeStorage@3035}
+     * instanceNode = {InstanceNode@3036}
+     * triggerNode = {TriggerNode@3037}
+     * serverService = {ServerService@3038}
+     * <p>
+     * reconcileService = {ReconcileService@3014} "ReconcileService [NEW]"
+     * lastReconcileTime = 1640152767612
+     * configService = {ConfigurationService@3047}
+     * shardingService = {ShardingService@3048}
+     * jobNodePath = {JobNodePath@3049}
+     * regCenter = {ZookeeperRegistryCenter@2936}
+     * delegate = {AbstractScheduledService$ServiceDelegate@3050} "ReconcileService [NEW]"
+     * <p>
+     * listenerManager = {ListenerManager@3015}
+     * jobNodeStorage = {JobNodeStorage@3024}
+     * electionListenerManager = {ElectionListenerManager@3025}
+     * shardingListenerManager = {ShardingListenerManager@3026}
+     * failoverListenerManager = {FailoverListenerManager@3027}
+     * monitorExecutionListenerManager = {MonitorExecutionListenerManager@3028}
+     * shutdownListenerManager = {ShutdownListenerManager@3029}
+     * triggerListenerManager = {TriggerListenerManager@3030}
+     * rescheduleListenerManager = {RescheduleListenerManager@3031}
+     * guaranteeListenerManager = {GuaranteeListenerManager@3032}
+     * regCenterConnectionStateListener = {RegistryCenterConnectionStateListener@3033}
      *
      * @param regCenter
      * @param jobName
@@ -117,45 +117,45 @@ public final class SetUpFacade {
         reconcileService = new ReconcileService(regCenter, jobName);
         listenerManager = new ListenerManager(regCenter, jobName, elasticJobListeners);
     }
-    
+
     /**
      * Set up job configuration.
-     *
+     * <p>
      * this.jobConfiguration = {JobConfiguration@3354}
-     *  jobName = "kuanghc1-job"
-     *  cron = "0/5 * * * * ?"
-     *  timeZone = null
-     *  shardingTotalCount = 3
-     *  shardingItemParameters = "0=Beijing,1=Shanghai,2=Shenzhen"
-     *  jobParameter = ""
-     *  monitorExecution = true
-     *  failover = false
-     *  misfire = true
-     *  maxTimeDiffSeconds = -1
-     *  reconcileIntervalMinutes = 10
-     *  jobShardingStrategyType = null
-     *  jobExecutorServiceHandlerType = null
-     *  jobErrorHandlerType = null
-     *  jobListenerTypes = {ArrayList@3359}  size = 0
-     *  extraConfigurations = {LinkedList@3360}  size = 1
-     *  description = ""
-     *  props = {Properties@3362}  size = 0
-     *  disabled = false
-     *  overwrite = false
-     *  label = null
-     *  staticSharding = false
+     * jobName = "kuanghc1-job"
+     * cron = "0/5 * * * * ?"
+     * timeZone = null
+     * shardingTotalCount = 3
+     * shardingItemParameters = "0=Beijing,1=Shanghai,2=Shenzhen"
+     * jobParameter = ""
+     * monitorExecution = true
+     * failover = false
+     * misfire = true
+     * maxTimeDiffSeconds = -1
+     * reconcileIntervalMinutes = 10
+     * jobShardingStrategyType = null
+     * jobExecutorServiceHandlerType = null
+     * jobErrorHandlerType = null
+     * jobListenerTypes = {ArrayList@3359}  size = 0
+     * extraConfigurations = {LinkedList@3360}  size = 1
+     * description = ""
+     * props = {Properties@3362}  size = 0
+     * disabled = false
+     * overwrite = false
+     * label = null
+     * staticSharding = false
      *
      * @param jobClassName job class name
-     * @param jobConfig job configuration to be updated
+     * @param jobConfig    job configuration to be updated
      * @return accepted job configuration
      */
     public JobConfiguration setUpJobConfiguration(final String jobClassName, final JobConfiguration jobConfig) {
         return configService.setUpJobConfiguration(jobClassName, jobConfig);
     }
-    
+
     /**
      * Register start up info.
-     * 
+     *
      * @param enabled enable job on startup
      */
     public void registerStartUpInfo(final boolean enabled) {
@@ -167,7 +167,7 @@ public final class SetUpFacade {
             reconcileService.startAsync();
         }
     }
-    
+
     /**
      * Tear down.
      */

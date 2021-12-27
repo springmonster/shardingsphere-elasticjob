@@ -1,8 +1,5 @@
-+++
-title = "部署指南"
-weight = 1
-chapter = true
-+++
++++ title = "部署指南"
+weight = 1 chapter = true +++
 
 ## 调度器部署步骤
 

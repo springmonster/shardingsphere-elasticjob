@@ -27,7 +27,7 @@ import org.apache.shardingsphere.elasticjob.restful.handler.HandlerNotFoundExcep
  * A default handler for {@link HandlerNotFoundException}.
  */
 public final class DefaultHandlerNotFoundExceptionHandler implements ExceptionHandler<HandlerNotFoundException> {
-    
+
     @Override
     public ExceptionHandleResult handleException(final HandlerNotFoundException ex) {
         return ExceptionHandleResult.builder()

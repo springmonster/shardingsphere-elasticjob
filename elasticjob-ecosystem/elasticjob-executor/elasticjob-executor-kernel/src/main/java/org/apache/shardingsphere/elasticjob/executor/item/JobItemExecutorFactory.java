@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,9 +20,9 @@ package org.apache.shardingsphere.elasticjob.executor.item;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.shardingsphere.elasticjob.api.ElasticJob;
-import org.apache.shardingsphere.elasticjob.infra.exception.JobConfigurationException;
 import org.apache.shardingsphere.elasticjob.executor.item.impl.ClassedJobItemExecutor;
 import org.apache.shardingsphere.elasticjob.executor.item.impl.TypedJobItemExecutor;
+import org.apache.shardingsphere.elasticjob.infra.exception.JobConfigurationException;
 import org.apache.shardingsphere.elasticjob.infra.spi.ElasticJobServiceLoader;
 
 import java.util.HashMap;
@@ -36,17 +36,17 @@ import java.util.ServiceLoader;
 @SuppressWarnings("rawtypes")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JobItemExecutorFactory {
-    
+
     private static final Map<Class, ClassedJobItemExecutor> CLASSED_EXECUTORS = new HashMap<>();
-    
+
     static {
         ElasticJobServiceLoader.registerTypedService(TypedJobItemExecutor.class);
         ServiceLoader.load(ClassedJobItemExecutor.class).forEach(each -> CLASSED_EXECUTORS.put(each.getElasticJobClass(), each));
     }
-    
+
     /**
      * Get executor.
-     * 
+     *
      * @param elasticJobClass elastic job class
      * @return job item executor
      */
@@ -59,7 +59,7 @@ public final class JobItemExecutorFactory {
         }
         throw new JobConfigurationException("Can not find executor for elastic job class `%s`", elasticJobClass.getName());
     }
-    
+
     /**
      * Get executor.
      *

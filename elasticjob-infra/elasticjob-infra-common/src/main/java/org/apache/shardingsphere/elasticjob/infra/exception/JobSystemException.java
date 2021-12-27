@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,13 +21,13 @@ package org.apache.shardingsphere.elasticjob.infra.exception;
  * Job system exception.
  */
 public final class JobSystemException extends RuntimeException {
-    
+
     private static final long serialVersionUID = 5018901344199973515L;
-    
+
     public JobSystemException(final String errorMessage, final Object... args) {
         super(String.format(errorMessage, args));
     }
-    
+
     public JobSystemException(final Throwable cause) {
         super(cause);
     }

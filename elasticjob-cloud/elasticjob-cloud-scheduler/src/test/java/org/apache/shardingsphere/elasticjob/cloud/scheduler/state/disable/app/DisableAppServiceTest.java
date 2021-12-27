@@ -31,37 +31,37 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public final class DisableAppServiceTest {
-    
+
     @Mock
     private CoordinatorRegistryCenter regCenter;
-    
+
     private DisableAppService disableAppService;
-        
+
     @Before
     public void setUp() {
         disableAppService = new DisableAppService(regCenter);
     }
-    
+
     @Test
     public void assertAdd() {
         disableAppService.add("test_app");
         verify(regCenter).isExisted("/state/disable/app/test_app");
         verify(regCenter).persist("/state/disable/app/test_app", "test_app");
     }
-    
+
     @Test
     public void assertRemove() {
         disableAppService.remove("test_app");
         verify(regCenter).remove("/state/disable/app/test_app");
     }
-    
+
     @Test
     public void assertIsDisabled() {
         when(regCenter.isExisted("/state/disable/app/test_app")).thenReturn(true);
         assertTrue(disableAppService.isDisabled("test_app"));
         verify(regCenter).isExisted("/state/disable/app/test_app");
     }
-    
+
     @Test
     public void assertIsEnabled() {
         when(regCenter.isExisted("/state/disable/app/test_app")).thenReturn(false);

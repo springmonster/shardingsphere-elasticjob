@@ -25,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.shardingsphere.elasticjob.reg.zookeeper.ZookeeperConfiguration;
 import org.apache.shardingsphere.elasticjob.tracing.api.TracingConfiguration;
+
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,18 +38,18 @@ import java.util.Properties;
  */
 @Slf4j
 public final class BootstrapEnvironment {
-    
+
     @Getter
     private static final BootstrapEnvironment INSTANCE = new BootstrapEnvironment();
-    
+
     private static final String PROPERTIES_PATH = "conf/elasticjob-cloud-scheduler.properties";
-    
+
     private final Properties properties;
-    
+
     private BootstrapEnvironment() {
         properties = getProperties();
     }
-    
+
     private Properties getProperties() {
         Properties result = new Properties();
         try (InputStream fileInputStream = BootstrapEnvironment.class.getClassLoader().getResourceAsStream(PROPERTIES_PATH)) {
@@ -59,7 +60,7 @@ public final class BootstrapEnvironment {
         setPropertiesByEnv(result);
         return result;
     }
-    
+
     private void setPropertiesByEnv(final Properties prop) {
         for (EnvironmentArgument each : EnvironmentArgument.values()) {
             String key = each.getKey();
@@ -70,7 +71,7 @@ public final class BootstrapEnvironment {
             }
         }
     }
-    
+
     /**
      * Get the host and port of the framework.
      *
@@ -79,7 +80,7 @@ public final class BootstrapEnvironment {
     public String getFrameworkHostPort() {
         return String.format("%s:%d", getMesosConfiguration().getHostname(), getRestfulServerConfiguration().getPort());
     }
-    
+
     /**
      * Get mesos config.
      *
@@ -88,7 +89,7 @@ public final class BootstrapEnvironment {
     public MesosConfiguration getMesosConfiguration() {
         return new MesosConfiguration(getValue(EnvironmentArgument.USER), getValue(EnvironmentArgument.MESOS_URL), getValue(EnvironmentArgument.HOSTNAME));
     }
-    
+
     /**
      * Get zookeeper configuration.
      *
@@ -103,7 +104,7 @@ public final class BootstrapEnvironment {
         }
         return result;
     }
-    
+
     /**
      * Get restful server config.
      *
@@ -112,7 +113,7 @@ public final class BootstrapEnvironment {
     public RestfulServerConfiguration getRestfulServerConfiguration() {
         return new RestfulServerConfiguration(Integer.parseInt(getValue(EnvironmentArgument.PORT)));
     }
-    
+
     /**
      * Get framework config.
      *
@@ -130,7 +131,7 @@ public final class BootstrapEnvironment {
     public AuthConfiguration getUserAuthConfiguration() {
         return new AuthConfiguration(getValue(EnvironmentArgument.AUTH_USERNAME), getValue(EnvironmentArgument.AUTH_PASSWORD));
     }
-    
+
     /**
      * Get tracing configuration.
      *
@@ -151,23 +152,23 @@ public final class BootstrapEnvironment {
         }
         return Optional.empty();
     }
-    
+
     /**
      * Get job event rdb config map.
      *
      * @return map of the rdb config
      */
-    
+
     public HashMap<String, String> getJobEventRdbConfigurationMap() {
         HashMap<String, String> result = new HashMap<>(4, 1);
-        
+
         result.put(EnvironmentArgument.EVENT_TRACE_RDB_DRIVER.getKey(), getValue(EnvironmentArgument.EVENT_TRACE_RDB_DRIVER));
         result.put(EnvironmentArgument.EVENT_TRACE_RDB_URL.getKey(), getValue(EnvironmentArgument.EVENT_TRACE_RDB_URL));
         result.put(EnvironmentArgument.EVENT_TRACE_RDB_USERNAME.getKey(), getValue(EnvironmentArgument.EVENT_TRACE_RDB_USERNAME));
         result.put(EnvironmentArgument.EVENT_TRACE_RDB_PASSWORD.getKey(), getValue(EnvironmentArgument.EVENT_TRACE_RDB_PASSWORD));
         return result;
     }
-    
+
     /**
      * Get the role of the mesos.
      *
@@ -180,7 +181,7 @@ public final class BootstrapEnvironment {
         }
         return Optional.of(role);
     }
-    
+
     private String getValue(final EnvironmentArgument environmentArgument) {
         String result = properties.getProperty(environmentArgument.getKey(), environmentArgument.getDefaultValue());
         if (environmentArgument.isRequired()) {
@@ -188,32 +189,32 @@ public final class BootstrapEnvironment {
         }
         return result;
     }
-    
+
     /**
      * Env args.
      */
     @RequiredArgsConstructor
     @Getter
     public enum EnvironmentArgument {
-        
+
         HOSTNAME("hostname", "localhost", true),
-        
+
         MESOS_URL("mesos_url", "zk://localhost:2181/mesos", true),
-        
+
         MESOS_ROLE("mesos_role", "", false),
-        
+
         USER("user", "", false),
-        
+
         ZOOKEEPER_SERVERS("zk_servers", "localhost:2181", true),
-        
+
         ZOOKEEPER_NAMESPACE("zk_namespace", "elasticjob-cloud", true),
-        
+
         ZOOKEEPER_DIGEST("zk_digest", "", false),
-        
+
         PORT("http_port", "8899", true),
-        
+
         JOB_STATE_QUEUE_SIZE("job_state_queue_size", "10000", true),
-        
+
         EVENT_TRACE_RDB_DRIVER("event_trace_rdb_driver", "", false),
 
         EVENT_TRACE_RDB_URL("event_trace_rdb_url", "", false),
@@ -221,17 +222,17 @@ public final class BootstrapEnvironment {
         EVENT_TRACE_RDB_USERNAME("event_trace_rdb_username", "", false),
 
         EVENT_TRACE_RDB_PASSWORD("event_trace_rdb_password", "", false),
-    
+
         RECONCILE_INTERVAL_MINUTES("reconcile_interval_minutes", "-1", false),
 
         AUTH_USERNAME("auth_username", "root", true),
 
         AUTH_PASSWORD("auth_password", "pwd", true);
-        
+
         private final String key;
-        
+
         private final String defaultValue;
-        
+
         private final boolean required;
     }
 }

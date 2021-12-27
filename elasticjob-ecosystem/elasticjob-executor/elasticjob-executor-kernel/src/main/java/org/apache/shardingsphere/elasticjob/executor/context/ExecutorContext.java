@@ -35,25 +35,25 @@ import java.util.ServiceLoader;
  * @see org.apache.shardingsphere.elasticjob.infra.concurrent.ExecutorServiceReloadable
  */
 public final class ExecutorContext {
-    
+
     static {
         ElasticJobServiceLoader.registerTypedService(Reloadable.class);
     }
-    
+
     private final Map<String, Reloadable<?>> reloadableItems = new LinkedHashMap<>();
 
     /**
      * executorContext = {ExecutorContext@4126}
-     *  reloadableItems = {LinkedHashMap@4127}  size = 2
-     *   "java.util.concurrent.ExecutorService" -> {ExecutorServiceReloadable@4133}
-     *    key = "java.util.concurrent.ExecutorService"
-     *    value = {ExecutorServiceReloadable@4133}
-     *   "org.apache.shardingsphere.elasticjob.error.handler.JobErrorHandler" -> {JobErrorHandlerReloadable@4135}
-     *    key = "org.apache.shardingsphere.elasticjob.error.handler.JobErrorHandler"
-     *    value = {JobErrorHandlerReloadable@4135}
-     *     jobErrorHandlerType = "LOG"
-     *     props = {Properties@4152}  size = 0
-     *     jobErrorHandler = {LogJobErrorHandler@4153}
+     * reloadableItems = {LinkedHashMap@4127}  size = 2
+     * "java.util.concurrent.ExecutorService" -> {ExecutorServiceReloadable@4133}
+     * key = "java.util.concurrent.ExecutorService"
+     * value = {ExecutorServiceReloadable@4133}
+     * "org.apache.shardingsphere.elasticjob.error.handler.JobErrorHandler" -> {JobErrorHandlerReloadable@4135}
+     * key = "org.apache.shardingsphere.elasticjob.error.handler.JobErrorHandler"
+     * value = {JobErrorHandlerReloadable@4135}
+     * jobErrorHandlerType = "LOG"
+     * props = {Properties@4152}  size = 0
+     * jobErrorHandler = {LogJobErrorHandler@4153}
      *
      * @param jobConfig
      */
@@ -64,11 +64,11 @@ public final class ExecutorContext {
         });
         initReloadable(jobConfig);
     }
-    
+
     private void initReloadable(final JobConfiguration jobConfig) {
         reloadableItems.values().stream().filter(each -> each instanceof ReloadablePostProcessor).forEach(each -> ((ReloadablePostProcessor) each).init(jobConfig));
     }
-    
+
     /**
      * Reload all reloadable item if necessary.
      *
@@ -77,7 +77,7 @@ public final class ExecutorContext {
     public void reloadIfNecessary(final JobConfiguration jobConfiguration) {
         reloadableItems.values().forEach(each -> each.reloadIfNecessary(jobConfiguration));
     }
-    
+
     /**
      * Get instance.
      *
@@ -89,7 +89,7 @@ public final class ExecutorContext {
     public <T> T get(final Class<T> targetClass) {
         return (T) reloadableItems.get(targetClass.getName()).getInstance();
     }
-    
+
     /**
      * Shutdown all closeable instances.
      */

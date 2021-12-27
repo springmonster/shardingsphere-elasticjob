@@ -19,8 +19,8 @@ package org.apache.shardingsphere.elasticjob.restful.handler;
 
 import lombok.Getter;
 import org.apache.shardingsphere.elasticjob.restful.Http;
-import org.apache.shardingsphere.elasticjob.restful.annotation.ParamSource;
 import org.apache.shardingsphere.elasticjob.restful.annotation.Param;
+import org.apache.shardingsphere.elasticjob.restful.annotation.ParamSource;
 import org.apache.shardingsphere.elasticjob.restful.annotation.RequestBody;
 import org.apache.shardingsphere.elasticjob.restful.annotation.Returning;
 
@@ -37,26 +37,26 @@ import java.util.Optional;
  * Describes parameters requirements of handle method.
  */
 public final class Handler {
-    
+
     private final Object instance;
-    
+
     private final Method handleMethod;
-    
+
     @Getter
     private final List<HandlerParameter> handlerParameters;
-    
+
     /**
      * HTTP status code to return.
      */
     @Getter
     private final int httpStatusCode;
-    
+
     /**
      * Content type to producing.
      */
     @Getter
     private final String producing;
-    
+
     public Handler(final Object instance, final Method handleMethod) {
         this.instance = instance;
         this.handleMethod = handleMethod;
@@ -64,7 +64,7 @@ public final class Handler {
         this.httpStatusCode = parseReturning();
         this.producing = parseProducing();
     }
-    
+
     /**
      * Execute handle method with required arguments.
      *
@@ -76,7 +76,7 @@ public final class Handler {
     public Object execute(final Object... args) throws InvocationTargetException, IllegalAccessException {
         return handleMethod.invoke(instance, args);
     }
-    
+
     private List<HandlerParameter> parseHandleMethodParameter() {
         List<HandlerParameter> params = new LinkedList<>();
         Parameter[] parameters = handleMethod.getParameters();
@@ -96,12 +96,12 @@ public final class Handler {
         }
         return Collections.unmodifiableList(params);
     }
-    
+
     private int parseReturning() {
         Returning returning = handleMethod.getAnnotation(Returning.class);
         return Optional.ofNullable(returning).map(Returning::code).orElse(200);
     }
-    
+
     private String parseProducing() {
         Returning returning = handleMethod.getAnnotation(Returning.class);
         return Optional.ofNullable(returning).map(Returning::contentType).orElse(Http.DEFAULT_CONTENT_TYPE);

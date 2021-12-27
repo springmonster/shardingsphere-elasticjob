@@ -1,8 +1,5 @@
-+++
-title = "作业运行状态监控"
-weight = 3
-chapter = true
-+++
++++ title = "作业运行状态监控"
+weight = 3 chapter = true +++
 
 通过监听 ElasticJob-Lite 的 ZooKeeper 注册中心的几个关键节点即可完成作业运行状态监控功能。
 

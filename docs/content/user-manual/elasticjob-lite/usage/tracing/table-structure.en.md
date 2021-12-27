@@ -1,10 +1,8 @@
-+++
-title = "Table Structure"
-weight = 4
-chapter = true
-+++
++++ title = "Table Structure"
+weight = 4 chapter = true +++
 
-The database which is the value of the event tracing property `event_trace_rdb_url` will automatically creates two tables `JOB_EXECUTION_LOG` and `JOB_STATUS_TRACE_LOG` and several indexes.
+The database which is the value of the event tracing property `event_trace_rdb_url` will automatically creates two
+tables `JOB_EXECUTION_LOG` and `JOB_STATUS_TRACE_LOG` and several indexes.
 
 ## JOB_EXECUTION_LOG Columns
 
@@ -22,11 +20,12 @@ The database which is the value of the event tracing property `event_trace_rdb_u
 | start_time       | TIMESTAMP     | Yes       | Job start time                                                                          |
 | complete_time    | TIMESTAMP     | No        | Job end time                                                                            |
 
-`JOB_EXECUTION_LOG` records the execution history of each job.
-There are two steps:
+`JOB_EXECUTION_LOG` records the execution history of each job. There are two steps:
 
-1. When the job is executed, program will create one record in the `JOB_EXECUTION_LOG`, and all fields except `failure_cause` and `complete_time` are not empty.
-1. When the job completes execution, program will update the record, update the columns of `is_success`, `complete_time` and `failure_cause`(if the job execution fails).
+1. When the job is executed, program will create one record in the `JOB_EXECUTION_LOG`, and all fields
+   except `failure_cause` and `complete_time` are not empty.
+1. When the job completes execution, program will update the record, update the columns of `is_success`, `complete_time`
+   and `failure_cause`(if the job execution fails).
 
 ## JOB_STATUS_TRACE_LOG Columns
 
@@ -44,5 +43,5 @@ There are two steps:
 | message          | VARCHAR(2000) | Yes       | Message                                                                                                                                                 |
 | creation_time    | TIMESTAMP     | Yes       | Create time                                                                                                                                             |
 
-`JOB_STATUS_TRACE_LOG` record the job status changes.
-Through the `task_id` of each job, user can query the life cycle and running track of the job status change.
+`JOB_STATUS_TRACE_LOG` record the job status changes. Through the `task_id` of each job, user can query the life cycle
+and running track of the job status change.

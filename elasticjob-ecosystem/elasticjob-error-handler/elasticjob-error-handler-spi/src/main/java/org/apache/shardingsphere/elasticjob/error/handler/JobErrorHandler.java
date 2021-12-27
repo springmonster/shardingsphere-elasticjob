@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,15 +26,15 @@ import java.io.Closeable;
  * Job error handler.
  */
 public interface JobErrorHandler extends TypedSPI, SPIPostProcessor, Closeable {
-    
+
     /**
      * Handle exception.
-     * 
+     *
      * @param jobName job name
-     * @param cause failure cause
+     * @param cause   failure cause
      */
     void handleException(String jobName, Throwable cause);
-    
+
     @Override
     default void close() {
     }

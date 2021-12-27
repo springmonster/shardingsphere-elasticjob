@@ -23,7 +23,7 @@ package org.apache.shardingsphere.elasticjob.tracing.api;
  * @param <T> storage type
  */
 public interface TracingStorageConfiguration<T> {
-    
+
     /**
      * Create storage.
      *

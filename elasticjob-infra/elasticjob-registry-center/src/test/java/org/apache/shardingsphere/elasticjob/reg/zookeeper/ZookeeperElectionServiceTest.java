@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,8 +23,8 @@ import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.leader.LeaderSelector;
 import org.apache.curator.retry.RetryOneTime;
 import org.apache.curator.test.KillSession;
-import org.apache.shardingsphere.elasticjob.reg.zookeeper.fixture.EmbedTestingServer;
 import org.apache.shardingsphere.elasticjob.reg.base.ElectionCandidate;
+import org.apache.shardingsphere.elasticjob.reg.zookeeper.fixture.EmbedTestingServer;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,25 +35,23 @@ import java.lang.reflect.Field;
 import java.util.concurrent.CountDownLatch;
 import java.util.function.Supplier;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ZookeeperElectionServiceTest {
-    
+
     private static final String HOST_AND_PORT = "localhost:8899";
-    
+
     private static final String ELECTION_PATH = "/election";
-    
+
     @Mock
     private ElectionCandidate electionCandidate;
-    
+
     @BeforeClass
     public static void init() {
         EmbedTestingServer.start();
     }
-    
+
     @Test
     public void assertContend() throws Exception {
         CuratorFramework client = CuratorFrameworkFactory.newClient(EmbedTestingServer.getConnectionString(), new RetryOneTime(2000));
@@ -76,7 +74,7 @@ public class ZookeeperElectionServiceTest {
         verify(anotherElectionCandidate, atLeastOnce()).startLeadership();
         verify(anotherElectionCandidate, atLeastOnce()).stopLeadership();
     }
-    
+
     @SneakyThrows
     private void blockUntilCondition(final Supplier<Boolean> condition) {
         while (!condition.get()) {

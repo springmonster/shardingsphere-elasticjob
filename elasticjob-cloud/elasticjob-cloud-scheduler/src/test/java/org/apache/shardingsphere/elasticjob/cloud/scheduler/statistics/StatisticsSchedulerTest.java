@@ -33,25 +33,25 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class StatisticsSchedulerTest {
-    
+
     private StatisticsScheduler statisticsScheduler;
-    
+
     @Mock
     private Scheduler scheduler;
-    
+
     @Before
     public void setUp() {
         statisticsScheduler = new StatisticsScheduler();
         ReflectionUtils.setFieldValue(statisticsScheduler, "scheduler", scheduler);
     }
-    
+
     @Test
     public void assertRegister() throws SchedulerException {
         StatisticJob job = new TestStatisticJob();
         statisticsScheduler.register(job);
         verify(scheduler).scheduleJob(job.buildJobDetail(), job.buildTrigger());
     }
-    
+
     @Test
     public void assertShutdown() throws SchedulerException {
         when(scheduler.isShutdown()).thenReturn(false);

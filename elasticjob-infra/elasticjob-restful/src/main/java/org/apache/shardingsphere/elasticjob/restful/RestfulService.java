@@ -21,12 +21,12 @@ package org.apache.shardingsphere.elasticjob.restful;
  * A facade of restful service. Invoke startup() method to start listen a port to provide Restful API.
  */
 public interface RestfulService {
-    
+
     /**
      * Start RESTFul service.
      */
     void startup();
-    
+
     /**
      * Shutdown RESTFul service.
      */

@@ -20,12 +20,7 @@ package org.apache.shardingsphere.elasticjob.restful.pipeline;
 import com.google.gson.Gson;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
-import io.netty.handler.codec.http.DefaultFullHttpRequest;
-import io.netty.handler.codec.http.HttpHeaderNames;
-import io.netty.handler.codec.http.HttpHeaderValues;
-import io.netty.handler.codec.http.HttpMethod;
-import io.netty.handler.codec.http.HttpUtil;
-import io.netty.handler.codec.http.HttpVersion;
+import io.netty.handler.codec.http.*;
 import lombok.SneakyThrows;
 import org.apache.shardingsphere.elasticjob.restful.NettyRestfulService;
 import org.apache.shardingsphere.elasticjob.restful.NettyRestfulServiceConfiguration;
@@ -46,15 +41,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 public final class NettyRestfulServiceTest {
-    
+
     private static final long TESTCASE_TIMEOUT = 10000L;
-    
+
     private static final String HOST = "localhost";
-    
+
     private static final int PORT = 18080;
-    
+
     private static RestfulService restfulService;
-    
+
     @BeforeClass
     public static void init() {
         NettyRestfulServiceConfiguration configuration = new NettyRestfulServiceConfiguration(PORT);
@@ -64,7 +59,7 @@ public final class NettyRestfulServiceTest {
         restfulService = new NettyRestfulService(configuration);
         restfulService.startup();
     }
-    
+
     @SneakyThrows
     @Test(timeout = TESTCASE_TIMEOUT)
     public void assertRequestWithParameters() {
@@ -87,7 +82,7 @@ public final class NettyRestfulServiceTest {
             assertThat(jobPojo.getDescription(), is(description));
         }, TESTCASE_TIMEOUT);
     }
-    
+
     @Test(timeout = TESTCASE_TIMEOUT)
     public void assertCustomExceptionHandler() {
         DefaultFullHttpRequest request = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.GET, "/job/throw/IllegalState");
@@ -97,7 +92,7 @@ public final class NettyRestfulServiceTest {
             assertThat(httpResponse.status().code(), is(403));
         }, TESTCASE_TIMEOUT);
     }
-    
+
     @Test(timeout = TESTCASE_TIMEOUT)
     public void assertUsingDefaultExceptionHandler() {
         DefaultFullHttpRequest request = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.GET, "/job/throw/IllegalArgument");
@@ -107,7 +102,7 @@ public final class NettyRestfulServiceTest {
             assertThat(httpResponse.status().code(), is(500));
         }, TESTCASE_TIMEOUT);
     }
-    
+
     @Test(timeout = TESTCASE_TIMEOUT)
     public void assertReturnStatusCode() {
         DefaultFullHttpRequest request = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.GET, "/job/code/204");
@@ -115,7 +110,7 @@ public final class NettyRestfulServiceTest {
             assertThat(httpResponse.status().code(), is(204));
         }, TESTCASE_TIMEOUT);
     }
-    
+
     @Test(timeout = TESTCASE_TIMEOUT)
     public void assertHandlerNotFound() {
         DefaultFullHttpRequest request = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.GET, "/not/found");
@@ -123,7 +118,7 @@ public final class NettyRestfulServiceTest {
             assertThat(httpResponse.status().code(), is(404));
         }, TESTCASE_TIMEOUT);
     }
-    
+
     @Test(timeout = TESTCASE_TIMEOUT)
     public void assertRequestIndexWithSlash() {
         DefaultFullHttpRequest requestWithSlash = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.GET, "/");
@@ -131,7 +126,7 @@ public final class NettyRestfulServiceTest {
             assertThat(httpResponse.status().code(), is(200));
         }, TESTCASE_TIMEOUT);
     }
-    
+
     @Test(timeout = TESTCASE_TIMEOUT)
     public void assertRequestIndexWithoutSlash() {
         DefaultFullHttpRequest requestWithoutSlash = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.GET, "");
@@ -139,7 +134,7 @@ public final class NettyRestfulServiceTest {
             assertThat(httpResponse.status().code(), is(200));
         }, TESTCASE_TIMEOUT);
     }
-    
+
     @AfterClass
     public static void tearDown() {
         if (null != restfulService) {

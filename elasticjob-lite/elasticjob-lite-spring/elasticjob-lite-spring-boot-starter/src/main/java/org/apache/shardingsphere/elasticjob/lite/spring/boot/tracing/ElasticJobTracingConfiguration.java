@@ -30,7 +30,7 @@ import javax.sql.DataSource;
  */
 @EnableConfigurationProperties(TracingProperties.class)
 public class ElasticJobTracingConfiguration {
-    
+
     /**
      * Create a bean of tracing configuration.
      *

@@ -32,9 +32,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 
 public final class BootstrapEnvironmentTest {
-    
+
     private final BootstrapEnvironment bootstrapEnvironment = BootstrapEnvironment.getINSTANCE();
-    
+
     @Test
     public void assertGetMesosConfiguration() {
         MesosConfiguration mesosConfig = bootstrapEnvironment.getMesosConfiguration();
@@ -42,7 +42,7 @@ public final class BootstrapEnvironmentTest {
         assertThat(mesosConfig.getUser(), is(""));
         assertThat(mesosConfig.getUrl(), is("zk://localhost:2181/mesos"));
     }
-    
+
     @Test
     public void assertGetZookeeperConfiguration() {
         Properties properties = new Properties();
@@ -53,19 +53,19 @@ public final class BootstrapEnvironmentTest {
         assertThat(zkConfig.getNamespace(), is("elasticjob-cloud"));
         assertThat(zkConfig.getDigest(), is("test"));
     }
-    
+
     @Test
     public void assertGetRestfulServerConfiguration() {
         RestfulServerConfiguration restfulServerConfig = bootstrapEnvironment.getRestfulServerConfiguration();
         assertThat(restfulServerConfig.getPort(), is(8899));
     }
-    
+
     @Test
     public void assertGetFrameworkConfiguration() {
         FrameworkConfiguration frameworkConfig = bootstrapEnvironment.getFrameworkConfiguration();
         assertThat(frameworkConfig.getJobStateQueueSize(), is(10000));
     }
-    
+
     @Test
     public void assertGetEventTraceRdbConfiguration() {
         Properties properties = new Properties();
@@ -76,12 +76,12 @@ public final class BootstrapEnvironmentTest {
         ReflectionUtils.setFieldValue(bootstrapEnvironment, "properties", properties);
         bootstrapEnvironment.getTracingConfiguration().ifPresent(tracingConfig -> assertThat(tracingConfig.getTracingStorageConfiguration().getStorage(), instanceOf(BasicDataSource.class)));
     }
-    
+
     @Test
     public void assertWithoutEventTraceRdbConfiguration() {
         assertFalse(bootstrapEnvironment.getTracingConfiguration().isPresent());
     }
-    
+
     @Test
     public void assertGetEventTraceRdbConfigurationMap() {
         Properties properties = new Properties();
@@ -96,7 +96,7 @@ public final class BootstrapEnvironmentTest {
         assertThat(jobEventRdbConfigurationMap.get(BootstrapEnvironment.EnvironmentArgument.EVENT_TRACE_RDB_USERNAME.getKey()), is("sa"));
         assertThat(jobEventRdbConfigurationMap.get(BootstrapEnvironment.EnvironmentArgument.EVENT_TRACE_RDB_PASSWORD.getKey()), is("password"));
     }
-    
+
     @Test
     public void assertReconcileConfiguration() {
         FrameworkConfiguration configuration = bootstrapEnvironment.getFrameworkConfiguration();

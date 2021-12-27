@@ -34,18 +34,18 @@ import org.quartz.spi.SchedulerPlugin;
 @Slf4j
 @Getter
 public final class JobShutdownHookPlugin implements SchedulerPlugin {
-    
+
     private String jobName;
-    
+
     @Setter
     private boolean cleanShutdown = true;
-    
+
     @Override
     public void initialize(final String name, final Scheduler scheduler, final ClassLoadHelper classLoadHelper) throws SchedulerException {
         jobName = scheduler.getSchedulerName();
         registerShutdownHook();
     }
-    
+
     /**
      * <p>
      * Called when the associated <code>Scheduler</code> is started, in order
@@ -57,7 +57,7 @@ public final class JobShutdownHookPlugin implements SchedulerPlugin {
     public void start() {
 
     }
-    
+
     @Override
     public void shutdown() {
         CoordinatorRegistryCenter regCenter = JobRegistry.getInstance().getRegCenter(jobName);
@@ -70,7 +70,7 @@ public final class JobShutdownHookPlugin implements SchedulerPlugin {
         }
         new InstanceService(regCenter, jobName).removeInstance();
     }
-    
+
     private void registerShutdownHook() {
         log.info("Registering Quartz shutdown hook. {}", jobName);
         Thread t = new Thread("Quartz Shutdown-Hook " + jobName) {

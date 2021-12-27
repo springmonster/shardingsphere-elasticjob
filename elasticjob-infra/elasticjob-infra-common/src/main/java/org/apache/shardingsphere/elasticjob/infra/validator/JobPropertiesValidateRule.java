@@ -28,22 +28,22 @@ import java.util.Properties;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JobPropertiesValidateRule {
-    
+
     /**
      * Validate property value is required.
-     * 
+     *
      * @param props properties to be validated
-     * @param key property key to be validated
+     * @param key   property key to be validated
      */
     public static void validateIsRequired(final Properties props, final String key) {
         Preconditions.checkNotNull(props.getProperty(key), "The property `%s` is required.", key);
     }
-    
+
     /**
      * Validate property value is positive integer.
-     * 
+     *
      * @param props properties to be validated
-     * @param key property key to be validated
+     * @param key   property key to be validated
      */
     public static void validateIsPositiveInteger(final Properties props, final String key) {
         String propertyValue = props.getProperty(key);

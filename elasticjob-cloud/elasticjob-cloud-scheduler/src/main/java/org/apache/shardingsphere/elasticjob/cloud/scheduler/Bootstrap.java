@@ -36,16 +36,16 @@ import java.util.concurrent.CountDownLatch;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Slf4j
 public final class Bootstrap {
-    
+
     /**
      * Startup server.
-     * 
+     *
      * @param args arguments
      * @throws InterruptedException thread interrupted exception
      */
-    
+
     public static void main(final String[] args) throws InterruptedException {
-        
+
         CoordinatorRegistryCenter regCenter = new ZookeeperRegistryCenter(BootstrapEnvironment.getINSTANCE().getZookeeperConfiguration());
         regCenter.init();
         final ZookeeperElectionService electionService = new ZookeeperElectionService(
@@ -54,7 +54,7 @@ public final class Bootstrap {
         final CountDownLatch latch = new CountDownLatch(1);
         latch.await();
         Runtime.getRuntime().addShutdownHook(new Thread("shutdown-hook") {
-            
+
             @Override
             public void run() {
                 electionService.stop();

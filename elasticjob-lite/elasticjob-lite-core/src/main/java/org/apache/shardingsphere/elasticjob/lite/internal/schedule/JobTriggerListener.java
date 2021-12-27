@@ -28,16 +28,16 @@ import org.quartz.listeners.TriggerListenerSupport;
  */
 @RequiredArgsConstructor
 public final class JobTriggerListener extends TriggerListenerSupport {
-    
+
     private final ExecutionService executionService;
-    
+
     private final ShardingService shardingService;
-    
+
     @Override
     public String getName() {
         return "JobTriggerListener";
     }
-    
+
     @Override
     public void triggerMisfired(final Trigger trigger) {
         if (null != trigger.getPreviousFireTime()) {

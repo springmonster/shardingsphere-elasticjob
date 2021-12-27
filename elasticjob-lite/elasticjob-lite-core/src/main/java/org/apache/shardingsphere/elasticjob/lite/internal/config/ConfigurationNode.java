@@ -23,18 +23,18 @@ import org.apache.shardingsphere.elasticjob.lite.internal.storage.JobNodePath;
  * Configuration node.
  */
 public final class ConfigurationNode {
-    
+
     static final String ROOT = "config";
-    
+
     private final JobNodePath jobNodePath;
-    
+
     public ConfigurationNode(final String jobName) {
         jobNodePath = new JobNodePath(jobName);
     }
-    
+
     /**
      * Judge is configuration root path or not.
-     * 
+     *
      * @param path node path
      * @return is configuration root path or not
      */

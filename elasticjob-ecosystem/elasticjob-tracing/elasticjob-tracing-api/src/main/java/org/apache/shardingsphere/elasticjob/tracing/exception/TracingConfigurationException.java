@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,13 +21,13 @@ package org.apache.shardingsphere.elasticjob.tracing.exception;
  * Tracing configuration exception.
  */
 public final class TracingConfigurationException extends Exception {
-    
+
     private static final long serialVersionUID = 4069519372148227761L;
-    
+
     public TracingConfigurationException(final Exception ex) {
         super(ex);
     }
-    
+
     public TracingConfigurationException(final String errorMessage) {
         super(errorMessage);
     }

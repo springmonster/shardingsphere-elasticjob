@@ -28,14 +28,14 @@ import java.nio.charset.StandardCharsets;
  * Default serializer for <code>application/json</code>.
  */
 public final class DefaultJsonResponseBodySerializer implements ResponseBodySerializer {
-    
+
     private final Gson gson = GsonFactory.getGson();
-    
+
     @Override
     public String mimeType() {
         return HttpHeaderValues.APPLICATION_JSON.toString();
     }
-    
+
     @Override
     public byte[] serialize(final Object responseBody) {
         if (responseBody instanceof String) {

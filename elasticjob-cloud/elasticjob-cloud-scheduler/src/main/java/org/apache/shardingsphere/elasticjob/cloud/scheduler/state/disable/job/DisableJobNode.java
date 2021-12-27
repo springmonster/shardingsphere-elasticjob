@@ -26,11 +26,11 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 final class DisableJobNode {
-    
+
     static final String ROOT = StateNode.ROOT + "/disable/job";
-    
+
     private static final String DISABLE_JOB = ROOT + "/%s";
-    
+
     static String getDisableJobNodePath(final String jobName) {
         return String.format(DISABLE_JOB, jobName);
     }

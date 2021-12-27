@@ -30,16 +30,16 @@ import java.util.concurrent.Executors;
  * Cloud job disable listener.
  */
 public final class CloudJobDisableListener implements CuratorCacheListener {
-    
+
     private final CoordinatorRegistryCenter regCenter;
-    
+
     private final ProducerManager producerManager;
-    
+
     public CloudJobDisableListener(final CoordinatorRegistryCenter regCenter, final ProducerManager producerManager) {
         this.regCenter = regCenter;
         this.producerManager = producerManager;
     }
-    
+
     @Override
     public void event(final Type type, final ChildData oldData, final ChildData data) {
         String path = Type.NODE_DELETED == type ? oldData.getPath() : data.getPath();
@@ -55,25 +55,25 @@ public final class CloudJobDisableListener implements CuratorCacheListener {
             }
         }
     }
-    
+
     private boolean isJobDisableNode(final String path) {
         return path.startsWith(DisableJobNode.ROOT) && path.length() > DisableJobNode.ROOT.length();
     }
-    
+
     /**
      * Start the listener service of the cloud job service.
      */
     public void start() {
         getCache().listenable().addListener(this, Executors.newSingleThreadExecutor());
     }
-    
+
     /**
      * Stop the listener service of the cloud job service.
      */
     public void stop() {
         getCache().listenable().removeListener(this);
     }
-    
+
     private CuratorCache getCache() {
         CuratorCache result = (CuratorCache) regCenter.getRawCache(DisableJobNode.ROOT);
         if (null != result) {

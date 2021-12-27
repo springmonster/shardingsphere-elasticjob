@@ -21,36 +21,36 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * Job node path.
- * 
+ *
  * <p>
  * Job node is add job name as prefix.
  * </p>
  */
 @RequiredArgsConstructor
 public final class JobNodePath {
-    
+
     private static final String LEADER_HOST_NODE = "leader/election/instance";
-    
+
     private static final String CONFIG_NODE = "config";
-    
+
     private static final String SERVERS_NODE = "servers";
-    
+
     private static final String INSTANCES_NODE = "instances";
-    
+
     private static final String SHARDING_NODE = "sharding";
-    
+
     private final String jobName;
-    
+
     /**
      * Get full path.
-     * 
+     *
      * @param node node
      * @return full path
      */
     public String getFullPath(final String node) {
         return String.format("/%s/%s", jobName, node);
     }
-    
+
     /**
      * Get configuration node path.
      *
@@ -59,7 +59,7 @@ public final class JobNodePath {
     public String getConfigNodePath() {
         return String.format("/%s/%s", jobName, CONFIG_NODE);
     }
-    
+
     /**
      * Get leader host node path.
      *
@@ -68,7 +68,7 @@ public final class JobNodePath {
     public String getLeaderHostNodePath() {
         return String.format("/%s/%s", jobName, LEADER_HOST_NODE);
     }
-    
+
     /**
      * Get server node path.
      *
@@ -77,7 +77,7 @@ public final class JobNodePath {
     public String getServerNodePath() {
         return String.format("/%s/%s", jobName, SERVERS_NODE);
     }
-    
+
     /**
      * Get server node path.
      *
@@ -87,7 +87,7 @@ public final class JobNodePath {
     public String getServerNodePath(final String serverIp) {
         return String.format("%s/%s", getServerNodePath(), serverIp);
     }
-    
+
     /**
      * Get instances node path.
      *
@@ -96,7 +96,7 @@ public final class JobNodePath {
     public String getInstancesNodePath() {
         return String.format("/%s/%s", jobName, INSTANCES_NODE);
     }
-    
+
     /**
      * Get instance node path via job instance ID.
      *
@@ -106,7 +106,7 @@ public final class JobNodePath {
     public String getInstanceNodePath(final String instanceId) {
         return String.format("%s/%s", getInstancesNodePath(), instanceId);
     }
-    
+
     /**
      * Get sharding node path.
      *
@@ -115,11 +115,11 @@ public final class JobNodePath {
     public String getShardingNodePath() {
         return String.format("/%s/%s", jobName, SHARDING_NODE);
     }
-    
+
     /**
      * Get sharding node path.
      *
-     * @param item sharding item
+     * @param item     sharding item
      * @param nodeName node name
      * @return sharding node path
      */

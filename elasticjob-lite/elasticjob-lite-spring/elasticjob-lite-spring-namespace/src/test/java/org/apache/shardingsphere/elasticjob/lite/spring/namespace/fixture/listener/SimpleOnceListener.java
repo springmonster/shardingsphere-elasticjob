@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,35 +26,35 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class SimpleOnceListener extends AbstractDistributeOnceElasticJobListener {
-    
+
     @Autowired
     private FooService fooService;
-    
+
     private final long startedTimeoutMilliseconds;
-    
+
     private final long completedTimeoutMilliseconds;
-    
+
     public SimpleOnceListener() {
         this(10000, 20000);
     }
-    
+
     public SimpleOnceListener(final long startedTimeoutMilliseconds, final long completedTimeoutMilliseconds) {
         super(startedTimeoutMilliseconds, completedTimeoutMilliseconds);
         this.startedTimeoutMilliseconds = startedTimeoutMilliseconds;
         this.completedTimeoutMilliseconds = completedTimeoutMilliseconds;
     }
-    
+
     @Override
     public void doBeforeJobExecutedAtLastStarted(final ShardingContexts shardingContexts) {
         assertThat(startedTimeoutMilliseconds, is(10000L));
         assertThat(fooService.foo(), is("this is fooService."));
     }
-    
+
     @Override
     public void doAfterJobExecutedAtLastCompleted(final ShardingContexts shardingContexts) {
         assertThat(completedTimeoutMilliseconds, is(20000L));
     }
-    
+
     @Override
     public String getType() {
         return "simpleOnceListener";

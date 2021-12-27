@@ -1,8 +1,5 @@
 ---
-title: Content
-weight: 10
-chapter: true
-pre: "<b>2. </b>"
+title: Content weight: 10 chapter: true pre: "<b>2. </b>"
 ---
 
 ### Chapter 2

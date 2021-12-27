@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,26 +24,26 @@ import java.io.IOException;
 
 /**
  * Embed ZooKeeper.
- * 
+ *
  * <p>
- *     Only used for examples
+ * Only used for examples
  * </p>
  */
 public final class EmbedZookeeperServer {
-    
+
     private static TestingServer testingServer;
-    
+
     /**
      * Embed ZooKeeper.
-     * 
+     *
      * @param port ZooKeeper port
      */
     public static void start(final int port) {
         try {
             testingServer = new TestingServer(port, new File(String.format("target/test_zk_data/%s/", System.nanoTime())));
-        
+
         } catch (final Exception ex) {
-        
+
             ex.printStackTrace();
         } finally {
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {

@@ -30,7 +30,7 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class StatisticTimeUtils {
-    
+
     /**
      * Get the statistical time with the interval unit.
      *
@@ -40,12 +40,12 @@ public final class StatisticTimeUtils {
     public static Date getCurrentStatisticTime(final StatisticInterval interval) {
         return getStatisticTime(interval, 0);
     }
-    
+
     /**
      * Get the statistical time with the interval unit.
      *
      * @param interval interval
-     * @param offset offset
+     * @param offset   offset
      * @return Date
      */
     public static Date getStatisticTime(final StatisticInterval interval, final int offset) {

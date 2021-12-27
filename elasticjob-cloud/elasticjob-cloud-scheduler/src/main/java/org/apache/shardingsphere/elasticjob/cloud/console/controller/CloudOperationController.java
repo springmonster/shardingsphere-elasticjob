@@ -40,26 +40,26 @@ import java.util.Map;
 @Slf4j
 @ContextPath("/api/operate")
 public final class CloudOperationController implements RestfulController {
-    
+
     private static ReconcileService reconcileService;
-    
+
     private static final long RECONCILE_MILLIS_INTERVAL = 10 * 1000L;
-    
+
     private static MesosStateService mesosStateService;
-    
+
     private static long lastReconcileTime;
-    
+
     /**
      * Init.
      *
-     * @param regCenter registry center
+     * @param regCenter        registry center
      * @param reconcileService reconcile service
      */
     public static void init(final CoordinatorRegistryCenter regCenter, final ReconcileService reconcileService) {
         CloudOperationController.reconcileService = reconcileService;
         CloudOperationController.mesosStateService = new MesosStateService(regCenter);
     }
-    
+
     /**
      * Explicit reconcile service.
      *
@@ -71,7 +71,7 @@ public final class CloudOperationController implements RestfulController {
         reconcileService.explicitReconcile();
         return true;
     }
-    
+
     /**
      * Implicit reconcile service.
      *
@@ -83,14 +83,14 @@ public final class CloudOperationController implements RestfulController {
         reconcileService.implicitReconcile();
         return true;
     }
-    
+
     private void validReconcileInterval() {
         if (System.currentTimeMillis() < lastReconcileTime + RECONCILE_MILLIS_INTERVAL) {
             throw new RuntimeException("Repeat explicitReconcile");
         }
         lastReconcileTime = System.currentTimeMillis();
     }
-    
+
     /**
      * Get sandbox of the cloud job by app name.
      *

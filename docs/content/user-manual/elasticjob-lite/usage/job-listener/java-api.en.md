@@ -1,8 +1,5 @@
-+++
-title = "Use Java API"
-weight = 2
-chapter = true
-+++
++++ title = "Use Java API"
+weight = 2 chapter = true +++
 
 ## Common Listener
 

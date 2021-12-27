@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,17 +24,17 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class SimpleCglibListener implements ElasticJobListener {
-    
+
     @Override
     public void beforeJobExecuted(final ShardingContexts shardingContexts) {
         assertThat(shardingContexts.getJobName(), is("simpleElasticJob_namespace_listener_cglib"));
     }
-    
+
     @Override
     public void afterJobExecuted(final ShardingContexts shardingContexts) {
         assertThat(shardingContexts.getJobName(), is("simpleElasticJob_namespace_listener_cglib"));
     }
-    
+
     @Override
     public String getType() {
         return "simpleCglibListener";

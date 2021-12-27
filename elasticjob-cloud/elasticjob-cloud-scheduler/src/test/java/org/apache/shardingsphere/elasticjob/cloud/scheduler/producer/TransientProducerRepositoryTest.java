@@ -29,20 +29,20 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(MockitoJUnitRunner.class)
 public final class TransientProducerRepositoryTest {
-    
+
     private final JobKey jobKey = JobKey.jobKey("0/45 * * * * ?");
-    
+
     private final String jobName = "test_job";
-    
+
     private final TransientProducerRepository transientProducerRepository = new TransientProducerRepository();
-    
+
     @Test
     public void assertPutJobKey() {
         transientProducerRepository.put(jobKey, jobName);
         assertThat(transientProducerRepository.get(jobKey).get(0), is(jobName));
         transientProducerRepository.remove(jobName);
     }
-    
+
     @Test
     public void assertPutJobWithChangedCron() {
         transientProducerRepository.put(jobKey, jobName);
@@ -52,7 +52,7 @@ public final class TransientProducerRepositoryTest {
         assertThat(transientProducerRepository.get(newJobKey).get(0), is(jobName));
         transientProducerRepository.remove(jobName);
     }
-    
+
     @Test
     public void assertPutMoreJobWithChangedCron() {
         String jobName2 = "other_test_job";
@@ -65,14 +65,14 @@ public final class TransientProducerRepositoryTest {
         transientProducerRepository.remove(jobName);
         transientProducerRepository.remove(jobName2);
     }
-    
+
     @Test
     public void assertRemoveJobKey() {
         transientProducerRepository.put(jobKey, jobName);
         transientProducerRepository.remove(jobName);
         assertTrue(transientProducerRepository.get(jobKey).isEmpty());
     }
-    
+
     @Test
     public void assertContainsKey() {
         transientProducerRepository.put(jobKey, jobName);

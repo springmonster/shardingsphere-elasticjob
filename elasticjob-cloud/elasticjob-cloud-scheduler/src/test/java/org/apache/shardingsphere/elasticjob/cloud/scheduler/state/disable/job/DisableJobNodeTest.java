@@ -23,7 +23,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public final class DisableJobNodeTest {
-    
+
     @Test
     public void assertGetDisableAppNodePath() {
         assertThat(DisableJobNode.getDisableJobNodePath("test_job0000000001"), is("/state/disable/job/test_job0000000001"));

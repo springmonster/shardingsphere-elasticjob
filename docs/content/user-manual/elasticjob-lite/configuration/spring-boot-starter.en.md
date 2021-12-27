@@ -1,10 +1,8 @@
-+++
-title = "Spring Boot Starter"
-weight = 2
-chapter = true
-+++
++++ title = "Spring Boot Starter"
+weight = 2 chapter = true +++
 
-To use the Spring boot, user need to add the dependency of the `elasticjob-lite-spring-boot-starter` module in the `pom.xml` file.
+To use the Spring boot, user need to add the dependency of the `elasticjob-lite-spring-boot-starter` module in
+the `pom.xml` file.
 
 ```xml
 <dependency>
@@ -18,7 +16,7 @@ To use the Spring boot, user need to add the dependency of the `elasticjob-lite-
 
 Prefix: `elasticjob.reg-center`
 
-Configuration: 
+Configuration:
 
 | Property name                   | Required |
 | ------------------------------- |:-------- |
@@ -31,9 +29,10 @@ Configuration:
 | connection-timeout-milliseconds | No       |
 | digest                          | No       |
 
-Reference: 
+Reference:
 
 **YAML**
+
 ```yaml
 elasticjob:
   regCenter:
@@ -42,6 +41,7 @@ elasticjob:
 ```
 
 **Properties**
+
 ```
 elasticjob.reg-center.namespace=elasticjob-lite-springboot
 elasticjob.reg-center.server-lists=localhost:6181
@@ -78,14 +78,14 @@ Configuration:
 
 **"elasticJobClass" and "elasticJobType" are mutually exclusive.**
 
-If cron was configured, the job will be created as a ScheduleJobBootstrap.
-The Starter will start scheduling when application is ready.
-Otherwise, the job will be created as a OneOffJobBootstrap with a name specified by "jobBootstrapBeanName".
-It requires manual injection and execution.
+If cron was configured, the job will be created as a ScheduleJobBootstrap. The Starter will start scheduling when
+application is ready. Otherwise, the job will be created as a OneOffJobBootstrap with a name specified by "
+jobBootstrapBeanName". It requires manual injection and execution.
 
-Reference: 
+Reference:
 
 **YAML**
+
 ```yaml
 elasticjob:
   jobs:
@@ -110,6 +110,7 @@ elasticjob:
 ```
 
 **Properties**
+
 ```
 elasticjob.jobs.simpleJob.elastic-job-class=org.apache.shardingsphere.elasticjob.lite.example.job.SpringBootSimpleJob
 elasticjob.jobs.simpleJob.cron=0/5 * * * * ?
@@ -140,12 +141,13 @@ Prefix: `elasticjob.tracing`
 
 **Load all Job When "includeJobNames" and "excludeJobNames" are null.**
 
-RDB is the only supported type at present.
-If Spring IoC container contained a bean of DataSource and RDB was set in configuration, an instance of TracingConfiguration will be created automatically.
+RDB is the only supported type at present. If Spring IoC container contained a bean of DataSource and RDB was set in
+configuration, an instance of TracingConfiguration will be created automatically.
 
-Reference: 
+Reference:
 
 **YAML**
+
 ```yaml
 elasticjob:
   tracing:
@@ -154,6 +156,7 @@ elasticjob:
 ```
 
 **Properties**
+
 ```
 elasticjob.tracing.type=RDB
 elasticjob.tracing.excludeJobNames=[ job-name ]
@@ -168,12 +171,13 @@ Prefix: `elasticjob.dump`
 | enabled          | true          | No       |
 | port             |               | Yes      |
 
-Designate a port as dump port in configurations. The Spring Boot Starter will enable dumping automatically.
-If the port for job dump was missing, dump won't be enabled.
+Designate a port as dump port in configurations. The Spring Boot Starter will enable dumping automatically. If the port
+for job dump was missing, dump won't be enabled.
 
-Reference: 
+Reference:
 
 **YAML**
+
 ```yaml
 elasticjob:
   dump:
@@ -181,6 +185,7 @@ elasticjob:
 ```
 
 **Properties**
+
 ```
 elasticjob.dump.port=9888
 ```

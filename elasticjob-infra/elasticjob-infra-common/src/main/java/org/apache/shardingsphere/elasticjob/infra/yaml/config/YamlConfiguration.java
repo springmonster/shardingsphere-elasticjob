@@ -25,7 +25,7 @@ import java.io.Serializable;
  * @param <T> type of configuration
  */
 public interface YamlConfiguration<T> extends Serializable {
-    
+
     /**
      * Convert to original configuration.
      *

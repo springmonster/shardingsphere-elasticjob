@@ -21,19 +21,19 @@ import javax.sql.DataSource;
 
 /**
  * JDBC parameter decorator.
- * 
+ *
  * @param <T> type of data source
  */
 public interface JDBCParameterDecorator<T extends DataSource> {
-    
+
     /**
      * Decorate data source.
-     * 
+     *
      * @param dataSource data source to be decorated
      * @return decorated data source
      */
     T decorate(T dataSource);
-    
+
     /**
      * Get data source type.
      *

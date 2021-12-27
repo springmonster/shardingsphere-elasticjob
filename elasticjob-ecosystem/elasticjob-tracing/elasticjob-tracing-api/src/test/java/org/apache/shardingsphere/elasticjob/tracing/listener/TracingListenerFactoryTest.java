@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,17 +27,17 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;
 
 public final class TracingListenerFactoryTest {
-    
+
     @Test(expected = TracingConfigurationException.class)
     public void assertGetListenerWithNullType() throws TracingConfigurationException {
         TracingListenerFactory.getListener(new TracingConfiguration<>("", null));
     }
-    
+
     @Test(expected = TracingConfigurationException.class)
     public void assertGetInvalidListener() throws TracingConfigurationException {
         TracingListenerFactory.getListener(new TracingConfiguration<>("INVALID", null));
     }
-    
+
     @Test
     public void assertGetListener() throws TracingConfigurationException {
         assertThat(TracingListenerFactory.getListener(new TracingConfiguration<>("TEST", new JobEventCallerConfiguration(() -> {

@@ -12,8 +12,8 @@
 </dependency>
 ```
 
-Tracing starter is optional.
-User can provide a bean of `TracingConfiguration` manually.
+Tracing starter is optional. User can provide a bean of `TracingConfiguration` manually.
+
 ```xml
 <dependency>
     <groupId>org.apache.shardingsphere.elasticjob</groupId>
@@ -46,6 +46,7 @@ public class SpringBootSimpleJob implements SimpleJob {
 ### Configure Registry Center, Jobs and Tracing Configuration
 
 `application.yml`
+
 ```yaml
 elasticjob:
   tracing:
@@ -77,6 +78,7 @@ elasticjob:
 ### Run it!
 
 Log fragments after started:
+
 ```
 Item: 2 | Time: 14:18:00 | Thread: 391 | DATAFLOW FETCH
 Item: 0 | Time: 14:18:00 | Thread: 386 | DATAFLOW FETCH

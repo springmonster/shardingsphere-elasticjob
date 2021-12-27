@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,10 +30,10 @@ import org.apache.zookeeper.KeeperException.NodeExistsException;
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class RegExceptionHandler {
-    
+
     /**
      * Handle exception.
-     * 
+     *
      * @param cause exception to be handled
      */
     public static void handleException(final Exception cause) {
@@ -48,7 +48,7 @@ public final class RegExceptionHandler {
             throw new RegException(cause);
         }
     }
-    
+
     private static boolean isIgnoredException(final Throwable cause) {
         return cause instanceof ConnectionLossException || cause instanceof NoNodeException || cause instanceof NodeExistsException;
     }

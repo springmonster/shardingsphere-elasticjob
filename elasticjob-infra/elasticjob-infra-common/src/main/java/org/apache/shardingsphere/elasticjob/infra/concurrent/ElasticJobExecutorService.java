@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,28 +20,24 @@ package org.apache.shardingsphere.elasticjob.infra.concurrent;
 import com.google.common.util.concurrent.MoreExecutors;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * ElasticJob executor service.
  */
 public final class ElasticJobExecutorService {
-    
+
     private final ThreadPoolExecutor threadPoolExecutor;
-    
+
     private final BlockingQueue<Runnable> workQueue;
-    
+
     public ElasticJobExecutorService(final String namingPattern, final int threadSize) {
         workQueue = new LinkedBlockingQueue<>();
         threadPoolExecutor = new ThreadPoolExecutor(
                 threadSize, threadSize, 5L, TimeUnit.MINUTES, workQueue, new BasicThreadFactory.Builder().namingPattern(String.join("-", namingPattern, "%s")).build());
         threadPoolExecutor.allowCoreThreadTimeOut(true);
     }
-    
+
     /**
      * Create executor service.
      *
@@ -59,7 +55,7 @@ public final class ElasticJobExecutorService {
     public boolean isShutdown() {
         return threadPoolExecutor.isShutdown();
     }
-    
+
     /**
      * Get active thread count.
      *
@@ -68,7 +64,7 @@ public final class ElasticJobExecutorService {
     public int getActiveThreadCount() {
         return threadPoolExecutor.getActiveCount();
     }
-    
+
     /**
      * Get work queue size.
      *

@@ -26,7 +26,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public final class JobContextTest {
-    
+
     @Test
     public void assertFrom() {
         CloudJobConfiguration cloudJobConfig = CloudJobConfigurationBuilder.createCloudJobConfiguration("test_job").toCloudJobConfiguration();

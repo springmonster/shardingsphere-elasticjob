@@ -20,6 +20,7 @@ package org.apache.shardingsphere.elasticjob.cloud.console;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Map;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.http.HttpEntity;
@@ -44,13 +45,13 @@ import org.apache.shardingsphere.elasticjob.infra.json.GsonFactory;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class HttpTestUtil {
-    
+
     private static final AuthenticationService AUTH_SERVICE = new AuthenticationService();
-    
+
     private static void setAuth(final HttpRequestBase httpRequestBase) {
         httpRequestBase.setHeader(AuthenticationConstants.HEADER_NAME, AUTH_SERVICE.getToken());
     }
-    
+
     /**
      * Send post request.
      *
@@ -66,7 +67,7 @@ public final class HttpTestUtil {
             throw new HttpClientException("send a post request for '%s' failed", e, url);
         }
     }
-    
+
     /**
      * Send post request.
      *
@@ -87,7 +88,7 @@ public final class HttpTestUtil {
             throw new HttpClientException("send a post request for '%s' with parameter '%s' failed", e, url, content);
         }
     }
-    
+
     /**
      * Send put request.
      *
@@ -108,7 +109,7 @@ public final class HttpTestUtil {
             throw new HttpClientException("send a put request for '%s' with parameter '%s' failed", e, url, content);
         }
     }
-    
+
     /**
      * Send get request.
      *
@@ -125,7 +126,7 @@ public final class HttpTestUtil {
             throw new HttpClientException("send a get request for '%s' failed", e, url);
         }
     }
-    
+
     /**
      * Send get request.
      *
@@ -147,7 +148,7 @@ public final class HttpTestUtil {
             throw new HttpClientException("send a get request for '%s' failed", e, url);
         }
     }
-    
+
     /**
      * Send delete request.
      *
@@ -163,7 +164,7 @@ public final class HttpTestUtil {
             throw new HttpClientException("send a delete request for '%s' failed", e, url);
         }
     }
-    
+
     /**
      * Send post request.
      *
@@ -183,7 +184,7 @@ public final class HttpTestUtil {
             throw new HttpClientException("send a post request for '%s' with parameter '%s' failed", e, url, content);
         }
     }
-    
+
     /**
      * Send get request.
      *

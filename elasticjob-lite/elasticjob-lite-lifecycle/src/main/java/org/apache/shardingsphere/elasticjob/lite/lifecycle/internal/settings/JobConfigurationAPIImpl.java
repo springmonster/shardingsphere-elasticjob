@@ -21,19 +21,19 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import lombok.RequiredArgsConstructor;
 import org.apache.shardingsphere.elasticjob.infra.pojo.JobConfigurationPOJO;
+import org.apache.shardingsphere.elasticjob.infra.yaml.YamlEngine;
 import org.apache.shardingsphere.elasticjob.lite.internal.storage.JobNodePath;
 import org.apache.shardingsphere.elasticjob.lite.lifecycle.api.JobConfigurationAPI;
 import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
-import org.apache.shardingsphere.elasticjob.infra.yaml.YamlEngine;
 
 /**
  * Job Configuration API implementation class.
  */
 @RequiredArgsConstructor
 public final class JobConfigurationAPIImpl implements JobConfigurationAPI {
-    
+
     private final CoordinatorRegistryCenter regCenter;
-    
+
     @Override
     public JobConfigurationPOJO getJobConfiguration(final String jobName) {
         String yamlContent = regCenter.get(new JobNodePath(jobName).getConfigNodePath());
@@ -42,7 +42,7 @@ public final class JobConfigurationAPIImpl implements JobConfigurationAPI {
         }
         return YamlEngine.unmarshal(yamlContent, JobConfigurationPOJO.class);
     }
-    
+
     @Override
     public void updateJobConfiguration(final JobConfigurationPOJO jobConfig) {
         Preconditions.checkArgument(!Strings.isNullOrEmpty(jobConfig.getJobName()), "jobName can not be empty.");
@@ -50,7 +50,7 @@ public final class JobConfigurationAPIImpl implements JobConfigurationAPI {
         JobNodePath jobNodePath = new JobNodePath(jobConfig.getJobName());
         regCenter.update(jobNodePath.getConfigNodePath(), YamlEngine.marshal(jobConfig));
     }
-    
+
     @Override
     public void removeJobConfiguration(final String jobName) {
         regCenter.remove("/" + jobName);

@@ -1,8 +1,5 @@
-+++
-title = "Use Spring Namespace"
-weight = 3
-chapter = true
-+++
++++ title = "Use Spring Namespace"
+weight = 3 chapter = true +++
 
 ## Listener configuration
 
@@ -30,4 +27,3 @@ chapter = true
 ## Job start
 
 The xml that configures the Spring namespace is started through Spring, and the job will be automatically loaded.
-

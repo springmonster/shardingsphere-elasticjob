@@ -23,7 +23,7 @@
     </formats>
     <includeBaseDirectory>true</includeBaseDirectory>
     <baseDirectory>${project.build.finalName}-cloud-executor-bin</baseDirectory>
-    
+
     <fileSets>
         <fileSet>
             <directory>../../</directory>
@@ -40,7 +40,7 @@
             <outputDirectory>.</outputDirectory>
         </fileSet>
     </fileSets>
-    
+
     <dependencySets>
         <dependencySet>
             <useProjectArtifact>true</useProjectArtifact>

@@ -29,9 +29,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * Transient producer repository.
  */
 final class TransientProducerRepository {
-    
+
     private final ConcurrentHashMap<JobKey, List<String>> cronTasks = new ConcurrentHashMap<>(256, 1);
-    
+
     synchronized void put(final JobKey jobKey, final String jobName) {
         remove(jobName);
         List<String> taskList = cronTasks.get(jobKey);
@@ -45,7 +45,7 @@ final class TransientProducerRepository {
             taskList.add(jobName);
         }
     }
-    
+
     synchronized void remove(final String jobName) {
         for (Entry<JobKey, List<String>> each : cronTasks.entrySet()) {
             JobKey jobKey = each.getKey();
@@ -56,16 +56,16 @@ final class TransientProducerRepository {
             }
         }
     }
-    
+
     List<String> get(final JobKey jobKey) {
         List<String> result = cronTasks.get(jobKey);
         return null == result ? Collections.emptyList() : result;
     }
-    
+
     boolean containsKey(final JobKey jobKey) {
         return cronTasks.containsKey(jobKey);
     }
-    
+
     void removeAll() {
         cronTasks.clear();
     }

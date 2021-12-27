@@ -38,7 +38,7 @@ import java.lang.reflect.InvocationTargetException;
  */
 @Sharable
 public final class HandleMethodExecutor extends ChannelInboundHandlerAdapter {
-    
+
     @SuppressWarnings({"unchecked", "NullableProblems"})
     @Override
     public void channelRead(final ChannelHandlerContext ctx, final Object msg) throws Exception {
@@ -61,7 +61,7 @@ public final class HandleMethodExecutor extends ChannelInboundHandlerAdapter {
             ReferenceCountUtil.release(handleContext.getHttpRequest());
         }
     }
-    
+
     private void populateHttpResponse(final FullHttpResponse httpResponse, final String producingContentType, final byte[] bodyBytes, final int statusCode) {
         HttpResponseStatus httpResponseStatus = HttpResponseStatus.valueOf(statusCode);
         httpResponse.setStatus(httpResponseStatus);
@@ -70,7 +70,7 @@ public final class HandleMethodExecutor extends ChannelInboundHandlerAdapter {
         HttpUtil.setContentLength(httpResponse, httpResponse.content().readableBytes());
         HttpUtil.setKeepAlive(httpResponse, true);
     }
-    
+
     @Override
     public void exceptionCaught(final ChannelHandlerContext ctx, final Throwable cause) {
         if (cause instanceof InvocationTargetException) {

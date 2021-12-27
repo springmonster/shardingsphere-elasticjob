@@ -17,7 +17,6 @@
 
 package org.apache.shardingsphere.elasticjob.lite.spring.namespace.job;
 
-import static org.junit.Assert.assertTrue;
 import org.apache.shardingsphere.elasticjob.infra.concurrent.BlockUtils;
 import org.apache.shardingsphere.elasticjob.lite.internal.schedule.JobRegistry;
 import org.apache.shardingsphere.elasticjob.lite.spring.namespace.test.AbstractZookeeperJUnit4SpringContextTests;
@@ -30,14 +29,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import static org.junit.Assert.assertTrue;
+
 @ContextConfiguration(locations = "classpath:META-INF/job/withJobType.xml")
 public final class JobSpringNamespaceWithTypeTest extends AbstractZookeeperJUnit4SpringContextTests {
-    
+
     private final String scriptJobName = "scriptElasticJob_job_type";
-    
+
     @Autowired
     private CoordinatorRegistryCenter regCenter;
-    
+
     private Scheduler scheduler;
 
     @After
@@ -47,7 +48,7 @@ public final class JobSpringNamespaceWithTypeTest extends AbstractZookeeperJUnit
         }
         JobRegistry.getInstance().getJobScheduleController(scriptJobName).shutdown();
     }
-    
+
     @Test
     public void jobScriptWithJobTypeTest() throws SchedulerException {
         while (!regCenter.isExisted("/" + scriptJobName + "/sharding")) {

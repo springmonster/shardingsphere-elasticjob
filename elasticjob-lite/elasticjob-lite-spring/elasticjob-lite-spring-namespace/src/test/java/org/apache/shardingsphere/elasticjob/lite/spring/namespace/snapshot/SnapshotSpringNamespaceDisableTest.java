@@ -26,7 +26,7 @@ import java.io.IOException;
 
 @ContextConfiguration(locations = "classpath:META-INF/snapshot/snapshotDisabled.xml")
 public final class SnapshotSpringNamespaceDisableTest extends AbstractZookeeperJUnit4SpringContextTests {
-    
+
     @Test(expected = IOException.class)
     public void assertSnapshotDisable() throws IOException {
         SocketUtils.sendCommand(SnapshotService.DUMP_COMMAND, 9998);

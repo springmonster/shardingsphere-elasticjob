@@ -27,16 +27,14 @@ import javax.sql.DataSource;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public final class DataSourceRegistryTest {
-    
+
     @Mock
     private DataSourceConfiguration dataSourceConfiguration;
-    
+
     @Test
     public void assertGetDataSourceBySameConfiguration() {
         when(dataSourceConfiguration.createDataSource()).then(invocation -> mock(DataSource.class));
@@ -45,7 +43,7 @@ public final class DataSourceRegistryTest {
         verify(dataSourceConfiguration).createDataSource();
         assertThat(actual, is(expected));
     }
-    
+
     @Test
     public void assertGetDataSourceWithDifferentConfiguration() {
         when(dataSourceConfiguration.createDataSource()).then(invocation -> mock(DataSource.class));

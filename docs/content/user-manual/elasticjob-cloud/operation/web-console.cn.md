@@ -1,16 +1,13 @@
-+++
-title = "运维平台"
-weight = 3
-chapter = true
-+++
++++ title = "运维平台"
+weight = 3 chapter = true +++
 
-运维平台内嵌于 elasticjob-cloud-scheduler 的 jar 包中，无需额外启动 WEB 服务器。
-可通过修改配置文件中 http_port 参数来调整启动端口,默认端口为 8899，访问地址为 `http://{your_scheduler_ip}:8899`。
+运维平台内嵌于 elasticjob-cloud-scheduler 的 jar 包中，无需额外启动 WEB 服务器。 可通过修改配置文件中 http_port 参数来调整启动端口,默认端口为
+8899，访问地址为 `http://{your_scheduler_ip}:8899`。
 
 ## 登录
 
-提供两种账户，管理员及访客，管理员拥有全部操作权限，访客仅拥有察看权限。
-默认管理员用户名和密码是 root/root，访客用户名和密码是 guest/guest，可通过 `conf\auth.properties` 修改管理员及访客用户名及密码。
+提供两种账户，管理员及访客，管理员拥有全部操作权限，访客仅拥有察看权限。 默认管理员用户名和密码是 root/root，访客用户名和密码是 guest/guest，可通过 `conf\auth.properties`
+修改管理员及访客用户名及密码。
 
 ## 功能列表
 

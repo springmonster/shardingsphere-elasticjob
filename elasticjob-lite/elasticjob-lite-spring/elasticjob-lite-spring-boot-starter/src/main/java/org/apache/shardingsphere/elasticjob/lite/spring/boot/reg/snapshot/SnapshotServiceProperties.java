@@ -28,6 +28,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Setter
 @ConfigurationProperties(prefix = "elasticjob.dump")
 public class SnapshotServiceProperties {
-    
+
     private int port;
 }

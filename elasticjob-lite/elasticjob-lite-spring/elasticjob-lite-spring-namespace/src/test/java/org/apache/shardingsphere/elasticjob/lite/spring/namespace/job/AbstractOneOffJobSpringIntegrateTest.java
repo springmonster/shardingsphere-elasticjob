@@ -34,33 +34,33 @@ import static org.junit.Assert.assertTrue;
 
 @RequiredArgsConstructor
 public abstract class AbstractOneOffJobSpringIntegrateTest extends AbstractZookeeperJUnit4SpringContextTests {
-    
+
     private final String simpleJobName;
-    
+
     private final String throughputDataflowJobName;
-    
+
     @Autowired
     private CoordinatorRegistryCenter regCenter;
-    
+
     @Before
     @After
     public void reset() {
         FooSimpleElasticJob.reset();
         DataflowElasticJob.reset();
     }
-    
+
     @After
     public void tearDown() {
         JobRegistry.getInstance().shutdown(simpleJobName);
         JobRegistry.getInstance().shutdown(throughputDataflowJobName);
     }
-    
+
     @Test
     public void assertSpringJobBean() {
         assertSimpleElasticJobBean();
         assertThroughputDataflowElasticJobBean();
     }
-    
+
     private void assertSimpleElasticJobBean() {
         OneOffJobBootstrap bootstrap = applicationContext.getBean(simpleJobName, OneOffJobBootstrap.class);
         bootstrap.execute();
@@ -70,7 +70,7 @@ public abstract class AbstractOneOffJobSpringIntegrateTest extends AbstractZooke
         assertTrue(FooSimpleElasticJob.isCompleted());
         assertTrue(regCenter.isExisted("/" + simpleJobName + "/sharding"));
     }
-    
+
     private void assertThroughputDataflowElasticJobBean() {
         OneOffJobBootstrap bootstrap = applicationContext.getBean(throughputDataflowJobName, OneOffJobBootstrap.class);
         bootstrap.execute();

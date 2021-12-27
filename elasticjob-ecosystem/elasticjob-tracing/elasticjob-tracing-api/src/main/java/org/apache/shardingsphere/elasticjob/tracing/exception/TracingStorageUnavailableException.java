@@ -21,9 +21,9 @@ package org.apache.shardingsphere.elasticjob.tracing.exception;
  * Tracing storage unavailable exception.
  */
 public final class TracingStorageUnavailableException extends RuntimeException {
-    
+
     private static final long serialVersionUID = 7364942870490687255L;
-    
+
     public TracingStorageUnavailableException(final Throwable cause) {
         super(cause);
     }

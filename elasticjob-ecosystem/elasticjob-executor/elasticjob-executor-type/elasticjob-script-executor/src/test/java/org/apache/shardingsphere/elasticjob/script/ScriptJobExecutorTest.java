@@ -40,42 +40,42 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public final class ScriptJobExecutorTest {
-    
+
     @Mock
     private ElasticJob elasticJob;
-    
+
     @Mock
     private JobConfiguration jobConfig;
-    
+
     @Mock
     private JobFacade jobFacade;
-    
+
     @Mock
     private Properties properties;
-    
+
     @Mock
     private ShardingContext shardingContext;
-    
+
     private ScriptJobExecutor jobExecutor;
-    
+
     @Before
     public void setUp() {
         jobExecutor = new ScriptJobExecutor();
     }
-    
+
     @Test(expected = JobConfigurationException.class)
     public void assertProcessWithJobConfigurationException() {
         when(jobConfig.getProps()).thenReturn(properties);
         jobExecutor.process(elasticJob, jobConfig, jobFacade, shardingContext);
     }
-    
+
     @Test(expected = JobSystemException.class)
     public void assertProcessWithJobSystemException() {
         when(jobConfig.getProps()).thenReturn(properties);
         when(properties.getProperty(ScriptJobProperties.SCRIPT_KEY)).thenReturn("demo.sh");
         jobExecutor.process(elasticJob, jobConfig, jobFacade, shardingContext);
     }
-    
+
     @Test
     public void assertProcess() {
         when(jobConfig.getProps()).thenReturn(properties);
@@ -94,7 +94,7 @@ public final class ScriptJobExecutorTest {
     private String getEcho() {
         return "echo script-job";
     }
-    
+
     @Test
     public void assertGetType() {
         assertThat(jobExecutor.getType(), is("SCRIPT"));

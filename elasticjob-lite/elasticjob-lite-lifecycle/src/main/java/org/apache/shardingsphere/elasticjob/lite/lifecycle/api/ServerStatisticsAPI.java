@@ -25,14 +25,14 @@ import java.util.Collection;
  * Server statistics API.
  */
 public interface ServerStatisticsAPI {
-    
+
     /**
      * Get servers total count.
      *
      * @return servers total count
      */
     int getServersTotalCount();
-    
+
     /**
      * Get all servers brief info.
      *

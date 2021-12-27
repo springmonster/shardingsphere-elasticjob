@@ -1,9 +1,6 @@
-+++
-pre = "<b>4.2.2. </b>"
++++ pre = "<b>4.2.2. </b>"
 title = "配置手册"
-weight = 2
-chapter = true
-+++
+weight = 2 chapter = true +++
 
 ElasticJob-Cloud 提供应用发布及作业注册等 RESTful API， 可通过 curl 操作。
 
@@ -146,9 +143,7 @@ url：job/register
 | description                   | String     | 否      |        | 作业描述信息                                        |
 | props                         | Properties | 否      |        | 作业属性配置信息                                     |
 
-使用脚本类型的瞬时作业可直接将脚本上传至 appURL，而无需打成 tar 包。
-如果只有单个脚本文件可无需压缩。
-如是复杂脚本应用，仍可上传 tar 包，支持各种常见压缩格式。
+使用脚本类型的瞬时作业可直接将脚本上传至 appURL，而无需打成 tar 包。 如果只有单个脚本文件可无需压缩。 如是复杂脚本应用，仍可上传 tar 包，支持各种常见压缩格式。
 
 示例：
 

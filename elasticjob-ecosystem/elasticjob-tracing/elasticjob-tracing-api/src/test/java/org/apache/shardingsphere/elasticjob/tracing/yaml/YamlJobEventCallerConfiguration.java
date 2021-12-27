@@ -29,11 +29,11 @@ import org.apache.shardingsphere.elasticjob.tracing.fixture.JobEventCallerConfig
 @Getter
 @Setter
 public final class YamlJobEventCallerConfiguration implements YamlTracingStorageConfiguration<JobEventCaller> {
-    
+
     private static final long serialVersionUID = -3152825887223378472L;
-    
+
     private JobEventCaller jobEventCaller;
-    
+
     @Override
     public TracingStorageConfiguration<JobEventCaller> toConfiguration() {
         return new JobEventCallerConfiguration(jobEventCaller);

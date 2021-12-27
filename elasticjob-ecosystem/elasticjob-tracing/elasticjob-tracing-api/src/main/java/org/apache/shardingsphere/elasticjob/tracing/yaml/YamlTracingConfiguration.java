@@ -32,13 +32,13 @@ import org.apache.shardingsphere.elasticjob.tracing.api.TracingConfiguration;
 @Setter
 @NoArgsConstructor
 public final class YamlTracingConfiguration<T> implements YamlConfiguration<TracingConfiguration<T>> {
-    
+
     private static final long serialVersionUID = -6625535892000287729L;
-    
+
     private String type;
-    
+
     private YamlTracingStorageConfiguration<T> tracingStorageConfiguration;
-    
+
     @Override
     public TracingConfiguration<T> toConfiguration() {
         return new TracingConfiguration<>(type, tracingStorageConfiguration.toConfiguration());

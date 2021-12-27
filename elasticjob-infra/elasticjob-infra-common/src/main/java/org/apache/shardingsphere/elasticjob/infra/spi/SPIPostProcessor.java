@@ -23,10 +23,10 @@ import java.util.Properties;
  * SPI post processor.
  */
 public interface SPIPostProcessor {
-    
+
     /**
      * Initialize SPI instance.
-     * 
+     *
      * @param props properties
      */
     void init(Properties props);

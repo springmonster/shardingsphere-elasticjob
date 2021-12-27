@@ -30,7 +30,7 @@ import org.apache.shardingsphere.elasticjob.tracing.api.TracingStorageConfigurat
  */
 @SuppressWarnings({"rawtypes", "unchecked"})
 public final class YamlTracingConfigurationConverter<T> implements YamlConfigurationConverter<TracingConfiguration<T>, YamlTracingConfiguration<T>> {
-    
+
     @Override
     public YamlTracingConfiguration<T> convertToYamlConfiguration(final TracingConfiguration<T> tracingConfiguration) {
         YamlTracingConfiguration<T> result = new YamlTracingConfiguration<>();
@@ -38,13 +38,13 @@ public final class YamlTracingConfigurationConverter<T> implements YamlConfigura
         result.setTracingStorageConfiguration(convertTracingStorageConfiguration(tracingConfiguration.getTracingStorageConfiguration()));
         return result;
     }
-    
+
     private YamlTracingStorageConfiguration<T> convertTracingStorageConfiguration(final TracingStorageConfiguration<T> tracingStorageConfiguration) {
         return YamlConfigurationConverterFactory
                 .<TracingStorageConfiguration<T>, YamlTracingStorageConfiguration<T>>findConverter((Class<TracingStorageConfiguration<T>>) tracingStorageConfiguration.getClass())
                 .orElseThrow(() -> new YamlConfigurationConverterNotFoundException(tracingStorageConfiguration.getClass())).convertToYamlConfiguration(tracingStorageConfiguration);
     }
-    
+
     @Override
     public Class configurationType() {
         return TracingConfiguration.class;

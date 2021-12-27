@@ -1,7 +1,5 @@
-+++
-title = "Error Handler Strategy"
-weight = 3
-+++
++++ title = "Error Handler Strategy"
+weight = 3 +++
 
 ## Log Strategy
 
@@ -35,7 +33,7 @@ Built-in: No
 
 Send email message notification and do not interrupt job.
 
-Maven POM: 
+Maven POM:
 
 ```xml
 <dependency>
@@ -45,7 +43,7 @@ Maven POM:
 </dependency>
 ```
 
-Configuration: 
+Configuration:
 
 | Name           | Description                                  | Required | Default Value            |
 | -------------- |:-------------------------------------------- |:-------- |:------------------------ |
@@ -69,7 +67,7 @@ Built-in: No
 
 Send wechat message notification and do not interrupt job
 
-Maven POM: 
+Maven POM:
 
 ```xml
 <dependency>
@@ -79,7 +77,7 @@ Maven POM:
 </dependency>
 ```
 
-Configuration: 
+Configuration:
 
 | Name                              | Description                                                               | Required | Default Value     |
 | --------------------------------- |:------------------------------------------------------------------------- |:-------- |:----------------- |
@@ -95,7 +93,7 @@ Built-in: No
 
 Send dingtalk message notification and do not interrupt job
 
-Maven POM: 
+Maven POM:
 
 ```xml
 <dependency>
@@ -105,7 +103,7 @@ Maven POM:
 </dependency>
 ```
 
-Configuration: 
+Configuration:
 
 | Name                                | Description                                                                 | Required | Default Value     |
 | ----------------------------------- |:--------------------------------------------------------------------------- |:-------- |:----------------- |

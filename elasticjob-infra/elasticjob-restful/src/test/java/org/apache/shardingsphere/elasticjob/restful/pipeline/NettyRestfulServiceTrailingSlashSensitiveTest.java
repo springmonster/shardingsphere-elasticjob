@@ -35,15 +35,15 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public final class NettyRestfulServiceTrailingSlashSensitiveTest {
-    
+
     private static final long TESTCASE_TIMEOUT = 10000L;
-    
+
     private static final String HOST = "localhost";
-    
+
     private static final int PORT = 18081;
-    
+
     private static RestfulService restfulService;
-    
+
     @BeforeClass
     public static void init() {
         NettyRestfulServiceConfiguration configuration = new NettyRestfulServiceConfiguration(PORT);
@@ -53,7 +53,7 @@ public final class NettyRestfulServiceTrailingSlashSensitiveTest {
         restfulService = new NettyRestfulService(configuration);
         restfulService.startup();
     }
-    
+
     @Test(timeout = TESTCASE_TIMEOUT)
     public void assertWithoutTrailingSlash() {
         DefaultFullHttpRequest requestWithSlash = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.GET, "/trailing/slash");
@@ -64,7 +64,7 @@ public final class NettyRestfulServiceTrailingSlashSensitiveTest {
             assertThat(body, is("without trailing slash"));
         }, TESTCASE_TIMEOUT);
     }
-    
+
     @Test(timeout = TESTCASE_TIMEOUT)
     public void assertWithTrailingSlash() {
         DefaultFullHttpRequest requestWithoutSlash = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.GET, "/trailing/slash/");
@@ -75,7 +75,7 @@ public final class NettyRestfulServiceTrailingSlashSensitiveTest {
             assertThat(body, is("with trailing slash"));
         }, TESTCASE_TIMEOUT);
     }
-    
+
     @AfterClass
     public static void tearDown() {
         if (null != restfulService) {

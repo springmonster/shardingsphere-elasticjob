@@ -33,16 +33,16 @@ import java.util.concurrent.ConcurrentMap;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ElasticJobServiceLoader {
-    
+
     private static final ConcurrentMap<Class<? extends TypedSPI>, ConcurrentMap<String, TypedSPI>> TYPED_SERVICES = new ConcurrentHashMap<>();
-    
+
     private static final ConcurrentMap<Class<? extends TypedSPI>, ConcurrentMap<String, Class<? extends TypedSPI>>> TYPED_SERVICE_CLASSES = new ConcurrentHashMap<>();
-    
+
     /**
      * Register typeSPI service.
      *
      * @param typedService typed service
-     * @param <T> class of service
+     * @param <T>          class of service
      */
     public static <T extends TypedSPI> void registerTypedService(final Class<T> typedService) {
         if (TYPED_SERVICES.containsKey(typedService)) {
@@ -50,31 +50,31 @@ public final class ElasticJobServiceLoader {
         }
         ServiceLoader.load(typedService).forEach(each -> registerTypedServiceClass(typedService, each));
     }
-    
+
     private static <T extends TypedSPI> void registerTypedServiceClass(final Class<T> typedService, final TypedSPI instance) {
         TYPED_SERVICES.computeIfAbsent(typedService, unused -> new ConcurrentHashMap<>()).putIfAbsent(instance.getType(), instance);
         TYPED_SERVICE_CLASSES.computeIfAbsent(typedService, unused -> new ConcurrentHashMap<>()).putIfAbsent(instance.getType(), instance.getClass());
     }
-    
+
     /**
      * Get cached typed instance.
      *
      * @param typedServiceInterface typed service interface
-     * @param type type
-     * @param <T> class of service
+     * @param type                  type
+     * @param <T>                   class of service
      * @return cached typed service instance
      */
     public static <T extends TypedSPI> Optional<T> getCachedTypedServiceInstance(final Class<T> typedServiceInterface, final String type) {
         return Optional.ofNullable(TYPED_SERVICES.get(typedServiceInterface)).map(services -> (T) services.get(type));
     }
-    
+
     /**
      * New typed instance.
      *
      * @param typedServiceInterface typed service interface
-     * @param type type
-     * @param props properties
-     * @param <T> class of service
+     * @param type                  type
+     * @param props                 properties
+     * @param <T>                   class of service
      * @return new typed service instance
      */
     public static <T extends TypedSPI> Optional<T> newTypedServiceInstance(final Class<T> typedServiceInterface, final String type, final Properties props) {
@@ -84,7 +84,7 @@ public final class ElasticJobServiceLoader {
         }
         return result;
     }
-    
+
     private static Object newServiceInstance(final Class<?> clazz) {
         try {
             return clazz.getConstructor().newInstance();

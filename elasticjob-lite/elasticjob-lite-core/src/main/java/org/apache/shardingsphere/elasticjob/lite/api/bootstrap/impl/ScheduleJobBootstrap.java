@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -29,18 +29,18 @@ import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
  * Schedule job bootstrap.
  */
 public final class ScheduleJobBootstrap implements JobBootstrap {
-    
+
     private final JobScheduler jobScheduler;
 
     /**
      * jobScheduler = {JobScheduler@3946}
-     *  coordinatorRegistryCenter = {ZookeeperRegistryCenter@3947}
-     *  jobConfiguration = {JobConfiguration@3948}
-     *  setUpFacade = {SetUpFacade@3949}
-     *  schedulerFacade = {SchedulerFacade@3950}
-     *  liteJobFacade = {LiteJobFacade@3951}
-     *  elasticJobExecutor = {ElasticJobExecutor@3952}
-     *  jobScheduleController = {JobScheduleController@4027}
+     * coordinatorRegistryCenter = {ZookeeperRegistryCenter@3947}
+     * jobConfiguration = {JobConfiguration@3948}
+     * setUpFacade = {SetUpFacade@3949}
+     * schedulerFacade = {SchedulerFacade@3950}
+     * liteJobFacade = {LiteJobFacade@3951}
+     * elasticJobExecutor = {ElasticJobExecutor@3952}
+     * jobScheduleController = {JobScheduleController@4027}
      *
      * @param coordinatorRegistryCenter
      * @param elasticJob
@@ -49,11 +49,11 @@ public final class ScheduleJobBootstrap implements JobBootstrap {
     public ScheduleJobBootstrap(final CoordinatorRegistryCenter coordinatorRegistryCenter, final ElasticJob elasticJob, final JobConfiguration jobConfiguration) {
         jobScheduler = new JobScheduler(coordinatorRegistryCenter, elasticJob, jobConfiguration);
     }
-    
+
     public ScheduleJobBootstrap(final CoordinatorRegistryCenter coordinatorRegistryCenter, final String elasticJobType, final JobConfiguration jobConfiguration) {
         jobScheduler = new JobScheduler(coordinatorRegistryCenter, elasticJobType, jobConfiguration);
     }
-    
+
     /**
      * Schedule job.
      */
@@ -61,7 +61,7 @@ public final class ScheduleJobBootstrap implements JobBootstrap {
         Preconditions.checkArgument(!Strings.isNullOrEmpty(jobScheduler.getJobConfiguration().getCron()), "Cron can not be empty.");
         jobScheduler.getJobScheduleController().scheduleJob(jobScheduler.getJobConfiguration().getCron(), jobScheduler.getJobConfiguration().getTimeZone());
     }
-    
+
     @Override
     public void shutdown() {
         jobScheduler.shutdown();

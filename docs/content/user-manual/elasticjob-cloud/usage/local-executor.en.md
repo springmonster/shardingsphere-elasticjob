@@ -1,11 +1,9 @@
-+++
-title = "Local Executor"
-weight = 2
-chapter = true
-+++
++++ title = "Local Executor"
+weight = 2 chapter = true +++
 
-When developing ElasticJob-Cloud jobs, developers can leave the Mesos environment to run and debug jobs locally.
-The local operating mode can be used to fully debug business functions and unit tests, and then deploy to the Mesos cluster after completion.
+When developing ElasticJob-Cloud jobs, developers can leave the Mesos environment to run and debug jobs locally. The
+local operating mode can be used to fully debug business functions and unit tests, and then deploy to the Mesos cluster
+after completion.
 
 There is no need to install the Mesos environment to run jobs locally.
 

@@ -1,8 +1,5 @@
-+++
-title = "表结构说明"
-weight = 4
-chapter = true
-+++
++++ title = "表结构说明"
+weight = 4 chapter = true +++
 
 事件追踪的 event_trace_rdb_url 属性对应库自动创建 JOB_EXECUTION_LOG 和 JOB_STATUS_TRACE_LOG 两张表以及若干索引。
 
@@ -22,8 +19,7 @@ chapter = true
 | start_time       | TIMESTAMP     | 是       | 作业开始执行时间                                        |
 | complete_time    | TIMESTAMP     | 否       | 作业结束执行时间                                        |
 
-JOB_EXECUTION_LOG 记录每次作业的执行历史。
-分为两个步骤：
+JOB_EXECUTION_LOG 记录每次作业的执行历史。 分为两个步骤：
 
 1. 作业开始执行时向数据库插入数据，除 failure_cause 和 complete_time 外的其他字段均不为空。
 1. 作业完成执行时向数据库更新数据，更新 is_success, complete_time 和 failure_cause(如果作业执行失败)。
@@ -44,5 +40,4 @@ JOB_EXECUTION_LOG 记录每次作业的执行历史。
 | message          | VARCHAR(2000) | 是       | 相关信息                                                                                                       |
 | creation_time    | TIMESTAMP     | 是       | 记录创建时间                                                                                                    |
 
-JOB_STATUS_TRACE_LOG 记录作业状态变更痕迹表。
-可通过每次作业运行的 task_id 查询作业状态变化的生命周期和运行轨迹。
+JOB_STATUS_TRACE_LOG 记录作业状态变更痕迹表。 可通过每次作业运行的 task_id 查询作业状态变化的生命周期和运行轨迹。

@@ -42,35 +42,35 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public final class ReconcileServiceTest {
-    
+
     @Mock
     private SchedulerDriver schedulerDriver;
-    
+
     @Mock
     private FacadeService facadeService;
-    
+
     private ReconcileService reconcileService;
-    
+
     @Captor
     private ArgumentCaptor<Collection<Protos.TaskStatus>> taskStatusCaptor;
-    
+
     @Before
     public void setUp() {
         reconcileService = new ReconcileService(schedulerDriver, facadeService);
     }
-    
+
     @Test
     public void assertRunOneIteration() {
         reconcileService.runOneIteration();
         verify(schedulerDriver).reconcileTasks(Collections.emptyList());
     }
-    
+
     @Test
     public void assertImplicitReconcile() {
         reconcileService.implicitReconcile();
         verify(schedulerDriver).reconcileTasks(Collections.emptyList());
     }
-    
+
     @Test
     public void assertExplicitReconcile() {
         Map<String, Set<TaskContext>> runningTaskMap = new HashMap<>();

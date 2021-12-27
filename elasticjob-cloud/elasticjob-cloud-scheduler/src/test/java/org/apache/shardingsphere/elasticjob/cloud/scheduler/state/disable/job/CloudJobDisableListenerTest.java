@@ -39,22 +39,22 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public final class CloudJobDisableListenerTest {
-    
+
     private static ZookeeperRegistryCenter regCenter;
-    
+
     @Mock
     private ProducerManager producerManager;
-    
+
     @InjectMocks
     private CloudJobDisableListener cloudJobDisableListener;
-    
+
     @Before
     public void setUp() {
         ReflectionUtils.setFieldValue(cloudJobDisableListener, "producerManager", producerManager);
         initRegistryCenter();
         ReflectionUtils.setFieldValue(cloudJobDisableListener, "regCenter", regCenter);
     }
-    
+
     private void initRegistryCenter() {
         EmbedTestingServer.start();
         ZookeeperConfiguration configuration = new ZookeeperConfiguration(EmbedTestingServer.getConnectionString(), CloudJobConfigurationListenerTest.class.getName());
@@ -64,27 +64,27 @@ public final class CloudJobDisableListenerTest {
         regCenter = new ZookeeperRegistryCenter(configuration);
         regCenter.init();
     }
-    
+
     @Test
     public void assertDisableWithInvalidPath() {
         cloudJobDisableListener.event(CuratorCacheListener.Type.NODE_CREATED, null, new ChildData("/other/test_job", null, "".getBytes()));
         verify(producerManager, times(0)).unschedule(ArgumentMatchers.any());
         verify(producerManager, times(0)).reschedule(ArgumentMatchers.any());
     }
-    
+
     @Test
     public void assertDisableWithNoJobNamePath() {
         cloudJobDisableListener.event(CuratorCacheListener.Type.NODE_CREATED, null, new ChildData("/state/disable/job", null, "".getBytes()));
         verify(producerManager, times(0)).unschedule(ArgumentMatchers.any());
         verify(producerManager, times(0)).reschedule(ArgumentMatchers.any());
     }
-    
+
     @Test
     public void assertDisable() {
         cloudJobDisableListener.event(CuratorCacheListener.Type.NODE_CREATED, null, new ChildData("/state/disable/job/job_test", null, "".getBytes()));
         verify(producerManager).unschedule(eq("job_test"));
     }
-    
+
     @Test
     public void assertEnableWithInvalidPath() {
         cloudJobDisableListener.event(CuratorCacheListener.Type.NODE_DELETED, new ChildData("/other/test_job", null, "".getBytes()),
@@ -92,7 +92,7 @@ public final class CloudJobDisableListenerTest {
         verify(producerManager, times(0)).unschedule(ArgumentMatchers.any());
         verify(producerManager, times(0)).reschedule(ArgumentMatchers.any());
     }
-    
+
     @Test
     public void assertEnableWithNoJobNamePath() {
         cloudJobDisableListener.event(CuratorCacheListener.Type.NODE_DELETED, new ChildData("/state/disable/job", null, "".getBytes()),
@@ -100,19 +100,19 @@ public final class CloudJobDisableListenerTest {
         verify(producerManager, times(0)).unschedule(ArgumentMatchers.any());
         verify(producerManager, times(0)).reschedule(ArgumentMatchers.any());
     }
-    
+
     @Test
     public void assertEnable() {
         cloudJobDisableListener.event(CuratorCacheListener.Type.NODE_DELETED, new ChildData("/state/disable/job/job_test", null, "".getBytes()),
                 new ChildData("/state/disable/job/job_test", null, "".getBytes()));
         verify(producerManager).reschedule(eq("job_test"));
     }
-    
+
     @Test
     public void assertStart() {
         cloudJobDisableListener.start();
     }
-    
+
     @Test
     public void assertStop() {
         regCenter.addCacheData("/state/disable/job");

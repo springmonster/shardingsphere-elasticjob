@@ -26,7 +26,7 @@ import org.springframework.context.annotation.Bean;
  */
 @EnableConfigurationProperties(ZookeeperProperties.class)
 public class ElasticJobRegistryCenterConfiguration {
-    
+
     /**
      * Create a zookeeper registry center bean via factory.
      *

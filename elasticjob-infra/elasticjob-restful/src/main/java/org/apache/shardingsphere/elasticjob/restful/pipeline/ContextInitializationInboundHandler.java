@@ -20,11 +20,7 @@ package org.apache.shardingsphere.elasticjob.restful.pipeline;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.handler.codec.http.DefaultFullHttpResponse;
-import io.netty.handler.codec.http.FullHttpRequest;
-import io.netty.handler.codec.http.FullHttpResponse;
-import io.netty.handler.codec.http.HttpResponseStatus;
-import io.netty.handler.codec.http.HttpUtil;
+import io.netty.handler.codec.http.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.elasticjob.restful.handler.HandleContext;
 import org.apache.shardingsphere.elasticjob.restful.handler.Handler;
@@ -36,7 +32,7 @@ import org.apache.shardingsphere.elasticjob.restful.handler.Handler;
 @Slf4j
 @Sharable
 public final class ContextInitializationInboundHandler extends ChannelInboundHandlerAdapter {
-    
+
     @SuppressWarnings("NullableProblems")
     @Override
     public void channelRead(final ChannelHandlerContext ctx, final Object msg) {

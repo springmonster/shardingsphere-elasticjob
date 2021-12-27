@@ -40,16 +40,16 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public final class EmailJobErrorHandlerTest {
-    
+
     @Mock
     private Logger log;
-    
+
     @Mock
     private Session session;
-    
+
     @Mock
     private Transport transport;
-    
+
     @Test
     public void assertHandleExceptionWithMessagingException() {
         EmailJobErrorHandler emailJobErrorHandler = getEmailJobErrorHandler(createConfigurationProperties());
@@ -59,7 +59,7 @@ public final class EmailJobErrorHandlerTest {
         emailJobErrorHandler.handleException(jobName, cause);
         verify(log).error("An exception has occurred in Job '{}' but failed to send email because of", jobName, cause);
     }
-    
+
     @Test
     @SneakyThrows
     public void assertHandleExceptionSucceedInSendingEmail() {
@@ -74,17 +74,17 @@ public final class EmailJobErrorHandlerTest {
         verify(transport).sendMessage(any(Message.class), any(Address[].class));
         verify(log).info("An exception has occurred in Job '{}', an email has been sent successfully.", jobName, cause);
     }
-    
+
     private EmailJobErrorHandler getEmailJobErrorHandler(final Properties props) {
         return (EmailJobErrorHandler) JobErrorHandlerFactory.createHandler("EMAIL", props).orElseThrow(() -> new JobConfigurationException("EMAIL error handler not found."));
     }
-    
+
     private void setUpMockSession(final Session session) {
         Properties props = new Properties();
         setFieldValue(session, "props", props);
         when(session.getProperties()).thenReturn(props);
     }
-    
+
     @SneakyThrows
     private void setStaticFieldValue(final EmailJobErrorHandler wechatJobErrorHandler, final String name, final Object value) {
         Field fieldLog = wechatJobErrorHandler.getClass().getDeclaredField(name);
@@ -94,14 +94,14 @@ public final class EmailJobErrorHandlerTest {
         modifiers.setInt(fieldLog, fieldLog.getModifiers() & ~Modifier.FINAL);
         fieldLog.set(wechatJobErrorHandler, value);
     }
-    
+
     @SneakyThrows
     private void setFieldValue(final Object target, final String fieldName, final Object fieldValue) {
         Field field = target.getClass().getDeclaredField(fieldName);
         field.setAccessible(true);
         field.set(target, fieldValue);
     }
-    
+
     private Properties createConfigurationProperties() {
         Properties result = new Properties();
         result.setProperty(EmailPropertiesConstants.HOST, "localhost");

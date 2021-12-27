@@ -1,10 +1,8 @@
-+++
-pre = "<b>5.2. </b>"
++++ pre = "<b>5.2. </b>"
 title = "Thread Pool Strategy"
-weight = 2
-+++
+weight = 2 +++
 
-Thread pool strategy, used to create thread pool for job execution. 
+Thread pool strategy, used to create thread pool for job execution.
 
 | *SPI Name*                            | *Description*                                          |
 | ------------------------------------- | ------------------------------------------------------ |

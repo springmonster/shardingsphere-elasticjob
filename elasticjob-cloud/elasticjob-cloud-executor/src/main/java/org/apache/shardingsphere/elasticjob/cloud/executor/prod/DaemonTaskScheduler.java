@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -48,31 +48,31 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @RequiredArgsConstructor
 public final class DaemonTaskScheduler {
-    
+
     private static final String ELASTIC_JOB_DATA_MAP_KEY = "elasticJob";
-    
+
     private static final String ELASTIC_JOB_TYPE_DATA_MAP_KEY = "elasticJobType";
-    
+
     private static final String JOB_FACADE_DATA_MAP_KEY = "jobFacade";
-    
+
     private static final String EXECUTOR_DRIVER_DATA_MAP_KEY = "executorDriver";
-    
+
     private static final String TASK_ID_DATA_MAP_KEY = "taskId";
-    
+
     private static final ConcurrentHashMap<String, Scheduler> RUNNING_SCHEDULERS = new ConcurrentHashMap<>(1024, 1);
-    
+
     private final ElasticJob elasticJob;
-    
+
     private final String elasticJobType;
-    
+
     private final JobConfiguration jobConfig;
-    
+
     private final JobFacade jobFacade;
-    
+
     private final ExecutorDriver executorDriver;
-    
+
     private final Protos.TaskID taskId;
-    
+
     /**
      * Init the job.
      */
@@ -89,13 +89,13 @@ public final class DaemonTaskScheduler {
             throw new JobSystemException(ex);
         }
     }
-    
+
     private Scheduler initializeScheduler() throws SchedulerException {
         StdSchedulerFactory factory = new StdSchedulerFactory();
         factory.initialize(getBaseQuartzProperties());
         return factory.getScheduler();
     }
-    
+
     private Properties getBaseQuartzProperties() {
         Properties result = new Properties();
         result.put("org.quartz.threadPool.class", org.quartz.simpl.SimpleThreadPool.class.getName());
@@ -108,7 +108,7 @@ public final class DaemonTaskScheduler {
         result.put("org.quartz.plugin.shutdownhook.cleanShutdown", Boolean.TRUE.toString());
         return result;
     }
-    
+
     private void scheduleJob(final Scheduler scheduler, final JobDetail jobDetail, final String triggerIdentity, final String cron) {
         try {
             if (!scheduler.checkExists(jobDetail.getKey())) {
@@ -120,11 +120,11 @@ public final class DaemonTaskScheduler {
             throw new JobSystemException(ex);
         }
     }
-    
+
     private CronTrigger createTrigger(final String triggerIdentity, final String cron) {
         return TriggerBuilder.newTrigger().withIdentity(triggerIdentity).withSchedule(CronScheduleBuilder.cronSchedule(cron).withMisfireHandlingInstructionDoNothing()).build();
     }
-    
+
     /**
      * Shutdown scheduling the task.
      *
@@ -140,29 +140,29 @@ public final class DaemonTaskScheduler {
             }
         }
     }
-    
+
     /**
      * Daemon job.
      */
     public static final class DaemonJob implements Job {
-        
+
         @Setter
         private ElasticJob elasticJob;
-    
+
         @Setter
         private String elasticJobType;
-        
+
         @Setter
         private CloudJobFacade jobFacade;
-        
+
         @Setter
         private ExecutorDriver executorDriver;
-    
+
         @Setter
         private Protos.TaskID taskId;
-        
+
         private volatile ElasticJobExecutor jobExecutor;
-        
+
         @Override
         public void execute(final JobExecutionContext context) {
             ShardingContexts shardingContexts = jobFacade.getShardingContexts();
@@ -180,14 +180,14 @@ public final class DaemonTaskScheduler {
                 shardingContexts.setCurrentJobEventSamplingCount(0);
             }
         }
-        
+
         private ElasticJobExecutor getJobExecutor() {
             if (null == jobExecutor) {
                 createJobExecutor();
             }
             return jobExecutor;
         }
-        
+
         private synchronized void createJobExecutor() {
             if (null != jobExecutor) {
                 return;

@@ -1,8 +1,5 @@
-+++
-title = "Deploy Guide"
-weight = 1
-chapter = true
-+++
++++ title = "Deploy Guide"
+weight = 1 chapter = true +++
 
 ## Scheduler deployment steps
 
@@ -14,8 +11,10 @@ chapter = true
 ## Job deployment steps
 
 1. Ensure that ZooKeeper, Mesos Master/Agent and ElasticJob-Cloud-Scheduler have been started correctly.
-2. Place the tar.gz file of the packaging job in a network accessible location, such as ftp or http. The `main` method in the packaged tar.gz file needs to call the `JobBootstrap.execute` method provided by ElasticJob-Cloud.
-3. Use curl command to call RESTful API to publish applications and register jobs. For details: [Configuration](/en/user-manual/elasticjob-cloud/configuration)
+2. Place the tar.gz file of the packaging job in a network accessible location, such as ftp or http. The `main` method
+   in the packaged tar.gz file needs to call the `JobBootstrap.execute` method provided by ElasticJob-Cloud.
+3. Use curl command to call RESTful API to publish applications and register jobs. For
+   details: [Configuration](/en/user-manual/elasticjob-cloud/configuration)
 
 ## Scheduler configuration steps
 

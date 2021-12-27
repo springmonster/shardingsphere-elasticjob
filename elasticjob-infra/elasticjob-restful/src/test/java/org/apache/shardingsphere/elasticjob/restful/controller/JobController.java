@@ -19,25 +19,20 @@ package org.apache.shardingsphere.elasticjob.restful.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.elasticjob.restful.Http;
-import org.apache.shardingsphere.elasticjob.restful.annotation.ParamSource;
 import org.apache.shardingsphere.elasticjob.restful.RestfulController;
-import org.apache.shardingsphere.elasticjob.restful.annotation.ContextPath;
-import org.apache.shardingsphere.elasticjob.restful.annotation.Mapping;
-import org.apache.shardingsphere.elasticjob.restful.annotation.Param;
-import org.apache.shardingsphere.elasticjob.restful.annotation.RequestBody;
-import org.apache.shardingsphere.elasticjob.restful.annotation.Returning;
+import org.apache.shardingsphere.elasticjob.restful.annotation.*;
 import org.apache.shardingsphere.elasticjob.restful.pojo.JobPojo;
 
 @Slf4j
 @ContextPath("/job")
 public final class JobController implements RestfulController {
-    
+
     /**
      * Pretend to create a job.
      *
-     * @param group group
-     * @param jobName job name
-     * @param cron job cron
+     * @param group       group
+     * @param jobName     job name
+     * @param cron        job cron
      * @param description job description
      * @return result
      */
@@ -53,7 +48,7 @@ public final class JobController implements RestfulController {
         result.setDescription(description);
         return result;
     }
-    
+
     /**
      * Throw an illegal state exception.
      *
@@ -64,7 +59,7 @@ public final class JobController implements RestfulController {
     public Object throwIllegalStateException(@Param(name = "Exception-Message", source = ParamSource.HEADER) final String message) {
         throw new IllegalStateException(message);
     }
-    
+
     /**
      * Throw an illegal argument exception.
      *
@@ -75,7 +70,7 @@ public final class JobController implements RestfulController {
     public Object throwIllegalArgumentException(@Param(name = "Exception-Message", source = ParamSource.HEADER) final String message) {
         throw new IllegalArgumentException(message);
     }
-    
+
     /**
      * Return 204.
      *

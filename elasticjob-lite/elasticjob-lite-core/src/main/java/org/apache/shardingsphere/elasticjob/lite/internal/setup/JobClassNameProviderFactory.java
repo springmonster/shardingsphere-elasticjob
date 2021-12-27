@@ -29,17 +29,17 @@ import java.util.ServiceLoader;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JobClassNameProviderFactory {
-    
+
     private static final List<JobClassNameProvider> PROVIDERS = new LinkedList<>();
-    
+
     private static final JobClassNameProvider DEFAULT_PROVIDER = new DefaultJobClassNameProvider();
-    
+
     static {
         for (JobClassNameProvider each : ServiceLoader.load(JobClassNameProvider.class)) {
             PROVIDERS.add(each);
         }
     }
-    
+
     /**
      * Get the first job class name provider.
      *

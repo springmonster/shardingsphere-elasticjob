@@ -41,18 +41,18 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public final class CloudAppConfigurationListenerTest {
-    
+
     private static ZookeeperRegistryCenter regCenter;
-    
+
     @Mock
     private ProducerManager producerManager;
-    
+
     @Mock
     private MesosStateService mesosStateService;
-    
+
     @InjectMocks
     private CloudAppConfigurationListener cloudAppConfigurationListener;
-    
+
     @Before
     public void setUp() {
         ReflectionUtils.setFieldValue(cloudAppConfigurationListener, "producerManager", producerManager);
@@ -60,7 +60,7 @@ public final class CloudAppConfigurationListenerTest {
         initRegistryCenter();
         ReflectionUtils.setFieldValue(cloudAppConfigurationListener, "regCenter", regCenter);
     }
-    
+
     private void initRegistryCenter() {
         EmbedTestingServer.start();
         ZookeeperConfiguration configuration = new ZookeeperConfiguration(EmbedTestingServer.getConnectionString(), CloudJobConfigurationListenerTest.class.getName());
@@ -70,7 +70,7 @@ public final class CloudAppConfigurationListenerTest {
         regCenter = new ZookeeperRegistryCenter(configuration);
         regCenter.init();
     }
-    
+
     @Test
     public void assertRemoveWithInvalidPath() {
         cloudAppConfigurationListener.event(CuratorCacheListener.Type.NODE_DELETED, new ChildData("/other/test_app", null, "".getBytes()),
@@ -78,7 +78,7 @@ public final class CloudAppConfigurationListenerTest {
         verify(mesosStateService, times(0)).executors(ArgumentMatchers.any());
         verify(producerManager, times(0)).sendFrameworkMessage(any(Protos.ExecutorID.class), any(Protos.SlaveID.class), any());
     }
-    
+
     @Test
     public void assertRemoveWithNoAppNamePath() {
         cloudAppConfigurationListener.event(CuratorCacheListener.Type.NODE_DELETED, new ChildData("/config/app", null, "".getBytes()),
@@ -86,19 +86,19 @@ public final class CloudAppConfigurationListenerTest {
         verify(mesosStateService, times(0)).executors(ArgumentMatchers.any());
         verify(producerManager, times(0)).sendFrameworkMessage(any(Protos.ExecutorID.class), any(Protos.SlaveID.class), any());
     }
-    
+
     @Test
     public void assertRemoveApp() {
         cloudAppConfigurationListener.event(CuratorCacheListener.Type.NODE_DELETED, new ChildData("/config/app/test_app", null, "".getBytes()),
                 new ChildData("/config/app/test_app", null, "".getBytes()));
         verify(mesosStateService).executors("test_app");
     }
-    
+
     @Test
     public void start() {
         cloudAppConfigurationListener.start();
     }
-    
+
     @Test
     public void stop() {
         regCenter.addCacheData(CloudAppConfigurationNode.ROOT);

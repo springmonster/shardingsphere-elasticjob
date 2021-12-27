@@ -44,22 +44,22 @@ import java.util.Properties;
  */
 @Slf4j
 public final class WechatJobErrorHandler implements JobErrorHandler {
-    
+
     private final CloseableHttpClient httpclient = HttpClients.createDefault();
-    
+
     private String webhook;
-    
+
     private int connectTimeoutMilliseconds;
-    
+
     private int readTimeoutMilliseconds;
-    
+
     @Override
     public void init(final Properties props) {
         webhook = props.getProperty(WechatPropertiesConstants.WEBHOOK);
         connectTimeoutMilliseconds = Integer.parseInt(props.getProperty(WechatPropertiesConstants.CONNECT_TIMEOUT_MILLISECONDS, WechatPropertiesConstants.DEFAULT_CONNECT_TIMEOUT_MILLISECONDS));
         readTimeoutMilliseconds = Integer.parseInt(props.getProperty(WechatPropertiesConstants.READ_TIMEOUT_MILLISECONDS, WechatPropertiesConstants.DEFAULT_READ_TIMEOUT_MILLISECONDS));
     }
-    
+
     @Override
     public void handleException(final String jobName, final Throwable cause) {
         HttpPost httpPost = createHTTPPostMethod(jobName, cause);
@@ -80,7 +80,7 @@ public final class WechatJobErrorHandler implements JobErrorHandler {
             log.error("An exception has occurred in Job '{}' but failed to send wechat because of", jobName, cause);
         }
     }
-    
+
     private HttpPost createHTTPPostMethod(final String jobName, final Throwable cause) {
         HttpPost result = new HttpPost(webhook);
         RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(connectTimeoutMilliseconds).setSocketTimeout(readTimeoutMilliseconds).build();
@@ -91,22 +91,22 @@ public final class WechatJobErrorHandler implements JobErrorHandler {
         result.setEntity(entity);
         return result;
     }
-    
+
     private String getJsonParameter(final String message) {
         return GsonFactory.getGson().toJson(ImmutableMap.of("msgtype", "text", "text", Collections.singletonMap("content", message)));
     }
-    
+
     private String getErrorMessage(final String jobName, final Throwable cause) {
         StringWriter stringWriter = new StringWriter();
         cause.printStackTrace(new PrintWriter(stringWriter, true));
         return String.format("Job '%s' exception occur in job processing, caused by %s", jobName, stringWriter.toString());
     }
-    
+
     @Override
     public String getType() {
         return "WECHAT";
     }
-    
+
     @SneakyThrows
     @Override
     public void close() {

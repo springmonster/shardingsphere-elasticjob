@@ -1,9 +1,6 @@
-+++
-pre = "<b>4.1.2 </b>"
++++ pre = "<b>4.1.2 </b>"
 title = "Configuration"
-weight = 2
-chapter = true
-+++
+weight = 2 chapter = true +++
 
 Through which developers can quickly and clearly understand the functions provided by ElasticJob-Lite.
 
@@ -61,20 +58,23 @@ Include IP and port, multiple addresses are separated by commas, such as: `host1
 
 **shardingItemParameters:**
 
-The sequence numbers and parameters of the Sharding items are separated by equal sign, and multiple key-value pairs are separated by commas.
-The Sharding sequence number starts from `0` and can't be greater than or equal to the total number of job fragments.
-For example: `0=a,1=b,2=c`
+The sequence numbers and parameters of the Sharding items are separated by equal sign, and multiple key-value pairs are
+separated by commas. The Sharding sequence number starts from `0` and can't be greater than or equal to the total number
+of job fragments. For example: `0=a,1=b,2=c`
 
 **jobParameter:**
 
-With this parameter, user can pass parameters for the business method of job scheduling, which is used to implement the job with parameters.
-For example: `Amount of data acquired each time`, `Primary key of the job instance read from the database`, etc.
+With this parameter, user can pass parameters for the business method of job scheduling, which is used to implement the
+job with parameters. For example: `Amount of data acquired each time`
+, `Primary key of the job instance read from the database`, etc.
 
 **monitorExecution:**
 
-When the execution time and interval of each job are very short, it is recommended not to monitor the running status of the job to improve efficiency.
-There is no need to monitor because it is a transient state. User can add data accumulation monitoring by self. And there is no guarantee that the data will be selected repeatedly, idempotency should be achieved in the job.
-If the job execution time and interval time are longer, it is recommended to monitor the job status, and it can guarantee that the data will not be selected repeatedly.
+When the execution time and interval of each job are very short, it is recommended not to monitor the running status of
+the job to improve efficiency. There is no need to monitor because it is a transient state. User can add data
+accumulation monitoring by self. And there is no guarantee that the data will be selected repeatedly, idempotency should
+be achieved in the job. If the job execution time and interval time are longer, it is recommended to monitor the job
+status, and it can guarantee that the data will not be selected repeatedly.
 
 **maxTimeDiffSeconds:**
 
@@ -82,8 +82,10 @@ If the time error exceeds the configured seconds, an exception will be thrown wh
 
 **reconcileIntervalMinutes:**
 
-In a distributed system, due to network, clock and other reasons, ZooKeeper may be inconsistent with the actual running job. This inconsistency cannot be completely avoided through positive verification.
-It is necessary to start another thread to periodically calibrate the consistency between the registry center and the job status, that is, to maintain the final consistency of ElasticJob.
+In a distributed system, due to network, clock and other reasons, ZooKeeper may be inconsistent with the actual running
+job. This inconsistency cannot be completely avoided through positive verification. It is necessary to start another
+thread to periodically calibrate the consistency between the registry center and the job status, that is, to maintain
+the final consistency of ElasticJob.
 
 Less than `1` means no repair is performed.
 

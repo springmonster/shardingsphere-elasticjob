@@ -1,10 +1,8 @@
-+++
-title = "Operation API"
-weight = 4
-chapter = true
-+++
++++ title = "Operation API"
+weight = 4 chapter = true +++
 
-ElasticJob-Lite provides a Java API, which can control the life cycle of jobs in a distributed environment by directly operating the registry.
+ElasticJob-Lite provides a Java API, which can control the life cycle of jobs in a distributed environment by directly
+operating the registry.
 
 The module is still in incubation.
 
@@ -16,8 +14,8 @@ Class name: `org.apache.shardingsphere.elasticjob.lite.lifecycle.api.JobConfigur
 
 Method signature：YamlJobConfiguration getJobConfiguration(String jobName)
 
-* **Parameters:** 
-  * jobName — Job name
+* **Parameters:**
+    * jobName — Job name
 
 * **Returns:** Job configuration object
 
@@ -25,15 +23,15 @@ Method signature：YamlJobConfiguration getJobConfiguration(String jobName)
 
 Method signature：void updateJobConfiguration(YamlJobConfiguration yamlJobConfiguration)
 
-* **Parameters:** 
-  * jobConfiguration — Job configuration object
+* **Parameters:**
+    * jobConfiguration — Job configuration object
 
-### Remove job configuration 
+### Remove job configuration
 
 Method signature：void removeJobConfiguration(String jobName)
 
-* **Parameters:** 
-  * jobName — Job name
+* **Parameters:**
+    * jobName — Job name
 
 ## Operation API
 
@@ -41,13 +39,14 @@ Class name：`org.apache.shardingsphere.elasticjob.lite.lifecycle.api.JobOperate
 
 ### Trigger job execution
 
-The job will only trigger execution if it does not conflict with the currently running job, and this flag will be automatically cleared after it is started.
+The job will only trigger execution if it does not conflict with the currently running job, and this flag will be
+automatically cleared after it is started.
 
 Method signature：void trigger(Optional<String> jobName, Optional<String> serverIp)
 
 * **Parameters:**
-  * jobName — Job name
-  * serverIp — IP address of the job server
+    * jobName — Job name
+    * serverIp — IP address of the job server
 
 ### Disable job
 
@@ -56,32 +55,32 @@ Disabling a job will cause other distributed jobs to trigger resharding.
 Method signature：void disable(Optional<String> jobName, Optional<String> serverIp)
 
 * **Parameters:**
-  * jobName — Job name
-  * serverIp — job server IP address
+    * jobName — Job name
+    * serverIp — job server IP address
 
 ### Enable job
 
 Method signature：void enable(Optional<String> jobName, Optional<String> serverIp)
 
 * **Parameters:**
-  * jobName — Job name
-  * serverIp — job server IP address
+    * jobName — Job name
+    * serverIp — job server IP address
 
 ### Shutdown scheduling job
 
 Method signature：void shutdown(Optional<String> jobName, Optional<String> serverIp)
 
 * **Parameters:**
-  * jobName — Job name
-  * serverIp — IP address of the job server
+    * jobName — Job name
+    * serverIp — IP address of the job server
 
 ### Remove job
 
 Method signature：void remove(Optional<String> jobName, Optional<String> serverIp)
 
 * **Parameters:**
-  * jobName — Job name
-  * serverIp — IP address of the job server
+    * jobName — Job name
+    * serverIp — IP address of the job server
 
 ## Operate sharding API
 
@@ -92,16 +91,16 @@ Class name：`org.apache.shardingsphere.elasticjob.lite.lifecycle.api.ShardingOp
 Method signature：void disable(String jobName, String item)
 
 * **Parameters:**
-  * jobName — Job name
-  * item — Job sharding item
+    * jobName — Job name
+    * item — Job sharding item
 
 ### Enable job sharding
 
 Method signature：void enable(String jobName, String item)
 
 * **Parameters:**
-  * jobName — Job name
-  * item — Job sharding item
+    * jobName — Job name
+    * item — Job sharding item
 
 ## Job statistics API
 
@@ -118,8 +117,8 @@ Method signature：int getJobsTotalCount()
 Method signature：JobBriefInfo getJobBriefInfo(String jobName)
 
 * **Parameters:**
-  * jobName — Job name
- 
+    * jobName — Job name
+
 * **Returns:** The brief job information
 
 ### Get brief information about all jobs.
@@ -133,8 +132,8 @@ Method signature：Collection<JobBriefInfo> getAllJobsBriefInfo()
 Method signature：Collection<JobBriefInfo> getJobsBriefInfo(String ip)
 
 * **Parameters:**
-  * ip — server IP
- 
+    * ip — server IP
+
 * **Returns:** Brief collection of job information
 
 ## Job server status display API
@@ -162,6 +161,6 @@ Class name：`org.apache.shardingsphere.elasticjob.lite.lifecycle.api.ShardingSt
 Method signature：Collection<ShardingInfo> getShardingInfo(String jobName)
 
 * **Parameters:**
-  * jobName — Job name
- 
+    * jobName — Job name
+
 * **Returns:** The collection of job sharding information

@@ -25,7 +25,7 @@ import java.util.Collection;
  * Sharding statistics API.
  */
 public interface ShardingStatisticsAPI {
-    
+
     /**
      * Get sharding info.
      *

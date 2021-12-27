@@ -31,36 +31,36 @@ import java.util.List;
  * Job instance service.
  */
 public final class InstanceService {
-    
+
     private final JobNodeStorage jobNodeStorage;
-    
+
     private final InstanceNode instanceNode;
-    
+
     private final TriggerNode triggerNode;
-    
+
     private final ServerService serverService;
-    
+
     public InstanceService(final CoordinatorRegistryCenter regCenter, final String jobName) {
         jobNodeStorage = new JobNodeStorage(regCenter, jobName);
         instanceNode = new InstanceNode(jobName);
         triggerNode = new TriggerNode(jobName);
         serverService = new ServerService(regCenter, jobName);
     }
-    
+
     /**
      * Persist job online status.
      */
     public void persistOnline() {
         jobNodeStorage.fillEphemeralJobNode(instanceNode.getLocalInstancePath(), instanceNode.getLocalInstanceValue());
     }
-    
+
     /**
      * Persist job instance.
      */
     public void removeInstance() {
         jobNodeStorage.removeJobNodeIfExisted(instanceNode.getLocalInstancePath());
     }
-    
+
     /**
      * Get available job instances.
      *
@@ -76,7 +76,7 @@ public final class InstanceService {
         }
         return result;
     }
-    
+
     boolean isLocalJobInstanceExisted() {
         return jobNodeStorage.isJobNodeExisted(instanceNode.getLocalInstancePath());
     }

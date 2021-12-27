@@ -20,12 +20,7 @@ package org.apache.shardingsphere.elasticjob.restful.mapping;
 import com.google.common.base.Preconditions;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
@@ -34,15 +29,15 @@ import java.util.regex.Pattern;
  * @param <V> Type of payload
  */
 public final class RegexUrlPatternMap<V> implements UrlPatternMap<V> {
-    
+
     private static final String PATH_SEPARATOR = "/";
-    
+
     private static final Pattern TEMPLATE_PATTERN = Pattern.compile("(?<=/)\\{(?<template>[^/]+)}");
-    
+
     private final Map<String, MappingContext<V>> map = new LinkedHashMap<>();
-    
+
     private final PathMatcher pathMatcher = new RegexPathMatcher();
-    
+
     @Override
     public void put(final String pathPattern, final V value) {
         Objects.requireNonNull(pathPattern, "Path pattern must be not null.");
@@ -54,7 +49,7 @@ public final class RegexUrlPatternMap<V> implements UrlPatternMap<V> {
         }
         map.put(unified, mappingContext);
     }
-    
+
     @Override
     public MappingContext<V> match(final String path) {
         List<MappingContext<V>> hits = new ArrayList<>();
@@ -75,13 +70,13 @@ public final class RegexUrlPatternMap<V> implements UrlPatternMap<V> {
         }
         return hits.get(0);
     }
-    
+
     private String unifyPattern(final String pattern) {
         return TEMPLATE_PATTERN.matcher(pattern).replaceAll("[^/]+");
     }
-    
+
     static class MappingComparator implements Comparator<MappingContext<?>> {
-        
+
         @Override
         public int compare(final MappingContext<?> o1, final MappingContext<?> o2) {
             String[] s1 = o1.pattern().split(PATH_SEPARATOR);
@@ -97,7 +92,7 @@ public final class RegexUrlPatternMap<V> implements UrlPatternMap<V> {
             }
             throw new AmbiguousPathPatternException(MessageFormat.format("Ambiguous path pattern: [{0}], [{1}].", o1.pattern(), o2.pattern()));
         }
-        
+
         private static boolean isTemplate(final String fragment) {
             return fragment.startsWith("{") && fragment.endsWith("}");
         }

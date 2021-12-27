@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -31,49 +31,49 @@ import java.util.Properties;
 @Getter
 @Setter
 public final class CloudJobConfigurationPOJO {
-    
+
     private String appName;
-    
+
     private double cpuCount;
-    
+
     private double memoryMB;
-    
+
     private CloudJobExecutionType jobExecutionType;
-    
+
     private String jobName;
-    
+
     private String cron;
-    
+
     private int shardingTotalCount;
-    
+
     private String shardingItemParameters;
-    
+
     private String jobParameter;
-    
+
     private boolean monitorExecution;
-    
+
     private boolean failover;
-    
+
     private boolean misfire;
-    
+
     private int maxTimeDiffSeconds;
-    
+
     private int reconcileIntervalMinutes;
-    
+
     private String jobShardingStrategyType;
-    
+
     private String jobExecutorServiceHandlerType;
-    
+
     private String jobErrorHandlerType;
-    
+
     private String description;
-    
+
     private Properties props = new Properties();
-    
+
     private boolean disabled;
-    
+
     private boolean overwrite;
-    
+
     /**
      * Convert to cloud job configuration.
      *
@@ -91,7 +91,7 @@ public final class CloudJobConfigurationPOJO {
         }
         return new CloudJobConfiguration(appName, cpuCount, memoryMB, jobExecutionType, jobConfig);
     }
-    
+
     /**
      * Convert from cloud job configuration.
      *

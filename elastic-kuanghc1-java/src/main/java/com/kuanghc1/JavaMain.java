@@ -19,6 +19,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.shardingsphere.elasticjob.api.JobConfiguration;
 import org.apache.shardingsphere.elasticjob.dataflow.props.DataflowJobProperties;
 import org.apache.shardingsphere.elasticjob.http.props.HttpJobProperties;
+import org.apache.shardingsphere.elasticjob.lite.api.bootstrap.impl.OneOffJobBootstrap;
 import org.apache.shardingsphere.elasticjob.lite.api.bootstrap.impl.ScheduleJobBootstrap;
 import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
 import org.apache.shardingsphere.elasticjob.reg.zookeeper.ZookeeperConfiguration;
@@ -51,11 +52,12 @@ public final class JavaMain {
 
         // kuanghc1:配置Database，这里是通过数据库记录log
         TracingConfiguration<DataSource> tracingConfig = new TracingConfiguration<>("RDB", setUpEventTraceDataSource());
-        setUpHttpJob(regCenter, tracingConfig);
-        setUpSimpleJob(regCenter, tracingConfig);
-        setUpDataflowJob(regCenter, tracingConfig);
-        setUpScriptJob(regCenter, tracingConfig);
+//        setUpHttpJob(regCenter, tracingConfig);
+//        setUpSimpleJob(regCenter, tracingConfig);
+//        setUpDataflowJob(regCenter, tracingConfig);
+//        setUpScriptJob(regCenter, tracingConfig);
 //        setUpOneOffJob(regCenter, tracingConfig);
+        setUpSQLJob(regCenter, tracingConfig);
 //        setUpOneOffJobWithEmail(regCenter, tracingConfig);
 //        setUpOneOffJobWithDingtalk(regCenter, tracingConfig);
 //        setUpOneOffJobWithWechat(regCenter, tracingConfig);
@@ -134,6 +136,14 @@ public final class JavaMain {
 
     }
 
+    private static void setUpSQLJob(final CoordinatorRegistryCenter regCenter, final TracingConfiguration<DataSource> tracingConfig) {
+        new ScheduleJobBootstrap(regCenter, "SQL", JobConfiguration.newBuilder("javaHttpJob", 3)
+                .setProperty(HttpJobProperties.URI_KEY, "https://github.com")
+                .setProperty(HttpJobProperties.METHOD_KEY, "GET")
+                .cron("0/5 * * * * ?").shardingItemParameters("0=Beijing,1=Shanghai,2=Guangzhou").addExtraConfigurations(tracingConfig).build()).schedule();
+
+    }
+
     /**
      * Java的
      *
@@ -172,12 +182,23 @@ public final class JavaMain {
                 .schedule();
     }
 
-    //
-//    private static void setUpOneOffJob(final CoordinatorRegistryCenter regCenter, final TracingConfiguration<DataSource> tracingConfig) {
-//        new OneOffJobBootstrap(regCenter, new com.kuanghc1.JavaSimpleJob(), JobConfiguration.newBuilder("javaOneOffSimpleJob", 3)
-//                .shardingItemParameters("0=Beijing,1=Shanghai,2=Guangzhou").addExtraConfigurations(tracingConfig).build()).execute();
-//    }
-//
+    /**
+     * 一次性的任务执行
+     *
+     * @param regCenter
+     * @param tracingConfig
+     */
+    private static void setUpOneOffJob(final CoordinatorRegistryCenter regCenter, final TracingConfiguration<DataSource> tracingConfig) {
+        new OneOffJobBootstrap(regCenter,
+                new com.kuanghc1.JavaSimpleJob(),
+                JobConfiguration
+                        .newBuilder("javaOneOffSimpleJob", 3)
+                        .shardingItemParameters("0=Beijing,1=Shanghai,2=Guangzhou")
+                        .addExtraConfigurations(tracingConfig)
+                        .build())
+                .execute();
+    }
+
 
     /**
      * Script的

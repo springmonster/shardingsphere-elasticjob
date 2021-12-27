@@ -42,24 +42,24 @@ import java.util.stream.Collectors;
  */
 @RequiredArgsConstructor
 public final class RunningService {
-    
+
     private static final int TASK_INITIAL_SIZE = 1024;
-    
+
     // TODO Using JMX to export
     @Getter
     private static final ConcurrentHashMap<String, Set<TaskContext>> RUNNING_TASKS = new ConcurrentHashMap<>(TASK_INITIAL_SIZE);
-    
+
     private static final ConcurrentHashMap<String, String> TASK_HOSTNAME_MAPPER = new ConcurrentHashMap<>(TASK_INITIAL_SIZE);
-    
+
     private final CoordinatorRegistryCenter regCenter;
-    
+
     private final CloudJobConfigurationService configurationService;
-    
+
     public RunningService(final CoordinatorRegistryCenter regCenter) {
         this.regCenter = regCenter;
         this.configurationService = new CloudJobConfigurationService(regCenter);
     }
-    
+
     /**
      * Start running queue service.
      */
@@ -72,13 +72,13 @@ public final class RunningService {
                 continue;
             }
             RUNNING_TASKS.put(each, Sets.newCopyOnWriteArraySet(regCenter.getChildrenKeys(RunningNode.getRunningJobNodePath(each)).stream().map(
-                input -> TaskContext.from(regCenter.get(RunningNode.getRunningTaskNodePath(MetaInfo.from(input).toString())))).collect(Collectors.toList())));
+                    input -> TaskContext.from(regCenter.get(RunningNode.getRunningTaskNodePath(MetaInfo.from(input).toString())))).collect(Collectors.toList())));
         }
     }
-    
+
     /**
      * Add task to running queue.
-     * 
+     *
      * @param taskContext task running context
      */
     public void add(final TaskContext taskContext) {
@@ -94,17 +94,17 @@ public final class RunningService {
             regCenter.persist(runningTaskNodePath, taskContext.getId());
         }
     }
-    
+
     private boolean isDaemon(final String jobName) {
         Optional<CloudJobConfigurationPOJO> cloudJobConfig = configurationService.load(jobName);
         return cloudJobConfig.isPresent() && CloudJobExecutionType.DAEMON == cloudJobConfig.get().getJobExecutionType();
     }
-    
+
     /**
      * Update task to idle state.
      *
      * @param taskContext task running context
-     * @param isIdle is idle
+     * @param isIdle      is idle
      */
     public void updateIdle(final TaskContext taskContext, final boolean isIdle) {
         synchronized (RUNNING_TASKS) {
@@ -116,11 +116,11 @@ public final class RunningService {
             }
         }
     }
-    
+
     private Optional<TaskContext> findTask(final TaskContext taskContext) {
         return getRunningTasks(taskContext.getMetaInfo().getJobName()).stream().filter(each -> each.equals(taskContext)).findFirst();
     }
-    
+
     /**
      * Remove job from running queue.
      *
@@ -133,9 +133,9 @@ public final class RunningService {
         }
         regCenter.remove(RunningNode.getRunningJobNodePath(jobName));
     }
-        
+
     /**
-     *  Remove task from running queue.
+     * Remove task from running queue.
      *
      * @param taskContext task running context
      */
@@ -150,12 +150,12 @@ public final class RunningService {
             regCenter.remove(jobRootNode);
         }
     }
-    
+
     private boolean isDaemonOrAbsent(final String jobName) {
         Optional<CloudJobConfigurationPOJO> cloudJobConfigurationOptional = configurationService.load(jobName);
         return !cloudJobConfigurationOptional.isPresent() || CloudJobExecutionType.DAEMON == cloudJobConfigurationOptional.get().getJobExecutionType();
     }
-    
+
     /**
      * Determine whether the job is running or not.
      *
@@ -165,7 +165,7 @@ public final class RunningService {
     public boolean isJobRunning(final String jobName) {
         return !getRunningTasks(jobName).isEmpty();
     }
-    
+
     /**
      * Determine whether the task is running or not.
      *
@@ -180,7 +180,7 @@ public final class RunningService {
         }
         return false;
     }
-    
+
     /**
      * Get running tasks by job name.
      *
@@ -192,7 +192,7 @@ public final class RunningService {
         Collection<TaskContext> result = RUNNING_TASKS.putIfAbsent(jobName, taskContexts);
         return null == result ? taskContexts : result;
     }
-    
+
     /**
      * Get all running tasks.
      *
@@ -203,7 +203,7 @@ public final class RunningService {
         result.putAll(RUNNING_TASKS);
         return result;
     }
-    
+
     /**
      * Get all running daemon tasks.
      *
@@ -224,17 +224,17 @@ public final class RunningService {
         }
         return result;
     }
-    
+
     /**
      * Add mapping of task primary key and hostname.
      *
-     * @param taskId task primary key
+     * @param taskId   task primary key
      * @param hostname host name
      */
     public void addMapping(final String taskId, final String hostname) {
         TASK_HOSTNAME_MAPPER.putIfAbsent(taskId, hostname);
     }
-    
+
     /**
      * Retrieve the hostname and then remove this task from the mapping.
      *
@@ -244,7 +244,7 @@ public final class RunningService {
     public String popMapping(final String taskId) {
         return TASK_HOSTNAME_MAPPER.remove(taskId);
     }
-    
+
     /**
      * Clear the running status.
      */

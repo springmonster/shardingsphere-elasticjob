@@ -33,70 +33,70 @@ import java.util.Map;
  */
 @RequiredArgsConstructor
 public final class JobTaskRequest implements TaskRequest {
-    
+
     private final TaskContext taskContext;
-    
+
     private final CloudJobConfiguration cloudJobConfig;
-    
+
     @Override
     public String getId() {
         return taskContext.getId();
     }
-    
+
     @Override
     public String taskGroupName() {
         return "";
     }
-    
+
     @Override
     public double getCPUs() {
         return cloudJobConfig.getCpuCount();
     }
-    
+
     @Override
     public double getMemory() {
         return cloudJobConfig.getMemoryMB();
     }
-    
+
     @Override
     public double getNetworkMbps() {
         return 0;
     }
-    
+
     @Override
     public double getDisk() {
         return 10d;
     }
-    
+
     @Override
     public int getPorts() {
         return 1;
     }
-    
+
     @Override
     public Map<String, Double> getScalarRequests() {
         return null;
     }
-    
+
     @Override
     public List<? extends ConstraintEvaluator> getHardConstraints() {
         return Collections.singletonList(AppConstraintEvaluator.getInstance());
     }
-    
+
     @Override
     public List<? extends VMTaskFitnessCalculator> getSoftConstraints() {
         return null;
     }
-    
+
     @Override
     public void setAssignedResources(final AssignedResources assignedResources) {
     }
-    
+
     @Override
     public AssignedResources getAssignedResources() {
         return null;
     }
-    
+
     @Override
     public Map<String, NamedResourceSetRequest> getCustomNamedResources() {
         return Collections.emptyMap();

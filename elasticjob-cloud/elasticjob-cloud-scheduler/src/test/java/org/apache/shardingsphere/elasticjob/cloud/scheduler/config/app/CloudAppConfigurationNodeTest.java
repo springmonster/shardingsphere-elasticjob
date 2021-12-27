@@ -23,7 +23,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public final class CloudAppConfigurationNodeTest {
-    
+
     @Test
     public void assertGetRootNodePath() {
         assertThat(CloudAppConfigurationNode.getRootNodePath("test_job_app"), is("/config/app/test_job_app"));

@@ -1,21 +1,20 @@
-+++
-pre = "<b>7. </b>"
++++ pre = "<b>7. </b>"
 title = "Powered By"
-weight = 7
-chapter = true
-+++
+weight = 7 chapter = true +++
 
 ## Register
 
 Welcome to register by company + homepage + use case(optional), your support is important to us.
 
-Please register [here](https://github.com/apache/shardingsphere-elasticjob/issues/254) with `company` + `homepage` + `use case(optional)`.
+Please register [here](https://github.com/apache/shardingsphere-elasticjob/issues/254) with `company` + `homepage`
++ `use case(optional)`.
 
 ## Who are using ElasticJob?
 
 Total: 83 companies.
 
 ### E-commerce
+
 <ul>
     <li><a href="http://www.dangdang.com/" rel="nofollow">DangDang</a></li>
     <li><a href="http://www.3songshu.com/" rel="nofollow">Three Squirrels</a></li>
@@ -35,6 +34,7 @@ Total: 83 companies.
 </ul>
 
 ### Financial Industry
+
 <ul>
     <li><a href="https://www.bestpay.com.cn/" rel="nofollow">Best Pay</a></li>
     <li><a href="http://www.wxsbank.com/" rel="nofollow">WX XISHANG BANK</a></li>
@@ -53,6 +53,7 @@ Total: 83 companies.
 </ul>
 
 ### Digitalization and Cloud Services
+
 <ul>
     <li><a href="http://www.yunjiacloud.com/" rel="nofollow">YunJia cloud</a></li>
     <li><a href="https://www.joyowo.com/" rel="nofollow">Joyowo</a></li>
@@ -61,6 +62,7 @@ Total: 83 companies.
 </ul>
 
 ### Transportation
+
 <ul>
     <li><a href="http://www.juneyaoair.com/" rel="nofollow">JUNEYAO AIR</a></li>
     <li><a href="https://www.caocaokeji.cn/" rel="nofollow">CaoCao</a></li>
@@ -73,6 +75,7 @@ Total: 83 companies.
 </ul>
 
 ### Logistics
+
 <ul>
     <li><a href="http://www.yto.net.cn/" rel="nofollow">YR Express</a></li>
     <li><a href="http://www.haoyunhu56.com/" rel="nofollow">HaoYunHu</a></li>
@@ -80,6 +83,7 @@ Total: 83 companies.
 </ul>
 
 ### Real Estate
+
 <ul>
     <li><a href="http://www.ziroom.com/" rel="nofollow">ZIroom</a></li>
     <li><a href="https://www.ucommune.com/" rel="nofollow">UCommune</a></li>
@@ -87,6 +91,7 @@ Total: 83 companies.
 </ul>
 
 ### E-education
+
 <ul>
     <li><a href="https://www.ibeiliao.com/" rel="nofollow">IBeiLiao</a></li>
     <li><a href="http://www.iqihang.com/" rel="nofollow">IQiHang</a></li>
@@ -97,6 +102,7 @@ Total: 83 companies.
 </ul>
 
 ### E-entertainment
+
 <ul>
     <li><a href="https://g.10086.cn/" rel="nofollow">MiguFun</a></li>
     <li><a href="https://www.motie.com/" rel="nofollow">motie</a></li>
@@ -104,6 +110,7 @@ Total: 83 companies.
 </ul>
 
 ### News
+
 <ul>
     <li><a href="http://bj.fangjia.com/" rel="nofollow">FangJia</a></li>
     <li><a href="https://auto.ifeng.com/" rel="nofollow">IFeng</a></li>
@@ -113,12 +120,14 @@ Total: 83 companies.
 </ul>
 
 ### Communication
+
 <ul>
     <li><a href="https://www.meizu.com/" rel="nofollow">MeiZu</a></li>
     <li><a href="https://www.oneplus.com/cn" rel="nofollow">OnePlus</a></li>
 </ul>
 
 ### Internet of Things
+
 <ul>
     <li><a href="https://thinkiot.lenovo.com/" rel="nofollow">Lenovo</a></li>
     <li><a href="http://www.neoway.com/" rel="nofollow">Neoway</a></li>
@@ -130,6 +139,7 @@ Total: 83 companies.
 </ul>
 
 ### Software Development Services
+
 <ul>
     <li><a href="https://www.ultrapower.com.cn/" rel="nofollow">ultrapower</a></li>
     <li><a href="http://www.duiba.com.cn" rel="nofollow">DuiBa Group</a></li>
@@ -144,6 +154,7 @@ Total: 83 companies.
 </ul>
 
 ### Health Care
+
 <ul>
     <li><a href="https://www.hh.global/" rel="nofollow">H&H Global</a></li>
     <li><a href="http://www.yunyichina.cn/" rel="nofollow">Glory</a></li>
@@ -152,11 +163,13 @@ Total: 83 companies.
 </ul>
 
 ### Retail
+
 <ul>
     <li><a href="http://www.yonghui.com.cn/" rel="nofollow">YH</a></li>
 </ul>
 
 ### AI
+
 <ul>
     <li><a href="https://www.deepblueai.com/" rel="nofollow">DeepBlue</a></li>
 </ul>

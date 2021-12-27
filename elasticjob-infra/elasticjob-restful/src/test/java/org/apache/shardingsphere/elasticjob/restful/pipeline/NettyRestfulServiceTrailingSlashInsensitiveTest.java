@@ -24,11 +24,11 @@ import org.apache.shardingsphere.elasticjob.restful.controller.TrailingSlashTest
 import org.junit.Test;
 
 public final class NettyRestfulServiceTrailingSlashInsensitiveTest {
-    
+
     private static final String HOST = "localhost";
-    
+
     private static final int PORT = 18082;
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void assertPathDuplicateWhenTrailingSlashInsensitive() {
         NettyRestfulServiceConfiguration configuration = new NettyRestfulServiceConfiguration(PORT);

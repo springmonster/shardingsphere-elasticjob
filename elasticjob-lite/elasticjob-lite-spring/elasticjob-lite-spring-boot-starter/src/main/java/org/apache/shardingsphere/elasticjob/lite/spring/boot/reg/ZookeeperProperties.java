@@ -26,7 +26,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Setter
 @ConfigurationProperties(prefix = "elasticjob.reg-center")
 public class ZookeeperProperties {
-    
+
     /**
      * Server list of ZooKeeper.
      *
@@ -37,42 +37,42 @@ public class ZookeeperProperties {
      * </p>
      */
     private String serverLists;
-    
+
     /**
      * Namespace.
      */
     private String namespace;
-    
+
     /**
      * Base sleep time milliseconds.
      */
     private int baseSleepTimeMilliseconds = 1000;
-    
+
     /**
      * Max sleep time milliseconds.
      */
     private int maxSleepTimeMilliseconds = 3000;
-    
+
     /**
      * Max retry times.
      */
     private int maxRetries = 3;
-    
+
     /**
      * Session timeout milliseconds.
      */
     private int sessionTimeoutMilliseconds;
-    
+
     /**
      * Connection timeout milliseconds.
      */
     private int connectionTimeoutMilliseconds;
-    
+
     /**
      * Zookeeper digest.
      */
     private String digest;
-    
+
     /**
      * Create ZooKeeper configuration.
      *

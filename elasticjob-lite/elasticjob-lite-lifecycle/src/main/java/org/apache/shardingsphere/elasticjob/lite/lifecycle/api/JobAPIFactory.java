@@ -32,73 +32,73 @@ import org.apache.shardingsphere.elasticjob.lite.lifecycle.internal.statistics.S
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JobAPIFactory {
-    
+
     /**
      * Create job configuration API.
      *
      * @param connectString registry center connect string
-     * @param namespace registry center namespace
-     * @param digest registry center digest
+     * @param namespace     registry center namespace
+     * @param digest        registry center digest
      * @return job configuration API
      */
     public static JobConfigurationAPI createJobConfigurationAPI(final String connectString, final String namespace, final String digest) {
         return new JobConfigurationAPIImpl(RegistryCenterFactory.createCoordinatorRegistryCenter(connectString, namespace, digest));
     }
-    
+
     /**
      * Create job operate API.
      *
      * @param connectString registry center connect string
-     * @param namespace registry center namespace
-     * @param digest registry center digest
+     * @param namespace     registry center namespace
+     * @param digest        registry center digest
      * @return job operate API
      */
     public static JobOperateAPI createJobOperateAPI(final String connectString, final String namespace, final String digest) {
         return new JobOperateAPIImpl(RegistryCenterFactory.createCoordinatorRegistryCenter(connectString, namespace, digest));
     }
-    
+
     /**
      * Create job sharding operate API.
      *
      * @param connectString registry center connect string
-     * @param namespace registry center namespace
-     * @param digest registry center digest
+     * @param namespace     registry center namespace
+     * @param digest        registry center digest
      * @return job sharding operate API
      */
     public static ShardingOperateAPI createShardingOperateAPI(final String connectString, final String namespace, final String digest) {
         return new ShardingOperateAPIImpl(RegistryCenterFactory.createCoordinatorRegistryCenter(connectString, namespace, digest));
     }
-    
+
     /**
      * Create job statistics API.
      *
      * @param connectString registry center connect string
-     * @param namespace registry center namespace
-     * @param digest registry center digest
+     * @param namespace     registry center namespace
+     * @param digest        registry center digest
      * @return job statistics API
      */
     public static JobStatisticsAPI createJobStatisticsAPI(final String connectString, final String namespace, final String digest) {
         return new JobStatisticsAPIImpl(RegistryCenterFactory.createCoordinatorRegistryCenter(connectString, namespace, digest));
     }
-    
+
     /**
      * Create server statistics API.
      *
      * @param connectString registry center connect string
-     * @param namespace registry center namespace
-     * @param digest registry center digest
+     * @param namespace     registry center namespace
+     * @param digest        registry center digest
      * @return job server statistics API
      */
     public static ServerStatisticsAPI createServerStatisticsAPI(final String connectString, final String namespace, final String digest) {
         return new ServerStatisticsAPIImpl(RegistryCenterFactory.createCoordinatorRegistryCenter(connectString, namespace, digest));
     }
-    
+
     /**
      * Create sharding statistics API.
      *
      * @param connectString registry center connect string
-     * @param namespace registry center namespace
-     * @param digest registry center digest
+     * @param namespace     registry center namespace
+     * @param digest        registry center digest
      * @return job sharding statistics API
      */
     public static ShardingStatisticsAPI createShardingStatisticsAPI(final String connectString, final String namespace, final String digest) {

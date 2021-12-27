@@ -28,21 +28,21 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
 public @interface Param {
-    
+
     /**
      * Parameter name.
      *
      * @return Parameter name
      */
     String name();
-    
+
     /**
      * Source of parameter.
      *
      * @return Source of parameter
      */
     ParamSource source();
-    
+
     /**
      * If the parameter is required.
      *

@@ -26,7 +26,7 @@ import org.apache.shardingsphere.elasticjob.restful.handler.ExceptionHandler;
  * A default handler for handling {@link Throwable}.
  */
 public final class DefaultExceptionHandler implements ExceptionHandler<Throwable> {
-    
+
     @Override
     public ExceptionHandleResult handleException(final Throwable ex) {
         return ExceptionHandleResult.builder()

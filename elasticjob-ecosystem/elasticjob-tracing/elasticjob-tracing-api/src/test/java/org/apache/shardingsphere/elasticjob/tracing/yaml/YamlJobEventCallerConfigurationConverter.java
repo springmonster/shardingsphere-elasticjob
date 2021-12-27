@@ -27,14 +27,14 @@ import org.apache.shardingsphere.elasticjob.tracing.fixture.JobEventCallerConfig
  */
 @SuppressWarnings({"unchecked", "rawtypes"})
 public final class YamlJobEventCallerConfigurationConverter implements YamlConfigurationConverter<TracingStorageConfiguration<JobEventCaller>, YamlTracingStorageConfiguration<JobEventCaller>> {
-    
+
     @Override
     public YamlTracingStorageConfiguration<JobEventCaller> convertToYamlConfiguration(final TracingStorageConfiguration<JobEventCaller> data) {
         YamlJobEventCallerConfiguration result = new YamlJobEventCallerConfiguration();
         result.setJobEventCaller(data.getStorage());
         return result;
     }
-    
+
     @Override
     public Class configurationType() {
         return JobEventCallerConfiguration.class;

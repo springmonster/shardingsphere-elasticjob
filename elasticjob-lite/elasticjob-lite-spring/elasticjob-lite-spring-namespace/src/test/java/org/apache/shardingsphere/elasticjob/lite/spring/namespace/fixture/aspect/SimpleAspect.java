@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,22 +18,22 @@
 package org.apache.shardingsphere.elasticjob.lite.spring.namespace.fixture.aspect;
 
 import org.aspectj.lang.JoinPoint;
-import org.springframework.stereotype.Component;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.stereotype.Component;
 
 @Component
 @Aspect
 public class SimpleAspect {
-    
+
     /**
      * Aspect.
      */
     @Pointcut("execution(* org.apache.shardingsphere.elasticjob.lite.spring.fixture..*(..))")
     public void aspect() {
     }
-    
+
     @Before("aspect()")
     public void before(final JoinPoint joinPoint) {
     }

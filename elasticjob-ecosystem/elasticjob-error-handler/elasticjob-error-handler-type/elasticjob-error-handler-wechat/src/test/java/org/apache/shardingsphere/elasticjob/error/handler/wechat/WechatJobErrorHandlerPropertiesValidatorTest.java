@@ -28,12 +28,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public final class WechatJobErrorHandlerPropertiesValidatorTest {
-    
+
     @Before
     public void startup() {
         ElasticJobServiceLoader.registerTypedService(JobErrorHandlerPropertiesValidator.class);
     }
-    
+
     @Test
     public void assertValidateWithNormal() {
         Properties properties = new Properties();
@@ -43,13 +43,13 @@ public final class WechatJobErrorHandlerPropertiesValidatorTest {
         WechatJobErrorHandlerPropertiesValidator actual = getValidator();
         actual.validate(properties);
     }
-    
+
     @Test(expected = NullPointerException.class)
     public void assertValidateWithPropsIsNull() {
         WechatJobErrorHandlerPropertiesValidator actual = getValidator();
         actual.validate(null);
     }
-    
+
     @Test
     public void assertValidateWithWebhookIsNull() {
         WechatJobErrorHandlerPropertiesValidator actual = getValidator();
@@ -59,7 +59,7 @@ public final class WechatJobErrorHandlerPropertiesValidatorTest {
             assertThat(e.getMessage(), is(String.format("The property `%s` is required.", WechatPropertiesConstants.WEBHOOK)));
         }
     }
-    
+
     private WechatJobErrorHandlerPropertiesValidator getValidator() {
         return (WechatJobErrorHandlerPropertiesValidator) ElasticJobServiceLoader.newTypedServiceInstance(JobErrorHandlerPropertiesValidator.class, "WECHAT", null).get();
     }

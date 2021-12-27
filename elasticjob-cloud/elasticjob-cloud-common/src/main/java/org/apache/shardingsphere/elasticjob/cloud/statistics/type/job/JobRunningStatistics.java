@@ -30,12 +30,12 @@ import java.util.Date;
 @RequiredArgsConstructor
 @AllArgsConstructor
 public final class JobRunningStatistics {
-    
+
     private long id;
-    
+
     private final int runningCount;
-    
+
     private final Date statisticsTime;
-    
+
     private Date creationTime = new Date();
 }

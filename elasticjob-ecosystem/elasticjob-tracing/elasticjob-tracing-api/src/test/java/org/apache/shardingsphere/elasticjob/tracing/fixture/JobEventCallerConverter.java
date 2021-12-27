@@ -24,12 +24,12 @@ import org.apache.shardingsphere.elasticjob.tracing.storage.TracingStorageConver
  * {@link TracingStorageConverter} for {@link JobEventCaller}.
  */
 public final class JobEventCallerConverter implements TracingStorageConverter<JobEventCaller> {
-    
+
     @Override
     public TracingStorageConfiguration<JobEventCaller> convertObjectToConfiguration(final JobEventCaller storage) {
         return new JobEventCallerConfiguration(storage);
     }
-    
+
     @Override
     public Class<JobEventCaller> storageType() {
         return JobEventCaller.class;

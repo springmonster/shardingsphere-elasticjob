@@ -42,24 +42,24 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public final class ReadyService {
-    
+
     private final BootstrapEnvironment env = BootstrapEnvironment.getINSTANCE();
-    
+
     private final CoordinatorRegistryCenter regCenter;
-    
+
     private final CloudJobConfigurationService configService;
-    
+
     private final RunningService runningService;
-    
+
     public ReadyService(final CoordinatorRegistryCenter regCenter) {
         this.regCenter = regCenter;
         configService = new CloudJobConfigurationService(regCenter);
         runningService = new RunningService(regCenter);
     }
-    
+
     /**
      * Add transient job to ready queue.
-     * 
+     *
      * @param jobName job name
      */
     public void addTransient(final String jobName) {
@@ -79,7 +79,7 @@ public final class ReadyService {
             regCenter.persist(ReadyNode.getReadyJobNodePath(jobName), "1");
         }
     }
-    
+
     /**
      * Add daemon job to ready queue.
      *
@@ -96,10 +96,10 @@ public final class ReadyService {
         }
         regCenter.persist(ReadyNode.getReadyJobNodePath(jobName), "1");
     }
-    
+
     /**
      * Set misfire disabled.
-     * 
+     *
      * @param jobName job name
      */
     public void setMisfireDisabled(final String jobName) {
@@ -108,7 +108,7 @@ public final class ReadyService {
             regCenter.persist(ReadyNode.getReadyJobNodePath(jobName), "1");
         }
     }
-    
+
     /**
      * Get all the eligible job contexts from ready queue.
      *
@@ -137,7 +137,7 @@ public final class ReadyService {
         }
         return result;
     }
-    
+
     /**
      * Remove jobs from ready queue.
      *
@@ -155,10 +155,10 @@ public final class ReadyService {
             }
         }
     }
-    
+
     /**
      * Get all ready tasks.
-     * 
+     *
      * @return all ready tasks
      */
     public Map<String, Integer> getAllReadyTasks() {

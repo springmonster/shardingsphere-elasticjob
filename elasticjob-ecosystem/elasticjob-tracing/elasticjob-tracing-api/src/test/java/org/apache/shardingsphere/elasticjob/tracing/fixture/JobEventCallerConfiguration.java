@@ -25,9 +25,9 @@ import org.apache.shardingsphere.elasticjob.tracing.api.TracingStorageConfigurat
  */
 @RequiredArgsConstructor
 public final class JobEventCallerConfiguration implements TracingStorageConfiguration<JobEventCaller> {
-    
+
     private final JobEventCaller jobEventCaller;
-    
+
     @Override
     public JobEventCaller getStorage() {
         return jobEventCaller;

@@ -29,16 +29,16 @@ import org.apache.shardingsphere.elasticjob.cloud.executor.prod.TaskExecutor;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JobBootstrap {
-    
+
     /**
      * Execute.
-     * 
+     *
      * @param elasticJob elastic job
      */
     public static void execute(final ElasticJob elasticJob) {
         execute(new TaskExecutor(elasticJob));
     }
-    
+
     /**
      * Execute.
      *
@@ -47,9 +47,9 @@ public final class JobBootstrap {
     public static void execute(final String elasticJobType) {
         execute(new TaskExecutor(elasticJobType));
     }
-    
+
     private static void execute(final TaskExecutor taskExecutor) {
         MesosExecutorDriver driver = new MesosExecutorDriver(taskExecutor);
         System.exit(Protos.Status.DRIVER_STOPPED == driver.run() ? 0 : -1);
-    } 
+    }
 }

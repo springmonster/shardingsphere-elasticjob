@@ -33,20 +33,20 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class LeasesQueue {
-    
+
     private static final LeasesQueue INSTANCE = new LeasesQueue();
-    
+
     private final BlockingQueue<VirtualMachineLease> queue = new LinkedBlockingQueue<>();
-    
+
     /**
      * Get instance.
-     * 
+     *
      * @return singleton instance
      */
     public static LeasesQueue getInstance() {
         return INSTANCE;
     }
-    
+
     /**
      * Offer resource to lease queue.
      *
@@ -55,10 +55,10 @@ public final class LeasesQueue {
     public void offer(final Protos.Offer offer) {
         queue.offer(new VMLeaseObject(offer));
     }
-    
+
     /**
      * Dump all the resources from lease queue.
-     * 
+     *
      * @return collection of resources
      */
     public List<VirtualMachineLease> drainTo() {

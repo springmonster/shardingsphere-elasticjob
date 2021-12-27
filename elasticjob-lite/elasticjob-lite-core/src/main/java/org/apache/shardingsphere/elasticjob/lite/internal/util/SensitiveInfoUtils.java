@@ -34,14 +34,14 @@ import java.util.stream.Collectors;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SensitiveInfoUtils {
-    
+
     private static final String FAKE_IP_SAMPLE = "ip";
 
     private static final Pattern IP_PATTERN = Pattern.compile(IpUtils.IP_REGEX);
-    
+
     /**
      * Filter sensitive IP addresses.
-     * 
+     *
      * @param target IP addresses to be filtered
      * @return filtered IP addresses
      */

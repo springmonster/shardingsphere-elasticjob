@@ -40,16 +40,16 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public final class DingtalkJobErrorHandlerTest {
-    
+
     private static final int PORT = 9875;
-    
+
     private static final String HOST = "localhost";
-    
+
     private static RestfulService restfulService;
-    
+
     @Mock
     private Logger log;
-    
+
     @BeforeClass
     public static void init() {
         NettyRestfulServiceConfiguration config = new NettyRestfulServiceConfiguration(PORT);
@@ -58,14 +58,14 @@ public final class DingtalkJobErrorHandlerTest {
         restfulService = new NettyRestfulService(config);
         restfulService.startup();
     }
-    
+
     @AfterClass
     public static void close() {
         if (null != restfulService) {
             restfulService.shutdown();
         }
     }
-    
+
     @Test
     public void assertHandleExceptionWithNotifySuccessful() {
         DingtalkJobErrorHandler actual = getDingtalkJobErrorHandler(createConfigurationProperties("http://localhost:9875/send?access_token=mocked_token"));
@@ -74,7 +74,7 @@ public final class DingtalkJobErrorHandlerTest {
         actual.handleException("test_job", cause);
         verify(log).info("An exception has occurred in Job '{}', an dingtalk message been sent successful.", "test_job", cause);
     }
-    
+
     @Test
     public void assertHandleExceptionWithWrongToken() {
         DingtalkJobErrorHandler actual = getDingtalkJobErrorHandler(createConfigurationProperties("http://localhost:9875/send?access_token=wrong_token"));
@@ -83,7 +83,7 @@ public final class DingtalkJobErrorHandlerTest {
         actual.handleException("test_job", cause);
         verify(log).error("An exception has occurred in Job '{}' but failed to send dingtalk because of: {}", "test_job", "token is not exist", cause);
     }
-    
+
     @Test
     public void assertHandleExceptionWithUrlIsNotFound() {
         DingtalkJobErrorHandler actual = getDingtalkJobErrorHandler(createConfigurationProperties("http://localhost:9875/404"));
@@ -92,7 +92,7 @@ public final class DingtalkJobErrorHandlerTest {
         actual.handleException("test_job", cause);
         verify(log).error("An exception has occurred in Job '{}' but failed to send dingtalk because of: unexpected http response status: {}", "test_job", 404, cause);
     }
-    
+
     @Test
     public void assertHandleExceptionWithWrongUrl() {
         DingtalkJobErrorHandler actual = getDingtalkJobErrorHandler(createNoSignJobConfigurationProperties("http://wrongUrl"));
@@ -101,7 +101,7 @@ public final class DingtalkJobErrorHandlerTest {
         actual.handleException("test_job", cause);
         verify(log).error("An exception has occurred in Job '{}', but failed to send dingtalk because of", "test_job", cause);
     }
-    
+
     @Test
     public void assertHandleExceptionWithNoSign() {
         DingtalkJobErrorHandler actual = getDingtalkJobErrorHandler(createNoSignJobConfigurationProperties("http://localhost:9875/send?access_token=mocked_token"));
@@ -110,11 +110,11 @@ public final class DingtalkJobErrorHandlerTest {
         actual.handleException("test_job", cause);
         verify(log).info("An exception has occurred in Job '{}', an dingtalk message been sent successful.", "test_job", cause);
     }
-    
+
     private DingtalkJobErrorHandler getDingtalkJobErrorHandler(final Properties props) {
         return (DingtalkJobErrorHandler) JobErrorHandlerFactory.createHandler("DINGTALK", props).orElseThrow(() -> new JobConfigurationException("DINGTALK error handler not found."));
     }
-    
+
     @SneakyThrows
     private void setStaticFieldValue(final DingtalkJobErrorHandler dingtalkJobErrorHandler) {
         Field field = dingtalkJobErrorHandler.getClass().getDeclaredField("log");
@@ -124,7 +124,7 @@ public final class DingtalkJobErrorHandlerTest {
         modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
         field.set(dingtalkJobErrorHandler, log);
     }
-    
+
     private Properties createConfigurationProperties(final String webhook) {
         Properties result = new Properties();
         result.setProperty(DingtalkPropertiesConstants.WEBHOOK, webhook);
@@ -134,7 +134,7 @@ public final class DingtalkJobErrorHandlerTest {
         result.setProperty(DingtalkPropertiesConstants.READ_TIMEOUT_MILLISECONDS, "6000");
         return result;
     }
-    
+
     private Properties createNoSignJobConfigurationProperties(final String webhook) {
         Properties result = new Properties();
         result.setProperty(DingtalkPropertiesConstants.WEBHOOK, webhook);

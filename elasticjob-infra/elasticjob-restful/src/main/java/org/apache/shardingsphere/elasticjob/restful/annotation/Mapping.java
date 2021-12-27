@@ -28,14 +28,14 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Mapping {
-    
+
     /**
      * Http method.
      *
      * @return Http method
      */
     String method();
-    
+
     /**
      * Path pattern of this handler. Starts with '/'.
      * Such as <code>/app/{jobName}/enable</code>.

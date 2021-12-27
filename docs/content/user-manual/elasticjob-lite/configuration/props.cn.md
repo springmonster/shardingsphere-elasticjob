@@ -1,8 +1,5 @@
-+++
-title = "作业属性配置"
-weight = 5
-chapter = true
-+++
++++ title = "作业属性配置"
+weight = 5 chapter = true +++
 
 ## 简介
 
@@ -50,4 +47,3 @@ ElasticJob 提供属性配置的方式为不同类型的作业提供定制化配
 | http.connect.timeout.milliseconds   | String      | http连接超时         | 3000      |
 | http.read.timeout.milliseconds      | String      | http读超时           | 5000      |
 | http.content.type                   | String      | http请求ContentType  | -         |
-

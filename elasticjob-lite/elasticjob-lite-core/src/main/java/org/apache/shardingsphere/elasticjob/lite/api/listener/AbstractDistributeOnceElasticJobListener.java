@@ -31,25 +31,25 @@ import java.util.Set;
  * Distributed once elasticjob listener.
  */
 public abstract class AbstractDistributeOnceElasticJobListener implements ElasticJobListener {
-    
+
     private final long startedTimeoutMilliseconds;
-    
+
     private final Object startedWait = new Object();
-    
+
     private final long completedTimeoutMilliseconds;
-    
+
     private final Object completedWait = new Object();
-    
+
     @Setter
     private GuaranteeService guaranteeService;
-    
+
     private final TimeService timeService = new TimeService();
-    
+
     public AbstractDistributeOnceElasticJobListener(final long startedTimeoutMilliseconds, final long completedTimeoutMilliseconds) {
         this.startedTimeoutMilliseconds = startedTimeoutMilliseconds <= 0L ? Long.MAX_VALUE : startedTimeoutMilliseconds;
         this.completedTimeoutMilliseconds = completedTimeoutMilliseconds <= 0L ? Long.MAX_VALUE : completedTimeoutMilliseconds;
     }
-    
+
     @Override
     public final void beforeJobExecuted(final ShardingContexts shardingContexts) {
         Set<Integer> shardingItems = shardingContexts.getShardingItemParameters().keySet();
@@ -78,7 +78,7 @@ public abstract class AbstractDistributeOnceElasticJobListener implements Elasti
             handleTimeout(startedTimeoutMilliseconds);
         }
     }
-    
+
     @Override
     public final void afterJobExecuted(final ShardingContexts shardingContexts) {
         Set<Integer> shardingItems = shardingContexts.getShardingItemParameters().keySet();
@@ -107,25 +107,25 @@ public abstract class AbstractDistributeOnceElasticJobListener implements Elasti
             handleTimeout(completedTimeoutMilliseconds);
         }
     }
-    
+
     private void handleTimeout(final long timeoutMilliseconds) {
         throw new JobSystemException("Job timeout. timeout mills is %s.", timeoutMilliseconds);
     }
-    
+
     /**
      * Do before job executed at last sharding job started.
      *
      * @param shardingContexts sharding contexts
      */
     public abstract void doBeforeJobExecutedAtLastStarted(ShardingContexts shardingContexts);
-    
+
     /**
      * Do after job executed at last sharding job completed.
      *
      * @param shardingContexts sharding contexts
      */
     public abstract void doAfterJobExecutedAtLastCompleted(ShardingContexts shardingContexts);
-    
+
     /**
      * Notify waiting task start.
      */
@@ -134,7 +134,7 @@ public abstract class AbstractDistributeOnceElasticJobListener implements Elasti
             startedWait.notifyAll();
         }
     }
-    
+
     /**
      * Notify waiting task complete.
      */

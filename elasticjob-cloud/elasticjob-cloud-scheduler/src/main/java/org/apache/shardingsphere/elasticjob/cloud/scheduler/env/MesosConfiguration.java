@@ -26,20 +26,20 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public final class MesosConfiguration {
-    
+
     /**
      * Framework name.
      */
     public static final String FRAMEWORK_NAME = "ElasticJob-Cloud";
-    
+
     /**
      * Framework failover timeout in seconds. Default is one week.
      */
     public static final double FRAMEWORK_FAILOVER_TIMEOUT_SECONDS = 60 * 60 * 24 * 7D;
-    
+
     private final String user;
-    
+
     private final String url;
-    
+
     private final String hostname;
 }

@@ -1,13 +1,9 @@
-+++
-title = "使用 Java API"
-weight = 2
-chapter = true
-+++
++++ title = "使用 Java API"
+weight = 2 chapter = true +++
 
 ## 作业配置
 
-ElasticJob-Lite 采用构建器模式创建作业配置对象。
-代码示例如下：
+ElasticJob-Lite 采用构建器模式创建作业配置对象。 代码示例如下：
 
 ```java
     JobConfiguration jobConfig = JobConfiguration.newBuilder("myJob", 3).cron("0/5 * * * * ?").shardingItemParameters("0=Beijing,1=Shanghai,2=Guangzhou").build();
@@ -15,8 +11,7 @@ ElasticJob-Lite 采用构建器模式创建作业配置对象。
 
 ## 作业启动
 
-ElasticJob-Lite 调度器分为定时调度和一次性调度两种类型。
-每种调度器启动时均需要注册中心配置、作业对象（或作业类型）以及作业配置这 3 个参数。
+ElasticJob-Lite 调度器分为定时调度和一次性调度两种类型。 每种调度器启动时均需要注册中心配置、作业对象（或作业类型）以及作业配置这 3 个参数。
 
 ### 定时调度
 
@@ -92,7 +87,6 @@ public class JobMain {
 }
 ```
 
-
 ## 配置错误处理策略
 
 使用 ElasticJob-Lite 过程中当作业发生异常后，可采用以下错误处理策略。
@@ -107,6 +101,7 @@ public class JobMain {
 | 钉钉通知策略              | 发送钉钉消息通知，但不中断作业执行     |            |          |      是          |
 
 ### 记录日志策略
+
 ```java
 public class JobDemo {
     
@@ -135,6 +130,7 @@ public class JobDemo {
 ```
 
 ### 抛出异常策略
+
 ```java
 public class JobDemo {
     
@@ -162,8 +158,8 @@ public class JobDemo {
 }
 ```
 
-
 ### 忽略异常策略
+
 ```java
 public class JobDemo {
     
@@ -196,6 +192,7 @@ public class JobDemo {
 请参考 [这里](/cn/user-manual/elasticjob-lite/configuration/built-in-strategy/error-handler/#邮件通知策略) 了解更多。
 
 Maven POM:
+
 ```xml
 <dependency>
     <groupId>org.apache.shardingsphere.elasticjob</groupId>
@@ -203,6 +200,7 @@ Maven POM:
     <version>${latest.release.version}</version>
 </dependency>
 ```
+
 ```java
 public class JobDemo {
     
@@ -250,6 +248,7 @@ public class JobDemo {
 请参考 [这里](/cn/user-manual/elasticjob-lite/configuration/built-in-strategy/error-handler/#企业微信通知策略) 了解更多。
 
 Maven POM:
+
 ```xml
 <dependency>
     <groupId>org.apache.shardingsphere.elasticjob</groupId>
@@ -257,6 +256,7 @@ Maven POM:
     <version>${latest.release.version}</version>
 </dependency>
 ```
+
 ```java
 public class JobDemo {
     
@@ -294,12 +294,12 @@ public class JobDemo {
 }
 ```
 
-
 ### 钉钉通知策略
 
 请参考 [这里](/cn/user-manual/elasticjob-lite/configuration/built-in-strategy/error-handler/#钉钉通知策略) 了解更多。
 
 Maven POM:
+
 ```xml
 <dependency>
     <groupId>org.apache.shardingsphere.elasticjob</groupId>
@@ -307,6 +307,7 @@ Maven POM:
     <version>${latest.release.version}</version>
 </dependency>
 ```
+
 ```java
 public class JobDemo {
     

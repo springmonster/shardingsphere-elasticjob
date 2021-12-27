@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,7 +21,7 @@ import org.apache.shardingsphere.elasticjob.reg.exception.RegException;
 import org.junit.Test;
 
 public final class ZookeeperRegistryCenterInitFailureTest {
-    
+
     @Test(expected = RegException.class)
     public void assertInitFailure() {
         ZookeeperRegistryCenter zkRegCenter = new ZookeeperRegistryCenter(new ZookeeperConfiguration("localhost:1", ZookeeperRegistryCenterInitFailureTest.class.getName()));

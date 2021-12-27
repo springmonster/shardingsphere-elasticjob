@@ -1,16 +1,14 @@
-+++
-title = "Java API"
-weight = 1
-chapter = true
-+++
++++ title = "Java API"
+weight = 1 chapter = true +++
 
 ## Registry Center Configuration
 
-The component which is used to register and coordinate the distributed behavior of jobs, currently only supports `ZooKeeper`.
+The component which is used to register and coordinate the distributed behavior of jobs, currently only
+supports `ZooKeeper`.
 
 Class name: `org.apache.shardingsphere.elasticjob.reg.zookeeper.ZookeeperConfiguration`
 
-Configuration: 
+Configuration:
 
 | Name                          | Constructor injection |
 | ----------------------------- |:--------------------- |
@@ -27,7 +25,7 @@ Configuration:
 
 Class name: `org.apache.shardingsphere.elasticjob.api.JobConfiguration`
 
-Configuration: 
+Configuration:
 
 | Name                          | Constructor injection |
 | ----------------------------- |:--------------------- |

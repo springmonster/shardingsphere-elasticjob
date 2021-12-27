@@ -22,6 +22,7 @@ import com.google.common.base.Strings;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -31,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -44,32 +46,32 @@ import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
  */
 @Slf4j
 public class MesosStateService {
-    
+
     private static String stateUrl;
-    
+
     private final FrameworkIDService frameworkIDService;
-    
+
     public MesosStateService(final CoordinatorRegistryCenter regCenter) {
         frameworkIDService = new FrameworkIDService(regCenter);
     }
-    
+
     /**
      * Register master info of Mesos.
      *
      * @param hostName hostname of master
-     * @param port port of master
+     * @param port     port of master
      */
     public static synchronized void register(final String hostName, final int port) {
         stateUrl = String.format("http://%s:%d/state", hostName, port);
     }
-    
+
     /**
      * Deregister master info of Mesos.
      */
     public static synchronized void deregister() {
         stateUrl = null;
     }
-    
+
     /**
      * Get sandbox info.
      *
@@ -102,7 +104,7 @@ public class MesosStateService {
         }
         return result;
     }
-    
+
     /**
      * Get executor by app name.
      *
@@ -119,7 +121,7 @@ public class MesosStateService {
             }
         }).collect(Collectors.toList());
     }
-    
+
     /**
      * Get all executors.
      *
@@ -129,12 +131,12 @@ public class MesosStateService {
     public Collection<ExecutorStateInfo> executors() throws JsonParseException {
         return executors(null);
     }
-    
+
     private JsonObject fetch(final String url) {
         Preconditions.checkState(!Strings.isNullOrEmpty(url));
         return GsonFactory.getJsonParser().parse(HttpClientUtils.httpGet(url).getContent()).getAsJsonObject();
     }
-    
+
     private Collection<JsonObject> findExecutors(final JsonArray frameworks, final String appName) throws JsonParseException {
         Optional<String> frameworkIDOptional = frameworkIDService.fetch();
         String frameworkID;
@@ -159,17 +161,17 @@ public class MesosStateService {
         }
         return result;
     }
-    
+
     private String getExecutorId(final JsonObject executor) throws JsonParseException {
         return executor.has("id") ? executor.get("id").getAsString() : executor.get("executor_id").getAsString();
     }
-    
+
     @Builder
     @Getter
     public static final class ExecutorStateInfo {
-        
+
         private final String id;
-        
+
         private final String slaveId;
     }
 }

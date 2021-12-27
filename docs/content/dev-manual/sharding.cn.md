@@ -1,9 +1,6 @@
-+++
-pre = "<b>5.1. </b>"
++++ pre = "<b>5.1. </b>"
 title = "作业分片策略"
-weight = 1
-chapter = true
-+++
+weight = 1 chapter = true +++
 
 作业分片策略，用于将作业在分布式环境下分解成为任务使用。
 

@@ -47,28 +47,28 @@ import java.util.Optional;
 @AllArgsConstructor
 @Slf4j
 public final class TaskResultStatisticJob extends AbstractStatisticJob {
-    
+
     private StatisticInterval statisticInterval;
-    
+
     private TaskResultMetaData sharedData;
-    
+
     private StatisticRdbRepository repository;
-    
+
     @Override
     public JobDetail buildJobDetail() {
         JobDetail result = JobBuilder.newJob(this.getClass()).withIdentity(getJobName() + "_" + statisticInterval).build();
         result.getJobDataMap().put("statisticUnit", statisticInterval);
         return result;
     }
-    
+
     @Override
     public Trigger buildTrigger() {
         return TriggerBuilder.newTrigger()
                 .withIdentity(getTriggerName() + "_" + statisticInterval)
                 .withSchedule(CronScheduleBuilder.cronSchedule(statisticInterval.getCron())
-                .withMisfireHandlingInstructionDoNothing()).build();
+                        .withMisfireHandlingInstructionDoNothing()).build();
     }
-    
+
     @Override
     public Map<String, Object> getDataMap() {
         Map<String, Object> result = new HashMap<>(3);
@@ -77,7 +77,7 @@ public final class TaskResultStatisticJob extends AbstractStatisticJob {
         result.put("repository", repository);
         return result;
     }
-    
+
     @Override
     public void execute(final JobExecutionContext context) {
         Optional<TaskResultStatistics> latestOne = repository.findLatestTaskResultStatistics(statisticInterval);
@@ -85,12 +85,12 @@ public final class TaskResultStatisticJob extends AbstractStatisticJob {
         TaskResultStatistics taskResultStatistics = new TaskResultStatistics(
                 sharedData.getSuccessCount(), sharedData.getFailedCount(), statisticInterval,
                 StatisticTimeUtils.getCurrentStatisticTime(statisticInterval));
-        log.debug("Add taskResultStatistics, statisticInterval is:{}, successCount is:{}, failedCount is:{}", 
+        log.debug("Add taskResultStatistics, statisticInterval is:{}, successCount is:{}, failedCount is:{}",
                 statisticInterval, sharedData.getSuccessCount(), sharedData.getFailedCount());
         repository.add(taskResultStatistics);
         sharedData.reset();
     }
-    
+
     private void fillBlankIfNeeded(final TaskResultStatistics latestOne) {
         List<Date> blankDateRange = findBlankStatisticTimes(latestOne.getStatisticsTime(), statisticInterval);
         if (!blankDateRange.isEmpty()) {

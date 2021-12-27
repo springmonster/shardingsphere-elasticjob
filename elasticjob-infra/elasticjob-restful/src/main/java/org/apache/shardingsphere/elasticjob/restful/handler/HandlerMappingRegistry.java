@@ -32,9 +32,9 @@ import java.util.Optional;
  * Search a proper {@link MappingContext} by HTTP method and request URI.
  */
 public final class HandlerMappingRegistry {
-    
+
     private final Map<HttpMethod, UrlPatternMap<Handler>> mappings = new HashMap<>();
-    
+
     /**
      * Get a MappingContext with Handler for the request.
      *
@@ -45,13 +45,13 @@ public final class HandlerMappingRegistry {
         String uriWithoutQuery = httpRequest.uri().split("\\?")[0];
         return Optional.ofNullable(mappings.get(httpRequest.method())).map(urlPatternMap -> urlPatternMap.match(uriWithoutQuery));
     }
-    
+
     /**
      * Add a Handler for a path pattern.
      *
-     * @param method HTTP method
+     * @param method      HTTP method
      * @param pathPattern path pattern
-     * @param handler handler
+     * @param handler     handler
      */
     public void addMapping(final HttpMethod method, final String pathPattern, final Handler handler) {
         UrlPatternMap<Handler> urlPatternMap = mappings.computeIfAbsent(method, httpMethod -> new RegexUrlPatternMap<>());

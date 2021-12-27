@@ -18,6 +18,7 @@
 package org.apache.shardingsphere.elasticjob.cloud.scheduler.mesos;
 
 import com.google.gson.JsonParseException;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -26,6 +27,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.elasticjob.cloud.config.CloudJobExecutionType;
 import org.apache.shardingsphere.elasticjob.cloud.config.pojo.CloudJobConfigurationPOJO;
@@ -50,23 +52,23 @@ import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
  */
 @Slf4j
 public final class FacadeService {
-    
+
     private final CloudAppConfigurationService appConfigService;
-    
+
     private final CloudJobConfigurationService jobConfigService;
-    
+
     private final ReadyService readyService;
-    
+
     private final RunningService runningService;
-    
+
     private final FailoverService failoverService;
-    
+
     private final DisableAppService disableAppService;
-    
+
     private final DisableJobService disableJobService;
-    
+
     private final MesosStateService mesosStateService;
-    
+
     public FacadeService(final CoordinatorRegistryCenter regCenter) {
         appConfigService = new CloudAppConfigurationService(regCenter);
         jobConfigService = new CloudJobConfigurationService(regCenter);
@@ -77,7 +79,7 @@ public final class FacadeService {
         disableJobService = new DisableJobService(regCenter);
         mesosStateService = new MesosStateService(regCenter);
     }
-    
+
     /**
      * Start facade service.
      */
@@ -85,7 +87,7 @@ public final class FacadeService {
         log.info("Elastic Job: Start facade service");
         runningService.start();
     }
-    
+
     /**
      * Get eligible job.
      *
@@ -99,7 +101,7 @@ public final class FacadeService {
         result.addAll(readyJobContexts);
         return result;
     }
-    
+
     /**
      * Remove launched task from queue.
      *
@@ -123,7 +125,7 @@ public final class FacadeService {
         failoverService.remove(failoverTaskContexts.stream().map(TaskContext::getMetaInfo).collect(Collectors.toList()));
         readyService.remove(readyJobNames);
     }
-    
+
     /**
      * Add task to running queue.
      *
@@ -132,17 +134,17 @@ public final class FacadeService {
     public void addRunning(final TaskContext taskContext) {
         runningService.add(taskContext);
     }
-    
+
     /**
      * Update daemon task status.
      *
      * @param taskContext task running context
-     * @param isIdle set to idle or not
+     * @param isIdle      set to idle or not
      */
     public void updateDaemonStatus(final TaskContext taskContext, final boolean isIdle) {
         runningService.updateIdle(taskContext, isIdle);
     }
-    
+
     /**
      * Remove task from running queue.
      *
@@ -151,7 +153,7 @@ public final class FacadeService {
     public void removeRunning(final TaskContext taskContext) {
         runningService.remove(taskContext);
     }
-    
+
     /**
      * Record task to failover queue.
      *
@@ -170,11 +172,11 @@ public final class FacadeService {
             failoverService.add(taskContext);
         }
     }
-    
+
     private boolean isDisable(final CloudJobConfigurationPOJO cloudJobConfig) {
         return disableAppService.isDisabled(cloudJobConfig.getAppName()) || disableJobService.isDisabled(cloudJobConfig.getJobName());
     }
-    
+
     /**
      * Add transient job to ready queue.
      *
@@ -183,7 +185,7 @@ public final class FacadeService {
     public void addTransient(final String jobName) {
         readyService.addTransient(jobName);
     }
-    
+
     /**
      * Load cloud job config.
      *
@@ -193,7 +195,7 @@ public final class FacadeService {
     public Optional<CloudJobConfigurationPOJO> load(final String jobName) {
         return jobConfigService.load(jobName);
     }
-    
+
     /**
      * Load app config by app name.
      *
@@ -203,7 +205,7 @@ public final class FacadeService {
     public Optional<CloudAppConfigurationPOJO> loadAppConfig(final String appName) {
         return appConfigService.load(appName);
     }
-    
+
     /**
      * Get failover task id by task meta info.
      *
@@ -213,7 +215,7 @@ public final class FacadeService {
     public Optional<String> getFailoverTaskId(final MetaInfo metaInfo) {
         return failoverService.getTaskId(metaInfo);
     }
-    
+
     /**
      * Add daemon job to ready queue.
      *
@@ -229,7 +231,7 @@ public final class FacadeService {
         }
         readyService.addDaemon(jobName);
     }
-    
+
     /**
      * Determine whether the task is running or not.
      *
@@ -240,17 +242,17 @@ public final class FacadeService {
         return ExecutionType.FAILOVER != taskContext.getType() && !runningService.getRunningTasks(taskContext.getMetaInfo().getJobName()).isEmpty()
                 || ExecutionType.FAILOVER == taskContext.getType() && runningService.isTaskRunning(taskContext.getMetaInfo());
     }
-    
+
     /**
      * Add mapping of the task primary key and host name.
      *
-     * @param taskId task primary key
+     * @param taskId   task primary key
      * @param hostname host name
      */
     public void addMapping(final String taskId, final String hostname) {
         runningService.addMapping(taskId, hostname);
     }
-    
+
     /**
      * Retrieve hostname and then remove task.
      *
@@ -260,7 +262,7 @@ public final class FacadeService {
     public String popMapping(final String taskId) {
         return runningService.popMapping(taskId);
     }
-    
+
     /**
      * Get all ready tasks.
      *
@@ -269,7 +271,7 @@ public final class FacadeService {
     public Map<String, Integer> getAllReadyTasks() {
         return readyService.getAllReadyTasks();
     }
-    
+
     /**
      * Get all running tasks.
      *
@@ -278,7 +280,7 @@ public final class FacadeService {
     public Map<String, Set<TaskContext>> getAllRunningTasks() {
         return runningService.getAllRunningTasks();
     }
-    
+
     /**
      * Get all failover tasks.
      *
@@ -287,7 +289,7 @@ public final class FacadeService {
     public Map<String, Collection<FailoverTaskInfo>> getAllFailoverTasks() {
         return failoverService.getAllFailoverTasks();
     }
-    
+
     /**
      * Determine whether the job is disable or not.
      *
@@ -298,7 +300,7 @@ public final class FacadeService {
         Optional<CloudJobConfigurationPOJO> jobConfiguration = jobConfigService.load(jobName);
         return !jobConfiguration.isPresent() || disableAppService.isDisabled(jobConfiguration.get().getAppName()) || disableJobService.isDisabled(jobName);
     }
-    
+
     /**
      * Enable job.
      *
@@ -307,7 +309,7 @@ public final class FacadeService {
     public void enableJob(final String jobName) {
         disableJobService.remove(jobName);
     }
-    
+
     /**
      * Disable job.
      *
@@ -316,7 +318,7 @@ public final class FacadeService {
     public void disableJob(final String jobName) {
         disableJobService.add(jobName);
     }
-    
+
     /**
      * Get all running executor info.
      *
@@ -326,7 +328,7 @@ public final class FacadeService {
     public Collection<ExecutorStateInfo> loadExecutorInfo() throws JsonParseException {
         return mesosStateService.executors();
     }
-    
+
     /**
      * Stop facade service.
      */

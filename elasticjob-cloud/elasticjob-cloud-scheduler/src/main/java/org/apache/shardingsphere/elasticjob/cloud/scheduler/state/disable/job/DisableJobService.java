@@ -26,15 +26,15 @@ import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
  */
 @Slf4j
 public class DisableJobService {
-    
+
     private final BootstrapEnvironment env = BootstrapEnvironment.getINSTANCE();
-    
+
     private final CoordinatorRegistryCenter regCenter;
-    
+
     public DisableJobService(final CoordinatorRegistryCenter regCenter) {
         this.regCenter = regCenter;
     }
-    
+
     /**
      * Add job to the disable queue.
      *
@@ -50,7 +50,7 @@ public class DisableJobService {
             regCenter.persist(disableJobNodePath, jobName);
         }
     }
-    
+
     /**
      * Remove the job from the disable queue.
      *
@@ -59,7 +59,7 @@ public class DisableJobService {
     public void remove(final String jobName) {
         regCenter.remove(DisableJobNode.getDisableJobNodePath(jobName));
     }
-    
+
     /**
      * Determine whether the job is in the disable queue or not.
      *

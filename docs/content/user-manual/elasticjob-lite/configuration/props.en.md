@@ -1,8 +1,5 @@
-+++
-title = "Job Properties"
-weight = 5
-chapter = true
-+++
++++ title = "Job Properties"
+weight = 5 chapter = true +++
 
 ## Introduction
 
@@ -20,7 +17,7 @@ Configuration: no
 
 Interface name: `org.apache.shardingsphere.elasticjob.dataflow.job.DataflowJob`
 
-Configuration: 
+Configuration:
 
 | *Name*             | *Data Type*   | *Description*               | *Default Value*  |
 | -----------------  | -----------   | --------------------------- | ---------------- |
@@ -30,7 +27,7 @@ Configuration:
 
 Type: `SCRIPT`
 
-Configuration: 
+Configuration:
 
 | *Name*               | *Data Type*   | *Description*           | *Default Value*  |
 | -------------------- | ------------- | ----------------------- | ---------------- |
@@ -40,7 +37,7 @@ Configuration:
 
 Type：`HTTP`
 
-Configuration: 
+Configuration:
 
 | *Name*                             | *Data Type*    | *Description*          |  *Default Value*  |
 | ---------------------------------- | -----------    | ----------------       | --------          |

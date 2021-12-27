@@ -1,11 +1,8 @@
-+++
-title = "Use Java API"
-weight = 1
-chapter = true
-+++
++++ title = "Use Java API"
+weight = 1 chapter = true +++
 
-ElasticJob-Lite currently provides `TracingConfiguration` based on database in the configuration.
-Developers can also extend it through SPI.
+ElasticJob-Lite currently provides `TracingConfiguration` based on database in the configuration. Developers can also
+extend it through SPI.
 
 ```java
     // init DataSource

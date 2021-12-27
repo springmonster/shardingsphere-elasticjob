@@ -42,24 +42,24 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public final class LaunchingTasksTest {
-    
+
     @Mock
     private CoordinatorRegistryCenter regCenter;
-    
+
     @Mock
     private CloudJobConfigurationService jobConfigService;
-    
+
     @Mock
     private ReadyService readyService;
-    
+
     @Mock
     private RunningService runningService;
-    
+
     @Mock
     private FailoverService failoverService;
-    
+
     private LaunchingTasks launchingTasks;
-    
+
     @Before
     public void setUp() {
         FacadeService facadeService = new FacadeService(regCenter);
@@ -72,7 +72,7 @@ public final class LaunchingTasksTest {
                 JobContext.from(CloudJobConfigurationBuilder.createCloudJobConfiguration("failover_job").toCloudJobConfiguration(), ExecutionType.FAILOVER)));
         launchingTasks = new LaunchingTasks(facadeService.getEligibleJobContext());
     }
-    
+
     @Test
     public void assertGetPendingTasks() {
         List<TaskRequest> actual = launchingTasks.getPendingTasks();

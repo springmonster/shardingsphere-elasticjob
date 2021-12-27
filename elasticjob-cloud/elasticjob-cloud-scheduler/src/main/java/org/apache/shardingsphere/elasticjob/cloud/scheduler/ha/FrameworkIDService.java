@@ -28,22 +28,22 @@ import java.util.Optional;
  */
 @RequiredArgsConstructor
 public final class FrameworkIDService {
-    
+
     private final CoordinatorRegistryCenter regCenter;
-    
+
     /**
      * Fetch framework ID.
-     * 
+     *
      * @return framework ID
      */
     public Optional<String> fetch() {
         String frameworkId = regCenter.getDirectly(HANode.FRAMEWORK_ID_NODE);
         return Strings.isNullOrEmpty(frameworkId) ? Optional.empty() : Optional.of(frameworkId);
     }
-    
+
     /**
      * Save framework ID.
-     * 
+     *
      * @param id framework ID
      */
     public void save(final String id) {

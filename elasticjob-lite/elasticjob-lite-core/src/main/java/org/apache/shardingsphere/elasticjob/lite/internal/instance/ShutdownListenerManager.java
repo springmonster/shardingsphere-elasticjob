@@ -29,15 +29,15 @@ import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
  */
 @Slf4j
 public final class ShutdownListenerManager extends AbstractListenerManager {
-    
+
     private final String jobName;
-    
+
     private final InstanceNode instanceNode;
-    
+
     private final InstanceService instanceService;
-    
+
     private final SchedulerFacade schedulerFacade;
-    
+
     public ShutdownListenerManager(final CoordinatorRegistryCenter regCenter, final String jobName) {
         super(regCenter, jobName);
         this.jobName = jobName;
@@ -45,14 +45,14 @@ public final class ShutdownListenerManager extends AbstractListenerManager {
         instanceService = new InstanceService(regCenter, jobName);
         schedulerFacade = new SchedulerFacade(regCenter, jobName);
     }
-    
+
     @Override
     public void start() {
         addDataListener(new InstanceShutdownStatusJobListener());
     }
-    
+
     class InstanceShutdownStatusJobListener extends AbstractJobListener {
-        
+
         @Override
         protected void dataChanged(final String path, final Type eventType, final String data) {
             log.info("khc InstanceShutdownStatusJobListener dataChanged path: {} , eventType: {} , data: {}", path, eventType, data);
@@ -61,11 +61,11 @@ public final class ShutdownListenerManager extends AbstractListenerManager {
                 schedulerFacade.shutdownInstance();
             }
         }
-        
+
         private boolean isRemoveInstance(final String path, final Type eventType) {
             return instanceNode.isLocalInstancePath(path) && Type.NODE_DELETED == eventType;
         }
-        
+
         private boolean isReconnectedRegistryCenter() {
             return instanceService.isLocalJobInstanceExisted();
         }

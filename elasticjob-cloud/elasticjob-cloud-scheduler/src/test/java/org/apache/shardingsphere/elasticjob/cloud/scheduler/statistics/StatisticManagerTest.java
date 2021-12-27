@@ -51,26 +51,26 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public final class StatisticManagerTest {
-    
+
     @Mock
     private CoordinatorRegistryCenter regCenter;
-    
+
     @Mock
     private StatisticRdbRepository rdbRepository;
-    
+
     @Mock
     private StatisticsScheduler scheduler;
-    
+
     @Mock
     private CloudJobConfigurationService configurationService;
-    
+
     private StatisticManager statisticManager;
-    
+
     @Before
     public void setUp() {
         statisticManager = StatisticManager.getInstance(regCenter, null);
     }
-    
+
     @After
     public void tearDown() {
         statisticManager.shutdown();
@@ -78,37 +78,37 @@ public final class StatisticManagerTest {
         reset(configurationService);
         reset(rdbRepository);
     }
-    
+
     @Test
     public void assertGetInstance() {
         assertThat(statisticManager, is(StatisticManager.getInstance(regCenter, null)));
     }
-    
+
     @Test
     public void assertStartupWhenRdbIsNotConfigured() {
         ReflectionUtils.setFieldValue(statisticManager, "rdbRepository", null);
         statisticManager.startup();
     }
-    
+
     @Test
     public void assertStartupWhenRdbIsConfigured() {
         ReflectionUtils.setFieldValue(statisticManager, "rdbRepository", rdbRepository);
         statisticManager.startup();
     }
-    
+
     @Test
     public void assertShutdown() {
         ReflectionUtils.setFieldValue(statisticManager, "scheduler", scheduler);
         statisticManager.shutdown();
         verify(scheduler).shutdown();
     }
-    
+
     @Test
     public void assertTaskRun() {
         statisticManager.taskRunSuccessfully();
         statisticManager.taskRunFailed();
     }
-    
+
     @Test
     public void assertTaskResultStatisticsWhenRdbIsNotConfigured() {
         ReflectionUtils.setFieldValue(statisticManager, "rdbRepository", null);
@@ -117,36 +117,36 @@ public final class StatisticManagerTest {
         assertThat(statisticManager.getTaskResultStatisticsSinceOnline().getSuccessCount(), is(0));
         assertThat(statisticManager.getTaskResultStatisticsSinceOnline().getFailedCount(), is(0));
     }
-    
+
     @Test
     public void assertTaskResultStatisticsWhenRdbIsConfigured() {
         ReflectionUtils.setFieldValue(statisticManager, "rdbRepository", rdbRepository);
         when(rdbRepository.getSummedTaskResultStatistics(any(Date.class), any(StatisticInterval.class)))
-            .thenReturn(new TaskResultStatistics(10, 10, StatisticInterval.DAY, new Date()));
+                .thenReturn(new TaskResultStatistics(10, 10, StatisticInterval.DAY, new Date()));
         assertThat(statisticManager.getTaskResultStatisticsWeekly().getSuccessCount(), is(10));
         assertThat(statisticManager.getTaskResultStatisticsWeekly().getFailedCount(), is(10));
         assertThat(statisticManager.getTaskResultStatisticsSinceOnline().getSuccessCount(), is(10));
         assertThat(statisticManager.getTaskResultStatisticsSinceOnline().getFailedCount(), is(10));
         verify(rdbRepository, times(4)).getSummedTaskResultStatistics(any(Date.class), any(StatisticInterval.class));
     }
-    
+
     @Test
     public void assertJobExecutionTypeStatistics() {
         ReflectionUtils.setFieldValue(statisticManager, "configurationService", configurationService);
         when(configurationService.loadAll()).thenReturn(Arrays.asList(
-                CloudJobConfigurationBuilder.createCloudJobConfiguration("test_job_1", CloudJobExecutionType.DAEMON), 
+                CloudJobConfigurationBuilder.createCloudJobConfiguration("test_job_1", CloudJobExecutionType.DAEMON),
                 CloudJobConfigurationBuilder.createCloudJobConfiguration("test_job_2", CloudJobExecutionType.TRANSIENT)));
         assertThat(statisticManager.getJobExecutionTypeStatistics().getDaemonJobCount(), is(1));
         assertThat(statisticManager.getJobExecutionTypeStatistics().getTransientJobCount(), is(1));
         verify(configurationService, times(2)).loadAll();
     }
-    
+
     @Test
     public void assertFindTaskRunningStatisticsWhenRdbIsNotConfigured() {
         ReflectionUtils.setFieldValue(statisticManager, "rdbRepository", null);
         assertTrue(statisticManager.findTaskRunningStatisticsWeekly().isEmpty());
     }
-    
+
     @Test
     public void assertFindTaskRunningStatisticsWhenRdbIsConfigured() {
         ReflectionUtils.setFieldValue(statisticManager, "rdbRepository", rdbRepository);
@@ -154,13 +154,13 @@ public final class StatisticManagerTest {
         assertThat(statisticManager.findTaskRunningStatisticsWeekly().size(), is(1));
         verify(rdbRepository).findTaskRunningStatistics(any(Date.class));
     }
-    
+
     @Test
     public void assertFindJobRunningStatisticsWhenRdbIsNotConfigured() {
         ReflectionUtils.setFieldValue(statisticManager, "rdbRepository", null);
         assertTrue(statisticManager.findJobRunningStatisticsWeekly().isEmpty());
     }
-    
+
     @Test
     public void assertFindJobRunningStatisticsWhenRdbIsConfigured() {
         ReflectionUtils.setFieldValue(statisticManager, "rdbRepository", rdbRepository);
@@ -168,13 +168,13 @@ public final class StatisticManagerTest {
         assertThat(statisticManager.findJobRunningStatisticsWeekly().size(), is(1));
         verify(rdbRepository).findJobRunningStatistics(any(Date.class));
     }
-    
+
     @Test
     public void assertFindJobRegisterStatisticsWhenRdbIsNotConfigured() {
         ReflectionUtils.setFieldValue(statisticManager, "rdbRepository", null);
         assertTrue(statisticManager.findJobRegisterStatisticsSinceOnline().isEmpty());
     }
-    
+
     @Test
     public void assertFindJobRegisterStatisticsWhenRdbIsConfigured() {
         ReflectionUtils.setFieldValue(statisticManager, "rdbRepository", rdbRepository);
@@ -182,7 +182,7 @@ public final class StatisticManagerTest {
         assertThat(statisticManager.findJobRegisterStatisticsSinceOnline().size(), is(1));
         verify(rdbRepository).findJobRegisterStatistics(any(Date.class));
     }
-    
+
     @Test
     public void assertFindLatestTaskResultStatisticsWhenRdbIsNotConfigured() {
         ReflectionUtils.setFieldValue(statisticManager, "rdbRepository", null);
@@ -192,31 +192,31 @@ public final class StatisticManagerTest {
             assertThat(actual.getFailedCount(), is(0));
         }
     }
-    
+
     @Test
     public void assertFindLatestTaskResultStatisticsWhenRdbIsConfigured() {
         ReflectionUtils.setFieldValue(statisticManager, "rdbRepository", rdbRepository);
         for (StatisticInterval each : StatisticInterval.values()) {
             when(rdbRepository.findLatestTaskResultStatistics(each))
-                .thenReturn(Optional.of(new TaskResultStatistics(10, 5, each, new Date())));
+                    .thenReturn(Optional.of(new TaskResultStatistics(10, 5, each, new Date())));
             TaskResultStatistics actual = statisticManager.findLatestTaskResultStatistics(each);
             assertThat(actual.getSuccessCount(), is(10));
             assertThat(actual.getFailedCount(), is(5));
         }
         verify(rdbRepository, times(StatisticInterval.values().length)).findLatestTaskResultStatistics(any(StatisticInterval.class));
     }
-    
+
     @Test
     public void assertFindTaskResultStatisticsDailyWhenRdbIsNotConfigured() {
         ReflectionUtils.setFieldValue(statisticManager, "rdbRepository", null);
         assertTrue(statisticManager.findTaskResultStatisticsDaily().isEmpty());
     }
-    
+
     @Test
     public void assertFindTaskResultStatisticsDailyWhenRdbIsConfigured() {
         ReflectionUtils.setFieldValue(statisticManager, "rdbRepository", rdbRepository);
         when(rdbRepository.findTaskResultStatistics(any(Date.class), any(StatisticInterval.class)))
-            .thenReturn(Collections.singletonList(new TaskResultStatistics(10, 5, StatisticInterval.MINUTE, new Date())));
+                .thenReturn(Collections.singletonList(new TaskResultStatistics(10, 5, StatisticInterval.MINUTE, new Date())));
         assertThat(statisticManager.findTaskResultStatisticsDaily().size(), is(1));
         verify(rdbRepository).findTaskResultStatistics(any(Date.class), any(StatisticInterval.class));
     }

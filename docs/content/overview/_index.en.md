@@ -1,23 +1,22 @@
-+++
-pre = "<b>1. </b>"
++++ pre = "<b>1. </b>"
 title = "Overview"
-weight = 1
-chapter = true
-+++
+weight = 1 chapter = true +++
 
-[![GitHub release](https://img.shields.io/github/release/apache/shardingsphere-elasticjob.svg?style=social&label=Release)](https://github.com/apache/shardingsphere-elasticjob/releases)&nbsp;
-[![GitHub stars](https://img.shields.io/github/stars/apache/shardingsphere-elasticjob.svg?style=social&label=Star)](https://github.com/apache/shardingsphere-elasticjob/stargazers)&nbsp;
-[![GitHub forks](https://img.shields.io/github/forks/apache/shardingsphere-elasticjob.svg?style=social&label=Fork)](https://github.com/apache/shardingsphere-elasticjob/fork)&nbsp;
+[![GitHub release](https://img.shields.io/github/release/apache/shardingsphere-elasticjob.svg?style=social&label=Release)](https://github.com/apache/shardingsphere-elasticjob/releases)&nbsp
+;
+[![GitHub stars](https://img.shields.io/github/stars/apache/shardingsphere-elasticjob.svg?style=social&label=Star)](https://github.com/apache/shardingsphere-elasticjob/stargazers)&nbsp
+;
+[![GitHub forks](https://img.shields.io/github/forks/apache/shardingsphere-elasticjob.svg?style=social&label=Fork)](https://github.com/apache/shardingsphere-elasticjob/fork)&nbsp
+;
 [![GitHub watchers](https://img.shields.io/github/watchers/apache/shardingsphere-elasticjob.svg?style=social&label=Watch)](https://github.com/apache/shardingsphere-elasticjob/watchers)
 [![Stargazers over time](https://starchart.cc/apache/shardingsphere-elasticjob.svg)](https://starchart.cc/apache/shardingsphere-elasticjob)
 
-ElasticJob is a distributed scheduling solution consisting of two separate projects, ElasticJob-Lite and ElasticJob-Cloud.
+ElasticJob is a distributed scheduling solution consisting of two separate projects, ElasticJob-Lite and
+ElasticJob-Cloud.
 
-Through the functions of flexible scheduling, resource management and job management, 
-it creates a distributed scheduling solution suitable for Internet scenarios, 
-and provides a diversified job ecosystem through open architecture design.
-It uses a unified job API for each project.
-Developers only need code one time and can deploy at will.
+Through the functions of flexible scheduling, resource management and job management, it creates a distributed
+scheduling solution suitable for Internet scenarios, and provides a diversified job ecosystem through open architecture
+design. It uses a unified job API for each project. Developers only need code one time and can deploy at will.
 
 ElasticJob became an [Apache ShardingSphere](https://shardingsphere.apache.org/) Sub project on May 28 2020.
 
@@ -33,8 +32,9 @@ Welcome communicate with community via [mail list](mailto:dev@shardingsphere.apa
 
 ## Introduction
 
-Using ElasticJob can make developers no longer worry about the non-functional requirements such as jobs scale out, so that they can focus more on business coding;
-At the same time, it can release operators too, so that they do not have to worry about jobs high availability and management, and can automatic operation by simply adding servers.
+Using ElasticJob can make developers no longer worry about the non-functional requirements such as jobs scale out, so
+that they can focus more on business coding; At the same time, it can release operators too, so that they do not have to
+worry about jobs high availability and management, and can automatic operation by simply adding servers.
 
 ### ElasticJob-Lite
 
@@ -58,33 +58,33 @@ Uses Mesos to manage and isolate resources.
 ## Features
 
 - Elastic Schedule
-  - Support job sharding and high availability in distributed system
-  - Scale out for throughput and efficiency improvement
-  - Job processing capacity is flexible and scalable with the allocation of resources
+    - Support job sharding and high availability in distributed system
+    - Scale out for throughput and efficiency improvement
+    - Job processing capacity is flexible and scalable with the allocation of resources
 
 - Resource Assign
-  - Execute job on suitable time and assigned resources
-  - Aggregation same job to same job executor
-  - Append resources to newly assigned jobs dynamically
+    - Execute job on suitable time and assigned resources
+    - Aggregation same job to same job executor
+    - Append resources to newly assigned jobs dynamically
 
 - Job Governance
-  - Failover
-  - Misfired
-  - Self diagnose and recover when distribute environment unstable
+    - Failover
+    - Misfired
+    - Self diagnose and recover when distribute environment unstable
 
 - Job Dependency (TODO)
-  - DAG based job dependency
-  - DAG based job item dependency
+    - DAG based job dependency
+    - DAG based job item dependency
 
 - Job Open Ecosystem
-  - Unify job api for extension
-  - Support rich job type lib, such as dataflow, script, HTTP, file, big data
-  - Focus business SDK, can work with Spring IOC
+    - Unify job api for extension
+    - Support rich job type lib, such as dataflow, script, HTTP, file, big data
+    - Focus business SDK, can work with Spring IOC
 
 - Admin Console
-  - Job administration
-  - Job event trace query
-  - Registry center management
+    - Job administration
+    - Job event trace query
+    - Registry center management
 
 ## Environment Required
 

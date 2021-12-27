@@ -28,14 +28,14 @@ import java.nio.charset.StandardCharsets;
  * Json response body serializer. Serialize object to json byte except String.
  */
 public final class JsonResponseBodySerializer implements ResponseBodySerializer {
-    
+
     private final Gson gson = new GsonBuilder().serializeNulls().create();
-    
+
     @Override
     public String mimeType() {
         return HttpHeaderValues.APPLICATION_JSON.toString();
     }
-    
+
     @Override
     public byte[] serialize(final Object responseBody) {
         if (responseBody instanceof String) {

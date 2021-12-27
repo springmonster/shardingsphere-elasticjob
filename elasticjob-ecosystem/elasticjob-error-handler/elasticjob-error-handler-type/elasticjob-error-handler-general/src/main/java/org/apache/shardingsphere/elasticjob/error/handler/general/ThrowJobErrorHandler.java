@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,16 +26,16 @@ import java.util.Properties;
  * Job error handler for throw exception.
  */
 public final class ThrowJobErrorHandler implements JobErrorHandler {
-    
+
     @Override
     public void init(final Properties props) {
     }
-    
+
     @Override
     public void handleException(final String jobName, final Throwable cause) {
         throw new JobSystemException(cause);
     }
-    
+
     @Override
     public String getType() {
         return "THROW";

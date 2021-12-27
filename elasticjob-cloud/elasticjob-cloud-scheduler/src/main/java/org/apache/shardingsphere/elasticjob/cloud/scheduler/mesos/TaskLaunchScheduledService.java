@@ -64,38 +64,38 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 @Slf4j
 public final class TaskLaunchScheduledService extends AbstractScheduledService {
-    
+
     private final SchedulerDriver schedulerDriver;
-    
+
     private final TaskScheduler taskScheduler;
-    
+
     private final FacadeService facadeService;
-    
+
     private final JobTracingEventBus jobTracingEventBus;
-    
+
     private final BootstrapEnvironment env = BootstrapEnvironment.getINSTANCE();
-    
+
     @Override
     protected String serviceName() {
         return "task-launch-processor";
     }
-    
+
     @Override
     protected Scheduler scheduler() {
         return Scheduler.newFixedDelaySchedule(2, 10, TimeUnit.SECONDS);
     }
-    
+
     @Override
     protected void startUp() {
         log.info("Elastic Job: Start {}", serviceName());
         AppConstraintEvaluator.init(facadeService);
     }
-    
+
     @Override
     protected void shutDown() {
         log.info("Elastic Job: Stop {}", serviceName());
     }
-    
+
     @Override
     protected void runOneIteration() {
         try {
@@ -107,7 +107,7 @@ public final class TaskLaunchScheduledService extends AbstractScheduledService {
             Collection<VMAssignmentResult> vmAssignmentResults = taskScheduler.scheduleOnce(taskRequests, LeasesQueue.getInstance().drainTo()).getResultMap().values();
             List<TaskContext> taskContextsList = new LinkedList<>();
             Map<List<Protos.OfferID>, List<Protos.TaskInfo>> offerIdTaskInfoMap = new HashMap<>();
-            for (VMAssignmentResult each: vmAssignmentResults) {
+            for (VMAssignmentResult each : vmAssignmentResults) {
                 List<VirtualMachineLease> leasesUsed = each.getLeasesUsed();
                 List<Protos.TaskInfo> taskInfoList = new ArrayList<>(each.getTasksAssigned().size() * 10);
                 taskInfoList.addAll(getTaskInfoList(launchingTasks.getIntegrityViolationJobs(vmAssignmentResults), each, leasesUsed.get(0).hostname(), leasesUsed.get(0).getOffer()));
@@ -132,10 +132,10 @@ public final class TaskLaunchScheduledService extends AbstractScheduledService {
             AppConstraintEvaluator.getInstance().clearAppRunningState();
         }
     }
-    
+
     private List<Protos.TaskInfo> getTaskInfoList(final Collection<String> integrityViolationJobs, final VMAssignmentResult vmAssignmentResult, final String hostname, final Protos.Offer offer) {
         List<Protos.TaskInfo> result = new ArrayList<>(vmAssignmentResult.getTasksAssigned().size());
-        for (TaskAssignmentResult each: vmAssignmentResult.getTasksAssigned()) {
+        for (TaskAssignmentResult each : vmAssignmentResult.getTasksAssigned()) {
             TaskContext taskContext = TaskContext.from(each.getTaskId());
             String jobName = taskContext.getMetaInfo().getJobName();
             if (!integrityViolationJobs.contains(jobName) && !facadeService.isRunning(taskContext) && !facadeService.isJobDisabled(jobName)) {
@@ -149,7 +149,7 @@ public final class TaskLaunchScheduledService extends AbstractScheduledService {
         }
         return result;
     }
-    
+
     private Protos.TaskInfo getTaskInfo(final Protos.Offer offer, final TaskAssignmentResult taskAssignmentResult) {
         TaskContext taskContext = TaskContext.from(taskAssignmentResult.getTaskId());
         Optional<CloudJobConfigurationPOJO> cloudJobConfig = facadeService.load(taskContext.getMetaInfo().getJobName());
@@ -176,7 +176,7 @@ public final class TaskLaunchScheduledService extends AbstractScheduledService {
             return buildCustomizedExecutorTaskInfo(taskContext, appConfig.get(), cloudJobConfig.get().toCloudJobConfiguration(), shardingContexts, offer, command);
         }
     }
-    
+
     private ShardingContexts getShardingContexts(final TaskContext taskContext, final CloudAppConfigurationPOJO appConfig, final CloudJobConfiguration cloudJobConfig) {
         Map<Integer, String> shardingItemParameters = new ShardingItemParameters(cloudJobConfig.getJobConfig().getShardingItemParameters()).getMap();
         Map<Integer, String> assignedShardingItemParameters = new HashMap<>(1, 1);
@@ -185,7 +185,7 @@ public final class TaskLaunchScheduledService extends AbstractScheduledService {
         return new ShardingContexts(taskContext.getId(), cloudJobConfig.getJobConfig().getJobName(), cloudJobConfig.getJobConfig().getShardingTotalCount(),
                 cloudJobConfig.getJobConfig().getJobParameter(), assignedShardingItemParameters, appConfig.getEventTraceSamplingCount());
     }
-    
+
     private Protos.TaskInfo buildCommandExecutorTaskInfo(final TaskContext taskContext, final CloudJobConfiguration cloudJobConfig, final ShardingContexts shardingContexts,
                                                          final Protos.Offer offer, final Protos.CommandInfo command) {
         Protos.TaskInfo.Builder result = Protos.TaskInfo.newBuilder().setTaskId(Protos.TaskID.newBuilder().setValue(taskContext.getId()).build())
@@ -195,7 +195,7 @@ public final class TaskLaunchScheduledService extends AbstractScheduledService {
                 .setData(ByteString.copyFrom(new TaskInfoData(shardingContexts, cloudJobConfig).serialize()));
         return result.setCommand(command).build();
     }
-    
+
     private Protos.TaskInfo buildCustomizedExecutorTaskInfo(final TaskContext taskContext, final CloudAppConfigurationPOJO appConfig, final CloudJobConfiguration cloudJobConfig,
                                                             final ShardingContexts shardingContexts, final Protos.Offer offer, final Protos.CommandInfo command) {
         Protos.TaskInfo.Builder result = Protos.TaskInfo.newBuilder().setTaskId(Protos.TaskID.newBuilder().setValue(taskContext.getId()).build())
@@ -204,7 +204,7 @@ public final class TaskLaunchScheduledService extends AbstractScheduledService {
                 .addResources(buildResource("mem", cloudJobConfig.getMemoryMB(), offer.getResourcesList()))
                 .setData(ByteString.copyFrom(new TaskInfoData(shardingContexts, cloudJobConfig).serialize()));
         Protos.ExecutorInfo.Builder executorBuilder = Protos.ExecutorInfo.newBuilder().setExecutorId(Protos.ExecutorID.newBuilder()
-                .setValue(taskContext.getExecutorId(cloudJobConfig.getAppName()))).setCommand(command)
+                        .setValue(taskContext.getExecutorId(cloudJobConfig.getAppName()))).setCommand(command)
                 .addResources(buildResource("cpus", appConfig.getCpuCount(), offer.getResourcesList()))
                 .addResources(buildResource("mem", appConfig.getMemoryMB(), offer.getResourcesList()));
         if (env.getTracingConfiguration().isPresent()) {
@@ -212,7 +212,7 @@ public final class TaskLaunchScheduledService extends AbstractScheduledService {
         }
         return result.setExecutor(executorBuilder.build()).build();
     }
-    
+
     private Protos.CommandInfo.URI buildURI(final CloudAppConfigurationPOJO appConfig, final boolean isCommandExecutor) {
         Protos.CommandInfo.URI.Builder result = Protos.CommandInfo.URI.newBuilder().setValue(appConfig.getAppURL()).setCache(appConfig.isAppCacheEnable());
         if (isCommandExecutor && !SupportedExtractionType.isExtraction(appConfig.getAppURL())) {
@@ -222,7 +222,7 @@ public final class TaskLaunchScheduledService extends AbstractScheduledService {
         }
         return result.build();
     }
-    
+
     private Protos.CommandInfo buildCommand(final Protos.CommandInfo.URI uri, final String script, final ShardingContexts shardingContexts, final boolean isCommandExecutor) {
         Protos.CommandInfo.Builder result = Protos.CommandInfo.newBuilder().addUris(uri).setShell(true);
         if (isCommandExecutor) {
@@ -234,16 +234,16 @@ public final class TaskLaunchScheduledService extends AbstractScheduledService {
         }
         return result.build();
     }
-    
+
     private String getArguments(final CommandLine commandLine) {
         return String.join(" ", commandLine.getArguments());
     }
-    
+
     private Protos.Resource buildResource(final String type, final double resourceValue, final List<Protos.Resource> resources) {
         return Protos.Resource.newBuilder().mergeFrom(
                 resources.stream().filter(input -> input.getName().equals(type)).findFirst().get()).setScalar(Protos.Value.Scalar.newBuilder().setValue(resourceValue)).build();
     }
-    
+
     private JobStatusTraceEvent createJobStatusTraceEvent(final TaskContext taskContext) {
         MetaInfo metaInfo = taskContext.getMetaInfo();
         JobStatusTraceEvent result = new JobStatusTraceEvent(metaInfo.getJobName(), taskContext.getId(), taskContext.getSlaveId(),
@@ -254,10 +254,10 @@ public final class TaskLaunchScheduledService extends AbstractScheduledService {
         }
         return result;
     }
-    
+
     private List<Protos.OfferID> getOfferIDs(final List<VirtualMachineLease> leasesUsed) {
         List<Protos.OfferID> result = new ArrayList<>();
-        for (VirtualMachineLease virtualMachineLease: leasesUsed) {
+        for (VirtualMachineLease virtualMachineLease : leasesUsed) {
             result.add(virtualMachineLease.getOffer().getId());
         }
         return result;

@@ -24,15 +24,15 @@ package org.apache.shardingsphere.elasticjob.restful.mapping;
  * @param <V> Type of payload
  */
 public interface UrlPatternMap<V> {
-    
+
     /**
      * Add a path pattern and value to URL pattern map.
      *
      * @param pathPattern path pattern
-     * @param value payload of the path pattern
+     * @param value       payload of the path pattern
      */
     void put(String pathPattern, V value);
-    
+
     /**
      * Find a proper mapping context for current path.
      *

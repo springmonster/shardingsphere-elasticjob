@@ -1,9 +1,6 @@
-+++
-pre = "<b>2.2. </b>"
++++ pre = "<b>2.2. </b>"
 title = "ElasticJob-Cloud"
-weight = 2
-chapter = true
-+++
+weight = 2 chapter = true +++
 
 ## Import Maven Dependency
 
@@ -64,10 +61,10 @@ curl -H "Content-Type: application/json" -X POST http://elasticjob_cloud_host:88
 ```
 
 Response body:
+
 ```json
 {"accessToken":"some_token"}
 ```
-
 
 ## Publish Job
 

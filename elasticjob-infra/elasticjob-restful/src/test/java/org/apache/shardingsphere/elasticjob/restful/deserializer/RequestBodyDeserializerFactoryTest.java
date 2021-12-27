@@ -23,13 +23,13 @@ import org.junit.Test;
 import static org.junit.Assert.assertNotNull;
 
 public final class RequestBodyDeserializerFactoryTest {
-    
+
     @Test
     public void assertGetJsonDefaultDeserializer() {
         RequestBodyDeserializer deserializer = RequestBodyDeserializerFactory.getRequestBodyDeserializer(HttpHeaderValues.APPLICATION_JSON.toString());
         assertNotNull(deserializer);
     }
-    
+
     @Test(expected = RequestBodyDeserializerNotFoundException.class)
     public void assertDeserializerNotFound() {
         RequestBodyDeserializerFactory.getRequestBodyDeserializer("Unknown");

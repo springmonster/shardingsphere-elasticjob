@@ -27,24 +27,24 @@ import org.quartz.Trigger;
  * Statistic job.
  */
 public interface StatisticJob extends Job {
-    
+
     /**
      * Build JobDetail.
-     * 
+     *
      * @return JobDetail
      */
     JobDetail buildJobDetail();
-    
+
     /**
      * Build Trigger.
-     * 
+     *
      * @return Trigger
      */
     Trigger buildTrigger();
-    
+
     /**
      * Get data map.
-     * 
+     *
      * @return property map, key is property name, value is property instance
      */
     Map<String, Object> getDataMap();

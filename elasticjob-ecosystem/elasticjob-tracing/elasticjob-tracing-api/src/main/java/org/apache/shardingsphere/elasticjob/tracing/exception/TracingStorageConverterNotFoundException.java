@@ -23,9 +23,9 @@ import org.apache.shardingsphere.elasticjob.tracing.storage.TracingStorageConver
  * {@link TracingStorageConverter} not found exception.
  */
 public final class TracingStorageConverterNotFoundException extends RuntimeException {
-    
+
     private static final long serialVersionUID = -995858641205565452L;
-    
+
     public TracingStorageConverterNotFoundException(final Class<?> storageType) {
         super(String.format("No TracingConfigurationConverter found for [%s]", storageType.getName()));
     }

@@ -52,19 +52,19 @@ import java.util.Properties;
  */
 @Slf4j
 public final class DingtalkJobErrorHandler implements JobErrorHandler {
-    
+
     private final CloseableHttpClient httpclient = HttpClients.createDefault();
-    
+
     private String webhook;
-    
+
     private String keyword;
-    
+
     private String secret;
-    
+
     private int connectTimeoutMilliseconds;
-    
+
     private int readTimeoutMilliseconds;
-    
+
     @Override
     public void init(final Properties props) {
         webhook = props.getProperty(DingtalkPropertiesConstants.WEBHOOK);
@@ -73,7 +73,7 @@ public final class DingtalkJobErrorHandler implements JobErrorHandler {
         connectTimeoutMilliseconds = Integer.parseInt(props.getProperty(DingtalkPropertiesConstants.CONNECT_TIMEOUT_MILLISECONDS, DingtalkPropertiesConstants.DEFAULT_CONNECT_TIMEOUT_MILLISECONDS));
         readTimeoutMilliseconds = Integer.parseInt(props.getProperty(DingtalkPropertiesConstants.READ_TIMEOUT_MILLISECONDS, DingtalkPropertiesConstants.DEFAULT_READ_TIMEOUT_MILLISECONDS));
     }
-    
+
     @Override
     public void handleException(final String jobName, final Throwable cause) {
         HttpPost httpPost = createHTTPPostMethod(jobName, cause);
@@ -94,7 +94,7 @@ public final class DingtalkJobErrorHandler implements JobErrorHandler {
             log.error("An exception has occurred in Job '{}', but failed to send dingtalk because of", jobName, cause);
         }
     }
-    
+
     private HttpPost createHTTPPostMethod(final String jobName, final Throwable cause) {
         HttpPost result = new HttpPost(getURL());
         RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(connectTimeoutMilliseconds).setSocketTimeout(readTimeoutMilliseconds).build();
@@ -105,16 +105,16 @@ public final class DingtalkJobErrorHandler implements JobErrorHandler {
         result.setEntity(entity);
         return result;
     }
-    
+
     private String getURL() {
         return Strings.isNullOrEmpty(secret) ? webhook : getSignedURL();
     }
-    
+
     private String getSignedURL() {
         long timestamp = System.currentTimeMillis();
         return String.format("%s&timestamp=%s&sign=%s", webhook, timestamp, generateSignature(timestamp));
     }
-    
+
     @SneakyThrows({NoSuchAlgorithmException.class, UnsupportedEncodingException.class, InvalidKeyException.class})
     private String generateSignature(final long timestamp) {
         String algorithmName = "HmacSHA256";
@@ -123,11 +123,11 @@ public final class DingtalkJobErrorHandler implements JobErrorHandler {
         byte[] signData = mac.doFinal((timestamp + "\n" + secret).getBytes(StandardCharsets.UTF_8));
         return URLEncoder.encode(new String(Base64.getEncoder().encode(signData)), StandardCharsets.UTF_8.name());
     }
-    
+
     private String getJsonParameter(final String message) {
         return GsonFactory.getGson().toJson(ImmutableMap.of("msgtype", "text", "text", Collections.singletonMap("content", message)));
     }
-    
+
     private String getErrorMessage(final String jobName, final Throwable cause) {
         StringWriter writer = new StringWriter();
         cause.printStackTrace(new PrintWriter(writer, true));
@@ -137,12 +137,12 @@ public final class DingtalkJobErrorHandler implements JobErrorHandler {
         }
         return result;
     }
-    
+
     @Override
     public String getType() {
         return "DINGTALK";
     }
-    
+
     @SneakyThrows
     @Override
     public void close() {

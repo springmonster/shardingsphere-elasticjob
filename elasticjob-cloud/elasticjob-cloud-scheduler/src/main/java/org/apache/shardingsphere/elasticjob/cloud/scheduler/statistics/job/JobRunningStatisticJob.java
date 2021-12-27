@@ -49,31 +49,31 @@ import java.util.Set;
 @NoArgsConstructor
 @Slf4j
 public final class JobRunningStatisticJob extends AbstractStatisticJob {
-    
+
     private static final StatisticInterval EXECUTE_INTERVAL = StatisticInterval.MINUTE;
-    
+
     private RunningService runningService;
-    
+
     private StatisticRdbRepository repository;
 
     public JobRunningStatisticJob(final CoordinatorRegistryCenter registryCenter, final StatisticRdbRepository rdbRepository) {
         runningService = new RunningService(registryCenter);
         this.repository = rdbRepository;
     }
-    
+
     @Override
     public JobDetail buildJobDetail() {
         return JobBuilder.newJob(this.getClass()).withIdentity(getJobName()).build();
     }
-    
+
     @Override
     public Trigger buildTrigger() {
         return TriggerBuilder.newTrigger()
                 .withIdentity(getTriggerName())
                 .withSchedule(CronScheduleBuilder.cronSchedule(EXECUTE_INTERVAL.getCron())
-                .withMisfireHandlingInstructionDoNothing()).build();
+                        .withMisfireHandlingInstructionDoNothing()).build();
     }
-    
+
     @Override
     public Map<String, Object> getDataMap() {
         Map<String, Object> result = new HashMap<>(2);
@@ -81,14 +81,14 @@ public final class JobRunningStatisticJob extends AbstractStatisticJob {
         result.put("repository", repository);
         return result;
     }
-    
+
     @Override
     public void execute(final JobExecutionContext context) {
         Map<String, Set<TaskContext>> allRunningTasks = runningService.getAllRunningTasks();
         statisticJob(getJobRunningCount(allRunningTasks));
         statisticTask(getTaskRunningCount(allRunningTasks));
     }
-    
+
     private void statisticJob(final int runningCount) {
         Optional<JobRunningStatistics> latestOne = repository.findLatestJobRunningStatistics();
         latestOne.ifPresent(this::fillBlankIfNeeded);
@@ -96,7 +96,7 @@ public final class JobRunningStatisticJob extends AbstractStatisticJob {
         log.debug("Add jobRunningStatistics, runningCount is:{}", runningCount);
         repository.add(jobRunningStatistics);
     }
-    
+
     private void statisticTask(final int runningCount) {
         Optional<TaskRunningStatistics> latestOne = repository.findLatestTaskRunningStatistics();
         latestOne.ifPresent(this::fillBlankIfNeeded);
@@ -104,7 +104,7 @@ public final class JobRunningStatisticJob extends AbstractStatisticJob {
         log.debug("Add taskRunningStatistics, runningCount is:{}", runningCount);
         repository.add(taskRunningStatistics);
     }
-    
+
     private int getJobRunningCount(final Map<String, Set<TaskContext>> allRunningTasks) {
         int result = 0;
         for (Map.Entry<String, Set<TaskContext>> entry : allRunningTasks.entrySet()) {
@@ -114,7 +114,7 @@ public final class JobRunningStatisticJob extends AbstractStatisticJob {
         }
         return result;
     }
-    
+
     private int getTaskRunningCount(final Map<String, Set<TaskContext>> allRunningTasks) {
         int result = 0;
         for (Map.Entry<String, Set<TaskContext>> entry : allRunningTasks.entrySet()) {
@@ -122,7 +122,7 @@ public final class JobRunningStatisticJob extends AbstractStatisticJob {
         }
         return result;
     }
-    
+
     private void fillBlankIfNeeded(final JobRunningStatistics latestOne) {
         List<Date> blankDateRange = findBlankStatisticTimes(latestOne.getStatisticsTime(), EXECUTE_INTERVAL);
         if (!blankDateRange.isEmpty()) {
@@ -132,7 +132,7 @@ public final class JobRunningStatisticJob extends AbstractStatisticJob {
             repository.add(new JobRunningStatistics(latestOne.getRunningCount(), each));
         }
     }
-    
+
     private void fillBlankIfNeeded(final TaskRunningStatistics latestOne) {
         List<Date> blankDateRange = findBlankStatisticTimes(latestOne.getStatisticsTime(), EXECUTE_INTERVAL);
         if (!blankDateRange.isEmpty()) {

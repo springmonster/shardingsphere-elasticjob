@@ -28,14 +28,14 @@ import java.nio.charset.StandardCharsets;
  * Deserializer for <code>application/json</code>.
  */
 public final class DefaultJsonRequestBodyDeserializer implements RequestBodyDeserializer {
-    
+
     private final Gson gson = GsonFactory.getGson();
-    
+
     @Override
     public String mimeType() {
         return HttpHeaderValues.APPLICATION_JSON.toString();
     }
-    
+
     @Override
     public <T> T deserialize(final Class<T> targetType, final byte[] requestBodyBytes) {
         if (0 == requestBodyBytes.length) {

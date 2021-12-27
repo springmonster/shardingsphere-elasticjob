@@ -29,7 +29,7 @@ import org.w3c.dom.Element;
  * Snapshot bean definition parser.
  */
 public final class SnapshotBeanDefinitionParser extends AbstractBeanDefinitionParser {
-    
+
     @Override
     protected AbstractBeanDefinition parseInternal(final Element element, final ParserContext parserContext) {
         BeanDefinitionBuilder result = BeanDefinitionBuilder.rootBeanDefinition(SnapshotService.class);

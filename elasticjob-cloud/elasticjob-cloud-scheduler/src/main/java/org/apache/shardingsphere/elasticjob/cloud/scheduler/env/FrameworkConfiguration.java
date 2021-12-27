@@ -26,14 +26,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public final class FrameworkConfiguration {
-    
+
     private final int jobStateQueueSize;
-    
+
     private final int reconcileIntervalMinutes;
-    
+
     /**
      * Check whether reconcile service is enabled or not.
-     * 
+     *
      * @return true is enabled, otherwise not
      */
     public boolean isEnabledReconcile() {

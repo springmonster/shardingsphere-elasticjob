@@ -1,11 +1,7 @@
-+++
-title = "使用 Java API"
-weight = 1
-chapter = true
-+++
++++ title = "使用 Java API"
+weight = 1 chapter = true +++
 
-ElasticJob-Lite 在配置中提供了 TracingConfiguration，目前支持数据库方式配置。
-开发者也可以通过 SPI 自行扩展。
+ElasticJob-Lite 在配置中提供了 TracingConfiguration，目前支持数据库方式配置。 开发者也可以通过 SPI 自行扩展。
 
 ```java
     // 初始化数据源

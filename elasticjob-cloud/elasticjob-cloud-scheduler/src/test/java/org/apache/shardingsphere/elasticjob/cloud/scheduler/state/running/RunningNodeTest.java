@@ -24,12 +24,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public final class RunningNodeTest {
-    
+
     @Test
     public void assertGetRunningJobNodePath() {
         assertThat(RunningNode.getRunningJobNodePath("test_job"), is("/state/running/test_job"));
     }
-    
+
     @Test
     public void assertGetRunningTaskNodePath() {
         String nodePath = TaskNode.builder().build().getTaskNodePath();

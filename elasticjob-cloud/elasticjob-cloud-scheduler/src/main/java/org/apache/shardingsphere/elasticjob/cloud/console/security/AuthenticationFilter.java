@@ -42,11 +42,11 @@ import java.util.Optional;
  */
 @RequiredArgsConstructor
 public final class AuthenticationFilter implements Filter {
-    
+
     private final Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-    
+
     private final AuthenticationService authenticationService;
-    
+
     @Override
     public void doFilter(final FullHttpRequest httpRequest, final FullHttpResponse httpResponse, final FilterChain filterChain) {
         if (HttpMethod.POST.equals(httpRequest.method()) && AuthenticationConstants.LOGIN_URI.equals(httpRequest.uri())) {
@@ -60,7 +60,7 @@ public final class AuthenticationFilter implements Filter {
         }
         filterChain.next(httpRequest);
     }
-    
+
     private void handleLogin(final FullHttpRequest httpRequest, final FullHttpResponse httpResponse) {
         byte[] bytes = ByteBufUtil.getBytes(httpRequest.content());
         String mimeType = Optional.ofNullable(HttpUtil.getMimeType(httpRequest)).orElseGet(() -> HttpUtil.getMimeType(Http.DEFAULT_CONTENT_TYPE)).toString();
@@ -74,12 +74,12 @@ public final class AuthenticationFilter implements Filter {
         String token = gson.toJson(Collections.singletonMap(AuthenticationConstants.HEADER_NAME, authenticationService.getToken()));
         respond(httpResponse, HttpResponseStatus.OK, token.getBytes());
     }
-    
+
     private void respondWithUnauthorized(final FullHttpResponse httpResponse) {
         String result = gson.toJson(Collections.singletonMap("message", "Unauthorized."));
         respond(httpResponse, HttpResponseStatus.UNAUTHORIZED, result.getBytes());
     }
-    
+
     private void respond(final FullHttpResponse httpResponse, final HttpResponseStatus status, final byte[] result) {
         httpResponse.setStatus(status);
         httpResponse.headers().set(HttpHeaderNames.CONTENT_TYPE, Http.DEFAULT_CONTENT_TYPE);

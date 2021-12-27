@@ -26,12 +26,12 @@ import org.apache.shardingsphere.elasticjob.restful.serializer.impl.DefaultJsonR
  * Factory for {@link DefaultJsonResponseBodySerializer}.
  */
 public final class DefaultJsonResponseBodySerializerFactory implements SerializerFactory {
-    
+
     @Override
     public String mimeType() {
         return HttpHeaderValues.APPLICATION_JSON.toString();
     }
-    
+
     @Override
     public ResponseBodySerializer createSerializer() {
         return new DefaultJsonResponseBodySerializer();

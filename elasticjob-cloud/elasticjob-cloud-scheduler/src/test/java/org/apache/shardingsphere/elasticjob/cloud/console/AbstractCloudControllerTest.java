@@ -43,25 +43,25 @@ import static org.mockito.Mockito.reset;
 
 @RunWith(MockitoJUnitRunner.class)
 public abstract class AbstractCloudControllerTest {
-    
+
     @Getter(AccessLevel.PROTECTED)
     private static CoordinatorRegistryCenter regCenter;
-    
+
     @Getter(AccessLevel.PROTECTED)
     private static JobEventRdbSearch jobEventRdbSearch;
-    
+
     private static ConsoleBootstrap consoleBootstrap;
-    
+
     private static RestfulService masterServer;
-    
+
     private static RestfulService slaveServer;
-    
+
     @BeforeClass
     public static void setUpClass() {
         initRestfulServer();
         initMesosServer();
     }
-    
+
     private static void initRestfulServer() {
         regCenter = mock(CoordinatorRegistryCenter.class);
         jobEventRdbSearch = mock(JobEventRdbSearch.class);
@@ -72,7 +72,7 @@ public abstract class AbstractCloudControllerTest {
                 producerManager, new ReconcileService(schedulerDriver, new FacadeService(regCenter)));
         consoleBootstrap.start();
     }
-    
+
     private static void initMesosServer() {
         MesosStateService.register("127.0.0.1", 9050);
         NettyRestfulServiceConfiguration masterServerConfiguration = new NettyRestfulServiceConfiguration(9050);
@@ -84,7 +84,7 @@ public abstract class AbstractCloudControllerTest {
         slaveServer = new NettyRestfulService(slaveServerConfiguration);
         slaveServer.startup();
     }
-    
+
     @AfterClass
     public static void tearDown() {
         consoleBootstrap.stop();
@@ -92,7 +92,7 @@ public abstract class AbstractCloudControllerTest {
         slaveServer.shutdown();
         MesosStateService.deregister();
     }
-    
+
     @Before
     public void setUp() {
         reset(regCenter);

@@ -25,33 +25,33 @@ import org.apache.shardingsphere.elasticjob.lite.internal.storage.JobNodePath;
  * Failover node.
  */
 public final class FailoverNode {
-    
+
     private static final String FAILOVER = "failover";
-    
+
     private static final String LEADER_ROOT = LeaderNode.ROOT + "/" + FAILOVER;
-    
+
     static final String ITEMS_ROOT = LEADER_ROOT + "/items";
-    
+
     private static final String ITEMS = ITEMS_ROOT + "/%s";
-    
+
     static final String LATCH = LEADER_ROOT + "/latch";
-    
+
     private static final String EXECUTION_FAILOVER = ShardingNode.ROOT + "/%s/" + FAILOVER;
 
     private static final String FAILOVERING = "failovering";
 
     private static final String EXECUTING_FAILOVER = ShardingNode.ROOT + "/%s/" + FAILOVERING;
-    
+
     private final JobNodePath jobNodePath;
-    
+
     public FailoverNode(final String jobName) {
         jobNodePath = new JobNodePath(jobName);
     }
-    
+
     static String getItemsNode(final int item) {
         return String.format(ITEMS, item);
     }
-    
+
     static String getExecutionFailoverNode(final int item) {
         return String.format(EXECUTION_FAILOVER, item);
     }
@@ -59,7 +59,7 @@ public final class FailoverNode {
     static String getExecutingFailoverNode(final int item) {
         return String.format(EXECUTING_FAILOVER, item);
     }
-    
+
     /**
      * Get sharding item by execution failover path.
      *
@@ -72,7 +72,7 @@ public final class FailoverNode {
         }
         return Integer.parseInt(path.substring(jobNodePath.getFullPath(ShardingNode.ROOT).length() + 1, path.lastIndexOf(FailoverNode.FAILOVER) - 1));
     }
-    
+
     private boolean isFailoverPath(final String path) {
         return path.startsWith(jobNodePath.getFullPath(ShardingNode.ROOT)) && path.endsWith(FailoverNode.FAILOVER);
     }

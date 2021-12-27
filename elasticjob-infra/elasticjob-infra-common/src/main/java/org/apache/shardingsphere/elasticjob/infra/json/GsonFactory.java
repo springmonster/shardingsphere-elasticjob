@@ -21,33 +21,34 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 import com.google.gson.TypeAdapter;
-import java.lang.reflect.Type;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+
+import java.lang.reflect.Type;
 
 /**
  * Gson factory.
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class GsonFactory {
-    
+
     private static GsonBuilder gsonBuilder = new GsonBuilder();
-    
+
     private static volatile Gson gson = gsonBuilder.create();
-    
+
     private static final JsonParser JSON_PARSER = new JsonParser();
-    
+
     /**
      * Register type adapter.
      *
-     * @param type Gson type
+     * @param type        Gson type
      * @param typeAdapter Gson type adapter
      */
     public static synchronized void registerTypeAdapter(final Type type, final TypeAdapter typeAdapter) {
         gsonBuilder.registerTypeAdapter(type, typeAdapter);
         gson = gsonBuilder.create();
     }
-    
+
     /**
      * Get gson instance.
      *
@@ -56,7 +57,7 @@ public final class GsonFactory {
     public static Gson getGson() {
         return gson;
     }
-    
+
     /**
      * Get json parser.
      *

@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -50,25 +50,25 @@ import java.util.concurrent.ExecutorService;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Slf4j
 public final class TaskExecutor implements Executor {
-    
+
     private final ElasticJob elasticJob;
-    
+
     private final String elasticJobType;
-    
+
     private final ExecutorService executorService = new ElasticJobExecutorService("cloud-task-executor", Runtime.getRuntime().availableProcessors() * 100).createExecutorService();
-    
+
     private volatile ElasticJobExecutor jobExecutor;
-    
+
     private volatile JobTracingEventBus jobTracingEventBus = new JobTracingEventBus();
-    
+
     public TaskExecutor(final ElasticJob elasticJob) {
         this(elasticJob, null);
     }
-    
+
     public TaskExecutor(final String elasticJobType) {
         this(null, elasticJobType);
     }
-    
+
     @Override
     public void registered(final ExecutorDriver executorDriver, final Protos.ExecutorInfo executorInfo, final Protos.FrameworkInfo frameworkInfo, final Protos.SlaveInfo slaveInfo) {
         if (!executorInfo.getData().isEmpty()) {
@@ -81,26 +81,26 @@ public final class TaskExecutor implements Executor {
             jobTracingEventBus = new JobTracingEventBus(new TracingConfiguration<DataSource>("RDB", dataSource));
         }
     }
-    
+
     @Override
     public void reregistered(final ExecutorDriver executorDriver, final Protos.SlaveInfo slaveInfo) {
     }
-    
+
     @Override
     public void disconnected(final ExecutorDriver executorDriver) {
     }
-    
+
     @Override
     public void launchTask(final ExecutorDriver executorDriver, final Protos.TaskInfo taskInfo) {
         executorService.submit(new TaskThread(executorDriver, taskInfo));
     }
-    
+
     @Override
     public void killTask(final ExecutorDriver executorDriver, final Protos.TaskID taskID) {
         executorDriver.sendStatusUpdate(Protos.TaskStatus.newBuilder().setTaskId(taskID).setState(Protos.TaskState.TASK_KILLED).build());
         DaemonTaskScheduler.shutdown(taskID);
     }
-    
+
     @Override
     public void frameworkMessage(final ExecutorDriver executorDriver, final byte[] bytes) {
         if (null != bytes && "STOP".equals(new String(bytes))) {
@@ -108,23 +108,23 @@ public final class TaskExecutor implements Executor {
             executorDriver.stop();
         }
     }
-    
+
     @Override
     public void shutdown(final ExecutorDriver executorDriver) {
     }
-    
+
     @Override
     public void error(final ExecutorDriver executorDriver, final String message) {
         log.error("call executor error, message is: {}", message);
     }
-    
+
     @RequiredArgsConstructor
     class TaskThread implements Runnable {
-        
+
         private final ExecutorDriver executorDriver;
-        
+
         private final TaskInfo taskInfo;
-        
+
         @Override
         public void run() {
             Thread.currentThread().setContextClassLoader(TaskThread.class.getClassLoader());
@@ -140,27 +140,27 @@ public final class TaskExecutor implements Executor {
                 } else {
                     new DaemonTaskScheduler(elasticJob, elasticJobType, jobConfig, jobFacade, executorDriver, taskInfo.getTaskId()).init();
                 }
-                
+
             } catch (final Throwable ex) {
-                
+
                 log.error("ElasticJob-Cloud Executor error:", ex);
                 executorDriver.sendStatusUpdate(Protos.TaskStatus.newBuilder().setTaskId(taskInfo.getTaskId()).setState(Protos.TaskState.TASK_ERROR).setMessage(ExceptionUtils.transform(ex)).build());
                 executorDriver.stop();
                 throw ex;
             }
         }
-    
+
         private boolean isTransient(final JobConfiguration jobConfig) {
             return Strings.isNullOrEmpty(jobConfig.getCron());
         }
-        
+
         private ElasticJobExecutor getJobExecutor(final JobFacade jobFacade) {
             if (null == jobExecutor) {
                 createJobExecutor(jobFacade);
             }
             return jobExecutor;
         }
-    
+
         private synchronized void createJobExecutor(final JobFacade jobFacade) {
             if (null != jobExecutor) {
                 return;

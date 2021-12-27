@@ -21,14 +21,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.embedded.EmbeddedChannel;
-import io.netty.handler.codec.http.DefaultFullHttpRequest;
-import io.netty.handler.codec.http.DefaultHttpHeaders;
-import io.netty.handler.codec.http.FullHttpRequest;
-import io.netty.handler.codec.http.FullHttpResponse;
-import io.netty.handler.codec.http.HttpHeaders;
-import io.netty.handler.codec.http.HttpMethod;
-import io.netty.handler.codec.http.HttpVersion;
-import io.netty.handler.codec.http.QueryStringEncoder;
+import io.netty.handler.codec.http.*;
 import org.apache.shardingsphere.elasticjob.restful.Http;
 import org.apache.shardingsphere.elasticjob.restful.RestfulController;
 import org.apache.shardingsphere.elasticjob.restful.annotation.Mapping;
@@ -44,9 +37,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public final class HandlerParameterDecoderTest {
-    
+
     private EmbeddedChannel channel;
-    
+
     @Before
     public void setUp() {
         ContextInitializationInboundHandler contextInitializationInboundHandler = new ContextInitializationInboundHandler();
@@ -55,7 +48,7 @@ public final class HandlerParameterDecoderTest {
         HandleMethodExecutor handleMethodExecutor = new HandleMethodExecutor();
         channel = new EmbeddedChannel(contextInitializationInboundHandler, httpRequestDispatcher, handlerParameterDecoder, handleMethodExecutor);
     }
-    
+
     @Test
     public void assertDecodeParameters() {
         QueryStringEncoder queryStringEncoder = new QueryStringEncoder("/myApp/C");
@@ -74,9 +67,9 @@ public final class HandlerParameterDecoderTest {
         assertThat(httpResponse.status().code(), is(200));
         assertThat(new String(ByteBufUtil.getBytes(httpResponse.content())), is("ok"));
     }
-    
+
     public static class DecoderTestController implements RestfulController {
-        
+
         /**
          * A handle method for decode testing.
          *

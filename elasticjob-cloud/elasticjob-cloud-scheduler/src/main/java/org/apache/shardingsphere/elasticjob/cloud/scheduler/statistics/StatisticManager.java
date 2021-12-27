@@ -54,21 +54,21 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class StatisticManager {
-    
+
     private static volatile StatisticManager instance;
-    
+
     private final CoordinatorRegistryCenter registryCenter;
-    
+
     private final CloudJobConfigurationService configurationService;
-    
+
     private final TracingConfiguration tracingConfiguration;
-    
+
     private final StatisticsScheduler scheduler;
-    
+
     private final Map<StatisticInterval, TaskResultMetaData> statisticData;
-    
+
     private StatisticRdbRepository rdbRepository;
-    
+
     private StatisticManager(final CoordinatorRegistryCenter registryCenter, final TracingConfiguration tracingConfiguration,
                              final StatisticsScheduler scheduler, final Map<StatisticInterval, TaskResultMetaData> statisticData) {
         this.registryCenter = registryCenter;
@@ -77,11 +77,11 @@ public final class StatisticManager {
         this.scheduler = scheduler;
         this.statisticData = statisticData;
     }
-    
+
     /**
      * Get statistic manager.
-     * 
-     * @param regCenter registry center
+     *
+     * @param regCenter            registry center
      * @param tracingConfiguration tracing configuration
      * @return statistic manager
      */
@@ -100,7 +100,7 @@ public final class StatisticManager {
         }
         return instance;
     }
-    
+
     private static void init() {
         if (null != instance.tracingConfiguration) {
             try {
@@ -110,7 +110,7 @@ public final class StatisticManager {
             }
         }
     }
-    
+
     /**
      * Startup.
      */
@@ -124,14 +124,14 @@ public final class StatisticManager {
             scheduler.register(new RegisteredJobStatisticJob(configurationService, rdbRepository));
         }
     }
-    
+
     /**
      * Shutdown.
      */
     public void shutdown() {
         scheduler.shutdown();
     }
-    
+
     /**
      * Run task successfully.
      */
@@ -140,7 +140,7 @@ public final class StatisticManager {
         statisticData.get(StatisticInterval.HOUR).incrementAndGetSuccessCount();
         statisticData.get(StatisticInterval.DAY).incrementAndGetSuccessCount();
     }
-    
+
     /**
      * Run task failed.
      */
@@ -149,13 +149,14 @@ public final class StatisticManager {
         statisticData.get(StatisticInterval.HOUR).incrementAndGetFailedCount();
         statisticData.get(StatisticInterval.DAY).incrementAndGetFailedCount();
     }
-    
+
     private boolean isRdbConfigured() {
         return null != rdbRepository;
     }
-    
+
     /**
      * Get statistic of the recent week.
+     *
      * @return task result statistic
      */
     public TaskResultStatistics getTaskResultStatisticsWeekly() {
@@ -164,10 +165,10 @@ public final class StatisticManager {
         }
         return rdbRepository.getSummedTaskResultStatistics(StatisticTimeUtils.getStatisticTime(StatisticInterval.DAY, -7), StatisticInterval.DAY);
     }
-    
+
     /**
      * Get statistic since online.
-     * 
+     *
      * @return task result statistic
      */
     public TaskResultStatistics getTaskResultStatisticsSinceOnline() {
@@ -176,9 +177,10 @@ public final class StatisticManager {
         }
         return rdbRepository.getSummedTaskResultStatistics(getOnlineDate(), StatisticInterval.DAY);
     }
-    
+
     /**
      * Get the latest statistic of the specified interval.
+     *
      * @param statisticInterval statistic interval
      * @return task result statistic
      */
@@ -191,10 +193,10 @@ public final class StatisticManager {
         }
         return new TaskResultStatistics(0, 0, statisticInterval, new Date());
     }
-    
+
     /**
      * Get statistic of the recent day.
-     * 
+     *
      * @return task result statistic
      */
     public List<TaskResultStatistics> findTaskResultStatisticsDaily() {
@@ -203,10 +205,10 @@ public final class StatisticManager {
         }
         return rdbRepository.findTaskResultStatistics(StatisticTimeUtils.getStatisticTime(StatisticInterval.HOUR, -24), StatisticInterval.MINUTE);
     }
-    
+
     /**
      * Get job execution type statistics.
-     * 
+     *
      * @return Job execution type statistics data object
      */
     public JobExecutionTypeStatistics getJobExecutionTypeStatistics() {
@@ -221,10 +223,10 @@ public final class StatisticManager {
         }
         return new JobExecutionTypeStatistics(transientJobCnt, daemonJobCnt);
     }
-    
+
     /**
      * Get the collection of task statistics in the most recent week.
-     * 
+     *
      * @return Collection of running task statistics data objects
      */
     public List<TaskRunningStatistics> findTaskRunningStatisticsWeekly() {
@@ -233,10 +235,10 @@ public final class StatisticManager {
         }
         return rdbRepository.findTaskRunningStatistics(StatisticTimeUtils.getStatisticTime(StatisticInterval.DAY, -7));
     }
-    
+
     /**
      * Get the collection of job statistics in the most recent week.
-     * 
+     *
      * @return collection of running task statistics data objects
      */
     public List<JobRunningStatistics> findJobRunningStatisticsWeekly() {
@@ -245,10 +247,10 @@ public final class StatisticManager {
         }
         return rdbRepository.findJobRunningStatistics(StatisticTimeUtils.getStatisticTime(StatisticInterval.DAY, -7));
     }
-    
+
     /**
      * Get running task statistics data collection since online.
-     * 
+     *
      * @return collection of running task statistics data objects
      */
     public List<JobRegisterStatistics> findJobRegisterStatisticsSinceOnline() {
@@ -257,7 +259,7 @@ public final class StatisticManager {
         }
         return rdbRepository.findJobRegisterStatistics(getOnlineDate());
     }
-    
+
     private Date getOnlineDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try {

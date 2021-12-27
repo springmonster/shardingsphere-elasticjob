@@ -41,7 +41,7 @@ import java.util.Properties;
  * Job bean definition parser.
  */
 public final class JobBeanDefinitionParser extends AbstractBeanDefinitionParser {
-    
+
     @Override
     protected AbstractBeanDefinition parseInternal(final Element element, final ParserContext parserContext) {
         BeanDefinitionBuilder factory;
@@ -61,7 +61,7 @@ public final class JobBeanDefinitionParser extends AbstractBeanDefinitionParser 
         factory.addConstructorArgValue(createJobConfigurationBeanDefinition(element, parserContext));
         return factory.getBeanDefinition();
     }
-    
+
     private BeanDefinition createJobConfigurationBeanDefinition(final Element element, final ParserContext parserContext) {
         BeanDefinitionBuilder result = BeanDefinitionBuilder.rootBeanDefinition(JobConfiguration.class);
         result.addConstructorArgValue(element.getAttribute(ID_ATTRIBUTE));
@@ -93,7 +93,7 @@ public final class JobBeanDefinitionParser extends AbstractBeanDefinitionParser 
         result.addConstructorArgValue(element.getAttribute(JobBeanDefinitionTag.STATIC_SHARDING_ATTRIBUTE));
         return result.getBeanDefinition();
     }
-    
+
     private Collection<BeanDefinition> parseExtraConfigs(final String[] extraConfigRefs, final Element element, final ParserContext parserContext) {
         Collection<BeanDefinition> result = new ManagedList<>(extraConfigRefs.length);
         for (String each : extraConfigRefs) {
@@ -104,7 +104,7 @@ public final class JobBeanDefinitionParser extends AbstractBeanDefinitionParser 
         }
         return result;
     }
-    
+
     private Properties parsePropsElement(final Element element, final ParserContext parserContext) {
         Element propsElement = DomUtils.getChildElementByTagName(element, JobBeanDefinitionTag.PROPS_TAG);
         return null == propsElement ? new Properties() : parserContext.getDelegate().parsePropsElement(propsElement);

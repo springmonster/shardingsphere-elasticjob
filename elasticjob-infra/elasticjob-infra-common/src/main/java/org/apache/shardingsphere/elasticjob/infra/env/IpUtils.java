@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,11 +21,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
-import java.net.Inet6Address;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.net.UnknownHostException;
+import java.net.*;
 import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
@@ -36,20 +32,20 @@ import java.util.Objects;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class IpUtils {
-    
+
     public static final String IP_REGEX = "((\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])(\\.(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)){3})";
-    
+
     public static final String PREFERRED_NETWORK_INTERFACE = "elasticjob.preferred.network.interface";
-    
+
     public static final String PREFERRED_NETWORK_IP = "elasticjob.preferred.network.ip";
-    
+
     private static volatile String cachedIpAddress;
-    
+
     private static volatile String cachedHostName;
-    
+
     /**
      * Get IP address for localhost.
-     * 
+     *
      * @return IP address for localhost
      */
     public static String getIp() {
@@ -69,7 +65,7 @@ public final class IpUtils {
         }
         throw new HostException("ip is null");
     }
-    
+
     private static NetworkInterface findNetworkInterface() {
         Enumeration<NetworkInterface> interfaces;
         try {
@@ -97,7 +93,7 @@ public final class IpUtils {
         }
         return result;
     }
-    
+
     private static NetworkInterface getFirstNetworkInterface(final List<NetworkInterface> validNetworkInterfaces) {
         NetworkInterface result = null;
         for (NetworkInterface each : validNetworkInterfaces) {
@@ -115,12 +111,12 @@ public final class IpUtils {
         }
         return result;
     }
-    
+
     private static boolean isPreferredNetworkInterface(final NetworkInterface networkInterface) {
         String preferredNetworkInterface = System.getProperty(PREFERRED_NETWORK_INTERFACE);
         return Objects.equals(networkInterface.getDisplayName(), preferredNetworkInterface);
     }
-    
+
     private static boolean ignoreNetworkInterface(final NetworkInterface networkInterface) {
         try {
             return null == networkInterface
@@ -131,7 +127,7 @@ public final class IpUtils {
             return true;
         }
     }
-    
+
     private static boolean isPreferredAddress(final InetAddress inetAddress) {
         String preferredNetworkIp = System.getProperty(PREFERRED_NETWORK_IP);
         if (null == preferredNetworkIp) {
@@ -140,7 +136,7 @@ public final class IpUtils {
         String hostAddress = inetAddress.getHostAddress();
         return hostAddress.startsWith(preferredNetworkIp) || hostAddress.matches(preferredNetworkIp);
     }
-    
+
     private static boolean isValidAddress(final InetAddress inetAddress) {
         try {
             return !inetAddress.isLoopbackAddress() && !inetAddress.isAnyLocalAddress()
@@ -149,14 +145,14 @@ public final class IpUtils {
             return false;
         }
     }
-    
+
     private static boolean isIp6Address(final InetAddress ipAddress) {
         return ipAddress instanceof Inet6Address;
     }
-    
+
     /**
      * Get host name for localhost.
-     * 
+     *
      * @return host name for localhost
      */
     public static String getHostName() {

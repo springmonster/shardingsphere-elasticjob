@@ -26,10 +26,10 @@ import java.util.List;
  * Transaction execution callback.
  */
 public interface TransactionExecutionCallback {
-    
+
     /**
      * Create curator operators.
-     * 
+     *
      * @param transactionOp transaction operation
      * @return curator operations
      * @throws Exception exception

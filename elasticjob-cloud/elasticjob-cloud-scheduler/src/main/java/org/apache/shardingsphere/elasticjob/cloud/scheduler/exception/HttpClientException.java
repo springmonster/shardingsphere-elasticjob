@@ -21,17 +21,17 @@ package org.apache.shardingsphere.elasticjob.cloud.scheduler.exception;
  * Http request exception.
  */
 public class HttpClientException extends RuntimeException {
-    
+
     private static final long serialVersionUID = 6769285134744353127L;
-    
+
     public HttpClientException(final Exception cause) {
         super(cause);
     }
-    
+
     public HttpClientException(final String errorMessage, final Object... args) {
         super(String.format(errorMessage, args));
     }
-    
+
     public HttpClientException(final String errorMessage, final Exception cause, final Object... args) {
         super(String.format(errorMessage, args), cause);
     }

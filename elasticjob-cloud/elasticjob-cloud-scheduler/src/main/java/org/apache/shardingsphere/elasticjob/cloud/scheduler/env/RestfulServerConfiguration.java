@@ -26,6 +26,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public final class RestfulServerConfiguration {
-    
+
     private final int port;
 }

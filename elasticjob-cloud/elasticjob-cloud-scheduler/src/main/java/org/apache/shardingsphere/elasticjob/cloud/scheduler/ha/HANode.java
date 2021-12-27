@@ -21,17 +21,17 @@ package org.apache.shardingsphere.elasticjob.cloud.scheduler.ha;
  * HA node.
  */
 public final class HANode {
-    
+
     /**
      * HA node.
      */
     public static final String ROOT = "/ha";
-    
+
     /**
      * FrameworkID node.
      */
     public static final String FRAMEWORK_ID_NODE = ROOT + "/framework_id";
-    
+
     /**
      * Election node.
      */

@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -33,27 +33,27 @@ import java.util.Map;
 @Getter
 @ToString
 public final class ShardingContexts implements Serializable {
-    
+
     private static final long serialVersionUID = -4585977349142082152L;
-    
+
     private final String taskId;
-    
+
     private final String jobName;
-    
+
     private final int shardingTotalCount;
-    
+
     private final String jobParameter;
-    
+
     private final Map<Integer, String> shardingItemParameters;
-    
+
     private int jobEventSamplingCount;
-    
+
     @Setter
     private int currentJobEventSamplingCount;
-    
+
     @Setter
     private boolean allowSendJobEvent = true;
-    
+
     public ShardingContexts(final String taskId, final String jobName, final int shardingTotalCount, final String jobParameter,
                             final Map<Integer, String> shardingItemParameters, final int jobEventSamplingCount) {
         this.taskId = taskId;
@@ -63,10 +63,10 @@ public final class ShardingContexts implements Serializable {
         this.shardingItemParameters = shardingItemParameters;
         this.jobEventSamplingCount = jobEventSamplingCount;
     }
-    
+
     /**
      * Create sharding context.
-     * 
+     *
      * @param shardingItem sharding item
      * @return sharding context
      */

@@ -1,12 +1,9 @@
-+++
-title = "Use Spring Boot Starter"
-weight = 2
-chapter = true
-+++
++++ title = "Use Spring Boot Starter"
+weight = 2 chapter = true +++
 
-ElasticJob-Lite Spring Boot Starter has already integrated TracingConfiguration configuration.
-What developers need to do is register a bean of DataSource into the Spring IoC Container and set the type of data source.
-Then the Starter will create an instance of TracingConfiguration and register it into the container.
+ElasticJob-Lite Spring Boot Starter has already integrated TracingConfiguration configuration. What developers need to
+do is register a bean of DataSource into the Spring IoC Container and set the type of data source. Then the Starter will
+create an instance of TracingConfiguration and register it into the container.
 
 ## Import Maven Dependency
 
@@ -37,6 +34,6 @@ elasticjob:
 
 ## Job Start
 
-TracingConfiguration will be registered into the IoC container imperceptibly after setting tracing type to RDB.
-If elasticjob-lite-spring-boot-starter was imported, developers need to do nothing else. 
-The instances of JobBootstrap will use the TracingConfiguration automatically.
+TracingConfiguration will be registered into the IoC container imperceptibly after setting tracing type to RDB. If
+elasticjob-lite-spring-boot-starter was imported, developers need to do nothing else. The instances of JobBootstrap will
+use the TracingConfiguration automatically.

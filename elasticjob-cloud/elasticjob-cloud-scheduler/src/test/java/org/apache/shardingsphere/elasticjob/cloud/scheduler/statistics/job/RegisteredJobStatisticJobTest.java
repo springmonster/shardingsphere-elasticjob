@@ -42,39 +42,39 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegisteredJobStatisticJobTest {
-    
+
     @Mock
     private CloudJobConfigurationService configurationService;
-    
+
     @Mock
     private StatisticRdbRepository repository;
-    
+
     private RegisteredJobStatisticJob registeredJobStatisticJob;
-    
+
     @Before
     public void setUp() {
         registeredJobStatisticJob = new RegisteredJobStatisticJob();
         registeredJobStatisticJob.setConfigurationService(configurationService);
         registeredJobStatisticJob.setRepository(repository);
     }
-    
+
     @Test
     public void assertBuildJobDetail() {
         assertThat(registeredJobStatisticJob.buildJobDetail().getKey().getName(), is(RegisteredJobStatisticJob.class.getSimpleName()));
     }
-    
+
     @Test
     public void assertBuildTrigger() {
         Trigger trigger = registeredJobStatisticJob.buildTrigger();
         assertThat(trigger.getKey().getName(), is(RegisteredJobStatisticJob.class.getSimpleName() + "Trigger"));
     }
-    
+
     @Test
     public void assertGetDataMap() {
         assertThat(registeredJobStatisticJob.getDataMap().get("configurationService"), is(configurationService));
         assertThat(registeredJobStatisticJob.getDataMap().get("repository"), is(repository));
     }
-    
+
     @Test
     public void assertExecuteWhenRepositoryIsEmpty() {
         Optional<JobRegisterStatistics> latestOne = Optional.empty();
@@ -86,7 +86,7 @@ public class RegisteredJobStatisticJobTest {
         verify(repository).add(any(JobRegisterStatistics.class));
         verify(configurationService).loadAll();
     }
-    
+
     @Test
     public void assertExecute() {
         Optional<JobRegisterStatistics> latestOne = Optional.of(new JobRegisterStatistics(0, StatisticTimeUtils.getStatisticTime(StatisticInterval.DAY, -3)));

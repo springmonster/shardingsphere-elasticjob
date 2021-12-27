@@ -32,11 +32,11 @@ import java.util.concurrent.ExecutorService;
  */
 @Slf4j
 public final class ExecutorServiceReloadable implements Reloadable<ExecutorService>, ReloadablePostProcessor {
-    
+
     private String jobExecutorServiceHandlerType;
-    
+
     private ExecutorService executorService;
-    
+
     @Override
     public void init(final JobConfiguration jobConfig) {
         jobExecutorServiceHandlerType = Strings.isNullOrEmpty(jobConfig.getJobExecutorServiceHandlerType())
@@ -46,7 +46,6 @@ public final class ExecutorServiceReloadable implements Reloadable<ExecutorServi
 
     /**
      * kuanghc1:这里为啥要reload？？？
-     *
      *
      * @param jobConfig
      */
@@ -64,23 +63,23 @@ public final class ExecutorServiceReloadable implements Reloadable<ExecutorServi
 
         reload(newJobExecutorServiceHandlerType, jobConfig.getJobName());
     }
-    
+
     private void reload(final String jobExecutorServiceHandlerType, final String jobName) {
         executorService.shutdown();
         this.jobExecutorServiceHandlerType = jobExecutorServiceHandlerType;
         executorService = JobExecutorServiceHandlerFactory.getHandler(jobExecutorServiceHandlerType).createExecutorService(jobName);
     }
-    
+
     @Override
     public ExecutorService getInstance() {
         return executorService;
     }
-    
+
     @Override
     public void close() {
         Optional.ofNullable(executorService).ifPresent(ExecutorService::shutdown);
     }
-    
+
     @Override
     public String getType() {
         return ExecutorService.class.getName();

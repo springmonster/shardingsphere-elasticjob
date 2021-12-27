@@ -29,11 +29,11 @@ import org.springframework.context.annotation.Bean;
 @ConditionalOnProperty(name = "elasticjob.dump.enabled", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties(SnapshotServiceProperties.class)
 public class ElasticJobSnapshotServiceConfiguration {
-    
+
     /**
      * Create a Snapshot service bean and start listening.
      *
-     * @param registryCenter registry center
+     * @param registryCenter            registry center
      * @param snapshotServiceProperties snapshot service properties
      * @return a bean of snapshot service
      */

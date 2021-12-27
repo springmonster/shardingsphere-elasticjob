@@ -24,40 +24,40 @@ import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
 
 /**
  * khc:------> SchedulerFacade 和 LiteJobFacade，看起来很相近，实际差别很大。它们分别为调度器、作业提供需要的方法。下文也会体现这一特点。
- *
+ * <p>
  * Scheduler facade.
  */
 public final class SchedulerFacade {
-    
+
     private final String jobName;
-    
+
     private final LeaderService leaderService;
-    
+
     private final ShardingService shardingService;
-    
+
     private final ExecutionService executionService;
 
     /**
      * schedulerFacade = {SchedulerFacade@3372}
-     *  jobName = "kuanghc1-job"
-     *  leaderService = {LeaderService@3373}
-     *   jobName = "kuanghc1-job"
-     *   serverService = {ServerService@3376}
-     *   jobNodeStorage = {JobNodeStorage@3377}
-     *  shardingService = {ShardingService@3374}
-     *   jobName = "kuanghc1-job"
-     *   jobNodeStorage = {JobNodeStorage@3378}
-     *   leaderService = {LeaderService@3379}
-     *   configService = {ConfigurationService@3380}  作业配置服务
-     *   instanceService = {InstanceService@3381} 作业运行实例服务
-     *   instanceNode = {InstanceNode@3382}
-     *   serverService = {ServerService@3383}
-     *   executionService = {ExecutionService@3384}  执行作业服务
-     *   jobNodePath = {JobNodePath@3385}
-     *  executionService = {ExecutionService@3375}
-     *   jobName = "kuanghc1-job"
-     *   jobNodeStorage = {JobNodeStorage@3386}
-     *   configService = {ConfigurationService@3387}
+     * jobName = "kuanghc1-job"
+     * leaderService = {LeaderService@3373}
+     * jobName = "kuanghc1-job"
+     * serverService = {ServerService@3376}
+     * jobNodeStorage = {JobNodeStorage@3377}
+     * shardingService = {ShardingService@3374}
+     * jobName = "kuanghc1-job"
+     * jobNodeStorage = {JobNodeStorage@3378}
+     * leaderService = {LeaderService@3379}
+     * configService = {ConfigurationService@3380}  作业配置服务
+     * instanceService = {InstanceService@3381} 作业运行实例服务
+     * instanceNode = {InstanceNode@3382}
+     * serverService = {ServerService@3383}
+     * executionService = {ExecutionService@3384}  执行作业服务
+     * jobNodePath = {JobNodePath@3385}
+     * executionService = {ExecutionService@3375}
+     * jobName = "kuanghc1-job"
+     * jobNodeStorage = {JobNodeStorage@3386}
+     * configService = {ConfigurationService@3387}
      *
      * @param regCenter
      * @param jobName
@@ -68,7 +68,7 @@ public final class SchedulerFacade {
         shardingService = new ShardingService(regCenter, jobName);
         executionService = new ExecutionService(regCenter, jobName);
     }
-    
+
     /**
      * Create job trigger listener.
      *
@@ -77,7 +77,7 @@ public final class SchedulerFacade {
     public JobTriggerListener newJobTriggerListener() {
         return new JobTriggerListener(executionService, shardingService);
     }
-    
+
     /**
      * Shutdown instance.
      */

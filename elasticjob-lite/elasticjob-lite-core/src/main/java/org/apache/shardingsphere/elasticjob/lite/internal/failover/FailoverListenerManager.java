@@ -36,19 +36,19 @@ import java.util.List;
  */
 @Slf4j
 public final class FailoverListenerManager extends AbstractListenerManager {
-    
+
     private final String jobName;
-    
+
     private final ConfigurationService configService;
-    
+
     private final ShardingService shardingService;
-    
+
     private final FailoverService failoverService;
-    
+
     private final ConfigurationNode configNode;
-    
+
     private final InstanceNode instanceNode;
-    
+
     public FailoverListenerManager(final CoordinatorRegistryCenter regCenter, final String jobName) {
         super(regCenter, jobName);
         this.jobName = jobName;
@@ -58,19 +58,19 @@ public final class FailoverListenerManager extends AbstractListenerManager {
         configNode = new ConfigurationNode(jobName);
         instanceNode = new InstanceNode(jobName);
     }
-    
+
     @Override
     public void start() {
         addDataListener(new JobCrashedJobListener());
         addDataListener(new FailoverSettingsChangedJobListener());
     }
-    
+
     private boolean isFailoverEnabled() {
         return configService.load(true).isFailover();
     }
-    
+
     class JobCrashedJobListener extends AbstractJobListener {
-        
+
         @Override
         protected void dataChanged(final String path, final Type eventType, final String data) {
             log.info("khc JobCrashedJobListener dataChanged path: {} , eventType: {} , data: {}", path, eventType, data);
@@ -95,9 +95,9 @@ public final class FailoverListenerManager extends AbstractListenerManager {
             }
         }
     }
-    
+
     class FailoverSettingsChangedJobListener extends AbstractJobListener {
-        
+
         @Override
         protected void dataChanged(final String path, final Type eventType, final String data) {
             log.info("khc FailoverSettingsChangedJobListener dataChanged path: {} , eventType: {} , data: {}", path, eventType, data);

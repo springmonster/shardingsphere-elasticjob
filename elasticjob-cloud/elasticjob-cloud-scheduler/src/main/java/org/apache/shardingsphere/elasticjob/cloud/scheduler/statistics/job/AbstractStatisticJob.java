@@ -29,15 +29,15 @@ import org.apache.shardingsphere.elasticjob.cloud.statistics.StatisticInterval;
  * Statistic job.
  */
 abstract class AbstractStatisticJob implements StatisticJob {
-    
+
     String getJobName() {
         return this.getClass().getSimpleName();
     }
-    
+
     String getTriggerName() {
         return this.getClass().getSimpleName() + "Trigger";
     }
-    
+
     List<Date> findBlankStatisticTimes(final Date latestStatisticTime, final StatisticInterval statisticInterval) {
         List<Date> result = new ArrayList<>();
         int previousInterval = -1;

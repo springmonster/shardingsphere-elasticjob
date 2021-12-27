@@ -40,16 +40,16 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TaskResultStatisticJobTest {
-    
+
     private final StatisticInterval statisticInterval = StatisticInterval.MINUTE;
-    
+
     private TaskResultMetaData sharedData;
-    
+
     @Mock
     private StatisticRdbRepository repository;
-    
+
     private TaskResultStatisticJob taskResultStatisticJob;
-    
+
     @Before
     public void setUp() {
         taskResultStatisticJob = new TaskResultStatisticJob();
@@ -58,12 +58,12 @@ public class TaskResultStatisticJobTest {
         taskResultStatisticJob.setSharedData(sharedData);
         taskResultStatisticJob.setRepository(repository);
     }
-    
+
     @Test
     public void assertBuildJobDetail() {
         assertThat(taskResultStatisticJob.buildJobDetail().getKey().getName(), is(TaskResultStatisticJob.class.getSimpleName() + "_" + statisticInterval));
     }
-    
+
     @Test
     public void assertBuildTrigger() {
         for (StatisticInterval each : StatisticInterval.values()) {
@@ -72,14 +72,14 @@ public class TaskResultStatisticJobTest {
             assertThat(trigger.getKey().getName(), is(TaskResultStatisticJob.class.getSimpleName() + "Trigger" + "_" + each));
         }
     }
-    
+
     @Test
     public void assertGetDataMap() {
         assertThat(taskResultStatisticJob.getDataMap().get("statisticInterval"), is(statisticInterval));
         assertThat(taskResultStatisticJob.getDataMap().get("sharedData"), is(sharedData));
         assertThat(taskResultStatisticJob.getDataMap().get("repository"), is(repository));
     }
-    
+
     @Test
     public void assertExecuteWhenRepositoryIsEmpty() {
         Optional<TaskResultStatistics> latestOne = Optional.empty();
@@ -92,7 +92,7 @@ public class TaskResultStatisticJobTest {
         }
         verify(repository, times(3)).add(any(TaskResultStatistics.class));
     }
-    
+
     @Test
     public void assertExecute() {
         for (StatisticInterval each : StatisticInterval.values()) {

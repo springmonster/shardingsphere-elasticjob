@@ -36,19 +36,19 @@ import java.util.concurrent.Executors;
  */
 @Slf4j
 public final class CloudAppConfigurationListener implements CuratorCacheListener {
-    
+
     private final CoordinatorRegistryCenter regCenter;
-    
+
     private final ProducerManager producerManager;
-    
+
     private MesosStateService mesosStateService;
-    
+
     public CloudAppConfigurationListener(final CoordinatorRegistryCenter regCenter, final ProducerManager producerManager) {
         this.regCenter = regCenter;
         this.producerManager = producerManager;
         mesosStateService = new MesosStateService(regCenter);
     }
-    
+
     @Override
     public void event(final Type type, final ChildData oldData, final ChildData data) {
         String path = Type.NODE_DELETED == type ? oldData.getPath() : data.getPath();
@@ -57,25 +57,25 @@ public final class CloudAppConfigurationListener implements CuratorCacheListener
             stopExecutors(appName);
         }
     }
-    
+
     private boolean isJobAppConfigNode(final String path) {
         return path.startsWith(CloudAppConfigurationNode.ROOT) && path.length() > CloudAppConfigurationNode.ROOT.length();
     }
-    
+
     /**
      * Start the listener service of the cloud job service.
      */
     public void start() {
         getCache().listenable().addListener(this, Executors.newSingleThreadExecutor());
     }
-    
+
     /**
      * Stop the listener service of the cloud job service.
      */
     public void stop() {
         getCache().listenable().removeListener(this);
     }
-    
+
     private CuratorCache getCache() {
         CuratorCache result = (CuratorCache) regCenter.getRawCache(CloudAppConfigurationNode.ROOT);
         if (null != result) {
@@ -84,7 +84,7 @@ public final class CloudAppConfigurationListener implements CuratorCacheListener
         regCenter.addCacheData(CloudAppConfigurationNode.ROOT);
         return (CuratorCache) regCenter.getRawCache(CloudAppConfigurationNode.ROOT);
     }
-    
+
     private void stopExecutors(final String appName) {
         try {
             Collection<MesosStateService.ExecutorStateInfo> executorBriefInfo = mesosStateService.executors(appName);

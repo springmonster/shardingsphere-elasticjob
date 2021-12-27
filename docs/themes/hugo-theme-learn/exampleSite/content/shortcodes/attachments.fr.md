@@ -12,22 +12,28 @@ Le shortcode *Attachments* affiche une liste de pièces jointes d'une page.
 Le shortcode affiche la liste de fichiers trouvés dans un **dossier spécifique**
 A l'heure actuelle, il supporte deux implémentations
 
-1. Si votre page est un fichier Markdown, les pièces jointes doivent être placée dans un **dossier** nommé comme le nom de la page et suffixé par **.files**.
+1. Si votre page est un fichier Markdown, les pièces jointes doivent être placée dans un **dossier** nommé comme le nom
+   de la page et suffixé par **.files**.
 
-    > * content
-    >   * _index.md
-    >   * page.files
-    >      * attachment.pdf
-    >   * page.md
+   > * content
+       >
+   * _index.md
+   >   * page.files
+         >
+   * attachment.pdf
+   >   * page.md
 
 2. Si votre page est un **dossier**, les pièces jointes doivent être placées dans un dossier fils **'files'**.
 
-    > * content
-    >   * _index.md
-    >   * page
-    >      * index.md
-    >      * files
-    >          * attachment.pdf
+   > * content
+       >
+   * _index.md
+   >   * page
+         >
+   * index.md
+   >      * files
+            >
+   * attachment.pdf
 
 Attention, si votre site est multi-langue, vous devrez avec autant de dossier qu'il y a de langues.
 
@@ -35,11 +41,10 @@ C'est tout !
 
 ### Paramètres
 
-| Paramètre | Défaut | Description |
-|:--|:--|:--|
-| title | "Pièces jointes" | Titre de la liste  |
-| style | "" | Choisir entre "orange", "grey", "blue" et "green" pour un style plus sympa |
-| pattern | ".*" | Une expression régulière, utilisée pour filtrer les pièces jointes par leur nom de fichier. <br/><br/>Le paramètre **pattern** doit être une [expression régulière](https://en.wikipedia.org/wiki/Regular_expression).
+| Paramètre | Défaut | Description | |:--|:--|:--| | title | "Pièces jointes" | Titre de la liste | | style | "" |
+Choisir entre "orange", "grey", "blue" et "green" pour un style plus sympa | | pattern | ".*" | Une expression
+régulière, utilisée pour filtrer les pièces jointes par leur nom de fichier. <br/><br/>Le paramètre **pattern** doit
+être une [expression régulière](https://en.wikipedia.org/wiki/Regular_expression).
 
 Par exemple:
 
@@ -49,7 +54,6 @@ Par exemple:
 ### Exemples
 
 #### Lister les pièces jointes de type pdf ou mp4
-
 
     {{%/*attachments title="Fichiers associés" pattern=".*(pdf|mp4)"/*/%}}
 
@@ -65,7 +69,6 @@ s'affiche comme
 
 {{% attachments style="orange" /%}}
 
-
     {{%/*attachments style="grey" /*/%}}
 
 s'affiche comme
@@ -77,7 +80,7 @@ s'affiche comme
 s'affiche comme
 
 {{% attachments style="blue" /%}}
-    
+
     {{%/*attachments style="green" /*/%}}
 
 s'affiche comme

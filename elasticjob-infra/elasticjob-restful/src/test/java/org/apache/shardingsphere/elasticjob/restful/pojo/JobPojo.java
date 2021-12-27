@@ -26,12 +26,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public final class JobPojo {
-    
+
     private String group;
-    
+
     private String name;
-    
+
     private String cron;
-    
+
     private String description;
 }

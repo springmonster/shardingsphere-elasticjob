@@ -51,9 +51,9 @@ public final class JavaMain {
 
     private static final String EVENT_RDB_STORAGE_PASSWORD = "";
 
-    
+
     public static void main(final String[] args) throws IOException {
-        
+
 //        EmbedZookeeperServer.start(EMBED_ZOOKEEPER_PORT);
         CoordinatorRegistryCenter regCenter = setUpRegistryCenter();
 

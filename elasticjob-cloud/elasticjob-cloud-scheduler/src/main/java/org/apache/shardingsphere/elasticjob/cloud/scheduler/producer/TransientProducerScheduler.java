@@ -43,18 +43,18 @@ import java.util.Properties;
  * Transient producer scheduler.
  */
 final class TransientProducerScheduler {
-    
+
     private final TransientProducerRepository repository;
-    
+
     private final ReadyService readyService;
-    
+
     private Scheduler scheduler;
-    
+
     TransientProducerScheduler(final ReadyService readyService) {
         repository = new TransientProducerRepository();
         this.readyService = readyService;
     }
-    
+
     void start() {
         scheduler = getScheduler();
         try {
@@ -63,7 +63,7 @@ final class TransientProducerScheduler {
             throw new JobSystemException(ex);
         }
     }
-    
+
     private Scheduler getScheduler() {
         StdSchedulerFactory factory = new StdSchedulerFactory();
         try {
@@ -73,7 +73,7 @@ final class TransientProducerScheduler {
             throw new JobSystemException(ex);
         }
     }
-    
+
     private Properties getQuartzProperties() {
         Properties result = new Properties();
         result.put("org.quartz.threadPool.class", SimpleThreadPool.class.getName());
@@ -83,7 +83,7 @@ final class TransientProducerScheduler {
         result.put("org.quartz.plugin.shutdownhook.cleanShutdown", Boolean.TRUE.toString());
         return result;
     }
-    
+
     // TODO Concurrency optimization
     synchronized void register(final CloudJobConfigurationPOJO cloudJobConfig) {
         String cron = cloudJobConfig.getCron();
@@ -97,18 +97,18 @@ final class TransientProducerScheduler {
             throw new JobSystemException(ex);
         }
     }
-    
+
     private JobDetail buildJobDetail(final JobKey jobKey) {
         JobDetail result = JobBuilder.newJob(ProducerJob.class).withIdentity(jobKey).build();
         result.getJobDataMap().put("repository", repository);
         result.getJobDataMap().put("readyService", readyService);
         return result;
     }
-    
+
     private Trigger buildTrigger(final String cron) {
         return TriggerBuilder.newTrigger().withIdentity(cron).withSchedule(CronScheduleBuilder.cronSchedule(cron).withMisfireHandlingInstructionDoNothing()).build();
     }
-    
+
     synchronized void deregister(final CloudJobConfigurationPOJO cloudJobConfig) {
         repository.remove(cloudJobConfig.getJobName());
         String cron = cloudJobConfig.getCron();
@@ -120,11 +120,11 @@ final class TransientProducerScheduler {
             }
         }
     }
-    
+
     private JobKey buildJobKey(final String cron) {
         return JobKey.jobKey(cron);
     }
-    
+
     void shutdown() {
         try {
             if (null != scheduler && !scheduler.isShutdown()) {
@@ -135,14 +135,14 @@ final class TransientProducerScheduler {
         }
         repository.removeAll();
     }
-    
+
     @Setter
     public static final class ProducerJob implements Job {
-        
+
         private TransientProducerRepository repository;
-        
+
         private ReadyService readyService;
-        
+
         @Override
         public void execute(final JobExecutionContext context) {
             List<String> jobNames = repository.get(context.getJobDetail().getKey());

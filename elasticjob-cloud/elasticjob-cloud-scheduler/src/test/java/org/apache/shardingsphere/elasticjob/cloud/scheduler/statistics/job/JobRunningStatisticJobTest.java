@@ -48,39 +48,39 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JobRunningStatisticJobTest {
-    
+
     @Mock
     private RunningService runningService;
-    
+
     @Mock
     private StatisticRdbRepository repository;
-    
+
     private JobRunningStatisticJob jobRunningStatisticJob;
-    
+
     @Before
     public void setUp() {
         jobRunningStatisticJob = new JobRunningStatisticJob();
         jobRunningStatisticJob.setRunningService(runningService);
         jobRunningStatisticJob.setRepository(repository);
     }
-    
+
     @Test
     public void assertBuildJobDetail() {
         assertThat(jobRunningStatisticJob.buildJobDetail().getKey().getName(), is(JobRunningStatisticJob.class.getSimpleName()));
     }
-    
+
     @Test
     public void assertBuildTrigger() {
         Trigger trigger = jobRunningStatisticJob.buildTrigger();
         assertThat(trigger.getKey().getName(), is(JobRunningStatisticJob.class.getSimpleName() + "Trigger"));
     }
-    
+
     @Test
     public void assertGetDataMap() {
         assertThat(jobRunningStatisticJob.getDataMap().get("runningService"), is(runningService));
         assertThat(jobRunningStatisticJob.getDataMap().get("repository"), is(repository));
     }
-    
+
     @Test
     public void assertExecuteWhenRepositoryIsEmpty() {
         Optional<JobRunningStatistics> latestJobRunningStatistics = Optional.empty();
@@ -96,7 +96,7 @@ public class JobRunningStatisticJobTest {
         verify(repository).add(ArgumentMatchers.any(TaskRunningStatistics.class));
         verify(runningService).getAllRunningTasks();
     }
-    
+
     @Test
     public void assertExecute() {
         Optional<JobRunningStatistics> latestJobRunningStatistics = Optional.of(new JobRunningStatistics(0, StatisticTimeUtils.getStatisticTime(StatisticInterval.MINUTE, -3)));

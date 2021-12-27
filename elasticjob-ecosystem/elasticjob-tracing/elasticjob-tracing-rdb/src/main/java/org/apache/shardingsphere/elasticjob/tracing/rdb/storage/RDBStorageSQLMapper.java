@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,29 +28,29 @@ import java.util.Properties;
  */
 @Getter
 public final class RDBStorageSQLMapper {
-    
+
     private final String createTableForJobExecutionLog;
-    
+
     private final String createTableForJobStatusTraceLog;
-    
+
     private final String createIndexForTaskIdStateIndex;
-    
+
     private final String insertForJobExecutionLog;
-    
+
     private final String insertForJobExecutionLogForComplete;
-    
+
     private final String insertForJobExecutionLogForFailure;
-    
+
     private final String updateForJobExecutionLog;
-    
+
     private final String updateForJobExecutionLogForFailure;
-    
+
     private final String insertForJobStatusTraceLog;
-    
+
     private final String selectForJobStatusTraceLog;
-    
+
     private final String selectOriginalTaskIdForJobStatusTraceLog;
-    
+
     public RDBStorageSQLMapper(final String sqlPropertiesFileName) {
         Properties props = loadProps(sqlPropertiesFileName);
         createTableForJobExecutionLog = props.getProperty("JOB_EXECUTION_LOG.TABLE.CREATE");
@@ -65,14 +65,14 @@ public final class RDBStorageSQLMapper {
         selectForJobStatusTraceLog = props.getProperty("JOB_STATUS_TRACE_LOG.SELECT");
         selectOriginalTaskIdForJobStatusTraceLog = props.getProperty("JOB_STATUS_TRACE_LOG.SELECT_ORIGINAL_TASK_ID");
     }
-    
+
     @SneakyThrows
     private Properties loadProps(final String sqlPropertiesFileName) {
         Properties result = new Properties();
         result.load(getPropertiesInputStream(sqlPropertiesFileName));
         return result;
     }
-    
+
     private InputStream getPropertiesInputStream(final String sqlPropertiesFileName) {
         InputStream sqlPropertiesFile = RDBJobEventStorage.class.getClassLoader().getResourceAsStream(String.format("META-INF/sql/%s", sqlPropertiesFileName));
         return null == sqlPropertiesFile ? RDBJobEventStorage.class.getClassLoader().getResourceAsStream("META-INF/sql/SQL92.properties") : sqlPropertiesFile;

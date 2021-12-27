@@ -39,20 +39,20 @@ import java.util.Base64;
 import java.util.Map;
 
 public final class DingtalkInternalController implements RestfulController {
-    
+
     private static final String ACCESS_TOKEN = "mocked_token";
-    
+
     private static final String KEYWORD = "mocked_keyword";
-    
+
     private static final String SECRET = "mocked_secret";
-    
+
     /**
      * Send Dingtalk message.
      *
      * @param accessToken access token
-     * @param timestamp timestamp
-     * @param sign sign
-     * @param body body
+     * @param timestamp   timestamp
+     * @param sign        sign
+     * @param body        body
      * @return send Result
      */
     @SneakyThrows
@@ -77,7 +77,7 @@ public final class DingtalkInternalController implements RestfulController {
         }
         return GsonFactory.getGson().toJson(ImmutableMap.of("errcode", 0, "errmsg", "ok"));
     }
-    
+
     private String sign(final Long timestamp) throws NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException {
         String stringToSign = timestamp + "\n" + SECRET;
         Mac mac = Mac.getInstance("HmacSHA256");

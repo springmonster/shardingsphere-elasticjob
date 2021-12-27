@@ -21,9 +21,9 @@ package org.apache.shardingsphere.elasticjob.infra.spi.exception;
  * Service loader instantiation exception.
  */
 public final class ServiceLoaderInstantiationException extends RuntimeException {
-    
+
     private static final long serialVersionUID = -2949903598320994076L;
-    
+
     public ServiceLoaderInstantiationException(final Class<?> clazz, final Throwable cause) {
         super(String.format("Can not find public no args constructor for SPI class `%s`", clazz.getName()), cause);
     }

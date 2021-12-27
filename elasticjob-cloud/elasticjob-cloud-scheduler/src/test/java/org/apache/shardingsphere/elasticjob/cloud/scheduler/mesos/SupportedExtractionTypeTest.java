@@ -23,7 +23,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public final class SupportedExtractionTypeTest {
-    
+
     @Test
     public void assertIsExtraction() {
         assertTrue(SupportedExtractionType.isExtraction("http://localhost:8080/test.tar"));

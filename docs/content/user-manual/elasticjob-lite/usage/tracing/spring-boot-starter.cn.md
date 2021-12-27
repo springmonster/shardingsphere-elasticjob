@@ -1,11 +1,7 @@
-+++
-title = "使用 Spring Boot Starter"
-weight = 2
-chapter = true
-+++
++++ title = "使用 Spring Boot Starter"
+weight = 2 chapter = true +++
 
-ElasticJob-Lite 的 Spring Boot Starter 集成了 TracingConfiguration 自动配置，
-开发者只需注册一个 DataSource 到 Spring 容器中并在配置文件指定事件追踪数据源类型，
+ElasticJob-Lite 的 Spring Boot Starter 集成了 TracingConfiguration 自动配置， 开发者只需注册一个 DataSource 到 Spring 容器中并在配置文件指定事件追踪数据源类型，
 Starter 就会自动创建一个 TracingConfiguration 实例并注册到 Spring 容器中。
 
 ## 引入 Maven 依赖

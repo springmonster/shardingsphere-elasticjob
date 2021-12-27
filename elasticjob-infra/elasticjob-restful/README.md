@@ -3,6 +3,7 @@
 ## Usage
 
 ### Create a RestfulController
+
 ```java
 @ContextPath("/job")
 public class JobController implements RestfulController {
@@ -29,6 +30,7 @@ public class JobController implements RestfulController {
 ```
 
 ### (Optional) Create ExceptionHandler
+
 ```java
 public class CustomIllegalStateExceptionHandler implements ExceptionHandler<IllegalStateException> {
     @Override
@@ -43,6 +45,7 @@ public class CustomIllegalStateExceptionHandler implements ExceptionHandler<Ille
 ```
 
 ### Configure Restful Service and Start Up
+
 ```java
 NettyRestfulServiceConfiguration configuration = new NettyRestfulServiceConfiguration(8080);
 configuration.addControllerInstance(new JobController());

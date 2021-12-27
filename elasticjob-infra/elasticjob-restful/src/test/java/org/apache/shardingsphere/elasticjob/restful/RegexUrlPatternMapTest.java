@@ -22,12 +22,10 @@ import org.apache.shardingsphere.elasticjob.restful.mapping.RegexUrlPatternMap;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 public final class RegexUrlPatternMapTest {
-    
+
     @Test
     public void assertRegexUrlPatternMap() {
         RegexUrlPatternMap<Integer> urlPatternMap = new RegexUrlPatternMap<>();
@@ -46,7 +44,7 @@ public final class RegexUrlPatternMapTest {
         mappingContext = urlPatternMap.match("/job/list");
         assertNull(mappingContext);
     }
-    
+
     @Test
     public void assertAmbiguous() {
         RegexUrlPatternMap<Integer> urlPatternMap = new RegexUrlPatternMap<>();
@@ -57,7 +55,7 @@ public final class RegexUrlPatternMapTest {
         assertThat(mappingContext.pattern(), is("/foo/{bar}/operate/{metrics}"));
         assertThat(mappingContext.payload(), is(11));
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void assertDuplicate() {
         RegexUrlPatternMap<Integer> urlPatternMap = new RegexUrlPatternMap<>();

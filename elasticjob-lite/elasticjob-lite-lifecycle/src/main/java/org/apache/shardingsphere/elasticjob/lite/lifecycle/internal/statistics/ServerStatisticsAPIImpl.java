@@ -25,12 +25,7 @@ import org.apache.shardingsphere.elasticjob.lite.lifecycle.api.ServerStatisticsA
 import org.apache.shardingsphere.elasticjob.lite.lifecycle.domain.ServerBriefInfo;
 import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -38,9 +33,9 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @RequiredArgsConstructor
 public final class ServerStatisticsAPIImpl implements ServerStatisticsAPI {
-    
+
     private final CoordinatorRegistryCenter regCenter;
-    
+
     @Override
     public int getServersTotalCount() {
         Set<String> servers = new HashSet<>();
@@ -50,7 +45,7 @@ public final class ServerStatisticsAPIImpl implements ServerStatisticsAPI {
         }
         return servers.size();
     }
-    
+
     @Override
     public Collection<ServerBriefInfo> getAllServersBriefInfo() {
         ConcurrentHashMap<String, ServerBriefInfo> servers = new ConcurrentHashMap<>();

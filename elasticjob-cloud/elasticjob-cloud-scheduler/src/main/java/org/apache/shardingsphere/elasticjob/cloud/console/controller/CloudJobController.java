@@ -71,28 +71,29 @@ import java.util.Set;
 @Slf4j
 @ContextPath("/api/job")
 public final class CloudJobController implements RestfulController {
-    
+
     private static CoordinatorRegistryCenter regCenter;
-    
+
     private static JobEventRdbSearch jobEventRdbSearch;
-    
+
     private static ProducerManager producerManager;
-    
+
     private final CloudJobConfigurationService configService;
-    
+
     private final FacadeService facadeService;
-    
+
     private final StatisticManager statisticManager;
-    
+
     public CloudJobController() {
         Preconditions.checkNotNull(regCenter);
         configService = new CloudJobConfigurationService(regCenter);
         facadeService = new FacadeService(regCenter);
         statisticManager = StatisticManager.getInstance(regCenter, null);
     }
-    
+
     /**
      * Init.
+     *
      * @param regCenter       registry center
      * @param producerManager producer manager
      */
@@ -102,7 +103,7 @@ public final class CloudJobController implements RestfulController {
         Optional<TracingConfiguration<?>> tracingConfiguration = BootstrapEnvironment.getINSTANCE().getTracingConfiguration();
         jobEventRdbSearch = tracingConfiguration.map(tracingConfiguration1 -> new JobEventRdbSearch((DataSource) tracingConfiguration1.getTracingStorageConfiguration().getStorage())).orElse(null);
     }
-    
+
     /**
      * Register cloud job.
      *
@@ -114,7 +115,7 @@ public final class CloudJobController implements RestfulController {
         producerManager.register(cloudJobConfig);
         return true;
     }
-    
+
     /**
      * Update cloud job.
      *
@@ -126,7 +127,7 @@ public final class CloudJobController implements RestfulController {
         producerManager.update(cloudJobConfig);
         return true;
     }
-    
+
     /**
      * Deregister cloud job.
      *
@@ -138,7 +139,7 @@ public final class CloudJobController implements RestfulController {
         producerManager.deregister(jobName);
         return true;
     }
-    
+
     /**
      * Check whether the cloud job is disabled or not.
      *
@@ -149,7 +150,7 @@ public final class CloudJobController implements RestfulController {
     public boolean isDisabled(@Param(name = "jobName", source = ParamSource.PATH) final String jobName) {
         return facadeService.isJobDisabled(jobName);
     }
-    
+
     /**
      * Enable cloud job.
      *
@@ -165,7 +166,7 @@ public final class CloudJobController implements RestfulController {
         }
         return true;
     }
-    
+
     /**
      * Disable cloud job.
      *
@@ -180,7 +181,7 @@ public final class CloudJobController implements RestfulController {
         }
         return true;
     }
-    
+
     /**
      * Trigger job once.
      *
@@ -196,7 +197,7 @@ public final class CloudJobController implements RestfulController {
         facadeService.addTransient(jobName);
         return true;
     }
-    
+
     /**
      * Query job detail.
      *
@@ -208,18 +209,20 @@ public final class CloudJobController implements RestfulController {
         Optional<CloudJobConfigurationPOJO> cloudJobConfig = configService.load(jobName);
         return cloudJobConfig.orElse(null);
     }
-    
+
     /**
      * Find all jobs.
+     *
      * @return all jobs
      */
     @Mapping(method = Http.GET, path = "/jobs")
     public Collection<CloudJobConfigurationPOJO> findAllJobs() {
         return configService.loadAll();
     }
-    
+
     /**
      * Find all running tasks.
+     *
      * @return all running tasks
      */
     @Mapping(method = Http.GET, path = "/tasks/running")
@@ -230,9 +233,10 @@ public final class CloudJobController implements RestfulController {
         }
         return result;
     }
-    
+
     /**
      * Find all ready tasks.
+     *
      * @return collection of all ready tasks
      */
     @Mapping(method = Http.GET, path = "/tasks/ready")
@@ -247,9 +251,10 @@ public final class CloudJobController implements RestfulController {
         }
         return result;
     }
-    
+
     /**
      * Find all failover tasks.
+     *
      * @return collection of all the failover tasks
      */
     @Mapping(method = Http.GET, path = "/tasks/failover")
@@ -260,9 +265,10 @@ public final class CloudJobController implements RestfulController {
         }
         return result;
     }
-    
+
     /**
      * Find job execution events.
+     *
      * @param requestParams request params
      * @return job execution event
      * @throws ParseException parse exception
@@ -274,9 +280,10 @@ public final class CloudJobController implements RestfulController {
         }
         return jobEventRdbSearch.findJobExecutionEvents(buildCondition(requestParams.toSingleValueMap(), new String[]{"jobName", "taskId", "ip", "isSuccess"}));
     }
-    
+
     /**
      * Find job status trace events.
+     *
      * @param requestParams request params
      * @return job status trace event
      * @throws ParseException parse exception
@@ -288,11 +295,11 @@ public final class CloudJobController implements RestfulController {
         }
         return jobEventRdbSearch.findJobStatusTraceEvents(buildCondition(requestParams.toSingleValueMap(), new String[]{"jobName", "taskId", "slaveId", "source", "executionType", "state"}));
     }
-    
+
     private boolean isRdbConfigured() {
         return null != jobEventRdbSearch;
     }
-    
+
     private JobEventRdbSearch.Condition buildCondition(final Map<String, String> requestParams, final String[] params) throws ParseException {
         int perPage = 10;
         int page = 1;
@@ -316,7 +323,7 @@ public final class CloudJobController implements RestfulController {
         }
         return new JobEventRdbSearch.Condition(perPage, page, sort, order, startTime, endTime, fields);
     }
-    
+
     private Map<String, Object> getQueryParameters(final Map<String, String> requestParams, final String[] params) {
         final Map<String, Object> result = new HashMap<>();
         for (String each : params) {
@@ -326,7 +333,7 @@ public final class CloudJobController implements RestfulController {
         }
         return result;
     }
-    
+
     /**
      * Find task result statistics.
      *
@@ -341,7 +348,7 @@ public final class CloudJobController implements RestfulController {
             return Collections.emptyList();
         }
     }
-    
+
     /**
      * Get task result statistics.
      *
@@ -363,7 +370,7 @@ public final class CloudJobController implements RestfulController {
                 return new TaskResultStatistics(0, 0, StatisticInterval.DAY, new Date());
         }
     }
-    
+
     /**
      * Find task running statistics.
      *
@@ -378,16 +385,17 @@ public final class CloudJobController implements RestfulController {
             return Collections.emptyList();
         }
     }
-    
+
     /**
      * Get job execution type statistics.
+     *
      * @return job execution statistics
      */
     @Mapping(method = Http.GET, path = "/statistics/jobs/executionType")
     public JobExecutionTypeStatistics getJobExecutionTypeStatistics() {
         return statisticManager.getJobExecutionTypeStatistics();
     }
-    
+
     /**
      * Find job running statistics in the recent week.
      *
@@ -402,9 +410,10 @@ public final class CloudJobController implements RestfulController {
             return Collections.emptyList();
         }
     }
-    
+
     /**
      * Find job register statistics.
+     *
      * @return collection of job register statistics since online
      */
     @Mapping(method = Http.GET, path = "/statistics/jobs/register")

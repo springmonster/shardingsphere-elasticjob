@@ -23,7 +23,7 @@ import org.apache.shardingsphere.elasticjob.api.JobConfiguration;
  * Reloadable post processor.
  */
 public interface ReloadablePostProcessor {
-    
+
     /**
      * Initialize reloadable.
      *

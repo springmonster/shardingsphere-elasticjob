@@ -4,13 +4,12 @@
 
 [![Stargazers over time](https://starchart.cc/apache/shardingsphere-elasticjob.svg)](https://starchart.cc/apache/shardingsphere-elasticjob)
 
-ElasticJob is a distributed scheduling solution consisting of two separate projects, ElasticJob-Lite and ElasticJob-Cloud.
+ElasticJob is a distributed scheduling solution consisting of two separate projects, ElasticJob-Lite and
+ElasticJob-Cloud.
 
-Through the functions of flexible scheduling, resource management and job management, 
-it creates a distributed scheduling solution suitable for Internet scenarios, 
-and provides a diversified job ecosystem through open architecture design.
-It uses a unified job API for each project.
-Developers only need code one time and can deploy at will.
+Through the functions of flexible scheduling, resource management and job management, it creates a distributed
+scheduling solution suitable for Internet scenarios, and provides a diversified job ecosystem through open architecture
+design. It uses a unified job API for each project. Developers only need code one time and can deploy at will.
 
 ElasticJob became an [Apache ShardingSphere](https://shardingsphere.apache.org/) Sub-project on May 28 2020.
 
@@ -28,8 +27,9 @@ You are welcome to communicate with the community via the [mailing list](mailto:
 
 ## Introduction
 
-Using ElasticJob developers can no longer worry about the non functional requirements such as job scale out, so that they can focus more on business coding.
-At the same time, it can release operators too, so that they do not have to worry about high availability and management, and can automatically operate by simply adding servers.
+Using ElasticJob developers can no longer worry about the non functional requirements such as job scale out, so that
+they can focus more on business coding. At the same time, it can release operators too, so that they do not have to
+worry about high availability and management, and can automatically operate by simply adding servers.
 
 ### ElasticJob-Lite
 
@@ -53,33 +53,33 @@ Uses Mesos to manage and isolate resources.
 ## Features
 
 - Elastic Schedule
-  - Support job sharding and high availability in distributed system
-  - Scale out for throughput and efficiency improvement
-  - Job processing capacity is flexible and scalable with the allocation of resources
+    - Support job sharding and high availability in distributed system
+    - Scale out for throughput and efficiency improvement
+    - Job processing capacity is flexible and scalable with the allocation of resources
 
 - Resource Assign
-  - Execute job on suitable time and assigned resources
-  - Aggregation same job to same job executor
-  - Append resources to newly assigned jobs dynamically
+    - Execute job on suitable time and assigned resources
+    - Aggregation same job to same job executor
+    - Append resources to newly assigned jobs dynamically
 
 - Job Governance
-  - Failover
-  - Misfired
-  - Self diagnose and recover when distribute environment unstable
+    - Failover
+    - Misfired
+    - Self diagnose and recover when distribute environment unstable
 
 - Job Dependency (TODO)
-  - DAG based job dependency
-  - DAG based job item dependency
+    - DAG based job dependency
+    - DAG based job item dependency
 
 - Job Open Ecosystem
-  - Unify job api for extension
-  - Support rich job type lib, such as dataflow, script, HTTP, file, big data
-  - Focus business SDK, can work with Spring IOC
+    - Unify job api for extension
+    - Support rich job type lib, such as dataflow, script, HTTP, file, big data
+    - Focus business SDK, can work with Spring IOC
 
 - [Admin Console](https://github.com/apache/shardingsphere-elasticjob-ui)
-  - Job administration
-  - Job event trace query
-  - Registry center management
+    - Job administration
+    - Job event trace query
+    - Registry center management
 
 ## Environment Required
 

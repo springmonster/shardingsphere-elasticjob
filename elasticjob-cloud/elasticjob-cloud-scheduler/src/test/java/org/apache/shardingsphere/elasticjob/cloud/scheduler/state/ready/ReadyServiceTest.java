@@ -48,25 +48,25 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public final class ReadyServiceTest {
-    
+
     @Mock
     private CoordinatorRegistryCenter regCenter;
-    
+
     @Mock
     private CloudJobConfigurationService configService;
-    
+
     @Mock
     private RunningService runningService;
-    
+
     private ReadyService readyService;
-        
+
     @Before
     public void setUp() {
         readyService = new ReadyService(regCenter);
         ReflectionUtils.setFieldValue(readyService, "configService", configService);
         ReflectionUtils.setFieldValue(readyService, "runningService", runningService);
     }
-    
+
     @Test
     public void assertAddTransientWithJobConfigIsNotPresent() {
         when(configService.load("test_job")).thenReturn(Optional.empty());
@@ -74,7 +74,7 @@ public final class ReadyServiceTest {
         verify(regCenter, times(0)).isExisted("/state/ready");
         verify(regCenter, times(0)).persist(ArgumentMatchers.any(), ArgumentMatchers.eq(""));
     }
-    
+
     @Test
     public void assertAddTransientWithJobConfigIsNotTransient() {
         when(configService.load("test_job")).thenReturn(Optional.of(CloudJobConfigurationBuilder.createCloudJobConfiguration("test_job", CloudJobExecutionType.DAEMON)));
@@ -82,7 +82,7 @@ public final class ReadyServiceTest {
         verify(regCenter, times(0)).isExisted("/state/ready");
         verify(regCenter, times(0)).persist(ArgumentMatchers.any(), ArgumentMatchers.eq(""));
     }
-    
+
     @Test
     public void assertAddTransientWhenJobExistedAndEnableMisfired() {
         when(configService.load("test_job")).thenReturn(Optional.of(CloudJobConfigurationBuilder.createCloudJobConfiguration("test_job")));
@@ -90,7 +90,7 @@ public final class ReadyServiceTest {
         readyService.addTransient("test_job");
         verify(regCenter).persist("/state/ready/test_job", "2");
     }
-    
+
     @Test
     public void assertAddTransientWhenJobExistedAndDisableMisfired() {
         when(configService.load("test_job")).thenReturn(Optional.of(CloudJobConfigurationBuilder.createCloudJobConfiguration("test_job", false)));
@@ -98,28 +98,28 @@ public final class ReadyServiceTest {
         readyService.addTransient("test_job");
         verify(regCenter).persist("/state/ready/test_job", "1");
     }
-    
+
     @Test
     public void assertAddTransientWhenJobNotExisted() {
         when(configService.load("test_job")).thenReturn(Optional.of(CloudJobConfigurationBuilder.createCloudJobConfiguration("test_job")));
         readyService.addTransient("test_job");
         verify(regCenter).persist("/state/ready/test_job", "1");
     }
-    
+
     @Test
     public void assertAddTransientWithOverJobQueueSize() {
         when(regCenter.getNumChildren(ReadyNode.ROOT)).thenReturn(BootstrapEnvironment.getINSTANCE().getFrameworkConfiguration().getJobStateQueueSize() + 1);
         readyService.addTransient("test_job");
         verify(regCenter, times(0)).persist("/state/ready/test_job", "1");
     }
-    
+
     @Test
     public void assertAddDaemonWithOverJobQueueSize() {
         when(regCenter.getNumChildren(ReadyNode.ROOT)).thenReturn(BootstrapEnvironment.getINSTANCE().getFrameworkConfiguration().getJobStateQueueSize() + 1);
         readyService.addDaemon("test_job");
         verify(regCenter, times(0)).persist("/state/ready/test_job", "1");
     }
-    
+
     @Test
     public void assertAddDaemonWithJobConfigIsNotPresent() {
         when(configService.load("test_job")).thenReturn(Optional.empty());
@@ -127,7 +127,7 @@ public final class ReadyServiceTest {
         verify(regCenter, times(0)).isExisted("/state/ready");
         verify(regCenter, times(0)).persist(ArgumentMatchers.any(), ArgumentMatchers.eq("1"));
     }
-    
+
     @Test
     public void assertAddDaemonWithJobConfigIsNotDaemon() {
         when(configService.load("test_job")).thenReturn(Optional.of(CloudJobConfigurationBuilder.createCloudJobConfiguration("test_job")));
@@ -135,21 +135,21 @@ public final class ReadyServiceTest {
         verify(regCenter, times(0)).isExisted("/state/ready");
         verify(regCenter, times(0)).persist(ArgumentMatchers.any(), ArgumentMatchers.eq("1"));
     }
-    
+
     @Test
     public void assertAddDaemonWithoutRootNode() {
         when(configService.load("test_job")).thenReturn(Optional.of(CloudJobConfigurationBuilder.createCloudJobConfiguration("test_job", CloudJobExecutionType.DAEMON)));
         readyService.addDaemon("test_job");
         verify(regCenter).persist("/state/ready/test_job", "1");
     }
-    
+
     @Test
     public void assertAddDaemonWithSameJobName() {
         when(configService.load("test_job")).thenReturn(Optional.of(CloudJobConfigurationBuilder.createCloudJobConfiguration("test_job", CloudJobExecutionType.DAEMON)));
         readyService.addDaemon("test_job");
         verify(regCenter).persist(ArgumentMatchers.any(), ArgumentMatchers.eq("1"));
     }
-    
+
     @Test
     public void assertAddRunningDaemon() {
         when(configService.load("test_job")).thenReturn(Optional.of(CloudJobConfigurationBuilder.createCloudJobConfiguration("test_job", CloudJobExecutionType.DAEMON)));
@@ -157,35 +157,35 @@ public final class ReadyServiceTest {
         readyService.addDaemon("test_job");
         verify(regCenter, never()).persist(ArgumentMatchers.any(), ArgumentMatchers.eq("1"));
     }
-    
+
     @Test
     public void assertAddDaemonWithoutSameJobName() {
         when(configService.load("test_job")).thenReturn(Optional.of(CloudJobConfigurationBuilder.createCloudJobConfiguration("test_job", CloudJobExecutionType.DAEMON)));
         readyService.addDaemon("test_job");
         verify(regCenter).persist("/state/ready/test_job", "1");
     }
-    
+
     @Test
     public void assertGetAllEligibleJobContextsWithoutRootNode() {
         when(regCenter.isExisted("/state/ready")).thenReturn(false);
         assertTrue(readyService.getAllEligibleJobContexts(Collections.emptyList()).isEmpty());
         verify(regCenter).isExisted("/state/ready");
     }
-    
+
     @Test
     public void assertSetMisfireDisabledWhenJobIsNotExisted() {
         when(configService.load("test_job")).thenReturn(Optional.empty());
         readyService.setMisfireDisabled("test_job");
         verify(regCenter, times(0)).persist("/state/ready/test_job", "1");
     }
-    
+
     @Test
     public void assertSetMisfireDisabledWhenReadyNodeNotExisted() {
         when(configService.load("test_job")).thenReturn(Optional.of(CloudJobConfigurationBuilder.createCloudJobConfiguration("test_job")));
         readyService.setMisfireDisabled("test_job");
         verify(regCenter, times(0)).persist("/state/ready/test_job", "1");
     }
-    
+
     @Test
     public void assertSetMisfireDisabledWhenReadyNodeExisted() {
         when(configService.load("test_job")).thenReturn(Optional.of(CloudJobConfigurationBuilder.createCloudJobConfiguration("test_job")));
@@ -193,7 +193,7 @@ public final class ReadyServiceTest {
         readyService.setMisfireDisabled("test_job");
         verify(regCenter).persist("/state/ready/test_job", "1");
     }
-    
+
     @Test
     public void assertGetAllEligibleJobContextsWithRootNode() {
         when(regCenter.isExisted("/state/ready")).thenReturn(true);
@@ -212,7 +212,7 @@ public final class ReadyServiceTest {
         verify(configService).load("eligible_job");
         verify(regCenter).remove("/state/ready/not_existed_job");
     }
-    
+
     @Test
     public void assertGetAllEligibleJobContextsWithRootNodeAndDaemonJob() {
         when(regCenter.isExisted("/state/ready")).thenReturn(true);
@@ -226,7 +226,7 @@ public final class ReadyServiceTest {
         verify(configService).load("not_existed_job");
         verify(configService).load("running_job");
     }
-    
+
     @Test
     public void assertRemove() {
         when(regCenter.getDirectly("/state/ready/test_job_1")).thenReturn("1");
@@ -237,7 +237,7 @@ public final class ReadyServiceTest {
         verify(regCenter, times(0)).persist("/state/ready/test_job_1", "0");
         verify(regCenter, times(0)).remove("/state/ready/test_job_2");
     }
-    
+
     @Test
     public void assertGetAllTasksWithoutRootNode() {
         when(regCenter.isExisted(ReadyNode.ROOT)).thenReturn(false);
@@ -246,7 +246,7 @@ public final class ReadyServiceTest {
         verify(regCenter, times(0)).getChildrenKeys(ArgumentMatchers.any());
         verify(regCenter, times(0)).get(ArgumentMatchers.any());
     }
-    
+
     @Test
     public void assertGetAllTasksWhenRootNodeHasNoChild() {
         when(regCenter.isExisted(ReadyNode.ROOT)).thenReturn(true);
@@ -256,7 +256,7 @@ public final class ReadyServiceTest {
         verify(regCenter).getChildrenKeys(ReadyNode.ROOT);
         verify(regCenter, times(0)).get(ArgumentMatchers.any());
     }
-    
+
     @Test
     public void assertGetAllTasksWhenNodeIsEmpty() {
         when(regCenter.isExisted(ReadyNode.ROOT)).thenReturn(true);
@@ -267,7 +267,7 @@ public final class ReadyServiceTest {
         verify(regCenter).getChildrenKeys(ReadyNode.ROOT);
         verify(regCenter).get(ReadyNode.getReadyJobNodePath("test_job"));
     }
-    
+
     @Test
     public void assertGetAllTasksWithRootNode() {
         when(regCenter.isExisted(ReadyNode.ROOT)).thenReturn(true);

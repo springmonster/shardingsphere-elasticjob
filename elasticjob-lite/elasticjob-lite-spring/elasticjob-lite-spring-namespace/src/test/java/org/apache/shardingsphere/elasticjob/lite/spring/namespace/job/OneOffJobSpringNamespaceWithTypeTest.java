@@ -31,17 +31,17 @@ import static org.junit.Assert.assertTrue;
 
 @ContextConfiguration(locations = "classpath:META-INF/job/oneOffWithJobType.xml")
 public final class OneOffJobSpringNamespaceWithTypeTest extends AbstractZookeeperJUnit4SpringContextTests {
-    
+
     private final String scriptJobName = "oneOffScriptElasticJob_job_type";
-    
+
     @Autowired
     private CoordinatorRegistryCenter regCenter;
-    
+
     @After
     public void tearDown() {
         JobRegistry.getInstance().shutdown(scriptJobName);
     }
-    
+
     @Test
     public void jobScriptWithJobTypeTest() {
         OneOffJobBootstrap bootstrap = applicationContext.getBean(scriptJobName, OneOffJobBootstrap.class);

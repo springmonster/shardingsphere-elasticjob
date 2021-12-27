@@ -1,8 +1,5 @@
-+++
-title = "Java API"
-weight = 1
-chapter = true
-+++
++++ title = "Java API"
+weight = 1 chapter = true +++
 
 ## 注册中心配置
 

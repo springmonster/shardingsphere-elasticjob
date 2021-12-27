@@ -51,37 +51,37 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public final class ProducerManagerTest {
-    
+
     @Mock
     private SchedulerDriver schedulerDriver;
-    
+
     @Mock
     private CoordinatorRegistryCenter regCenter;
-    
+
     @Mock
     private CloudAppConfigurationService appConfigService;
-    
+
     @Mock
     private CloudJobConfigurationService configService;
-   
+
     @Mock
     private ReadyService readyService;
-    
+
     @Mock
     private RunningService runningService;
-    
+
     @Mock
     private DisableJobService disableJobService;
-    
+
     @Mock
     private TransientProducerScheduler transientProducerScheduler;
-    
+
     private ProducerManager producerManager;
-    
+
     private final CloudAppConfigurationPOJO appConfig = CloudAppConfigurationBuilder.createCloudAppConfiguration("test_app");
-    
+
     private final CloudJobConfigurationPOJO transientJobConfig = CloudJobConfigurationBuilder.createCloudJobConfiguration("transient_test_job");
-    
+
     private final CloudJobConfigurationPOJO daemonJobConfig = CloudJobConfigurationBuilder.createCloudJobConfiguration("daemon_test_job", CloudJobExecutionType.DAEMON);
 
     @Before
@@ -94,7 +94,7 @@ public final class ProducerManagerTest {
         ReflectionUtils.setFieldValue(producerManager, "disableJobService", disableJobService);
         ReflectionUtils.setFieldValue(producerManager, "transientProducerScheduler", transientProducerScheduler);
     }
-    
+
     @Test
     public void assertStartup() {
         when(configService.loadAll()).thenReturn(Arrays.asList(transientJobConfig, daemonJobConfig));
@@ -109,20 +109,20 @@ public final class ProducerManagerTest {
         when(appConfigService.load("test_app")).thenReturn(Optional.empty());
         producerManager.register(transientJobConfig);
     }
-    
+
     @Test(expected = JobConfigurationException.class)
     public void assertRegisterExistedJob() {
         when(appConfigService.load("test_app")).thenReturn(Optional.of(appConfig));
         when(configService.load("transient_test_job")).thenReturn(Optional.of(transientJobConfig));
         producerManager.register(transientJobConfig);
     }
-    
+
     @Test(expected = JobConfigurationException.class)
     public void assertRegisterDisabledJob() {
         when(disableJobService.isDisabled("transient_test_job")).thenReturn(true);
         producerManager.register(transientJobConfig);
     }
-    
+
     @Test
     public void assertRegisterTransientJob() {
         when(appConfigService.load("test_app")).thenReturn(Optional.of(appConfig));
@@ -131,7 +131,7 @@ public final class ProducerManagerTest {
         verify(configService).add(transientJobConfig);
         verify(transientProducerScheduler).register(transientJobConfig);
     }
-    
+
     @Test
     public void assertRegisterDaemonJob() {
         when(appConfigService.load("test_app")).thenReturn(Optional.of(appConfig));
@@ -140,13 +140,13 @@ public final class ProducerManagerTest {
         verify(configService).add(daemonJobConfig);
         verify(readyService).addDaemon("daemon_test_job");
     }
-    
+
     @Test(expected = JobConfigurationException.class)
     public void assertUpdateNotExisted() {
         when(configService.load("transient_test_job")).thenReturn(Optional.empty());
         producerManager.update(transientJobConfig);
     }
-    
+
     @Test
     public void assertUpdateExisted() {
         when(configService.load("transient_test_job")).thenReturn(Optional.of(transientJobConfig));
@@ -161,14 +161,14 @@ public final class ProducerManagerTest {
         verify(runningService).remove("transient_test_job");
         verify(readyService).remove(Collections.singletonList("transient_test_job"));
     }
-    
+
     @Test
     public void assertDeregisterNotExisted() {
         when(configService.load("transient_test_job")).thenReturn(Optional.empty());
         producerManager.deregister("transient_test_job");
         verify(configService, times(0)).remove("transient_test_job");
     }
-    
+
     @Test
     public void assertDeregisterExisted() {
         when(configService.load("transient_test_job")).thenReturn(Optional.of(transientJobConfig));
@@ -184,7 +184,7 @@ public final class ProducerManagerTest {
         verify(runningService).remove("transient_test_job");
         verify(readyService).remove(Collections.singletonList("transient_test_job"));
     }
-    
+
     @Test
     public void assertShutdown() {
         producerManager.shutdown();

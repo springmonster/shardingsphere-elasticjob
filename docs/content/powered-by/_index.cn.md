@@ -1,9 +1,6 @@
-+++
-pre = "<b>7. </b>"
++++ pre = "<b>7. </b>"
 title = "采用公司"
-weight = 7
-chapter = true
-+++
+weight = 7 chapter = true +++
 
 ## 登记
 
@@ -16,6 +13,7 @@ chapter = true
 共计 83 家公司。
 
 ### 电子商务
+
 <ul>
    <li><a href="http://www.dangdang.com/" rel="nofollow">当当</a></li>
     <li><a href="http://www.3songshu.com/" rel="nofollow">三只松鼠</a></li>
@@ -35,6 +33,7 @@ chapter = true
 </ul>
 
 ### 金融行业
+
 <ul>
     <li><a href="https://www.bestpay.com.cn/" rel="nofollow">甜橙金融(翼支付)</a></li>
     <li><a href="http://www.wxsbank.com/" rel="nofollow">无锡锡商银行</a></li>
@@ -53,6 +52,7 @@ chapter = true
 </ul>
 
 ### 数字化与云服务
+
 <ul>
     <li><a href="http://www.yunjiacloud.com/" rel="nofollow">云嘉云计算</a></li>
     <li><a href="https://www.joyowo.com/" rel="nofollow">金柚网</a></li>
@@ -61,6 +61,7 @@ chapter = true
 </ul>
 
 ### 出行
+
 <ul>
     <li><a href="http://www.juneyaoair.com/" rel="nofollow">吉祥航空</a></li>
     <li><a href="https://www.caocaokeji.cn/" rel="nofollow">曹操出行</a></li>
@@ -73,6 +74,7 @@ chapter = true
 </ul>
 
 ### 物流
+
 <ul>
     <li><a href="http://www.yto.net.cn/" rel="nofollow">圆通速递</a></li> 
     <li><a href="http://www.haoyunhu56.com/" rel="nofollow">好运虎物流</a></li>
@@ -80,6 +82,7 @@ chapter = true
 </ul>
 
 ### 房地产
+
 <ul>
     <li><a href="http://www.ziroom.com/" rel="nofollow">自如网</a></li>
     <li><a href="https://www.ucommune.com/" rel="nofollow">优客工场</a></li>
@@ -87,6 +90,7 @@ chapter = true
 </ul>
 
 ### 互联网教育
+
 <ul>
     <li><a href="https://www.ibeiliao.com/" rel="nofollow">贝聊科技</a></li>
     <li><a href="http://www.iqihang.com/" rel="nofollow">爱启航</a></li>
@@ -97,6 +101,7 @@ chapter = true
 </ul>
 
 ### 互联网文娱
+
 <ul>
     <li><a href="https://g.10086.cn/" rel="nofollow">咪咕互娱</a></li>
     <li><a href="https://www.motie.com/" rel="nofollow">磨铁文学</a></li>
@@ -104,6 +109,7 @@ chapter = true
 </ul>
 
 ### 新闻资讯
+
 <ul>
     <li><a href="http://bj.fangjia.com/" rel="nofollow">房价网</a></li>
     <li><a href="https://auto.ifeng.com/" rel="nofollow">凤凰汽车</a></li>
@@ -113,12 +119,14 @@ chapter = true
 </ul>
 
 ### 通信科技
+
 <ul>
     <li><a href="https://www.meizu.com/" rel="nofollow">魅族</a></li>
     <li><a href="https://www.oneplus.com/cn" rel="nofollow">一加科技</a></li>
 </ul>
 
 ### 物联网
+
 <ul>
     <li><a href="https://thinkiot.lenovo.com/" rel="nofollow">联想懂的通信</a></li>
     <li><a href="http://www.neoway.com/" rel="nofollow">有方科技</a></li>
@@ -130,6 +138,7 @@ chapter = true
 </ul>
 
 ### 软件开发及服务
+
 <ul>
     <li><a href="https://www.ultrapower.com.cn/" rel="nofollow">神州泰岳</a></li>
     <li><a href="http://www.duiba.com.cn" rel="nofollow">兑吧</a></li>
@@ -144,6 +153,7 @@ chapter = true
 </ul>
 
 ### 医疗健康
+
 <ul>
     <li><a href="https://www.hh.global/" rel="nofollow">健合集团</a></li>
     <li><a href="http://www.yunyichina.cn/" rel="nofollow">云医科技</a></li>
@@ -152,11 +162,13 @@ chapter = true
 </ul>
 
 ### 零售业
+
 <ul>
     <li><a href="http://www.yonghui.com.cn/" rel="nofollow">永辉超市</a></li>
 </ul>
 
 ### 人工智能
+
 <ul>
     <li><a href="https://www.deepblueai.com/" rel="nofollow">深兰科技</a></li>
 </ul>

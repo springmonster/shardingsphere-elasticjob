@@ -50,36 +50,36 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public final class AppConstraintEvaluatorTest {
-    
+
     private static final double SUFFICIENT_CPU = 1.0 * 13;
-    
+
     private static final double INSUFFICIENT_CPU = 1.0 * 11;
-    
+
     private static final double SUFFICIENT_MEM = 128.0 * 13;
-    
+
     private static final double INSUFFICIENT_MEM = 128.0 * 11;
-    
+
     private static FacadeService facadeService;
-    
+
     private TaskScheduler taskScheduler;
-    
+
     @BeforeClass
     public static void init() {
         facadeService = mock(FacadeService.class);
         AppConstraintEvaluator.init(facadeService);
     }
-    
+
     @Before
     public void setUp() {
         taskScheduler = new TaskScheduler.Builder().withLeaseOfferExpirySecs(1000000000L).withLeaseRejectAction(virtualMachineLease -> {
         }).build();
     }
-    
+
     @After
     public void tearDown() {
         AppConstraintEvaluator.getInstance().clearAppRunningState();
     }
-    
+
     @Test
     public void assertFirstLaunch() {
         SchedulingResult result = taskScheduler.scheduleOnce(getTasks(), Arrays.asList(getLease(0, SUFFICIENT_CPU, SUFFICIENT_MEM), getLease(1, SUFFICIENT_CPU, SUFFICIENT_MEM)));
@@ -87,21 +87,21 @@ public final class AppConstraintEvaluatorTest {
         assertThat(result.getFailures().size(), is(0));
         assertThat(getAssignedTaskNumber(result), is(20));
     }
-    
+
     @Test
     public void assertFirstLaunchLackCpu() {
         SchedulingResult result = taskScheduler.scheduleOnce(getTasks(), Arrays.asList(getLease(0, INSUFFICIENT_CPU, SUFFICIENT_MEM), getLease(1, INSUFFICIENT_CPU, SUFFICIENT_MEM)));
         assertThat(result.getResultMap().size(), is(2));
         assertThat(getAssignedTaskNumber(result), is(18));
     }
-    
+
     @Test
     public void assertFirstLaunchLackMem() {
         SchedulingResult result = taskScheduler.scheduleOnce(getTasks(), Arrays.asList(getLease(0, SUFFICIENT_CPU, INSUFFICIENT_MEM), getLease(1, SUFFICIENT_CPU, INSUFFICIENT_MEM)));
         assertThat(result.getResultMap().size(), is(2));
         assertThat(getAssignedTaskNumber(result), is(18));
     }
-    
+
     @Test
     public void assertExistExecutorOnS0() {
         when(facadeService.loadExecutorInfo()).thenReturn(Collections.singletonList(new ExecutorStateInfo("foo-app@-@S0", "S0")));
@@ -110,7 +110,7 @@ public final class AppConstraintEvaluatorTest {
         assertThat(result.getResultMap().size(), is(2));
         assertTrue(getAssignedTaskNumber(result) > 18);
     }
-    
+
     @Test
     public void assertGetExecutorError() {
         when(facadeService.loadExecutorInfo()).thenThrow(JsonParseException.class);
@@ -119,7 +119,7 @@ public final class AppConstraintEvaluatorTest {
         assertThat(result.getResultMap().size(), is(2));
         assertThat(getAssignedTaskNumber(result), is(18));
     }
-    
+
     @Test
     public void assertLackJobConfig() {
         when(facadeService.load("test")).thenReturn(Optional.empty());
@@ -127,7 +127,7 @@ public final class AppConstraintEvaluatorTest {
         assertThat(result.getResultMap().size(), is(1));
         assertThat(getAssignedTaskNumber(result), is(1));
     }
-    
+
     @Test
     public void assertLackAppConfig() {
         when(facadeService.load("test")).thenReturn(Optional.of(CloudJobConfigurationBuilder.createCloudJobConfiguration("test")));
@@ -136,7 +136,7 @@ public final class AppConstraintEvaluatorTest {
         assertThat(result.getResultMap().size(), is(1));
         assertThat(getAssignedTaskNumber(result), is(1));
     }
-    
+
     private VirtualMachineLease getLease(final int index, final double cpus, final double mem) {
         return new VMLeaseObject(Protos.Offer.newBuilder()
                 .setId(Protos.OfferID.newBuilder().setValue("offer" + index))
@@ -147,7 +147,7 @@ public final class AppConstraintEvaluatorTest {
                 .addResources(Protos.Resource.newBuilder().setName("mem").setType(Protos.Value.Type.SCALAR).setScalar(Protos.Value.Scalar.newBuilder().setValue(mem)))
                 .build());
     }
-    
+
     private List<TaskRequest> getTasks() {
         List<TaskRequest> result = new ArrayList<>(20);
         for (int i = 0; i < 20; i++) {
@@ -167,7 +167,7 @@ public final class AppConstraintEvaluatorTest {
         when(facadeService.loadAppConfig("bar-app")).thenReturn(Optional.of(CloudAppConfigurationBuilder.createCloudAppConfiguration("bar-app")));
         return result;
     }
-    
+
     private TaskRequest getTask(final String jobName) {
         TaskRequest result = mock(TaskRequest.class);
         when(result.getCPUs()).thenReturn(1.0d);
@@ -176,7 +176,7 @@ public final class AppConstraintEvaluatorTest {
         when(result.getId()).thenReturn(new TaskContext(jobName, Collections.singletonList(0), ExecutionType.READY).getId());
         return result;
     }
-    
+
     private int getAssignedTaskNumber(final SchedulingResult schedulingResult) {
         int result = 0;
         for (VMAssignmentResult each : schedulingResult.getResultMap().values()) {

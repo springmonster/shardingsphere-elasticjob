@@ -1,9 +1,6 @@
-+++
-pre = "<b>2.2. </b>"
++++ pre = "<b>2.2. </b>"
 title = "ElasticJob-Cloud"
-weight = 2
-chapter = true
-+++
+weight = 2 chapter = true +++
 
 ## 引入 Maven 依赖
 

@@ -27,7 +27,7 @@ import org.apache.shardingsphere.elasticjob.restful.handler.ExceptionHandler;
  **/
 @Slf4j
 public final class ConsoleExceptionHandler implements ExceptionHandler<Exception> {
-    
+
     @Override
     public ExceptionHandleResult handleException(final Exception ex) {
         return ExceptionHandleResult.builder()

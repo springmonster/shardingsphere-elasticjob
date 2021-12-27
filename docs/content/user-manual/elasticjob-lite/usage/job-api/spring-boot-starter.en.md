@@ -1,24 +1,21 @@
-+++
-title = "Use Spring Boot Starter"
-weight = 3
-chapter = true
-+++
++++ title = "Use Spring Boot Starter"
+weight = 3 chapter = true +++
 
-ElasticJob-Lite provides a customized Spring Boot Starter, which can be used in conjunction with Spring Boot.
-Developers are free from configuring CoordinatorRegistryCenter, JobBootstrap by using ElasticJob Spring Boot Starter.
-What developers need to solve distributed scheduling problem are job implementations with a little configuration.
+ElasticJob-Lite provides a customized Spring Boot Starter, which can be used in conjunction with Spring Boot. Developers
+are free from configuring CoordinatorRegistryCenter, JobBootstrap by using ElasticJob Spring Boot Starter. What
+developers need to solve distributed scheduling problem are job implementations with a little configuration.
 
 ## Job configuration
 
 ### Implements ElasticJob
 
-Job implementation is similar to other usage of ElasticJob. 
-The difference is that jobs will be registered into the Spring IoC container.
+Job implementation is similar to other usage of ElasticJob. The difference is that jobs will be registered into the
+Spring IoC container.
 
 **Thread-Safety Issue**
 
-Bean is singleton by default. 
-Consider setting Bean Scope to `prototype` if the instance of ElasticJob would be used by more than a JobBootstrap.
+Bean is singleton by default. Consider setting Bean Scope to `prototype` if the instance of ElasticJob would be used by
+more than a JobBootstrap.
 
 ```java
 @Component
@@ -40,8 +37,9 @@ public class SpringBootDataflowJob implements DataflowJob<Foo> {
 
 Configure the Zookeeper which will be used by ElasticJob via configuration files.
 
-`elasticjob.jobs` is a Map. Using key as job name. Specific job type and configuration in value.
-The Starter will create instances of `OneOffJobBootstrap` or `ScheduleJobBootstrap` and register them into the Spring IoC container automatically. 
+`elasticjob.jobs` is a Map. Using key as job name. Specific job type and configuration in value. The Starter will create
+instances of `OneOffJobBootstrap` or `ScheduleJobBootstrap` and register them into the Spring IoC container
+automatically.
 
 Configuration reference:
 
@@ -72,12 +70,11 @@ Just start Spring Boot Starter directly. The schedule jobs will startup when the
 
 ### One-off Job
 
-When to execute OneOffJob is up to you. 
-Developers can inject the `OneOffJobBootstrap` bean into where they plan to invoke.
-Trigger the job by invoking `execute()` method manually.
+When to execute OneOffJob is up to you. Developers can inject the `OneOffJobBootstrap` bean into where they plan to
+invoke. Trigger the job by invoking `execute()` method manually.
 
-The bean name of `OneOffJobBootstrap` is specified by property "jobBootstrapBeanName",
-Please refer to [Spring Boot Starter Configuration](/en/user-manual/elasticjob-lite/configuration/spring-boot-starter).
+The bean name of `OneOffJobBootstrap` is specified by property "jobBootstrapBeanName", Please refer
+to [Spring Boot Starter Configuration](/en/user-manual/elasticjob-lite/configuration/spring-boot-starter).
 
 ```yaml
 elasticjob:
@@ -118,7 +115,8 @@ public class OneOffJobController {
 
 In the process of using ElasticJob-Lite, when the job is abnormal, the following error handling strategies can be used.
 
-| *Error handler strategy name*            | *Description*                                                 |  *Built-in*  | *Default*| *Extra config*   |
+| *Error handler strategy name*            | *Description*                                                 |  *
+Built-in*  | *Default*| *Extra config*   |
 | ---------------------------------------- | ------------------------------------------------------------- |  -------     |  --------|  --------------  |
 | Log Strategy                             | Log error and do not interrupt job                            |   Yes        |     Yes  |                  |
 | Throw Strategy                           | Throw system exception and interrupt job                      |   Yes        |          |                  |
@@ -128,6 +126,7 @@ In the process of using ElasticJob-Lite, when the job is abnormal, the following
 | Dingtalk Notification Strategy           | Send dingtalk message notification and do not interrupt job   |              |          |    Yes           |
 
 ### Log Strategy
+
 ```yaml
 elasticjob:
   regCenter:
@@ -138,6 +137,7 @@ elasticjob:
 ```
 
 ### Throw Strategy
+
 ```yaml
 elasticjob:
   regCenter:
@@ -148,6 +148,7 @@ elasticjob:
 ```
 
 ### Ignore Strategy
+
 ```yaml
 elasticjob:
   regCenter:
@@ -159,9 +160,12 @@ elasticjob:
 
 ### Email Notification Strategy
 
-Please refer to [here](/en/user-manual/elasticjob-lite/configuration/built-in-strategy/error-handler/#email-notification-strategy) for more details.
+Please refer
+to [here](/en/user-manual/elasticjob-lite/configuration/built-in-strategy/error-handler/#email-notification-strategy)
+for more details.
 
 Maven POM:
+
 ```xml
 <dependency>
     <groupId>org.apache.shardingsphere.elasticjob</groupId>
@@ -169,6 +173,7 @@ Maven POM:
     <version>${latest.release.version}</version>
 </dependency>
 ```
+
 ```yaml
 elasticjob:
   regCenter:
@@ -193,9 +198,12 @@ elasticjob:
 
 ### Wechat Enterprise Notification Strategy
 
-Please refer to [here](/en/user-manual/elasticjob-lite/configuration/built-in-strategy/error-handler/#wechat-enterprise-notification-strategy) for more details.
+Please refer
+to [here](/en/user-manual/elasticjob-lite/configuration/built-in-strategy/error-handler/#wechat-enterprise-notification-strategy)
+for more details.
 
 Maven POM:
+
 ```xml
 <dependency>
     <groupId>org.apache.shardingsphere.elasticjob</groupId>
@@ -203,6 +211,7 @@ Maven POM:
     <version>${latest.release.version}</version>
 </dependency>
 ```
+
 ```yaml
 elasticjob:
   regCenter:
@@ -219,9 +228,12 @@ elasticjob:
 
 ### Dingtalk Notification Strategy
 
-Please refer to [here](/en/user-manual/elasticjob-lite/configuration/built-in-strategy/error-handler/#dingtalk-notification-strategy) for more details.
+Please refer
+to [here](/en/user-manual/elasticjob-lite/configuration/built-in-strategy/error-handler/#dingtalk-notification-strategy)
+for more details.
 
 Maven POM:
+
 ```xml
 <dependency>
     <groupId>org.apache.shardingsphere.elasticjob</groupId>
@@ -229,6 +241,7 @@ Maven POM:
     <version>${latest.release.version}</version>
 </dependency>
 ```
+
 ```yaml
 elasticjob:
   regCenter:

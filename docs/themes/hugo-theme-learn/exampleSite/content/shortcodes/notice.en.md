@@ -1,6 +1,5 @@
 ---
-title: Notice
-description : "Disclaimers to help you structure your page"
+title: Notice description : "Disclaimers to help you structure your page"
 ---
 
 The notice shortcode shows 4 types of disclaimers to help you structure your page.
@@ -15,9 +14,7 @@ A notice disclaimer
 
 renders as
 
-{{% notice note %}}
-A notice disclaimer
-{{% /notice %}}
+{{% notice note %}} A notice disclaimer {{% /notice %}}
 
 ### Info
 
@@ -29,9 +26,7 @@ An information disclaimer
 
 renders as
 
-{{% notice info %}}
-An information disclaimer
-{{% /notice %}}
+{{% notice info %}} An information disclaimer {{% /notice %}}
 
 ### Tip
 
@@ -43,9 +38,7 @@ A tip disclaimer
 
 renders as
 
-{{% notice tip %}}
-A tip disclaimer
-{{% /notice %}}
+{{% notice tip %}} A tip disclaimer {{% /notice %}}
 
 ### Warning
 
@@ -57,6 +50,4 @@ An warning disclaimer
 
 renders as
 
-{{% notice warning %}}
-A warning disclaimer
-{{% /notice %}}
+{{% notice warning %}} A warning disclaimer {{% /notice %}}

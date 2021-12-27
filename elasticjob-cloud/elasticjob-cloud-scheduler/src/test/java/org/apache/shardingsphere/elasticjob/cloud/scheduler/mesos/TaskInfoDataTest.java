@@ -30,27 +30,27 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 public final class TaskInfoDataTest {
-    
+
     private final ShardingContexts shardingContexts = new ShardingContexts("fake_task_id", "test_job", 3, "test_param", Collections.emptyMap());
-    
+
     @Test
     public void assertSerializeSimpleJob() {
         TaskInfoData actual = new TaskInfoData(shardingContexts, CloudJobConfigurationBuilder.createCloudJobConfiguration("test_job").toCloudJobConfiguration());
         assertSerialize(SerializationUtils.deserialize(actual.serialize()));
     }
-    
+
     @Test
     public void assertSerializeDataflowJob() {
         TaskInfoData actual = new TaskInfoData(shardingContexts, CloudJobConfigurationBuilder.createDataflowCloudJobConfiguration("test_job"));
         assertSerialize(SerializationUtils.deserialize(actual.serialize()));
     }
-    
+
     @Test
     public void assertSerializeScriptJob() {
         TaskInfoData actual = new TaskInfoData(shardingContexts, CloudJobConfigurationBuilder.createScriptCloudJobConfiguration("test_job").toCloudJobConfiguration());
         assertSerialize(SerializationUtils.deserialize(actual.serialize()));
     }
-    
+
     private void assertSerialize(final Map expected) {
         assertThat(expected.size(), is(2));
         assertNotNull(expected.get("shardingContext"));

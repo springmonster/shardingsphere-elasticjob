@@ -18,14 +18,12 @@
 package org.apache.shardingsphere.elasticjob.lite.example.job.simple;
 
 import org.apache.shardingsphere.elasticjob.api.ShardingContext;
-import org.apache.shardingsphere.elasticjob.lite.example.fixture.entity.Foo;
 import org.apache.shardingsphere.elasticjob.lite.example.fixture.repository.FooRepository;
 import org.apache.shardingsphere.elasticjob.lite.example.fixture.repository.FooRepositoryFactory;
 import org.apache.shardingsphere.elasticjob.simple.job.SimpleJob;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 public class JavaSimpleJob implements SimpleJob {
 

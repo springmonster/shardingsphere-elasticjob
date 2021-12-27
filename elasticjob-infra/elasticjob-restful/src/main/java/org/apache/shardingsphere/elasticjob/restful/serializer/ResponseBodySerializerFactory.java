@@ -31,23 +31,23 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ResponseBodySerializerFactory {
-    
+
     private static final Map<String, ResponseBodySerializer> RESPONSE_BODY_SERIALIZERS = new ConcurrentHashMap<>();
-    
+
     private static final Map<String, SerializerFactory> RESPONSE_BODY_SERIALIZER_FACTORIES = new ConcurrentHashMap<>();
-    
+
     private static final ResponseBodySerializer MISSING_SERIALIZER = new ResponseBodySerializer() {
         @Override
         public String mimeType() {
             throw new UnsupportedOperationException();
         }
-        
+
         @Override
         public byte[] serialize(final Object responseBody) {
             throw new UnsupportedOperationException();
         }
     };
-    
+
     static {
         for (ResponseBodySerializer serializer : ServiceLoader.load(ResponseBodySerializer.class)) {
             RESPONSE_BODY_SERIALIZERS.put(serializer.mimeType(), serializer);
@@ -56,7 +56,7 @@ public final class ResponseBodySerializerFactory {
             RESPONSE_BODY_SERIALIZER_FACTORIES.put(factory.mimeType(), factory);
         }
     }
-    
+
     /**
      * Get serializer for specific HTTP content type.
      *
@@ -89,7 +89,7 @@ public final class ResponseBodySerializerFactory {
         }
         return result;
     }
-    
+
     private static void instantiateResponseBodySerializerFromFactories(final String contentType) {
         ResponseBodySerializer serializer;
         SerializerFactory factory = RESPONSE_BODY_SERIALIZER_FACTORIES.get(contentType);

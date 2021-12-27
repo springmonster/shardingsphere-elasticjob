@@ -23,7 +23,7 @@ import org.apache.shardingsphere.elasticjob.api.ElasticJob;
  * Job class name provider.
  */
 public interface JobClassNameProvider {
-    
+
     /**
      * Get job class name.
      *

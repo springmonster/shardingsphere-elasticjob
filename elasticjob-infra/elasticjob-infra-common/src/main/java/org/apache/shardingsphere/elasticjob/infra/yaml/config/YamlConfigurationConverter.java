@@ -24,7 +24,7 @@ package org.apache.shardingsphere.elasticjob.infra.yaml.config;
  * @param <Y> type of YAML configuration
  */
 public interface YamlConfigurationConverter<T, Y extends YamlConfiguration<T>> {
-    
+
     /**
      * Convert to YAML configuration.
      *
@@ -32,7 +32,7 @@ public interface YamlConfigurationConverter<T, Y extends YamlConfiguration<T>> {
      * @return YAML configuration
      */
     Y convertToYamlConfiguration(T data);
-    
+
     /**
      * Get type of Configuration.
      *

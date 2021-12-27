@@ -1,9 +1,6 @@
-+++
-pre = "<b>5.1. </b>"
++++ pre = "<b>5.1. </b>"
 title = "Job Sharding Strategy"
-weight = 1
-chapter = true
-+++
+weight = 1 chapter = true +++
 
 Job Sharding Strategy， used to sharding job to distributed tasks.
 

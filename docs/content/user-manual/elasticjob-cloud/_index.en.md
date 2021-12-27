@@ -1,9 +1,6 @@
-+++
-pre = "<b>4.2. </b>"
++++ pre = "<b>4.2. </b>"
 title = "ElasticJob-Cloud"
-weight = 2
-chapter = true
-+++
+weight = 2 chapter = true +++
 
 ## Introduction
 
@@ -20,5 +17,5 @@ ElasticJob-Cloud uses Mesos to manage and isolate resources.
 | Job Execution     | Daemon            | `Daemon + Transient` |
 | Deploy Dependency | ZooKeeper         | `ZooKeeper + Mesos`  |
 
-The advantages of ElasticJob-Cloud are resource management and isolation, 
-which is suitable for big data application with starve resource environment.
+The advantages of ElasticJob-Cloud are resource management and isolation, which is suitable for big data application
+with starve resource environment.

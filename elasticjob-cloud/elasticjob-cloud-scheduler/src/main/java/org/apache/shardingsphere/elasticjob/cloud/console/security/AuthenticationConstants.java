@@ -25,8 +25,8 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class AuthenticationConstants {
-    
+
     public static final String LOGIN_URI = "/api/login";
-    
+
     public static final String HEADER_NAME = "accessToken";
 }

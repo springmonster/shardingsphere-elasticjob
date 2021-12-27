@@ -25,7 +25,7 @@ import org.apache.shardingsphere.elasticjob.restful.filter.FilterChain;
  * HTTP request filter.
  */
 public interface Filter {
-    
+
     /**
      * Do filter.
      *

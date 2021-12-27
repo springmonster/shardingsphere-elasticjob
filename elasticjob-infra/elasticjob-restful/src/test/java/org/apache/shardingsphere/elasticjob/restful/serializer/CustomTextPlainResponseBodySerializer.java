@@ -25,12 +25,12 @@ import java.nio.charset.StandardCharsets;
  * Serializer for <code>text/plain</code>. Serialize String to bytes.
  */
 public final class CustomTextPlainResponseBodySerializer implements ResponseBodySerializer {
-    
+
     @Override
     public String mimeType() {
         return HttpHeaderValues.TEXT_PLAIN.toString();
     }
-    
+
     @Override
     public byte[] serialize(final Object responseBody) {
         if (responseBody instanceof String) {

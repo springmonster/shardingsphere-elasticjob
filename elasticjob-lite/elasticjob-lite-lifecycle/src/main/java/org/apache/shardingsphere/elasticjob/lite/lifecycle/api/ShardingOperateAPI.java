@@ -21,20 +21,20 @@ package org.apache.shardingsphere.elasticjob.lite.lifecycle.api;
  * Sharding operate API.
  */
 public interface ShardingOperateAPI {
-    
+
     /**
      * Disable job sharding item.
-     * 
+     *
      * @param jobName job name
-     * @param item sharding item
+     * @param item    sharding item
      */
     void disable(String jobName, String item);
-    
+
     /**
      * Enable job sharding item.
      *
      * @param jobName job name
-     * @param item sharding item
+     * @param item    sharding item
      */
     void enable(String jobName, String item);
 }

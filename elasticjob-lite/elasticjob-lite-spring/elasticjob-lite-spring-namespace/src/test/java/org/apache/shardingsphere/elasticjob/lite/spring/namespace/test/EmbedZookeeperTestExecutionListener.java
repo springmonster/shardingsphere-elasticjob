@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,8 +18,8 @@
 package org.apache.shardingsphere.elasticjob.lite.spring.namespace.test;
 
 import org.apache.curator.test.TestingServer;
-import org.apache.shardingsphere.elasticjob.reg.exception.RegExceptionHandler;
 import org.apache.shardingsphere.elasticjob.infra.concurrent.BlockUtils;
+import org.apache.shardingsphere.elasticjob.reg.exception.RegExceptionHandler;
 import org.springframework.test.context.TestContext;
 import org.springframework.test.context.support.AbstractTestExecutionListener;
 
@@ -27,23 +27,23 @@ import java.io.File;
 import java.io.IOException;
 
 public final class EmbedZookeeperTestExecutionListener extends AbstractTestExecutionListener {
-    
+
     private static volatile TestingServer testingServer;
-    
+
     @Override
     public void beforeTestClass(final TestContext testContext) {
         startEmbedTestingServer();
     }
-    
+
     private static void startEmbedTestingServer() {
         if (null != testingServer) {
             return;
         }
         try {
             testingServer = new TestingServer(3181, new File(String.format("target/test_zk_data/%s/", System.nanoTime())));
-            
+
         } catch (final Exception ex) {
-            
+
             RegExceptionHandler.handleException(ex);
         } finally {
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {

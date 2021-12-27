@@ -31,27 +31,27 @@ import java.lang.management.ManagementFactory;
 @Setter
 @EqualsAndHashCode(of = "jobInstanceId")
 public final class JobInstance {
-    
+
     public static final String DELIMITER = "@-@";
-    
+
     private String jobInstanceId;
-    
+
     private String labels;
-    
+
     private String serverIp;
-    
+
     public JobInstance() {
         this(IpUtils.getIp() + DELIMITER + ManagementFactory.getRuntimeMXBean().getName().split("@")[0]);
     }
-    
+
     public JobInstance(final String jobInstanceId) {
         this(jobInstanceId, null);
     }
-    
+
     public JobInstance(final String jobInstanceId, final String labels) {
         this(jobInstanceId, labels, IpUtils.getIp());
     }
-    
+
     public JobInstance(final String jobInstanceId, final String labels, final String serverIp) {
         this.jobInstanceId = jobInstanceId;
         this.labels = labels;

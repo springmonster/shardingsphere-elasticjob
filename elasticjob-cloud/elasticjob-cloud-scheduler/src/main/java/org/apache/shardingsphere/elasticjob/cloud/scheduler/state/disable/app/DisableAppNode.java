@@ -26,11 +26,11 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 final class DisableAppNode {
-    
+
     static final String ROOT = StateNode.ROOT + "/disable/app";
-    
+
     private static final String DISABLE_APP = ROOT + "/%s";
-    
+
     static String getDisableAppNodePath(final String appName) {
         return String.format(DISABLE_APP, appName);
     }

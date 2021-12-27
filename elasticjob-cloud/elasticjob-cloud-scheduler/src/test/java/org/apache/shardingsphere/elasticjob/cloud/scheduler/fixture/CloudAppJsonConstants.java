@@ -22,12 +22,13 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CloudAppJsonConstants {
-    
+
     private static final String APP_JSON = "{\"appName\":\"%s\",\"appURL\":\"http://localhost/app.jar\",\"bootstrapScript\":\"bin/start.sh\","
             + "\"cpuCount\":1.0,\"memoryMB\":128.0,\"appCacheEnable\":true,\"eventTraceSamplingCount\":0}";
 
     /**
      * Get app in json format.
+     *
      * @param appName app name
      * @return app in json format
      */

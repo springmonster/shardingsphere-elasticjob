@@ -15,8 +15,9 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-    
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.apache.shardingsphere.elasticjob</groupId>
@@ -26,7 +27,7 @@
     <artifactId>elasticjob-cloud-scheduler-distribution</artifactId>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
-    
+
     <dependencies>
         <dependency>
             <groupId>org.apache.shardingsphere.elasticjob</groupId>
@@ -48,16 +49,16 @@
             <artifactId>elasticjob-script-executor</artifactId>
             <version>${project.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.apache.shardingsphere.elasticjob</groupId>-->
-<!--            <artifactId>elasticjob-cloud-common</artifactId>-->
-<!--            <version>${project.version}</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.shardingsphere.elasticjob</groupId>-->
-<!--            <artifactId>elasticjob-cloud-scheduler</artifactId>-->
-<!--            <version>${project.parent.version}</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.shardingsphere.elasticjob</groupId>-->
+        <!--            <artifactId>elasticjob-cloud-common</artifactId>-->
+        <!--            <version>${project.version}</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.shardingsphere.elasticjob</groupId>-->
+        <!--            <artifactId>elasticjob-cloud-scheduler</artifactId>-->
+        <!--            <version>${project.parent.version}</version>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>org.apache.shardingsphere.elasticjob</groupId>
             <artifactId>elasticjob-restful</artifactId>
@@ -71,7 +72,7 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
         </dependency>
-        
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -113,7 +114,7 @@
             <artifactId>logback-classic</artifactId>
         </dependency>
     </dependencies>
-    
+
     <profiles>
         <profile>
             <id>release</id>

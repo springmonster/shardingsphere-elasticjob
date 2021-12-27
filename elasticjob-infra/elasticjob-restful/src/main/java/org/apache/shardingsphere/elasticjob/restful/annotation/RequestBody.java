@@ -28,7 +28,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
 public @interface RequestBody {
-    
+
     /**
      * If request body is required.
      *

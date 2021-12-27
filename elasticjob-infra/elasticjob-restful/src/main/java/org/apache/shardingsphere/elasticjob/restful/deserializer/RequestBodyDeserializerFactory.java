@@ -31,23 +31,23 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class RequestBodyDeserializerFactory {
-    
+
     private static final Map<String, RequestBodyDeserializer> REQUEST_BODY_DESERIALIZERS = new ConcurrentHashMap<>();
-    
+
     private static final Map<String, DeserializerFactory> DEFAULT_REQUEST_BODY_DESERIALIZER_FACTORIES = new ConcurrentHashMap<>();
-    
+
     private static final RequestBodyDeserializer MISSING_DESERIALIZER = new RequestBodyDeserializer() {
         @Override
         public String mimeType() {
             throw new UnsupportedOperationException();
         }
-        
+
         @Override
         public <T> T deserialize(final Class<T> targetType, final byte[] requestBodyBytes) {
             throw new UnsupportedOperationException();
         }
     };
-    
+
     static {
         for (RequestBodyDeserializer deserializer : ServiceLoader.load(RequestBodyDeserializer.class)) {
             REQUEST_BODY_DESERIALIZERS.put(deserializer.mimeType(), deserializer);
@@ -56,7 +56,7 @@ public final class RequestBodyDeserializerFactory {
             DEFAULT_REQUEST_BODY_DESERIALIZER_FACTORIES.put(factory.mimeType(), factory);
         }
     }
-    
+
     /**
      * Get deserializer for specific HTTP content type.
      *
@@ -89,7 +89,7 @@ public final class RequestBodyDeserializerFactory {
         }
         return result;
     }
-    
+
     private static void instantiateRequestBodyDeserializerFromFactories(final String contentType) {
         RequestBodyDeserializer deserializer;
         DeserializerFactory factory = DEFAULT_REQUEST_BODY_DESERIALIZER_FACTORIES.get(contentType);

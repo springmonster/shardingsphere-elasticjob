@@ -1,8 +1,6 @@
-+++
-pre = "<b>5.3. </b>"
++++ pre = "<b>5.3. </b>"
 title = "Error Handler"
-weight = 3
-+++
+weight = 3 +++
 
 Error handler strategy, used to handle error when exception occur during job execution.
 

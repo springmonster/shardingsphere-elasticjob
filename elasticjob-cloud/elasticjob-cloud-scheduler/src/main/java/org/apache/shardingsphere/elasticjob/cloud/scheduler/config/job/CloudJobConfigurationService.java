@@ -34,19 +34,19 @@ import java.util.Optional;
  */
 @RequiredArgsConstructor
 public final class CloudJobConfigurationService {
-    
+
     private final CoordinatorRegistryCenter regCenter;
-    
+
     /**
      * Add cloud job configuration.
-     * 
+     *
      * @param cloudJobConfig cloud job configuration
      */
     public void add(final CloudJobConfigurationPOJO cloudJobConfig) {
         regCenter.persist(
                 CloudJobConfigurationNode.getRootNodePath(cloudJobConfig.getJobName()), YamlEngine.marshal(cloudJobConfig));
     }
-    
+
     /**
      * Update cloud job configuration.
      *
@@ -56,7 +56,7 @@ public final class CloudJobConfigurationService {
         regCenter.update(
                 CloudJobConfigurationNode.getRootNodePath(cloudJobConfig.getJobName()), YamlEngine.marshal(cloudJobConfig));
     }
-    
+
     /**
      * Load all registered cloud job configurations.
      *
@@ -73,7 +73,7 @@ public final class CloudJobConfigurationService {
         }
         return result;
     }
-    
+
     /**
      * Load cloud job configuration by job name.
      *
@@ -84,7 +84,7 @@ public final class CloudJobConfigurationService {
         String configContent = regCenter.get(CloudJobConfigurationNode.getRootNodePath(jobName));
         return Strings.isNullOrEmpty(configContent) ? Optional.empty() : Optional.of(YamlEngine.unmarshal(configContent, CloudJobConfigurationPOJO.class));
     }
-    
+
     /**
      * Remove cloud job configuration.
      *

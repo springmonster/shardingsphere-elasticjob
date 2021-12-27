@@ -25,21 +25,21 @@ import java.util.Collection;
  * Job statistics API.
  */
 public interface JobStatisticsAPI {
-    
+
     /**
      * Get jobs total count.
      *
      * @return jobs total count.
      */
     int getJobsTotalCount();
-    
+
     /**
      * Get all jobs brief info.
      *
      * @return all jobs brief info.
      */
     Collection<JobBriefInfo> getAllJobsBriefInfo();
-    
+
     /**
      * Get job brief info.
      *
@@ -47,7 +47,7 @@ public interface JobStatisticsAPI {
      * @return job brief info
      */
     JobBriefInfo getJobBriefInfo(String jobName);
-    
+
     /**
      * Get jobs brief info.
      *

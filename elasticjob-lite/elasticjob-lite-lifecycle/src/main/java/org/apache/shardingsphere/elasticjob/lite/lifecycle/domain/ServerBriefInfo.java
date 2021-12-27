@@ -33,21 +33,21 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Getter
 @Setter
 public final class ServerBriefInfo implements Serializable, Comparable<ServerBriefInfo> {
-    
+
     private static final long serialVersionUID = 1133149706443681483L;
-    
+
     private final String serverIp;
-    
+
     private final Set<String> instances = new HashSet<>();
-    
+
     private final Set<String> jobNames = new HashSet<>();
-    
+
     private int instancesNum;
-    
+
     private int jobsNum;
-    
+
     private AtomicInteger disabledJobsNum = new AtomicInteger();
-    
+
     @Override
     public int compareTo(final ServerBriefInfo o) {
         return (getServerIp()).compareTo(o.getServerIp());

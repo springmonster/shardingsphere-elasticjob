@@ -42,18 +42,18 @@ import java.util.Optional;
  */
 @Sharable
 public final class HttpRequestDispatcher extends ChannelInboundHandlerAdapter {
-    
+
     private static final String TRAILING_SLASH = "/";
-    
+
     private final HandlerMappingRegistry mappingRegistry = new HandlerMappingRegistry();
-    
+
     private final boolean trailingSlashSensitive;
-    
+
     public HttpRequestDispatcher(final List<RestfulController> restfulControllers, final boolean trailingSlashSensitive) {
         this.trailingSlashSensitive = trailingSlashSensitive;
         initMappingRegistry(restfulControllers);
     }
-    
+
     @SuppressWarnings({"unchecked", "NullableProblems"})
     @Override
     public void channelRead(final ChannelHandlerContext ctx, final Object msg) {
@@ -71,7 +71,7 @@ public final class HttpRequestDispatcher extends ChannelInboundHandlerAdapter {
             throw new HandlerNotFoundException(request.uri());
         }
     }
-    
+
     private void initMappingRegistry(final List<RestfulController> restfulControllers) {
         for (RestfulController restfulController : restfulControllers) {
             Class<? extends RestfulController> controllerClass = restfulController.getClass();
@@ -91,11 +91,11 @@ public final class HttpRequestDispatcher extends ChannelInboundHandlerAdapter {
             }
         }
     }
-    
+
     private String resolveFullPath(final String contextPath, final String pattern) {
         return Optional.ofNullable(contextPath).orElse("") + pattern;
     }
-    
+
     private String appendTrailingSlashIfAbsent(final String uri) {
         String[] split = uri.split("\\?");
         if (1 == split.length) {

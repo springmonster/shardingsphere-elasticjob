@@ -37,19 +37,19 @@ import java.util.concurrent.Executors;
  */
 @Slf4j
 public final class CloudJobConfigurationListener implements CuratorCacheListener {
-    
+
     private final CoordinatorRegistryCenter regCenter;
-    
+
     private final ProducerManager producerManager;
-    
+
     private final ReadyService readyService;
-    
+
     public CloudJobConfigurationListener(final CoordinatorRegistryCenter regCenter, final ProducerManager producerManager) {
         this.regCenter = regCenter;
         readyService = new ReadyService(regCenter);
         this.producerManager = producerManager;
     }
-    
+
     @Override
     public void event(final Type type, final ChildData oldData, final ChildData data) {
         String path = Type.NODE_DELETED == type ? oldData.getPath() : data.getPath();
@@ -75,7 +75,7 @@ public final class CloudJobConfigurationListener implements CuratorCacheListener
             producerManager.unschedule(jobName);
         }
     }
-    
+
     private boolean isJobConfigNode(final String path) {
         return path.startsWith(CloudJobConfigurationNode.ROOT) && path.length() > CloudJobConfigurationNode.ROOT.length();
     }
@@ -83,28 +83,28 @@ public final class CloudJobConfigurationListener implements CuratorCacheListener
     private CloudJobConfigurationPOJO getCloudJobConfiguration(final ChildData data) {
         try {
             return YamlEngine.unmarshal(new String(data.getData()), CloudJobConfigurationPOJO.class);
-            
+
         } catch (final Exception ex) {
             log.warn("Wrong Cloud Job Configuration with:", ex);
-            
+
             return null;
         }
     }
-    
+
     /**
      * Start the listener service of the cloud job service.
      */
     public void start() {
         getCache().listenable().addListener(this, Executors.newSingleThreadExecutor());
     }
-    
+
     /**
      * Stop the listener service of the cloud job service.
      */
     public void stop() {
         getCache().listenable().removeListener(this);
     }
-    
+
     private CuratorCache getCache() {
         CuratorCache result = (CuratorCache) regCenter.getRawCache(CloudJobConfigurationNode.ROOT);
         if (null != result) {

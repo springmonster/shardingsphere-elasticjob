@@ -32,29 +32,29 @@ import java.util.List;
  * Job operate API implementation class.
  */
 public final class JobOperateAPIImpl implements JobOperateAPI {
-    
+
     private final CoordinatorRegistryCenter regCenter;
-    
+
     public JobOperateAPIImpl(final CoordinatorRegistryCenter regCenter) {
         this.regCenter = regCenter;
     }
-    
+
     @Override
     public void trigger(final String jobName) {
         Preconditions.checkNotNull(jobName, "Job name cannot be null");
         new InstanceService(regCenter, jobName).triggerAllInstances();
     }
-    
+
     @Override
     public void disable(final String jobName, final String serverIp) {
         disableOrEnableJobs(jobName, serverIp, true);
     }
-    
+
     @Override
     public void enable(final String jobName, final String serverIp) {
         disableOrEnableJobs(jobName, serverIp, false);
     }
-    
+
     private void disableOrEnableJobs(final String jobName, final String serverIp, final boolean disabled) {
         Preconditions.checkArgument(null != jobName || null != serverIp, "At least indicate jobName or serverIp.");
         if (null != jobName && null != serverIp) {
@@ -77,7 +77,7 @@ public final class JobOperateAPIImpl implements JobOperateAPI {
             }
         }
     }
-    
+
     private void persistDisabledOrEnabledJob(final String jobName, final String serverIp, final boolean disabled) {
         JobNodePath jobNodePath = new JobNodePath(jobName);
         String serverNodePath = jobNodePath.getServerNodePath(serverIp);
@@ -87,7 +87,7 @@ public final class JobOperateAPIImpl implements JobOperateAPI {
             regCenter.persist(serverNodePath, ServerStatus.ENABLED.name());
         }
     }
-    
+
     @Override
     public void shutdown(final String jobName, final String serverIp) {
         Preconditions.checkArgument(null != jobName || null != serverIp, "At least indicate jobName or serverIp.");
@@ -118,7 +118,7 @@ public final class JobOperateAPIImpl implements JobOperateAPI {
             }
         }
     }
-    
+
     @Override
     public void remove(final String jobName, final String serverIp) {
         shutdown(jobName, serverIp);

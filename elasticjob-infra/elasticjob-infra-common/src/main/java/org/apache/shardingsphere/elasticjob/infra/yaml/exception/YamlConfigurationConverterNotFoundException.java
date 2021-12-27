@@ -21,9 +21,9 @@ package org.apache.shardingsphere.elasticjob.infra.yaml.exception;
  * Yaml configuration converter not found exception.
  */
 public final class YamlConfigurationConverterNotFoundException extends RuntimeException {
-    
+
     private static final long serialVersionUID = 664042135874000182L;
-    
+
     public YamlConfigurationConverterNotFoundException(final Class<?> type) {
         super(String.format("No YamlConfigurationConverter found for class [%s]", type.getName()));
     }

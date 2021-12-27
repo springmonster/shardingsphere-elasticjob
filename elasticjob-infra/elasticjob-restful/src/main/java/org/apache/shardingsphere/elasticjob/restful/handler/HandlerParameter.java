@@ -27,14 +27,14 @@ import org.apache.shardingsphere.elasticjob.restful.annotation.ParamSource;
 @RequiredArgsConstructor
 @Getter
 public final class HandlerParameter {
-    
+
     private final int index;
-    
+
     private final Class<?> type;
-    
+
     private final ParamSource paramSource;
-    
+
     private final String name;
-    
+
     private final boolean required;
 }

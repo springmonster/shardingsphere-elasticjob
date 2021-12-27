@@ -47,26 +47,26 @@ import java.util.Optional;
 @AllArgsConstructor
 @Slf4j
 public final class RegisteredJobStatisticJob extends AbstractStatisticJob {
-    
+
     private CloudJobConfigurationService configurationService;
-    
+
     private StatisticRdbRepository repository;
-    
+
     private final StatisticInterval execInterval = StatisticInterval.DAY;
-    
+
     @Override
     public JobDetail buildJobDetail() {
         return JobBuilder.newJob(this.getClass()).withIdentity(getJobName()).build();
     }
-    
+
     @Override
     public Trigger buildTrigger() {
         return TriggerBuilder.newTrigger()
                 .withIdentity(getTriggerName())
                 .withSchedule(CronScheduleBuilder.cronSchedule(execInterval.getCron())
-                .withMisfireHandlingInstructionDoNothing()).build();
+                        .withMisfireHandlingInstructionDoNothing()).build();
     }
-    
+
     @Override
     public Map<String, Object> getDataMap() {
         Map<String, Object> result = new HashMap<>(2);
@@ -74,7 +74,7 @@ public final class RegisteredJobStatisticJob extends AbstractStatisticJob {
         result.put("repository", repository);
         return result;
     }
-    
+
     @Override
     public void execute(final JobExecutionContext context) {
         Optional<JobRegisterStatistics> latestOne = repository.findLatestJobRegisterStatistics();
@@ -84,7 +84,7 @@ public final class RegisteredJobStatisticJob extends AbstractStatisticJob {
         log.debug("Add jobRegisterStatistics, registeredCount is:{}", registeredCount);
         repository.add(jobRegisterStatistics);
     }
-    
+
     private void fillBlankIfNeeded(final JobRegisterStatistics latestOne) {
         List<Date> blankDateRange = findBlankStatisticTimes(latestOne.getStatisticsTime(), execInterval);
         if (!blankDateRange.isEmpty()) {

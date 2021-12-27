@@ -26,8 +26,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public final class AuthenticationInfo {
-    
+
     private String username;
-    
+
     private String password;
 }

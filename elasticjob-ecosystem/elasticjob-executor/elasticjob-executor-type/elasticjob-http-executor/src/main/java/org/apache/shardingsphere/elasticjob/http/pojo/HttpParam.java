@@ -26,16 +26,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public final class HttpParam {
-    
+
     private final String url;
-    
+
     private final String method;
-    
+
     private final String data;
-    
+
     private final int connectTimeout;
-    
+
     private final int readTimeout;
-    
+
     private final String contentType;
 }

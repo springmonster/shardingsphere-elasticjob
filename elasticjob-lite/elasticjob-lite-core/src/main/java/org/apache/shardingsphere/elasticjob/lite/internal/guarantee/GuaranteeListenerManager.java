@@ -31,25 +31,25 @@ import java.util.Collection;
  */
 @Slf4j
 public final class GuaranteeListenerManager extends AbstractListenerManager {
-    
+
     private final GuaranteeNode guaranteeNode;
-    
+
     private final Collection<ElasticJobListener> elasticJobListeners;
-    
+
     public GuaranteeListenerManager(final CoordinatorRegistryCenter regCenter, final String jobName, final Collection<ElasticJobListener> elasticJobListeners) {
         super(regCenter, jobName);
         this.guaranteeNode = new GuaranteeNode(jobName);
         this.elasticJobListeners = elasticJobListeners;
     }
-    
+
     @Override
     public void start() {
         addDataListener(new StartedNodeRemovedJobListener());
         addDataListener(new CompletedNodeRemovedJobListener());
     }
-    
+
     class StartedNodeRemovedJobListener extends AbstractJobListener {
-        
+
         @Override
         protected void dataChanged(final String path, final Type eventType, final String data) {
             log.info("khc StartedNodeRemovedJobListener dataChanged path: {} , eventType: {} , data: {}", path, eventType, data);
@@ -63,9 +63,9 @@ public final class GuaranteeListenerManager extends AbstractListenerManager {
             }
         }
     }
-    
+
     class CompletedNodeRemovedJobListener extends AbstractJobListener {
-        
+
         @Override
         protected void dataChanged(final String path, final Type eventType, final String data) {
             log.info("khc CompletedNodeRemovedJobListener dataChanged path: {} , eventType: {} , data: {}", path, eventType, data);

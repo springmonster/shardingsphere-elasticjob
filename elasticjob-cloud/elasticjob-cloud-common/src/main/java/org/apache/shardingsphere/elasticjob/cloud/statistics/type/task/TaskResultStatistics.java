@@ -31,16 +31,16 @@ import java.util.Date;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public final class TaskResultStatistics {
-    
+
     private long id;
-    
+
     private final int successCount;
-    
+
     private final int failedCount;
-    
+
     private final StatisticInterval statisticInterval;
-    
+
     private final Date statisticsTime;
-    
+
     private Date creationTime = new Date();
 }

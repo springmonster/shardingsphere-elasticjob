@@ -1,13 +1,9 @@
-+++
-title = "Use Java API"
-weight = 2
-chapter = true
-+++
++++ title = "Use Java API"
+weight = 2 chapter = true +++
 
 ## Job configuration
 
-ElasticJob-Lite uses the builder mode to create job configuration objects.
-The code example is as follows:
+ElasticJob-Lite uses the builder mode to create job configuration objects. The code example is as follows:
 
 ```java
     JobConfiguration jobConfig = JobConfiguration.newBuilder("myJob", 3).cron("0/5 * * * * ?").shardingItemParameters("0=Beijing,1=Shanghai,2=Guangzhou").build();
@@ -15,8 +11,8 @@ The code example is as follows:
 
 ## Job start
 
-ElasticJob-Lite scheduler is divided into two types: timed scheduling and one-time scheduling.
-Each scheduler needs three parameters: registry configuration, job object (or job type), and job configuration when it starts.
+ElasticJob-Lite scheduler is divided into two types: timed scheduling and one-time scheduling. Each scheduler needs
+three parameters: registry configuration, job object (or job type), and job configuration when it starts.
 
 ### Timed scheduling
 
@@ -73,7 +69,8 @@ public class JobDemo {
 
 Using ElasticJob may meet some distributed problem which is not easy to observe.
 
-Because of developer can not debug in production environment, ElasticJob provide `dump` command to export job runtime information for debugging.
+Because of developer can not debug in production environment, ElasticJob provide `dump` command to export job runtime
+information for debugging.
 
 Please refer to [Operation Manual](/en/user-manual/elasticjob-lite/operation/dump) for more details.
 
@@ -96,7 +93,8 @@ public class JobMain {
 
 In the process of using ElasticJob-Lite, when the job is abnormal, the following error handling strategies can be used.
 
-| *Error handler strategy name*            | *Description*                                                 |  *Built-in*  | *Default*| *Extra config*   |
+| *Error handler strategy name*            | *Description*                                                 |  *
+Built-in*  | *Default*| *Extra config*   |
 | ---------------------------------------- | ------------------------------------------------------------- |  -------     |  --------|  --------------  |
 | Log Strategy                             | Log error and do not interrupt job                            |   Yes        |     Yes  |                  |
 | Throw Strategy                           | Throw system exception and interrupt job                      |   Yes        |          |                  |
@@ -106,6 +104,7 @@ In the process of using ElasticJob-Lite, when the job is abnormal, the following
 | Dingtalk Notification Strategy           | Send dingtalk message notification and do not interrupt job   |              |          |    Yes           |
 
 ### Log Strategy
+
 ```java
 public class JobDemo {
     
@@ -134,6 +133,7 @@ public class JobDemo {
 ```
 
 ### Throw Strategy
+
 ```java
 public class JobDemo {
     
@@ -161,8 +161,8 @@ public class JobDemo {
 }
 ```
 
-
 ### Ignore Strategy
+
 ```java
 public class JobDemo {
     
@@ -192,9 +192,12 @@ public class JobDemo {
 
 ### Email Notification Strategy
 
-Please refer to [here](/en/user-manual/elasticjob-lite/configuration/built-in-strategy/error-handler/#email-notification-strategy) for more details.
+Please refer
+to [here](/en/user-manual/elasticjob-lite/configuration/built-in-strategy/error-handler/#email-notification-strategy)
+for more details.
 
 Maven POM:
+
 ```xml
 <dependency>
     <groupId>org.apache.shardingsphere.elasticjob</groupId>
@@ -202,6 +205,7 @@ Maven POM:
     <version>${latest.release.version}</version>
 </dependency>
 ```
+
 ```java
 public class JobDemo {
     
@@ -246,9 +250,12 @@ public class JobDemo {
 
 ### Wechat Enterprise Notification Strategy
 
-Please refer to [here](/en/user-manual/elasticjob-lite/configuration/built-in-strategy/error-handler/#wechat-enterprise-notification-strategy) for more details.
+Please refer
+to [here](/en/user-manual/elasticjob-lite/configuration/built-in-strategy/error-handler/#wechat-enterprise-notification-strategy)
+for more details.
 
 Maven POM:
+
 ```xml
 <dependency>
     <groupId>org.apache.shardingsphere.elasticjob</groupId>
@@ -256,6 +263,7 @@ Maven POM:
     <version>${latest.release.version}</version>
 </dependency>
 ```
+
 ```java
 public class JobDemo {
     
@@ -295,9 +303,12 @@ public class JobDemo {
 
 ### Dingtalk Notification Strategy
 
-Please refer to [here](/en/user-manual/elasticjob-lite/configuration/built-in-strategy/error-handler/#dingtalk-notification-strategy) for more details.
+Please refer
+to [here](/en/user-manual/elasticjob-lite/configuration/built-in-strategy/error-handler/#dingtalk-notification-strategy)
+for more details.
 
 Maven POM:
+
 ```xml
 <dependency>
     <groupId>org.apache.shardingsphere.elasticjob</groupId>
@@ -305,6 +316,7 @@ Maven POM:
     <version>${latest.release.version}</version>
 </dependency>
 ```
+
 ```java
 public class JobDemo {
     

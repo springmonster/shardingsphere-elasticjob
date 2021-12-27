@@ -32,24 +32,24 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public final class ProducerJobTest {
-    
+
     @Mock
     private JobExecutionContext jobExecutionContext;
-    
+
     @Mock
     private ReadyService readyService;
-    
+
     private final TransientProducerRepository repository = new TransientProducerRepository();
-    
+
     private TransientProducerScheduler.ProducerJob producerJob;
-    
+
     @Before
     public void setUp() {
         producerJob = new TransientProducerScheduler.ProducerJob();
         producerJob.setRepository(repository);
         producerJob.setReadyService(readyService);
     }
-    
+
     @Test
     public void assertExecute() {
         when(jobExecutionContext.getJobDetail()).thenReturn(JobBuilder.newJob(TransientProducerScheduler.ProducerJob.class).withIdentity("0/30 * * * * ?").build());

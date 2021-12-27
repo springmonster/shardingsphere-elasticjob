@@ -18,11 +18,7 @@
 package org.apache.shardingsphere.elasticjob.restful.pipeline;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.FullHttpRequest;
@@ -39,14 +35,14 @@ import java.util.function.Consumer;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class HttpClient {
-    
+
     /**
      * Send a HTTP request and invoke consumer when server response.
      *
-     * @param host server host
-     * @param port server port
-     * @param request HTTP request
-     * @param consumer HTTP response consumer
+     * @param host           server host
+     * @param port           server port
+     * @param request        HTTP request
+     * @param consumer       HTTP response consumer
      * @param timeoutSeconds wait for consume
      */
     @SneakyThrows

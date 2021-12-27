@@ -31,18 +31,18 @@ import java.util.List;
 @RequiredArgsConstructor
 @Getter
 public final class JobContext {
-    
+
     private final CloudJobConfiguration cloudJobConfig;
-    
+
     private final List<Integer> assignedShardingItems;
-    
+
     private final ExecutionType type;
-    
+
     /**
      * Create job running context from job configuration and execution type.
      *
      * @param cloudJobConfig cloud job configuration
-     * @param type execution type
+     * @param type           execution type
      * @return Job running context
      */
     public static JobContext from(final CloudJobConfiguration cloudJobConfig, final ExecutionType type) {

@@ -1,14 +1,14 @@
 ---
-date: 2016-04-09T16:50:16+02:00
-title: Organisation des pages
-weight: 5
+date: 2016-04-09T16:50:16+02:00 title: Organisation des pages weight: 5
 ---
 
-Dans **Hugo**, les pages sont le coeur de votre site. Une fois configurées, les pages sont la valeur ajoutée de votre site de documentation.
+Dans **Hugo**, les pages sont le coeur de votre site. Une fois configurées, les pages sont la valeur ajoutée de votre
+site de documentation.
 
 ## Dossiers
 
-Organisez votre site comment n'importe quel autre [projet Hugo](https://gohugo.io/content/organization/). Typiquement, vous allez avoir un dossier *content* avec vos pages.
+Organisez votre site comment n'importe quel autre [projet Hugo](https://gohugo.io/content/organization/). Typiquement,
+vous allez avoir un dossier *content* avec vos pages.
 
     content
     ├── niveau-un 
@@ -34,26 +34,25 @@ Organisez votre site comment n'importe quel autre [projet Hugo](https://gohugo.i
     ├── _index.md                       <-- /
     └── premiere-page.md                <-- /premiere-page
 
-{{% notice note %}}
-Le fichier `_index.md` est obligatoire dans chaque dossier, c'est en quelques rotes votre page d'accueil pour le dossier.
-{{% /notice %}}
+{{% notice note %}} Le fichier `_index.md` est obligatoire dans chaque dossier, c'est en quelques rotes votre page d'
+accueil pour le dossier. {{% /notice %}}
 
 ## Types
 
-**Hugo-theme-learn** définit deux types de pages. *Défaut* et *Chapitre*. Les deux sont utilisables à n'importe quel niveau du site, la seule différence est dans l'affichage.
+**Hugo-theme-learn** définit deux types de pages. *Défaut* et *Chapitre*. Les deux sont utilisables à n'importe quel
+niveau du site, la seule différence est dans l'affichage.
 
-Un **Chapitre** affiche une page vouée à être une introduction pour un ensemble de pages filles. Habituellement, il va seulement contenir un titre et un résumé de la section.
-Vous pouvez définir n'importe quel contenu HTML comme préfixe de l'entrée du menu. Dans l'exemple ci-dessous, c'est juste un nombre mais vous pourriez utiliser une [icône](https://fortawesome.github.io/Font-Awesome/).
+Un **Chapitre** affiche une page vouée à être une introduction pour un ensemble de pages filles. Habituellement, il va
+seulement contenir un titre et un résumé de la section. Vous pouvez définir n'importe quel contenu HTML comme préfixe de
+l'entrée du menu. Dans l'exemple ci-dessous, c'est juste un nombre mais vous pourriez utiliser
+une [icône](https://fortawesome.github.io/Font-Awesome/).
 
 ![Page Chapitre](/cont/pages/images/pages-chapter.png?width=50pc)
 
 ```markdown
-+++
-title = "Démarrage"
-weight = 5
-pre = "<b>1. </b>"
-chapter = true
-+++
++++ title = "Démarrage"
+weight = 5 pre = "<b>1. </b>"
+chapter = true +++
 
 ### Chapitre 1
 
@@ -62,7 +61,8 @@ chapter = true
 Découvrez comment utiliser ce thème Hugo et apprenez en les concepts
 ```
 
-Pour dire à **Hugo-theme-learn** de considérer la page comme un chapitre, configure `chapter=true` dans le Front Matter de la page.
+Pour dire à **Hugo-theme-learn** de considérer la page comme un chapitre, configure `chapter=true` dans le Front Matter
+de la page.
 
 Une page **Défaut** est n'importe quelle autre page.
 
@@ -83,11 +83,13 @@ Une page **Défaut** est n'importe quelle autre page.
     hugo new site <new_project>
     ```
 
-**Hugo-theme-learn** fournit des [archétypes]({{< relref "cont/archetypes.fr.md" >}}) pour vous aider à créer ce type de pages.
+**Hugo-theme-learn** fournit des [archétypes]({{< relref "cont/archetypes.fr.md" >}}) pour vous aider à créer ce type de
+pages.
 
 ## Configuration des Front Matter
 
-Chaque page Hugo doit définir un [Front Matter](https://gohugo.io/content/front-matter/) dans le format *yaml*, *toml* ou *json*.
+Chaque page Hugo doit définir un [Front Matter](https://gohugo.io/content/front-matter/) dans le format *yaml*, *toml*
+ou *json*.
 
 **Hugo-theme-learn** utilise les paramètres suivant en plus de ceux définis par Hugo:
 
@@ -113,7 +115,8 @@ LastModifierEmail = ""
 
 ### Ajouter une icône à une entrée du menu
 
-Dans le Front Matter, ajouter un paramètre `pre` pour insérer du code HTML qui s'affichera avant le label du menu. L'exemple ci-dessous utilise l'icône de Github.
+Dans le Front Matter, ajouter un paramètre `pre` pour insérer du code HTML qui s'affichera avant le label du menu.
+L'exemple ci-dessous utilise l'icône de Github.
 
 ```toml
 +++

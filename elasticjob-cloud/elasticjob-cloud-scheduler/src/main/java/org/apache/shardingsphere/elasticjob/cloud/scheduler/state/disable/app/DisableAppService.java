@@ -26,15 +26,15 @@ import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
  */
 @Slf4j
 public class DisableAppService {
-    
+
     private final BootstrapEnvironment env = BootstrapEnvironment.getINSTANCE();
-    
+
     private final CoordinatorRegistryCenter regCenter;
-    
+
     public DisableAppService(final CoordinatorRegistryCenter regCenter) {
         this.regCenter = regCenter;
     }
-    
+
     /**
      * Add application name to disable queue.
      *
@@ -50,19 +50,19 @@ public class DisableAppService {
             regCenter.persist(disableAppNodePath, appName);
         }
     }
-    
+
     /**
      * Remove application name from disable queue.
-     * 
+     *
      * @param appName application name
      */
     public void remove(final String appName) {
         regCenter.remove(DisableAppNode.getDisableAppNodePath(appName));
     }
-    
+
     /**
      * Check whether the application name is disabled or not.
-     * 
+     *
      * @param appName application name
      * @return true is in the disable queue, otherwise not
      */

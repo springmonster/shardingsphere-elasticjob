@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,11 +27,11 @@ import java.io.IOException;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class EmbedTestingServer {
-    
+
     private static final int PORT = 9181;
-    
+
     private static volatile TestingServer testingServer;
-    
+
     /**
      * Get the connection string.
      *
@@ -40,7 +40,7 @@ public final class EmbedTestingServer {
     public static String getConnectionString() {
         return "localhost:" + PORT;
     }
-    
+
     /**
      * Start the server.
      */
@@ -50,9 +50,9 @@ public final class EmbedTestingServer {
         }
         try {
             testingServer = new TestingServer(PORT, new File(String.format("target/test_zk_data/%s/", System.nanoTime())));
-            
+
         } catch (final Exception ex) {
-            
+
             RegExceptionHandler.handleException(ex);
         } finally {
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {

@@ -36,34 +36,34 @@ import java.util.Map;
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class LocalTaskExecutor {
-    
+
     private final ElasticJob elasticJob;
-    
+
     private final String elasticJobType;
-    
+
     private final JobConfiguration jobConfiguration;
-    
+
     private final int shardingItem;
-    
+
     public LocalTaskExecutor(final ElasticJob elasticJob, final JobConfiguration jobConfiguration, final int shardingItem) {
         this(elasticJob, null, jobConfiguration, shardingItem);
     }
-    
+
     public LocalTaskExecutor(final String elasticJobType, final JobConfiguration jobConfiguration, final int shardingItem) {
         this(null, elasticJobType, jobConfiguration, shardingItem);
     }
-    
+
     /**
      * Execute job.
      */
     public void execute() {
         createElasticJobExecutor(new CloudJobFacade(getShardingContexts(), jobConfiguration, new JobTracingEventBus())).execute();
     }
-    
+
     private ElasticJobExecutor createElasticJobExecutor(final JobFacade jobFacade) {
         return null == elasticJob ? new ElasticJobExecutor(elasticJobType, jobConfiguration, jobFacade) : new ElasticJobExecutor(elasticJob, jobConfiguration, jobFacade);
     }
-    
+
     private ShardingContexts getShardingContexts() {
         Map<Integer, String> shardingItemMap = new HashMap<>(1, 1);
         shardingItemMap.put(shardingItem, new ShardingItemParameters(jobConfiguration.getShardingItemParameters()).getMap().get(shardingItem));

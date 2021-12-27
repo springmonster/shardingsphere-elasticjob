@@ -23,12 +23,12 @@ import org.apache.shardingsphere.elasticjob.restful.deserializer.factory.Deseria
 import org.apache.shardingsphere.elasticjob.restful.deserializer.impl.DefaultJsonRequestBodyDeserializer;
 
 public final class DefaultJsonRequestBodyDeserializerFactory implements DeserializerFactory {
-    
+
     @Override
     public String mimeType() {
         return HttpHeaderValues.APPLICATION_JSON.toString();
     }
-    
+
     @Override
     public RequestBodyDeserializer createDeserializer() {
         return new DefaultJsonRequestBodyDeserializer();

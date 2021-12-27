@@ -34,17 +34,17 @@ import java.util.Objects;
  */
 @Slf4j
 public final class ElectionListenerManager extends AbstractListenerManager {
-    
+
     private final String jobName;
-    
+
     private final LeaderNode leaderNode;
-    
+
     private final ServerNode serverNode;
-    
+
     private final LeaderService leaderService;
-    
+
     private final ServerService serverService;
-    
+
     public ElectionListenerManager(final CoordinatorRegistryCenter regCenter, final String jobName) {
         super(regCenter, jobName);
         this.jobName = jobName;
@@ -53,15 +53,15 @@ public final class ElectionListenerManager extends AbstractListenerManager {
         leaderService = new LeaderService(regCenter, jobName);
         serverService = new ServerService(regCenter, jobName);
     }
-    
+
     @Override
     public void start() {
         addDataListener(new LeaderElectionJobListener());
         addDataListener(new LeaderAbdicationJobListener());
     }
-    
+
     class LeaderElectionJobListener extends AbstractJobListener {
-        
+
         @Override
         protected void dataChanged(final String path, final Type eventType, final String data) {
             log.info("khc LeaderElectionJobListener dataChanged path: {} , eventType: {} , data: {}", path, eventType, data);
@@ -70,27 +70,28 @@ public final class ElectionListenerManager extends AbstractListenerManager {
                 leaderService.electLeader();
             }
         }
-        
+
         private boolean isActiveElection(final String path, final String data) {
             return !leaderService.hasLeader() && isLocalServerEnabled(path, data);
         }
-        
+
         private boolean isPassiveElection(final String path, final Type eventType) {
             JobInstance jobInstance = JobRegistry.getInstance().getJobInstance(jobName);
             return !Objects.isNull(jobInstance) && isLeaderCrashed(path, eventType) && serverService.isAvailableServer(jobInstance.getServerIp());
         }
-        
+
         private boolean isLeaderCrashed(final String path, final Type eventType) {
             return leaderNode.isLeaderInstancePath(path) && Type.NODE_DELETED == eventType;
         }
-        
+
         private boolean isLocalServerEnabled(final String path, final String data) {
             return serverNode.isLocalServerPath(path) && !ServerStatus.DISABLED.name().equals(data);
         }
     }
+
     // 领导退位工作监听器
     class LeaderAbdicationJobListener extends AbstractJobListener {
-        
+
         @Override
         protected void dataChanged(final String path, final Type eventType, final String data) {
             log.info("khc LeaderAbdicationJobListener dataChanged path: {} , eventType: {} , data: {}", path, eventType, data);
@@ -99,7 +100,7 @@ public final class ElectionListenerManager extends AbstractListenerManager {
                 leaderService.removeLeader();
             }
         }
-        
+
         private boolean isLocalServerDisabled(final String path, final String data) {
             return serverNode.isLocalServerPath(path) && ServerStatus.DISABLED.name().equals(data);
         }

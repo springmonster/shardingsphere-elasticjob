@@ -17,11 +17,11 @@
 
 package org.apache.shardingsphere.elasticjob.lite.spring.namespace.job;
 
+import org.apache.shardingsphere.elasticjob.infra.concurrent.BlockUtils;
 import org.apache.shardingsphere.elasticjob.lite.internal.schedule.JobRegistry;
-import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
 import org.apache.shardingsphere.elasticjob.lite.spring.namespace.fixture.job.ref.RefFooSimpleElasticJob;
 import org.apache.shardingsphere.elasticjob.lite.spring.namespace.test.AbstractZookeeperJUnit4SpringContextTests;
-import org.apache.shardingsphere.elasticjob.infra.concurrent.BlockUtils;
+import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,23 +32,23 @@ import static org.junit.Assert.assertTrue;
 
 @ContextConfiguration(locations = "classpath:META-INF/job/withJobRef.xml")
 public final class JobSpringNamespaceWithRefTest extends AbstractZookeeperJUnit4SpringContextTests {
-    
+
     private final String simpleJobName = "simpleElasticJob_job_ref";
-    
+
     @Autowired
     private CoordinatorRegistryCenter regCenter;
-    
+
     @Before
     @After
     public void reset() {
         RefFooSimpleElasticJob.reset();
     }
-    
+
     @After
     public void tearDown() {
         JobRegistry.getInstance().shutdown(simpleJobName);
     }
-    
+
     @Test
     public void assertSpringJobBean() {
         assertSimpleElasticJobBean();

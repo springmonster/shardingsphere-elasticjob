@@ -24,18 +24,18 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public final class TracingStorageConverterFactoryTest {
-    
+
     @Test
     public void assertConverterExists() {
         assertTrue(TracingStorageConverterFactory.findConverter(JobEventCaller.class).isPresent());
     }
-    
+
     @Test
     public void assertConverterNotFound() {
         assertFalse(TracingStorageConverterFactory.findConverter(AClassWithoutCorrespondingConverter.class).isPresent());
     }
-    
+
     private static class AClassWithoutCorrespondingConverter {
-    
+
     }
 }

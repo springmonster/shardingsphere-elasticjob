@@ -34,9 +34,9 @@ import java.util.Optional;
  */
 @RequiredArgsConstructor
 public final class CloudAppConfigurationService {
-    
+
     private final CoordinatorRegistryCenter regCenter;
-    
+
     /**
      * Add cloud app configuration.
      *
@@ -45,7 +45,7 @@ public final class CloudAppConfigurationService {
     public void add(final CloudAppConfigurationPOJO appConfig) {
         regCenter.persist(CloudAppConfigurationNode.getRootNodePath(appConfig.getAppName()), YamlEngine.marshal(appConfig));
     }
-    
+
     /**
      * Update cloud app configuration.
      *
@@ -54,7 +54,7 @@ public final class CloudAppConfigurationService {
     public void update(final CloudAppConfigurationPOJO appConfig) {
         regCenter.update(CloudAppConfigurationNode.getRootNodePath(appConfig.getAppName()), YamlEngine.marshal(appConfig));
     }
-    
+
     /**
      * Load app configuration by app name.
      *
@@ -65,7 +65,7 @@ public final class CloudAppConfigurationService {
         String configContent = regCenter.get(CloudAppConfigurationNode.getRootNodePath(appName));
         return Strings.isNullOrEmpty(configContent) ? Optional.empty() : Optional.of(YamlEngine.unmarshal(configContent, CloudAppConfigurationPOJO.class));
     }
-    
+
     /**
      * Load all registered cloud app configurations.
      *
@@ -83,7 +83,7 @@ public final class CloudAppConfigurationService {
         }
         return result;
     }
-    
+
     /**
      * Remove cloud app configuration by app name.
      *

@@ -42,23 +42,23 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public final class JobEventRdbSearchTest {
-    
+
     @Mock
     private DataSource dataSource;
-    
+
     @Mock
     private PreparedStatement preparedStatement;
-    
+
     @Mock
     private ResultSet resultSet;
-    
+
     @Mock
     private Connection conn;
-    
+
     private JobEventRdbSearch.Condition condition;
-    
+
     private JobEventRdbSearch jobEventRdbSearch;
-    
+
     @Before
     public void setUp() throws Exception {
         jobEventRdbSearch = new JobEventRdbSearch(dataSource);
@@ -68,7 +68,7 @@ public final class JobEventRdbSearchTest {
         when(resultSet.getInt(1)).thenReturn(1);
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
     }
-    
+
     @Test
     @SneakyThrows
     public void assertFindJobExecutionEvents() {
@@ -86,7 +86,7 @@ public final class JobEventRdbSearchTest {
         assertThat(jobExecutionEvents.getRows().get(0).getSource(), is(JobExecutionEvent.ExecutionSource.FAILOVER));
         assertThat(jobExecutionEvents.getRows().get(0).getShardingItem(), is(1));
     }
-    
+
     @Test
     @SneakyThrows
     public void assertFindJobStatusTraceEvents() {

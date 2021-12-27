@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -31,17 +31,17 @@ import java.util.Map;
  */
 @Getter
 public final class ShardingItemParameters {
-    
+
     private static final String PARAMETER_DELIMITER = ",";
-    
+
     private static final String KEY_VALUE_DELIMITER = "=";
-    
+
     private final Map<Integer, String> map;
-    
+
     public ShardingItemParameters(final String shardingItemParameters) {
         map = toMap(shardingItemParameters);
     }
-    
+
     private Map<Integer, String> toMap(final String originalShardingItemParameters) {
         if (Strings.isNullOrEmpty(originalShardingItemParameters)) {
             return Collections.emptyMap();
@@ -54,7 +54,7 @@ public final class ShardingItemParameters {
         }
         return result;
     }
-    
+
     private ShardingItem parse(final String shardingItemParameter, final String originalShardingItemParameters) {
         String[] pair = shardingItemParameter.trim().split(KEY_VALUE_DELIMITER);
         if (2 != pair.length) {
@@ -66,15 +66,15 @@ public final class ShardingItemParameters {
             throw new JobConfigurationException("Sharding item parameters key '%s' is not an integer.", pair[0]);
         }
     }
-    
+
     /**
      * Sharding item.
      */
     @AllArgsConstructor
     private static final class ShardingItem {
-        
+
         private final int item;
-        
+
         private final String parameter;
     }
 }

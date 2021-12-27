@@ -37,7 +37,7 @@ import java.util.List;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class HttpClientUtils {
-    
+
     /**
      * Http get request.
      *
@@ -47,13 +47,13 @@ public final class HttpClientUtils {
     public static HttpResult httpGet(final String url) {
         return httpGet(url, null, null, 3000L);
     }
-    
+
     /**
      * Http get request.
      *
-     * @param url url
-     * @param paramValues param values
-     * @param encoding encoding
+     * @param url                     url
+     * @param paramValues             param values
+     * @param encoding                encoding
      * @param readTimeoutMilliseconds read timeout milliseconds
      * @return http result
      */
@@ -82,13 +82,13 @@ public final class HttpClientUtils {
             }
         }
     }
-    
+
     private static String encodingParams(final List<String> paramValues, final String encoding) throws UnsupportedEncodingException {
         if (null == paramValues || 0 == paramValues.size()) {
             return null;
         }
         StringBuilder stringBuilder = new StringBuilder();
-        for (Iterator<String> iter = paramValues.iterator(); iter.hasNext();) {
+        for (Iterator<String> iter = paramValues.iterator(); iter.hasNext(); ) {
             stringBuilder.append(iter.next()).append("=");
             stringBuilder.append(URLEncoder.encode(iter.next(), encoding));
             if (iter.hasNext()) {
@@ -97,7 +97,7 @@ public final class HttpClientUtils {
         }
         return stringBuilder.toString();
     }
-    
+
     /**
      * Http post request.
      *
@@ -107,13 +107,13 @@ public final class HttpClientUtils {
     public static HttpResult httpPost(final String url) {
         return httpPost(url, null, null, 3000L);
     }
-    
+
     /**
      * Http post request.
      *
-     * @param url url
-     * @param paramValues param values
-     * @param encoding encoding
+     * @param url                     url
+     * @param paramValues             param values
+     * @param encoding                encoding
      * @param readTimeoutMilliseconds read timeout milliseconds
      * @return http result
      */
@@ -142,15 +142,15 @@ public final class HttpClientUtils {
             }
         }
     }
-    
+
     @Getter
     @Setter
     public static class HttpResult {
-        
+
         private final int code;
-        
+
         private final String content;
-        
+
         public HttpResult(final int code, final String content) {
             this.code = code;
             this.content = content;

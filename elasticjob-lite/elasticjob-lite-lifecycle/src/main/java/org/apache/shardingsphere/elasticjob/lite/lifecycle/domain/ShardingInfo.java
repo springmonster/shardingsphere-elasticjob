@@ -28,39 +28,39 @@ import java.io.Serializable;
 @Getter
 @Setter
 public final class ShardingInfo implements Serializable, Comparable<ShardingInfo> {
-    
+
     private static final long serialVersionUID = 8587397581949456718L;
-    
+
     private int item;
-    
+
     private String serverIp;
 
     private String instanceId;
 
     private ShardingStatus status;
-    
+
     private boolean failover;
-    
+
     @Override
     public int compareTo(final ShardingInfo o) {
         return getItem() - o.getItem();
     }
-    
+
     /**
      * Job sharding status.
      */
     public enum ShardingStatus {
-        
-        DISABLED, 
+
+        DISABLED,
         RUNNING,
         SHARDING_FLAG,
         PENDING;
-    
+
         /**
          * Get sharding status.
-         * 
-         * @param isDisabled is disabled 
-         * @param isRunning is running
+         *
+         * @param isDisabled     is disabled
+         * @param isRunning      is running
          * @param isShardingFlag is need to Sharding
          * @return job sharding status
          */

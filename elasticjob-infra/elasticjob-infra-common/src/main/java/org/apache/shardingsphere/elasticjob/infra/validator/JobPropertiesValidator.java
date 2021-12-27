@@ -25,10 +25,10 @@ import java.util.Properties;
  * Job properties validator.
  */
 public interface JobPropertiesValidator extends TypedSPI {
-    
+
     /**
      * Validate job properties.
-     * 
+     *
      * @param props job properties
      */
     void validate(Properties props);

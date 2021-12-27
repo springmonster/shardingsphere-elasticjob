@@ -35,9 +35,9 @@ import java.util.List;
  */
 @RequiredArgsConstructor
 public final class ShardingStatisticsAPIImpl implements ShardingStatisticsAPI {
-    
+
     private final CoordinatorRegistryCenter regCenter;
-    
+
     @Override
     public Collection<ShardingInfo> getShardingInfo(final String jobName) {
         String shardingRootPath = new JobNodePath(jobName).getShardingNodePath();
@@ -49,7 +49,7 @@ public final class ShardingStatisticsAPIImpl implements ShardingStatisticsAPI {
         Collections.sort(result);
         return result;
     }
-    
+
     private ShardingInfo getShardingInfo(final String jobName, final String item) {
         ShardingInfo result = new ShardingInfo();
         result.setItem(Integer.parseInt(item));

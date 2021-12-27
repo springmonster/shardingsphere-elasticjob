@@ -29,7 +29,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public final class YamlDataSourceConfigurationConverterTest {
-    
+
     @Test
     public void assertConvertDataSourceConfiguration() {
         DataSourceConfiguration dataSourceConfiguration = new DataSourceConfiguration("org.h2.Driver");

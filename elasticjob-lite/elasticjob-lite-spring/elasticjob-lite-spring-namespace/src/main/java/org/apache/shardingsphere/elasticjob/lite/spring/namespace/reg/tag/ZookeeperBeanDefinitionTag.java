@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,20 +25,20 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ZookeeperBeanDefinitionTag {
-    
+
     public static final String SERVER_LISTS_ATTRIBUTE = "server-lists";
-    
+
     public static final String NAMESPACE_ATTRIBUTE = "namespace";
-    
+
     public static final String BASE_SLEEP_TIME_MILLISECONDS_ATTRIBUTE = "base-sleep-time-milliseconds";
-    
+
     public static final String MAX_SLEEP_TIME_MILLISECONDS_ATTRIBUTE = "max-sleep-time-milliseconds";
-    
+
     public static final String MAX_RETRIES_ATTRIBUTE = "max-retries";
-    
+
     public static final String SESSION_TIMEOUT_MILLISECONDS_ATTRIBUTE = "session-timeout-milliseconds";
-    
+
     public static final String CONNECTION_TIMEOUT_MILLISECONDS_ATTRIBUTE = "connection-timeout-milliseconds";
-    
+
     public static final String DIGEST_ATTRIBUTE = "digest";
 }

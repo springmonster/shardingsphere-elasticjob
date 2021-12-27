@@ -24,14 +24,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class TaskResultMetaDataTest {
-    
+
     private TaskResultMetaData metaData;
-    
+
     @Before
     public void setUp() {
         metaData = new TaskResultMetaData();
     }
-    
+
     @Test
     public void assertIncrementAndGet() {
         for (int i = 0; i < 100; i++) {
@@ -41,7 +41,7 @@ public class TaskResultMetaDataTest {
             assertThat(metaData.getFailedCount(), is(i + 1));
         }
     }
-    
+
     @Test
     public void assertReset() {
         for (int i = 0; i < 100; i++) {

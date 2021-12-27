@@ -1,9 +1,6 @@
-+++
-pre = "<b>5.5. </b>"
++++ pre = "<b>5.5. </b>"
 title = "线路规划"
-weight = 5
-chapter = true
-+++
+weight = 5 chapter = true +++
 
 ## Kernel
 
@@ -51,6 +48,7 @@ chapter = true
     - [x] Spring Boot Starter（3.0.0-alpha 提供）
 
 ## ElasticJob-Cloud
+
 - [x] Transient Job
     - [x] High Availability
     - [x] Elastic scale in/out

@@ -23,7 +23,7 @@ import io.netty.handler.codec.http.FullHttpRequest;
  * Filter chain for {@link org.apache.shardingsphere.elasticjob.restful.Filter}.
  */
 public interface FilterChain {
-    
+
     /**
      * Next filter.
      *

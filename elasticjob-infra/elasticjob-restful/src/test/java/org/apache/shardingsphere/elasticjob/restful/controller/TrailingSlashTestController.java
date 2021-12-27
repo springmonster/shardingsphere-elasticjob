@@ -25,7 +25,7 @@ import org.apache.shardingsphere.elasticjob.restful.annotation.Returning;
 
 @ContextPath("/trailing")
 public final class TrailingSlashTestController implements RestfulController {
-    
+
     /**
      * A mapping without trailing slash.
      *
@@ -36,7 +36,7 @@ public final class TrailingSlashTestController implements RestfulController {
     public String withoutTrailingSlash() {
         return "without trailing slash";
     }
-    
+
     /**
      * A mapping with trailing slash.
      *

@@ -51,21 +51,21 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public final class SchedulerEngineTest {
-    
+
     @Mock
     private TaskScheduler taskScheduler;
-    
+
     @Mock
     private FacadeService facadeService;
-    
+
     @Mock
     private FrameworkIDService frameworkIDService;
-    
+
     @Mock
     private StatisticManager statisticManager;
-    
+
     private SchedulerEngine schedulerEngine;
-    
+
     @Before
     public void setUp() {
         schedulerEngine = new SchedulerEngine(taskScheduler, facadeService, new JobTracingEventBus(), frameworkIDService, statisticManager);
@@ -73,20 +73,20 @@ public final class SchedulerEngineTest {
         when(facadeService.load("test_job")).thenReturn(Optional.of(CloudJobConfigurationBuilder.createCloudJobConfiguration("test_job")));
         new RunningService(mock(CoordinatorRegistryCenter.class)).clear();
     }
-    
+
     @Test
     public void assertRegistered() {
         schedulerEngine.registered(null, Protos.FrameworkID.newBuilder().setValue("1").build(), Protos.MasterInfo.getDefaultInstance());
         verify(taskScheduler).expireAllLeases();
         verify(frameworkIDService).save("1");
     }
-    
+
     @Test
     public void assertReregistered() {
         schedulerEngine.reregistered(null, Protos.MasterInfo.getDefaultInstance());
         verify(taskScheduler).expireAllLeases();
     }
-    
+
     @Test
     public void assertResourceOffers() {
         SchedulerDriver schedulerDriver = mock(SchedulerDriver.class);
@@ -94,13 +94,13 @@ public final class SchedulerEngineTest {
         schedulerEngine.resourceOffers(schedulerDriver, offers);
         assertThat(LeasesQueue.getInstance().drainTo().size(), is(2));
     }
-    
+
     @Test
     public void assertOfferRescinded() {
         schedulerEngine.offerRescinded(null, Protos.OfferID.newBuilder().setValue("myOffer").build());
         verify(taskScheduler).expireLease("myOffer");
     }
-    
+
     @Test
     public void assertRunningStatusUpdateForDaemonJobBegin() {
         TaskNode taskNode = TaskNode.builder().build();
@@ -108,7 +108,7 @@ public final class SchedulerEngineTest {
                 .setState(Protos.TaskState.TASK_RUNNING).setMessage("BEGIN").setSlaveId(Protos.SlaveID.newBuilder().setValue("slave-S0")).build());
         verify(facadeService).updateDaemonStatus(TaskContext.from(taskNode.getTaskNodeValue()), false);
     }
-    
+
     @Test
     public void assertRunningStatusUpdateForDaemonJobComplete() {
         TaskNode taskNode = TaskNode.builder().build();
@@ -116,7 +116,7 @@ public final class SchedulerEngineTest {
                 .setState(Protos.TaskState.TASK_RUNNING).setMessage("COMPLETE").setSlaveId(Protos.SlaveID.newBuilder().setValue("slave-S0")).build());
         verify(facadeService).updateDaemonStatus(TaskContext.from(taskNode.getTaskNodeValue()), true);
     }
-    
+
     @Test
     public void assertRunningStatusUpdateForOther() {
         TaskNode taskNode = TaskNode.builder().build();
@@ -124,7 +124,7 @@ public final class SchedulerEngineTest {
                 .setState(Protos.TaskState.TASK_RUNNING).setSlaveId(Protos.SlaveID.newBuilder().setValue("slave-S0")).build());
         verify(facadeService, times(0)).updateDaemonStatus(TaskContext.from(taskNode.getTaskNodeValue()), ArgumentMatchers.eq(ArgumentMatchers.anyBoolean()));
     }
-    
+
     @Test
     public void assertFinishedStatusUpdateWithoutLaunchedTasks() {
         TaskNode taskNode = TaskNode.builder().build();
@@ -133,7 +133,7 @@ public final class SchedulerEngineTest {
         verify(facadeService).removeRunning(TaskContext.from(taskNode.getTaskNodeValue()));
         verify(taskScheduler, times(0)).getTaskUnAssigner();
     }
-    
+
     @Test
     public void assertFinishedStatusUpdate() {
         @SuppressWarnings("unchecked")
@@ -147,7 +147,7 @@ public final class SchedulerEngineTest {
         verify(taskUnAssigner).call(TaskContext.getIdForUnassignedSlave(taskNode.getTaskNodeValue()), "localhost");
         verify(statisticManager).taskRunSuccessfully();
     }
-    
+
     @Test
     public void assertKilledStatusUpdate() {
         @SuppressWarnings("unchecked")
@@ -161,7 +161,7 @@ public final class SchedulerEngineTest {
         verify(facadeService).addDaemonJobToReadyQueue("test_job");
         verify(taskUnAssigner).call(TaskContext.getIdForUnassignedSlave(taskNode.getTaskNodeValue()), "localhost");
     }
-    
+
     @Test
     public void assertFailedStatusUpdate() {
         @SuppressWarnings("unchecked")
@@ -176,7 +176,7 @@ public final class SchedulerEngineTest {
         verify(taskUnAssigner).call(TaskContext.getIdForUnassignedSlave(taskNode.getTaskNodeValue()), "localhost");
         verify(statisticManager).taskRunFailed();
     }
-    
+
     @Test
     public void assertErrorStatusUpdate() {
         @SuppressWarnings("unchecked")
@@ -191,7 +191,7 @@ public final class SchedulerEngineTest {
         verify(taskUnAssigner).call(TaskContext.getIdForUnassignedSlave(taskNode.getTaskNodeValue()), "localhost");
         verify(statisticManager).taskRunFailed();
     }
-    
+
     @Test
     public void assertLostStatusUpdate() {
         @SuppressWarnings("unchecked")
@@ -206,7 +206,7 @@ public final class SchedulerEngineTest {
         verify(taskUnAssigner).call(TaskContext.getIdForUnassignedSlave(taskNode.getTaskNodeValue()), "localhost");
         verify(statisticManager).taskRunFailed();
     }
-    
+
     @Test
     public void assertDroppedStatusUpdate() {
         @SuppressWarnings("unchecked")
@@ -222,7 +222,7 @@ public final class SchedulerEngineTest {
         verify(taskUnAssigner).call(TaskContext.getIdForUnassignedSlave(taskNode.getTaskNodeValue()), "localhost");
         verify(statisticManager).taskRunFailed();
     }
-    
+
     @Test
     public void assertGoneStatusUpdate() {
         @SuppressWarnings("unchecked")
@@ -237,7 +237,7 @@ public final class SchedulerEngineTest {
         verify(taskUnAssigner).call(TaskContext.getIdForUnassignedSlave(taskNode.getTaskNodeValue()), "localhost");
         verify(statisticManager).taskRunFailed();
     }
-    
+
     @Test
     public void assertGoneByOperatorStatusUpdate() {
         @SuppressWarnings("unchecked")
@@ -253,7 +253,7 @@ public final class SchedulerEngineTest {
         verify(taskUnAssigner).call(TaskContext.getIdForUnassignedSlave(taskNode.getTaskNodeValue()), "localhost");
         verify(statisticManager).taskRunFailed();
     }
-    
+
     @Test
     public void assertUnknownStatusUpdate() {
         TaskNode taskNode = TaskNode.builder().build();
@@ -262,7 +262,7 @@ public final class SchedulerEngineTest {
                 .setSlaveId(Protos.SlaveID.newBuilder().setValue("slave-S0")).build());
         verify(statisticManager).taskRunFailed();
     }
-    
+
     @Test
     public void assertUnReachedStatusUpdate() {
         TaskNode taskNode = TaskNode.builder().build();
@@ -271,23 +271,23 @@ public final class SchedulerEngineTest {
                 .setSlaveId(Protos.SlaveID.newBuilder().setValue("slave-S0")).build());
         verify(statisticManager).taskRunFailed();
     }
-    
+
     @Test
     public void assertFrameworkMessage() {
         schedulerEngine.frameworkMessage(null, null, Protos.SlaveID.newBuilder().setValue("slave-S0").build(), new byte[1]);
     }
-    
+
     @Test
     public void assertSlaveLost() {
         schedulerEngine.slaveLost(null, Protos.SlaveID.newBuilder().setValue("slave-S0").build());
         verify(taskScheduler).expireAllLeasesByVMId("slave-S0");
     }
-    
+
     @Test
     public void assertExecutorLost() {
         schedulerEngine.executorLost(null, Protos.ExecutorID.newBuilder().setValue("test_job@-@0@-@00").build(), Protos.SlaveID.newBuilder().setValue("slave-S0").build(), 0);
     }
-    
+
     @Test
     public void assertError() {
         schedulerEngine.error(null, null);

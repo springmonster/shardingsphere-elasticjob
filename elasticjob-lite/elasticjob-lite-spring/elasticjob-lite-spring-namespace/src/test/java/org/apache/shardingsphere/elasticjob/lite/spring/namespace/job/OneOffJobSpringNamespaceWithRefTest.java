@@ -17,12 +17,12 @@
 
 package org.apache.shardingsphere.elasticjob.lite.spring.namespace.job;
 
+import org.apache.shardingsphere.elasticjob.infra.concurrent.BlockUtils;
 import org.apache.shardingsphere.elasticjob.lite.api.bootstrap.impl.OneOffJobBootstrap;
 import org.apache.shardingsphere.elasticjob.lite.internal.schedule.JobRegistry;
-import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
 import org.apache.shardingsphere.elasticjob.lite.spring.namespace.fixture.job.ref.RefFooSimpleElasticJob;
 import org.apache.shardingsphere.elasticjob.lite.spring.namespace.test.AbstractZookeeperJUnit4SpringContextTests;
-import org.apache.shardingsphere.elasticjob.infra.concurrent.BlockUtils;
+import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,9 +33,9 @@ import static org.junit.Assert.assertTrue;
 
 @ContextConfiguration(locations = "classpath:META-INF/job/oneOffWithJobRef.xml")
 public final class OneOffJobSpringNamespaceWithRefTest extends AbstractZookeeperJUnit4SpringContextTests {
-    
+
     private final String oneOffSimpleJobName = "oneOffSimpleElasticJobRef";
-    
+
     @Autowired
     private CoordinatorRegistryCenter regCenter;
 
@@ -44,12 +44,12 @@ public final class OneOffJobSpringNamespaceWithRefTest extends AbstractZookeeper
     public void reset() {
         RefFooSimpleElasticJob.reset();
     }
-    
+
     @After
     public void tearDown() {
         JobRegistry.getInstance().shutdown(oneOffSimpleJobName);
     }
-    
+
     @Test
     public void assertSpringJobBean() {
         OneOffJobBootstrap bootstrap = applicationContext.getBean(oneOffSimpleJobName, OneOffJobBootstrap.class);

@@ -23,7 +23,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public final class ReadyNodeTest {
-    
+
     @Test
     public void assertGetReadyJobNodePath() {
         assertThat(ReadyNode.getReadyJobNodePath("test_job0000000001"), is("/state/ready/test_job0000000001"));

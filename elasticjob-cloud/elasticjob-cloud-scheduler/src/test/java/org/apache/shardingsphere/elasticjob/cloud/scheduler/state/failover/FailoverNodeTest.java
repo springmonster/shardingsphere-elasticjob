@@ -25,12 +25,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public final class FailoverNodeTest {
-    
+
     @Test
     public void assertGetFailoverJobNodePath() {
         assertThat(FailoverNode.getFailoverJobNodePath("test_job"), is("/state/failover/test_job"));
     }
-    
+
     @Test
     public void assertGetFailoverTaskNodePath() {
         String jobNodePath = TaskNode.builder().type(ExecutionType.FAILOVER).build().getTaskNodePath();

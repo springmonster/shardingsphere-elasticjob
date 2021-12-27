@@ -47,21 +47,21 @@ import java.util.Set;
  */
 @Slf4j
 public final class FailoverService {
-    
+
     private final BootstrapEnvironment env = BootstrapEnvironment.getINSTANCE();
-    
+
     private final CoordinatorRegistryCenter regCenter;
-    
+
     private final CloudJobConfigurationService configService;
-    
+
     private final RunningService runningService;
-    
+
     public FailoverService(final CoordinatorRegistryCenter regCenter) {
         this.regCenter = regCenter;
         configService = new CloudJobConfigurationService(regCenter);
         runningService = new RunningService(regCenter);
     }
-    
+
     /**
      * Add task to failover queue.
      *
@@ -78,7 +78,7 @@ public final class FailoverService {
             regCenter.persist(failoverTaskNodePath, taskContext.getId());
         }
     }
-    
+
     /**
      * Get all eligible job contexts from failover queue.
      *
@@ -109,7 +109,7 @@ public final class FailoverService {
         }
         return result;
     }
-    
+
     private List<Integer> getAssignedShardingItems(final String jobName, final List<String> taskIdList, final Set<HashCode> assignedTasks) {
         List<Integer> result = new ArrayList<>(taskIdList.size());
         for (String each : taskIdList) {
@@ -121,10 +121,10 @@ public final class FailoverService {
         }
         return result;
     }
-    
+
     /**
      * Remove task from the failover queue.
-     * 
+     *
      * @param metaInfoList collection of task meta infos to be removed
      */
     public void remove(final Collection<MetaInfo> metaInfoList) {
@@ -132,7 +132,7 @@ public final class FailoverService {
             regCenter.remove(FailoverNode.getFailoverTaskNodePath(each.toString()));
         }
     }
-    
+
     /**
      * Get task id from failover queue.
      *
@@ -143,10 +143,10 @@ public final class FailoverService {
         String failoverTaskNodePath = FailoverNode.getFailoverTaskNodePath(metaInfo.toString());
         return regCenter.isExisted(failoverTaskNodePath) ? Optional.of(regCenter.get(failoverTaskNodePath)) : Optional.empty();
     }
-    
+
     /**
      * Get all failover tasks.
-     * 
+     *
      * @return all failover tasks
      */
     public Map<String, Collection<FailoverTaskInfo>> getAllFailoverTasks() {
@@ -163,7 +163,7 @@ public final class FailoverService {
         }
         return result;
     }
-    
+
     /**
      * Get failover tasks.
      *

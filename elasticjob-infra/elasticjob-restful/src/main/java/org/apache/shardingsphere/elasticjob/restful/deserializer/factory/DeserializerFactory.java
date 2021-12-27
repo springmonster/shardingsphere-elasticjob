@@ -26,14 +26,14 @@ import org.apache.shardingsphere.elasticjob.restful.deserializer.RequestBodyDese
  * @see org.apache.shardingsphere.elasticjob.restful.deserializer.RequestBodyDeserializerFactory
  */
 public interface DeserializerFactory {
-    
+
     /**
      * Specify which type would be deserialized by the deserializer created by this factory.
      *
      * @return MIME type
      */
     String mimeType();
-    
+
     /**
      * Deserializer factory method.
      *

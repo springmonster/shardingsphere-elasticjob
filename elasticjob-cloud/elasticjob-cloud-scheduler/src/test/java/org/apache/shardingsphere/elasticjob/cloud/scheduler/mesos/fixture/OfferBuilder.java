@@ -26,6 +26,7 @@ public final class OfferBuilder {
 
     /**
      * Create offer.
+     *
      * @param offerId offer id
      * @return Offer
      */

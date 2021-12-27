@@ -26,8 +26,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public final class JobExecutionTypeStatistics {
-    
+
     private final int transientJobCount;
-    
+
     private final int daemonJobCount;
 }

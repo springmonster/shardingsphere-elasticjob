@@ -28,12 +28,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public final class EmailJobErrorHandlerPropertiesValidatorTest {
-    
+
     @Before
     public void startup() {
         ElasticJobServiceLoader.registerTypedService(JobErrorHandlerPropertiesValidator.class);
     }
-    
+
     @Test
     public void assertValidateWithNormal() {
         Properties properties = new Properties();
@@ -47,13 +47,13 @@ public final class EmailJobErrorHandlerPropertiesValidatorTest {
         EmailJobErrorHandlerPropertiesValidator actual = getValidator();
         actual.validate(properties);
     }
-    
+
     @Test(expected = NullPointerException.class)
     public void assertValidateWithPropsIsNull() {
         EmailJobErrorHandlerPropertiesValidator actual = getValidator();
         actual.validate(null);
     }
-    
+
     @Test
     public void assertValidateWithHostIsNull() {
         EmailJobErrorHandlerPropertiesValidator actual = getValidator();
@@ -63,7 +63,7 @@ public final class EmailJobErrorHandlerPropertiesValidatorTest {
             assertThat(e.getMessage(), is(String.format("The property `%s` is required.", EmailPropertiesConstants.HOST)));
         }
     }
-    
+
     private EmailJobErrorHandlerPropertiesValidator getValidator() {
         return (EmailJobErrorHandlerPropertiesValidator) ElasticJobServiceLoader.newTypedServiceInstance(JobErrorHandlerPropertiesValidator.class, "EMAIL", null).get();
     }

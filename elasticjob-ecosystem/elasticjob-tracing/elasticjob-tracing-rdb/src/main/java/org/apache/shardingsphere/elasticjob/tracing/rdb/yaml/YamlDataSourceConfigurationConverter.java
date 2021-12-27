@@ -29,7 +29,7 @@ import javax.sql.DataSource;
  */
 @SuppressWarnings({"rawtypes", "unchecked"})
 public final class YamlDataSourceConfigurationConverter implements YamlConfigurationConverter<TracingStorageConfiguration<DataSource>, YamlTracingStorageConfiguration<DataSource>> {
-    
+
     @Override
     public YamlTracingStorageConfiguration<DataSource> convertToYamlConfiguration(final TracingStorageConfiguration<DataSource> data) {
         DataSourceConfiguration dataSourceConfiguration = (DataSourceConfiguration) data;
@@ -38,7 +38,7 @@ public final class YamlDataSourceConfigurationConverter implements YamlConfigura
         result.setProps(dataSourceConfiguration.getProps());
         return result;
     }
-    
+
     @Override
     public Class configurationType() {
         return DataSourceConfiguration.class;

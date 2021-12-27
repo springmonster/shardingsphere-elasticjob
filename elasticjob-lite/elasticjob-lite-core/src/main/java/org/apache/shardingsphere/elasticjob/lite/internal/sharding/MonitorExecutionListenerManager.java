@@ -18,9 +18,9 @@
 package org.apache.shardingsphere.elasticjob.lite.internal.sharding;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shardingsphere.elasticjob.infra.pojo.JobConfigurationPOJO;
 import org.apache.shardingsphere.elasticjob.infra.yaml.YamlEngine;
 import org.apache.shardingsphere.elasticjob.lite.internal.config.ConfigurationNode;
-import org.apache.shardingsphere.elasticjob.infra.pojo.JobConfigurationPOJO;
 import org.apache.shardingsphere.elasticjob.lite.internal.listener.AbstractJobListener;
 import org.apache.shardingsphere.elasticjob.lite.internal.listener.AbstractListenerManager;
 import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
@@ -30,24 +30,24 @@ import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
  */
 @Slf4j
 public final class MonitorExecutionListenerManager extends AbstractListenerManager {
-    
+
     private final ExecutionService executionService;
-    
+
     private final ConfigurationNode configNode;
-    
+
     public MonitorExecutionListenerManager(final CoordinatorRegistryCenter regCenter, final String jobName) {
         super(regCenter, jobName);
         executionService = new ExecutionService(regCenter, jobName);
         configNode = new ConfigurationNode(jobName);
     }
-    
+
     @Override
     public void start() {
         addDataListener(new MonitorExecutionSettingsChangedJobListener());
     }
-    
+
     class MonitorExecutionSettingsChangedJobListener extends AbstractJobListener {
-        
+
         @Override
         protected void dataChanged(final String path, final Type eventType, final String data) {
             log.info("khc MonitorExecutionSettingsChangedJobListener dataChanged path: {} , eventType: {} , data: {}", path, eventType, data);

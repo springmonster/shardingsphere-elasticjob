@@ -28,19 +28,19 @@ import org.apache.shardingsphere.elasticjob.restful.NettyRestfulServiceConfigura
  * Initialize channel pipeline.
  */
 public final class RestfulServiceChannelInitializer extends ChannelInitializer<Channel> {
-    
+
     private final ContextInitializationInboundHandler contextInitializationInboundHandler;
-    
+
     private final FilterChainInboundHandler filterChainInboundHandler;
-    
+
     private final HttpRequestDispatcher httpRequestDispatcher;
-    
+
     private final HandlerParameterDecoder handlerParameterDecoder;
-    
+
     private final HandleMethodExecutor handleMethodExecutor;
-    
+
     private final ExceptionHandling exceptionHandling;
-    
+
     public RestfulServiceChannelInitializer(final NettyRestfulServiceConfiguration configuration) {
         contextInitializationInboundHandler = new ContextInitializationInboundHandler();
         filterChainInboundHandler = new FilterChainInboundHandler(configuration.getFilterInstances());
@@ -49,7 +49,7 @@ public final class RestfulServiceChannelInitializer extends ChannelInitializer<C
         handleMethodExecutor = new HandleMethodExecutor();
         exceptionHandling = new ExceptionHandling(configuration.getExceptionHandlers());
     }
-    
+
     @Override
     protected void initChannel(final Channel channel) {
         ChannelPipeline pipeline = channel.pipeline();

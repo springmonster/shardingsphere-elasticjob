@@ -1,5 +1,4 @@
-+++
-title = "page test 3"
++++ title = "page test 3"
 description = "Ceci est une page test"
 +++
 

@@ -23,14 +23,14 @@ package org.apache.shardingsphere.elasticjob.restful.mapping;
  * @param <T> payload type
  */
 public interface MappingContext<T> {
-    
+
     /**
      * The path pattern of mapping context.
      *
      * @return path pattern
      */
     String pattern();
-    
+
     /**
      * Payload of mapping context.
      *

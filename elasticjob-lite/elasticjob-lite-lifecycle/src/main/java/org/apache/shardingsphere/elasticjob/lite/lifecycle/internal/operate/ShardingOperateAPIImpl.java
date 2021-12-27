@@ -25,23 +25,23 @@ import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
  * Sharding operate API implementation class.
  */
 public final class ShardingOperateAPIImpl implements ShardingOperateAPI {
-    
+
     private final CoordinatorRegistryCenter regCenter;
-    
+
     public ShardingOperateAPIImpl(final CoordinatorRegistryCenter regCenter) {
         this.regCenter = regCenter;
     }
-    
+
     @Override
     public void disable(final String jobName, final String item) {
         disableOrEnableJobs(jobName, item, true);
     }
-    
+
     @Override
     public void enable(final String jobName, final String item) {
         disableOrEnableJobs(jobName, item, false);
     }
-    
+
     private void disableOrEnableJobs(final String jobName, final String item, final boolean disabled) {
         JobNodePath jobNodePath = new JobNodePath(jobName);
         String shardingDisabledNodePath = jobNodePath.getShardingNodePath(item, "disabled");

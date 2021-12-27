@@ -1,11 +1,9 @@
-+++
-title = "Use Spring Namespace"
-weight = 4
-chapter = true
-+++
++++ title = "Use Spring Namespace"
+weight = 4 chapter = true +++
 
-ElasticJob-Lite provides a custom Spring namespace, which can be used with the Spring.
-Through the way of DI (Dependency Injection), developers can easily use data sources and other objects that managed by the Spring container in their jobs, and use placeholders to get values ​​from property files.
+ElasticJob-Lite provides a custom Spring namespace, which can be used with the Spring. Through the way of DI (Dependency
+Injection), developers can easily use data sources and other objects that managed by the Spring container in their jobs,
+and use placeholders to get values ​​from property files.
 
 ## Job Configuration
 
@@ -43,18 +41,19 @@ Through the way of DI (Dependency Injection), developers can easily use data sou
 
 ### Schedule Job
 
-If the Spring container start, the `XML` that configures the Spring namespace will be loaded, and the job will be automatically started.
+If the Spring container start, the `XML` that configures the Spring namespace will be loaded, and the job will be
+automatically started.
 
 ### One-off Job
 
-When to execute OneOffJob is up to you. 
-Developers can inject the `OneOffJobBootstrap` bean into where they plan to invoke.
-Trigger the job by invoking `execute()` method manually.
+When to execute OneOffJob is up to you. Developers can inject the `OneOffJobBootstrap` bean into where they plan to
+invoke. Trigger the job by invoking `execute()` method manually.
 
 ```xml
     <bean id="oneOffJob" class="org.apache.shardingsphere.elasticjob.lite.example.job.simple.SpringSimpleJob" />
     <elasticjob:job id="oneOffJobBean" job-ref="oneOffJob" ...  />
 ```
+
 ```java
 public final class SpringMain {
     public static void main(final String[] args) {
@@ -69,7 +68,8 @@ public final class SpringMain {
 
 Using ElasticJob may meet some distributed problem which is not easy to observe.
 
-Because of developer can not debug in production environment, ElasticJob provide `dump` command to export job runtime information for debugging.
+Because of developer can not debug in production environment, ElasticJob provide `dump` command to export job runtime
+information for debugging.
 
 Please refer to [Operation Manual](/en/user-manual/elasticjob-lite/operation/dump) for more details.
 
@@ -97,7 +97,8 @@ The example below is how to configure SnapshotService for open listener port to 
 
 In the process of using ElasticJob-Lite, when the job is abnormal, the following error handling strategies can be used.
 
-| *Error handler strategy name*            | *Description*                                                 |  *Built-in*  | *Default*| *Extra config*   |
+| *Error handler strategy name*            | *Description*                                                 |  *
+Built-in*  | *Default*| *Extra config*   |
 | ---------------------------------------- | ------------------------------------------------------------- |  -------     |  --------|  --------------  |
 | Log Strategy                             | Log error and do not interrupt job                            |   Yes        |     Yes  |                  |
 | Throw Strategy                           | Throw system exception and interrupt job                      |   Yes        |          |                  |
@@ -107,7 +108,6 @@ In the process of using ElasticJob-Lite, when the job is abnormal, the following
 | Dingtalk Notification Strategy           | Send dingtalk message notification and do not interrupt job   |              |          |    Yes           |
 
 The following example shows how to configure the error-handling policy through the Spring namespace.
-
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>

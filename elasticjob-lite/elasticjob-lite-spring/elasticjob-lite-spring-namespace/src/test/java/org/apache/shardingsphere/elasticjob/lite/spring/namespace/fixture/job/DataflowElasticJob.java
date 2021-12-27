@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,10 +25,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class DataflowElasticJob implements DataflowJob<String> {
-    
+
     @Getter
     private static volatile boolean completed;
-    
+
     @Override
     public List<String> fetchData(final ShardingContext shardingContext) {
         if (completed) {
@@ -36,12 +36,12 @@ public class DataflowElasticJob implements DataflowJob<String> {
         }
         return Collections.singletonList("data");
     }
-    
+
     @Override
     public void processData(final ShardingContext shardingContext, final List<String> data) {
         completed = true;
     }
-    
+
     /**
      * Set completed to false.
      */

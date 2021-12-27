@@ -1,7 +1,5 @@
-+++
-title = "page 4"
++++ title = "page 4"
 description = "This is a demo child page"
-hidden = true
-+++
+hidden = true +++
 
 This is a demo child page, not displayed in the menu

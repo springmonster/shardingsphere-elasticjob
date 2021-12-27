@@ -42,45 +42,45 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SchedulerServiceTest {
-    
+
     @Mock
     private BootstrapEnvironment env;
-    
+
     @Mock
     private CloudJobConfigurationListener cloudJobConfigurationListener;
-    
+
     @Mock
     private FacadeService facadeService;
-    
+
     @Mock
     private SchedulerDriver schedulerDriver;
-    
+
     @Mock
     private ProducerManager producerManager;
-    
+
     @Mock
     private StatisticManager statisticManager;
-    
+
     @Mock
     private Service taskLaunchScheduledService;
-    
+
     @Mock
     private ConsoleBootstrap consoleBootstrap;
-    
+
     @Mock
     private ReconcileService reconcileService;
-    
+
     @Mock
     private CloudJobDisableListener cloudJobDisableListener;
-    
+
     @Mock
     private CloudAppConfigurationListener cloudAppConfigurationListener;
-    
+
     @Mock
     private CloudAppDisableListener cloudAppDisableListener;
-    
+
     private SchedulerService schedulerService;
-    
+
     @Before
     public void setUp() {
         schedulerService = new SchedulerService(env, facadeService, schedulerDriver,
@@ -88,7 +88,7 @@ public class SchedulerServiceTest {
                 taskLaunchScheduledService, consoleBootstrap, reconcileService, cloudJobDisableListener,
                 cloudAppConfigurationListener, cloudAppDisableListener);
     }
-    
+
     @Test
     public void assertStart() {
         setReconcileEnabled(true);
@@ -103,7 +103,7 @@ public class SchedulerServiceTest {
         inOrder.verify(schedulerDriver).start();
         inOrder.verify(reconcileService).startAsync();
     }
-    
+
     @Test
     public void assertStartWithoutReconcile() {
         setReconcileEnabled(false);
@@ -118,7 +118,7 @@ public class SchedulerServiceTest {
         inOrder.verify(schedulerDriver).start();
         inOrder.verify(reconcileService, never()).stopAsync();
     }
-    
+
     @Test
     public void assertStop() {
         setReconcileEnabled(true);
@@ -133,7 +133,7 @@ public class SchedulerServiceTest {
         inOrder.verify(facadeService).stop();
         inOrder.verify(reconcileService).stopAsync();
     }
-    
+
     @Test
     public void assertStopWithoutReconcile() {
         setReconcileEnabled(false);
@@ -148,16 +148,15 @@ public class SchedulerServiceTest {
         inOrder.verify(facadeService).stop();
         inOrder.verify(reconcileService, never()).stopAsync();
     }
-    
+
     private InOrder getInOrder() {
         return inOrder(facadeService, schedulerDriver, producerManager,
                 statisticManager, cloudJobConfigurationListener, taskLaunchScheduledService, consoleBootstrap, reconcileService);
     }
-    
+
     private void setReconcileEnabled(final boolean isEnabled) {
         FrameworkConfiguration frameworkConfiguration = mock(FrameworkConfiguration.class);
         when(frameworkConfiguration.isEnabledReconcile()).thenReturn(isEnabled);
         when(env.getFrameworkConfiguration()).thenReturn(frameworkConfiguration);
     }
 }
-    

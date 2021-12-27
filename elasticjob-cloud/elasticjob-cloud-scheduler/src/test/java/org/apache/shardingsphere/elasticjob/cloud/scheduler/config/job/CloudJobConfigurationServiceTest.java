@@ -40,7 +40,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public final class CloudJobConfigurationServiceTest {
-    
+
     private static final String YAML = "appName: test_app\n"
             + "cpuCount: 1.0\n"
             + "cron: 0/30 * * * * ?\n"
@@ -58,34 +58,34 @@ public final class CloudJobConfigurationServiceTest {
             + "reconcileIntervalMinutes: 10\n"
             + "shardingItemParameters: ''\n"
             + "shardingTotalCount: 10\n";
-        
+
     @Mock
     private CoordinatorRegistryCenter regCenter;
-    
+
     @InjectMocks
     private CloudJobConfigurationService configService;
-    
+
     @Test
     public void assertAdd() {
         CloudJobConfigurationPOJO cloudJobConfig = CloudJobConfigurationBuilder.createCloudJobConfiguration("test_job");
         configService.add(cloudJobConfig);
         verify(regCenter).persist("/config/job/test_job", YAML);
     }
-    
+
     @Test
     public void assertUpdate() {
         CloudJobConfigurationPOJO cloudJobConfig = CloudJobConfigurationBuilder.createCloudJobConfiguration("test_job");
         configService.update(cloudJobConfig);
         verify(regCenter).update("/config/job/test_job", YAML);
     }
-    
+
     @Test
     public void assertLoadAllWithoutRootNode() {
         when(regCenter.isExisted("/config/job")).thenReturn(false);
         assertTrue(configService.loadAll().isEmpty());
         verify(regCenter).isExisted("/config/job");
     }
-    
+
     @Test
     public void assertLoadAllWithRootNode() {
         when(regCenter.isExisted("/config/job")).thenReturn(true);
@@ -99,12 +99,12 @@ public final class CloudJobConfigurationServiceTest {
         verify(regCenter).get("/config/job/test_job_1");
         verify(regCenter).get("/config/job/test_job_2");
     }
-    
+
     @Test
     public void assertLoadWithoutConfig() {
         assertFalse(configService.load("test_job").isPresent());
     }
-    
+
     @Test
     public void assertLoadWithConfig() {
         when(regCenter.get("/config/job/test_job")).thenReturn(CloudJsonConstants.getJobJson());
@@ -112,14 +112,14 @@ public final class CloudJobConfigurationServiceTest {
         assertTrue(actual.isPresent());
         assertThat(actual.get().getJobName(), is("test_job"));
     }
-    
+
     @Test
     public void assertLoadWithSpringConfig() {
         when(regCenter.get("/config/job/test_spring_job")).thenReturn(CloudJsonConstants.getSpringJobJson());
         Optional<CloudJobConfigurationPOJO> actual = configService.load("test_spring_job");
         assertTrue(actual.isPresent());
     }
-    
+
     @Test
     public void assertRemove() {
         configService.remove("test_job");

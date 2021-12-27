@@ -44,23 +44,23 @@ import java.util.Optional;
  */
 @Slf4j
 public final class ProducerManager {
-    
+
     private final CloudAppConfigurationService appConfigService;
-    
+
     private final CloudJobConfigurationService configService;
-            
+
     private final ReadyService readyService;
-    
+
     private final RunningService runningService;
-    
+
     private final DisableAppService disableAppService;
-    
+
     private final DisableJobService disableJobService;
-    
+
     private final TransientProducerScheduler transientProducerScheduler;
-    
+
     private final SchedulerDriver schedulerDriver;
-    
+
     public ProducerManager(final SchedulerDriver schedulerDriver, final CoordinatorRegistryCenter regCenter) {
         this.schedulerDriver = schedulerDriver;
         appConfigService = new CloudAppConfigurationService(regCenter);
@@ -71,7 +71,7 @@ public final class ProducerManager {
         disableJobService = new DisableJobService(regCenter);
         transientProducerScheduler = new TransientProducerScheduler(readyService);
     }
-    
+
     /**
      * Start the producer manager.
      */
@@ -82,10 +82,10 @@ public final class ProducerManager {
             schedule(each);
         }
     }
-    
+
     /**
      * Register the job.
-     * 
+     *
      * @param cloudJobConfig cloud job configuration
      */
     public void register(final CloudJobConfigurationPOJO cloudJobConfig) {
@@ -103,7 +103,7 @@ public final class ProducerManager {
         configService.add(cloudJobConfig);
         schedule(cloudJobConfig);
     }
-    
+
     /**
      * Update the job.
      *
@@ -117,10 +117,10 @@ public final class ProducerManager {
         configService.update(cloudJobConfig);
         reschedule(cloudJobConfig.getJobName());
     }
-    
+
     /**
      * Deregister the job.
-     * 
+     *
      * @param jobName job name
      */
     public void deregister(final String jobName) {
@@ -131,7 +131,7 @@ public final class ProducerManager {
         }
         unschedule(jobName);
     }
-    
+
     /**
      * Schedule the job.
      *
@@ -147,7 +147,7 @@ public final class ProducerManager {
             readyService.addDaemon(cloudJobConfig.getJobName());
         }
     }
-    
+
     /**
      * Stop to schedule the job.
      *
@@ -162,7 +162,7 @@ public final class ProducerManager {
         Optional<CloudJobConfigurationPOJO> jobConfig = configService.load(jobName);
         jobConfig.ifPresent(transientProducerScheduler::deregister);
     }
-    
+
     /**
      * Re-schedule the job.
      *
@@ -173,18 +173,18 @@ public final class ProducerManager {
         Optional<CloudJobConfigurationPOJO> jobConfig = configService.load(jobName);
         jobConfig.ifPresent(this::schedule);
     }
-    
+
     /**
      * Send message to executor.
-     * 
+     *
      * @param executorId the executor of which to receive message
-     * @param slaveId the slave id of the executor
-     * @param data message content
+     * @param slaveId    the slave id of the executor
+     * @param data       message content
      */
     public void sendFrameworkMessage(final ExecutorID executorId, final SlaveID slaveId, final byte[] data) {
         schedulerDriver.sendFrameworkMessage(executorId, slaveId, data);
     }
-    
+
     /**
      * Shutdown the producer manager.
      */

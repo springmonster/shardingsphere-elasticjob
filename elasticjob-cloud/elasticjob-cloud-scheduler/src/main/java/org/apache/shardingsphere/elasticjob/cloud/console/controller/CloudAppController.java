@@ -47,37 +47,37 @@ import java.util.Optional;
  */
 @ContextPath("/api/app")
 public final class CloudAppController implements RestfulController {
-    
+
     private static CoordinatorRegistryCenter regCenter;
-    
+
     private static ProducerManager producerManager;
-    
+
     private final CloudAppConfigurationService appConfigService;
-    
+
     private final CloudJobConfigurationService jobConfigService;
-    
+
     private final DisableAppService disableAppService;
-    
+
     private final MesosStateService mesosStateService;
-    
+
     public CloudAppController() {
         appConfigService = new CloudAppConfigurationService(regCenter);
         jobConfigService = new CloudJobConfigurationService(regCenter);
         mesosStateService = new MesosStateService(regCenter);
         disableAppService = new DisableAppService(regCenter);
     }
-    
+
     /**
      * Init.
      *
      * @param producerManager producer manager
-     * @param regCenter registry center
+     * @param regCenter       registry center
      */
     public static void init(final CoordinatorRegistryCenter regCenter, final ProducerManager producerManager) {
         CloudAppController.regCenter = regCenter;
         CloudAppController.producerManager = producerManager;
     }
-    
+
     /**
      * Register app config.
      *
@@ -93,7 +93,7 @@ public final class CloudAppController implements RestfulController {
         appConfigService.add(appConfig);
         return true;
     }
-    
+
     /**
      * Update app config.
      *
@@ -105,7 +105,7 @@ public final class CloudAppController implements RestfulController {
         appConfigService.update(appConfig);
         return true;
     }
-    
+
     /**
      * Query app config.
      *
@@ -117,7 +117,7 @@ public final class CloudAppController implements RestfulController {
         Optional<CloudAppConfigurationPOJO> appConfig = appConfigService.load(appName);
         return appConfig.orElse(null);
     }
-    
+
     /**
      * Find all registered app configs.
      *
@@ -127,7 +127,7 @@ public final class CloudAppController implements RestfulController {
     public Collection<CloudAppConfigurationPOJO> findAllApps() {
         return appConfigService.loadAll();
     }
-    
+
     /**
      * Query the app is disabled or not.
      *
@@ -138,7 +138,7 @@ public final class CloudAppController implements RestfulController {
     public boolean isDisabled(@Param(name = "appName", source = ParamSource.PATH) final String appName) {
         return disableAppService.isDisabled(appName);
     }
-    
+
     /**
      * Disable app config.
      *
@@ -157,7 +157,7 @@ public final class CloudAppController implements RestfulController {
         }
         return true;
     }
-    
+
     /**
      * Enable app.
      *
@@ -176,7 +176,7 @@ public final class CloudAppController implements RestfulController {
         }
         return true;
     }
-    
+
     /**
      * Deregister app.
      *
@@ -191,7 +191,7 @@ public final class CloudAppController implements RestfulController {
         }
         return true;
     }
-    
+
     private void removeAppAndJobConfigurations(final String appName) {
         for (CloudJobConfigurationPOJO each : jobConfigService.loadAll()) {
             if (appName.equals(each.getAppName())) {
@@ -201,7 +201,7 @@ public final class CloudAppController implements RestfulController {
         disableAppService.remove(appName);
         appConfigService.remove(appName);
     }
-    
+
     private void stopExecutors(final String appName) {
         try {
             Collection<ExecutorStateInfo> executorBriefInfo = mesosStateService.executors(appName);

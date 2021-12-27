@@ -26,15 +26,15 @@ import org.apache.shardingsphere.elasticjob.reg.base.ElectionCandidate;
  * Scheduler election candidate.
  */
 public final class SchedulerElectionCandidate implements ElectionCandidate {
-    
+
     private final CoordinatorRegistryCenter regCenter;
-    
+
     private SchedulerService schedulerService;
-    
+
     public SchedulerElectionCandidate(final CoordinatorRegistryCenter regCenter) {
         this.regCenter = regCenter;
     }
-    
+
     @Override
     public void startLeadership() {
         try {
@@ -45,7 +45,7 @@ public final class SchedulerElectionCandidate implements ElectionCandidate {
             throw new JobSystemException(throwable);
         }
     }
-    
+
     @Override
     public void stopLeadership() {
         schedulerService.stop();

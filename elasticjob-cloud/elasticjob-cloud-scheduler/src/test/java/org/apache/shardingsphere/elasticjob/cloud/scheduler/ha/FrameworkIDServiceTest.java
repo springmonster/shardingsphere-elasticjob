@@ -34,17 +34,17 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FrameworkIDServiceTest {
-    
+
     @Mock
     private CoordinatorRegistryCenter registryCenter;
-    
+
     private FrameworkIDService frameworkIDService;
-    
+
     @Before
     public void init() {
         frameworkIDService = new FrameworkIDService(registryCenter);
     }
-    
+
     @Test
     public void assertFetch() {
         when(registryCenter.getDirectly(HANode.FRAMEWORK_ID_NODE)).thenReturn("1");
@@ -53,7 +53,7 @@ public class FrameworkIDServiceTest {
         assertThat(frameworkIDOptional.get(), is("1"));
         verify(registryCenter).getDirectly(HANode.FRAMEWORK_ID_NODE);
     }
-    
+
     @Test
     public void assertSave() {
         when(registryCenter.isExisted(HANode.FRAMEWORK_ID_NODE)).thenReturn(false);

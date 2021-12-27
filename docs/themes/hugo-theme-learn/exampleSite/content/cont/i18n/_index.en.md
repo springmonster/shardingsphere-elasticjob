@@ -1,7 +1,5 @@
 ---
-date: 2016-04-09T16:50:16+02:00
-title: Multilingual and i18n
-weight: 30
+date: 2016-04-09T16:50:16+02:00 title: Multilingual and i18n weight: 30
 ---
 
 **Learn theme** is fully compatible with Hugo multilingual mode.
@@ -16,7 +14,8 @@ It provides:
 
 ## Basic configuration
 
-After learning [how Hugo handle multilingual websites](https://gohugo.io/content-management/multilingual), define your languages in your `config.toml` file.
+After learning [how Hugo handle multilingual websites](https://gohugo.io/content-management/multilingual), define your
+languages in your `config.toml` file.
 
 For example with current French and English website.
 
@@ -47,25 +46,27 @@ Then, for each new page, append the *id* of the language to the file.
     - in English: `_index.en.md`
     - in French: `_index.fr.md`
 
-{{% notice info %}}
-Be aware that only translated pages are displayed in menu. It's not replaced with default language content.
-{{% /notice %}}
+{{% notice info %}} Be aware that only translated pages are displayed in menu. It's not replaced with default language
+content. {{% /notice %}}
 
-{{% notice tip %}}
-Use [slug](https://gohugo.io/content-management/multilingual/#translate-your-content) Front Matter parameter to translate urls too.
-{{% /notice %}}
+{{% notice tip %}} Use [slug](https://gohugo.io/content-management/multilingual/#translate-your-content) Front Matter
+parameter to translate urls too. {{% /notice %}}
 
 ## Overwrite translation strings
 
-Translations strings are used for common default values used in the theme (*Edit this page* button, *Search placeholder* and so on). Translations are available in french and english but you may use another language or want to override default values.
+Translations strings are used for common default values used in the theme (*Edit this page* button, *Search placeholder*
+and so on). Translations are available in french and english but you may use another language or want to override
+default values.
 
-To override these values, create a new file in your local i18n folder `i18n/<idlanguage>.toml` and inspire yourself from the theme `themes/hugo-theme-learn/i18n/en.toml` 
+To override these values, create a new file in your local i18n folder `i18n/<idlanguage>.toml` and inspire yourself from
+the theme `themes/hugo-theme-learn/i18n/en.toml`
 
-By the way, as these translations could be used by other people, please take the time to propose a translation by [making a PR](https://github.com/matcornic/hugo-theme-learn/pulls) to the theme ! 
+By the way, as these translations could be used by other people, please take the time to propose a translation
+by [making a PR](https://github.com/matcornic/hugo-theme-learn/pulls) to the theme !
 
 ## Disable language switching
 
-Switching the language in the browser is a great feature, but for some reasons you may want to disable it. 
+Switching the language in the browser is a great feature, but for some reasons you may want to disable it.
 
 Just set `disableLanguageSwitchingButton=true` in your `config.toml`
 

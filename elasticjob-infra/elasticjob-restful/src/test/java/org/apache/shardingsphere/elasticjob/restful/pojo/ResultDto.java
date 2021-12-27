@@ -23,8 +23,8 @@ import lombok.Getter;
 @Builder
 @Getter
 public final class ResultDto<T> {
-    
+
     private final int code;
-    
+
     private final T data;
 }

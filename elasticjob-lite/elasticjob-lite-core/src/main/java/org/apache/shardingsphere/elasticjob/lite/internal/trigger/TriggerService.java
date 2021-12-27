@@ -24,16 +24,16 @@ import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
  * Trigger service.
  */
 public final class TriggerService {
-    
+
     private final JobNodeStorage jobNodeStorage;
-    
+
     private final TriggerNode triggerNode;
-    
+
     public TriggerService(final CoordinatorRegistryCenter regCenter, final String jobName) {
         jobNodeStorage = new JobNodeStorage(regCenter, jobName);
         triggerNode = new TriggerNode(jobName);
     }
-    
+
     /**
      * Remove trigger flag.
      */

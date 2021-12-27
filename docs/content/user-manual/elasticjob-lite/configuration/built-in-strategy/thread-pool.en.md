@@ -1,7 +1,5 @@
-+++
-title = "Thread Pool Strategy"
-weight = 2
-+++
++++ title = "Thread Pool Strategy"
+weight = 2 +++
 
 ## CPU Resource Strategy
 

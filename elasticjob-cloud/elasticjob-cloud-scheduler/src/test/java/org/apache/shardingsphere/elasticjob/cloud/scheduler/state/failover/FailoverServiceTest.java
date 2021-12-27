@@ -50,25 +50,25 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public final class FailoverServiceTest {
-    
+
     @Mock
     private CoordinatorRegistryCenter regCenter;
-    
+
     @Mock
     private CloudJobConfigurationService configService;
-    
+
     @Mock
     private RunningService runningService;
-    
+
     private FailoverService failoverService;
-    
+
     @Before
     public void setUp() {
         failoverService = new FailoverService(regCenter);
         ReflectionUtils.setFieldValue(failoverService, "configService", configService);
         ReflectionUtils.setFieldValue(failoverService, "runningService", runningService);
     }
-    
+
     @Test
     public void assertAddWhenJobIsOverQueueSize() {
         when(regCenter.getNumChildren(FailoverNode.ROOT)).thenReturn(BootstrapEnvironment.getINSTANCE().getFrameworkConfiguration().getJobStateQueueSize() + 1);
@@ -76,7 +76,7 @@ public final class FailoverServiceTest {
         failoverService.add(TaskContext.from(taskNode.getTaskNodeValue()));
         verify(regCenter, times(0)).persist("/state/failover/test_job/" + taskNode.getTaskNodePath(), taskNode.getTaskNodeValue());
     }
-    
+
     @Test
     public void assertAddWhenExisted() {
         TaskNode taskNode = TaskNode.builder().type(ExecutionType.FAILOVER).build();
@@ -85,7 +85,7 @@ public final class FailoverServiceTest {
         verify(regCenter).isExisted("/state/failover/test_job/" + taskNode.getTaskNodePath());
         verify(regCenter, times(0)).persist("/state/failover/test_job/" + taskNode.getTaskNodePath(), taskNode.getTaskNodeValue());
     }
-    
+
     @Test
     public void assertAddWhenNotExistedAndTaskIsRunning() {
         TaskNode taskNode = TaskNode.builder().type(ExecutionType.FAILOVER).build();
@@ -96,7 +96,7 @@ public final class FailoverServiceTest {
         verify(runningService).isTaskRunning(MetaInfo.from(taskNode.getTaskNodePath()));
         verify(regCenter, times(0)).persist("/state/failover/test_job/" + taskNode.getTaskNodePath(), taskNode.getTaskNodeValue());
     }
-    
+
     @Test
     public void assertAddWhenNotExistedAndTaskIsNotRunning() {
         TaskNode taskNode = TaskNode.builder().type(ExecutionType.FAILOVER).build();
@@ -107,14 +107,14 @@ public final class FailoverServiceTest {
         verify(runningService).isTaskRunning(MetaInfo.from(taskNode.getTaskNodePath()));
         verify(regCenter).persist("/state/failover/test_job/" + taskNode.getTaskNodePath(), taskNode.getTaskNodeValue());
     }
-    
+
     @Test
     public void assertGetAllEligibleJobContextsWithoutRootNode() {
         when(regCenter.isExisted("/state/failover")).thenReturn(false);
         assertTrue(failoverService.getAllEligibleJobContexts().isEmpty());
         verify(regCenter).isExisted("/state/failover");
     }
-    
+
     @Test
     public void assertGetAllEligibleJobContextsWithRootNode() {
         when(regCenter.isExisted("/state/failover")).thenReturn(true);
@@ -137,7 +137,7 @@ public final class FailoverServiceTest {
         verify(regCenter).remove("/state/failover/task_empty_job");
         verify(regCenter).remove("/state/failover/not_existed_job");
     }
-    
+
     @Test
     public void assertRemove() {
         String jobNodePath1 = TaskNode.builder().type(ExecutionType.FAILOVER).build().getTaskNodePath();
@@ -146,7 +146,7 @@ public final class FailoverServiceTest {
         verify(regCenter).remove("/state/failover/test_job/" + jobNodePath1);
         verify(regCenter).remove("/state/failover/test_job/" + jobNodePath2);
     }
-    
+
     @Test
     public void assertGetTaskId() {
         TaskNode taskNode = TaskNode.builder().type(ExecutionType.FAILOVER).build();
@@ -158,14 +158,14 @@ public final class FailoverServiceTest {
         assertThat(taskId.get(), is(taskNode.getTaskNodeValue()));
         verify(regCenter, times(2)).isExisted("/state/failover/test_job/" + taskNode.getTaskNodePath());
     }
-    
+
     @Test
     public void assertGetAllFailoverTasksWithoutRootNode() {
         when(regCenter.isExisted(FailoverNode.ROOT)).thenReturn(false);
         assertTrue(failoverService.getAllFailoverTasks().isEmpty());
         verify(regCenter).isExisted(FailoverNode.ROOT);
     }
-    
+
     @Test
     public void assertGetAllFailoverTasksWhenRootNodeHasNoChild() {
         when(regCenter.isExisted(FailoverNode.ROOT)).thenReturn(true);
@@ -174,7 +174,7 @@ public final class FailoverServiceTest {
         verify(regCenter).isExisted(FailoverNode.ROOT);
         verify(regCenter).getChildrenKeys(FailoverNode.ROOT);
     }
-    
+
     @Test
     public void assertGetAllFailoverTasksWhenJobNodeHasNoChild() {
         when(regCenter.isExisted(FailoverNode.ROOT)).thenReturn(true);
@@ -185,7 +185,7 @@ public final class FailoverServiceTest {
         verify(regCenter).getChildrenKeys(FailoverNode.ROOT);
         verify(regCenter).getChildrenKeys(FailoverNode.getFailoverJobNodePath("test_job"));
     }
-    
+
     @Test
     public void assertGetAllFailoverTasksWithRootNode() {
         String uuid1 = UUID.randomUUID().toString();

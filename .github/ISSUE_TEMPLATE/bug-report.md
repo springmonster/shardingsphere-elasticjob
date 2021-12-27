@@ -12,8 +12,8 @@ Before report a bug, make sure you have:
 - Searched open and closed [GitHub issues](https://github.com/apache/shardingsphere-elasticjob/issues).
 - Read documentation: [ElasticJob Doc](https://shardingsphere.apache.org/elasticjob/current/en/overview/).
 
-Please pay attention on issues you submitted, because we maybe need more details. 
-If no response anymore and we cannot reproduce it on current information, we will **close it**.
+Please pay attention on issues you submitted, because we maybe need more details. If no response anymore and we cannot
+reproduce it on current information, we will **close it**.
 
 Please answer these questions before submitting your issue. Thanks!
 

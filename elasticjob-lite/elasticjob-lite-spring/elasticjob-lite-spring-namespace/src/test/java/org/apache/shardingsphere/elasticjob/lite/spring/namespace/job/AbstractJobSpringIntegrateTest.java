@@ -18,12 +18,12 @@
 package org.apache.shardingsphere.elasticjob.lite.spring.namespace.job;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.shardingsphere.elasticjob.infra.concurrent.BlockUtils;
 import org.apache.shardingsphere.elasticjob.lite.internal.schedule.JobRegistry;
-import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
 import org.apache.shardingsphere.elasticjob.lite.spring.namespace.fixture.job.DataflowElasticJob;
 import org.apache.shardingsphere.elasticjob.lite.spring.namespace.fixture.job.FooSimpleElasticJob;
 import org.apache.shardingsphere.elasticjob.lite.spring.namespace.test.AbstractZookeeperJUnit4SpringContextTests;
-import org.apache.shardingsphere.elasticjob.infra.concurrent.BlockUtils;
+import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,33 +33,33 @@ import static org.junit.Assert.assertTrue;
 
 @RequiredArgsConstructor
 public abstract class AbstractJobSpringIntegrateTest extends AbstractZookeeperJUnit4SpringContextTests {
-    
+
     private final String simpleJobName;
-    
+
     private final String throughputDataflowJobName;
-    
+
     @Autowired
     private CoordinatorRegistryCenter regCenter;
-    
+
     @Before
     @After
     public void reset() {
         FooSimpleElasticJob.reset();
         DataflowElasticJob.reset();
     }
-    
+
     @After
     public void tearDown() {
         JobRegistry.getInstance().shutdown(simpleJobName);
         JobRegistry.getInstance().shutdown(throughputDataflowJobName);
     }
-    
+
     @Test
     public void assertSpringJobBean() {
         assertSimpleElasticJobBean();
         assertThroughputDataflowElasticJobBean();
     }
-    
+
     private void assertSimpleElasticJobBean() {
         while (!FooSimpleElasticJob.isCompleted()) {
             BlockUtils.waitingShortTime();
@@ -67,7 +67,7 @@ public abstract class AbstractJobSpringIntegrateTest extends AbstractZookeeperJU
         assertTrue(FooSimpleElasticJob.isCompleted());
         assertTrue(regCenter.isExisted("/" + simpleJobName + "/sharding"));
     }
-    
+
     private void assertThroughputDataflowElasticJobBean() {
         while (!DataflowElasticJob.isCompleted()) {
             BlockUtils.waitingShortTime();

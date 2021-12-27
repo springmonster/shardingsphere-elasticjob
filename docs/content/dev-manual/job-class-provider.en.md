@@ -1,8 +1,6 @@
-+++
-pre = "<b>5.4. </b>"
++++ pre = "<b>5.4. </b>"
 title = "Job Class Name Provider"
-weight = 4
-+++
+weight = 4 +++
 
 Job class name provider, used to provide job class name in different contain environments.
 

@@ -28,14 +28,14 @@ import java.io.Closeable;
  * @param <T> reload target
  */
 public interface Reloadable<T> extends TypedSPI, Closeable {
-    
+
     /**
      * Reload if necessary.
      *
      * @param jobConfiguration job configuration
      */
     void reloadIfNecessary(JobConfiguration jobConfiguration);
-    
+
     /**
      * Get target instance.
      *

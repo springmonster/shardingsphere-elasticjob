@@ -1,8 +1,5 @@
-+++
-title = "Spring 命名空间"
-weight = 3
-chapter = true
-+++
++++ title = "Spring 命名空间"
+weight = 3 chapter = true +++
 
 使用 Spring 命名空间需在 pom.xml 文件中添加 elasticjob-lite-spring 模块的依赖。
 

@@ -23,21 +23,22 @@ import org.apache.shardingsphere.elasticjob.infra.context.TaskContext.MetaInfo;
 
 @Builder
 public final class TaskNode {
-    
+
     private static final String DELIMITER = "@-@";
-    
+
     private final String jobName;
-    
+
     private final int shardingItem;
-    
+
     private final ExecutionType type;
-    
+
     private final String slaveId;
-    
+
     private final String uuid;
-    
+
     /**
      * Get task node path.
+     *
      * @return task node path
      */
     public String getTaskNodePath() {
@@ -46,6 +47,7 @@ public final class TaskNode {
 
     /**
      * Get task node value.
+     *
      * @return task node value
      */
     public String getTaskNodeValue() {
@@ -54,6 +56,7 @@ public final class TaskNode {
 
     /**
      * Get task meta info.
+     *
      * @return meta info
      */
     public MetaInfo getMetaInfo() {

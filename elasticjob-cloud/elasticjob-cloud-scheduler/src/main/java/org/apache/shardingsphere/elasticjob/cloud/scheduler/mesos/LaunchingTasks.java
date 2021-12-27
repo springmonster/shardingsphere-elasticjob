@@ -38,16 +38,16 @@ import java.util.Map;
  */
 @Slf4j
 public final class LaunchingTasks {
-    
+
     private final Map<String, JobContext> eligibleJobContextsMap;
-    
+
     public LaunchingTasks(final Collection<JobContext> eligibleJobContexts) {
         eligibleJobContextsMap = new HashMap<>(eligibleJobContexts.size(), 1);
         for (JobContext each : eligibleJobContexts) {
             eligibleJobContextsMap.put(each.getCloudJobConfig().getJobConfig().getJobName(), each);
         }
     }
-    
+
     List<TaskRequest> getPendingTasks() {
         List<TaskRequest> result = new ArrayList<>(eligibleJobContextsMap.size() * 10);
         for (JobContext each : eligibleJobContextsMap.values()) {
@@ -55,7 +55,7 @@ public final class LaunchingTasks {
         }
         return result;
     }
-    
+
     private Collection<TaskRequest> createTaskRequests(final JobContext jobContext) {
         Collection<TaskRequest> result = new ArrayList<>(jobContext.getAssignedShardingItems().size());
         for (int each : jobContext.getAssignedShardingItems()) {
@@ -64,7 +64,7 @@ public final class LaunchingTasks {
         }
         return result;
     }
-    
+
     Collection<String> getIntegrityViolationJobs(final Collection<VMAssignmentResult> vmAssignmentResults) {
         Map<String, Integer> assignedJobShardingTotalCountMap = getAssignedJobShardingTotalCountMap(vmAssignmentResults);
         Collection<String> result = new HashSet<>(assignedJobShardingTotalCountMap.size(), 1);
@@ -77,11 +77,11 @@ public final class LaunchingTasks {
         }
         return result;
     }
-    
+
     private Map<String, Integer> getAssignedJobShardingTotalCountMap(final Collection<VMAssignmentResult> vmAssignmentResults) {
         Map<String, Integer> result = new HashMap<>(eligibleJobContextsMap.size(), 1);
-        for (VMAssignmentResult vmAssignmentResult: vmAssignmentResults) {
-            for (TaskAssignmentResult tasksAssigned: vmAssignmentResult.getTasksAssigned()) {
+        for (VMAssignmentResult vmAssignmentResult : vmAssignmentResults) {
+            for (TaskAssignmentResult tasksAssigned : vmAssignmentResult.getTasksAssigned()) {
                 String jobName = TaskContext.from(tasksAssigned.getTaskId()).getMetaInfo().getJobName();
                 if (result.containsKey(jobName)) {
                     result.put(jobName, result.get(jobName) + 1);

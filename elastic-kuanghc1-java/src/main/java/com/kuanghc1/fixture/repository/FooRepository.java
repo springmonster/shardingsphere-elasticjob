@@ -19,7 +19,6 @@ package com.kuanghc1.fixture.repository;
 
 
 import com.kuanghc1.fixture.entity.Foo;
-import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;

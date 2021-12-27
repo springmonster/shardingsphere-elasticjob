@@ -19,23 +19,28 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:elasticjob="http://shardingsphere.apache.org/schema/elasticjob"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
                         http://www.springframework.org/schema/beans/spring-beans.xsd 
                         http://shardingsphere.apache.org/schema/elasticjob
                         http://shardingsphere.apache.org/schema/elasticjob/elasticjob.xsd
                         ">
-    <import resource="base.xml" />
-    
-    <bean id="fooJob" class="org.apache.shardingsphere.elasticjob.lite.spring.namespace.fixture.job.FooSimpleElasticJob" />
-    <bean id="dataflowJob" class="org.apache.shardingsphere.elasticjob.lite.spring.namespace.fixture.job.DataflowElasticJob" />
-    
-    <elasticjob:job id="simpleElasticJob_namespace" job-ref="fooJob" registry-center-ref="regCenter" 
-             cron="${simpleJob.cron}" sharding-total-count="${simpleJob.shardingTotalCount}" sharding-item-parameters="${simpleJob.shardingItemParameters}" 
-             disabled="${simpleJob.disabled}" overwrite="${simpleJob.overwrite}" />
-    <elasticjob:job id="dataflowElasticJob_namespace" job-ref="dataflowJob" registry-center-ref="regCenter" 
-             sharding-total-count="${dataflowJob.shardingTotalCount}" cron="${dataflowJob.cron}" sharding-item-parameters="${dataflowJob.shardingItemParameters}" 
-             monitor-execution="${dataflowJob.monitorExecution}" failover="${dataflowJob.failover}" description="${dataflowJob.description}" 
-             disabled="${dataflowJob.disabled}" overwrite="${dataflowJob.overwrite}">
+    <import resource="base.xml"/>
+
+    <bean id="fooJob"
+          class="org.apache.shardingsphere.elasticjob.lite.spring.namespace.fixture.job.FooSimpleElasticJob"/>
+    <bean id="dataflowJob"
+          class="org.apache.shardingsphere.elasticjob.lite.spring.namespace.fixture.job.DataflowElasticJob"/>
+
+    <elasticjob:job id="simpleElasticJob_namespace" job-ref="fooJob" registry-center-ref="regCenter"
+                    cron="${simpleJob.cron}" sharding-total-count="${simpleJob.shardingTotalCount}"
+                    sharding-item-parameters="${simpleJob.shardingItemParameters}"
+                    disabled="${simpleJob.disabled}" overwrite="${simpleJob.overwrite}"/>
+    <elasticjob:job id="dataflowElasticJob_namespace" job-ref="dataflowJob" registry-center-ref="regCenter"
+                    sharding-total-count="${dataflowJob.shardingTotalCount}" cron="${dataflowJob.cron}"
+                    sharding-item-parameters="${dataflowJob.shardingItemParameters}"
+                    monitor-execution="${dataflowJob.monitorExecution}" failover="${dataflowJob.failover}"
+                    description="${dataflowJob.description}"
+                    disabled="${dataflowJob.disabled}" overwrite="${dataflowJob.overwrite}">
         <props>
             <prop key="streaming.process">${dataflowJob.streamingProcess}</prop>
         </props>

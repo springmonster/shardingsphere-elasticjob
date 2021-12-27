@@ -23,52 +23,52 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Task result meta data.
  */
 public final class TaskResultMetaData {
-    
+
     private final AtomicInteger successCount;
-    
+
     private final AtomicInteger failedCount;
 
     public TaskResultMetaData() {
         successCount = new AtomicInteger(0);
         failedCount = new AtomicInteger(0);
     }
-    
+
     /**
      * Increase and get success count.
-     * 
+     *
      * @return success count
      */
     public int incrementAndGetSuccessCount() {
         return successCount.incrementAndGet();
     }
-    
+
     /**
      * Increase and get failed count.
-     * 
+     *
      * @return failed count
      */
     public int incrementAndGetFailedCount() {
         return failedCount.incrementAndGet();
     }
-    
+
     /**
      * Get success count.
-     * 
+     *
      * @return success count
      */
     public int getSuccessCount() {
         return successCount.get();
     }
-    
+
     /**
      * Get failed count.
-     * 
+     *
      * @return failed count
      */
     public int getFailedCount() {
         return failedCount.get();
     }
-    
+
     /**
      * Reset success and failed count.
      */

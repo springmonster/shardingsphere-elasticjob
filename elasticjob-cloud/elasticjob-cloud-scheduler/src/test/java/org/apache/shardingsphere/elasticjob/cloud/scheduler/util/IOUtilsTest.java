@@ -22,27 +22,28 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
+
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public final class IOUtilsTest {
-    
+
     @Test
     public void assertToStringFromInputStream() throws Exception {
         byte[] b = "toStringFromInputStream".getBytes(StandardCharsets.UTF_8);
         InputStream in = new ByteArrayInputStream(b);
         assertThat(IOUtils.toString(in, null), is("toStringFromInputStream"));
     }
-    
+
     @Test
     public void assertToStringFromInputStreamWithEncoding() throws Exception {
         byte[] b = "toStringFromInputStream".getBytes(StandardCharsets.UTF_8);
         InputStream in = new ByteArrayInputStream(b);
         assertThat(IOUtils.toString(in, "UTF-8"), is("toStringFromInputStream"));
     }
-    
+
     @Test
     public void assertToStringFromReader() throws Exception {
         byte[] b = "toStringFromReader".getBytes(StandardCharsets.UTF_8);

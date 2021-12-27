@@ -45,13 +45,13 @@ import java.util.Set;
 @Slf4j
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class AppConstraintEvaluator implements ConstraintEvaluator {
-    
+
     private static AppConstraintEvaluator instance;
-    
+
     private final Set<String> runningApps = new HashSet<>();
-    
+
     private final FacadeService facadeService;
-    
+
     /**
      * Init.
      *
@@ -60,11 +60,11 @@ public final class AppConstraintEvaluator implements ConstraintEvaluator {
     public static void init(final FacadeService facadeService) {
         instance = new AppConstraintEvaluator(facadeService);
     }
-    
+
     static AppConstraintEvaluator getInstance() {
         return Preconditions.checkNotNull(instance);
     }
-    
+
     void loadAppRunningState() {
         try {
             for (ExecutorStateInfo each : facadeService.loadExecutorInfo()) {
@@ -74,16 +74,16 @@ public final class AppConstraintEvaluator implements ConstraintEvaluator {
             clearAppRunningState();
         }
     }
-    
+
     void clearAppRunningState() {
         runningApps.clear();
     }
-    
+
     @Override
     public String getName() {
         return "App-Fitness-Calculator";
     }
-    
+
     @Override
     public Result evaluate(final TaskRequest taskRequest, final VirtualMachineCurrentState targetVM, final TaskTrackerState taskTrackerState) {
         double assigningCpus = 0.0d;
@@ -129,13 +129,13 @@ public final class AppConstraintEvaluator implements ConstraintEvaluator {
         return new Result(true, String.format("cpus:%s/%s mem:%s/%s", assigningCpus, targetVM.getCurrAvailableResources()
                 .cpuCores(), assigningMemoryMB, targetVM.getCurrAvailableResources().memoryMB()));
     }
-    
+
     private boolean isAppRunningOnSlave(final String taskId, final String slaveId) throws LackConfigException {
         TaskContext taskContext = TaskContext.from(taskId);
         taskContext.setSlaveId(slaveId);
         return runningApps.contains(taskContext.getExecutorId(getJobConfiguration(taskContext).getAppName()));
     }
-    
+
     private CloudAppConfigurationPOJO getAppConfiguration(final String taskId) throws LackConfigException {
         CloudJobConfiguration cloudJobConfig = getJobConfiguration(TaskContext.from(taskId));
         Optional<CloudAppConfigurationPOJO> appConfigOptional = facadeService.loadAppConfig(cloudJobConfig.getAppName());
@@ -144,7 +144,7 @@ public final class AppConstraintEvaluator implements ConstraintEvaluator {
         }
         return appConfigOptional.get();
     }
-    
+
     private CloudJobConfiguration getJobConfiguration(final TaskContext taskContext) throws LackConfigException {
         Optional<CloudJobConfigurationPOJO> cloudJobConfig = facadeService.load(taskContext.getMetaInfo().getJobName());
         if (!cloudJobConfig.isPresent()) {
@@ -152,11 +152,11 @@ public final class AppConstraintEvaluator implements ConstraintEvaluator {
         }
         return cloudJobConfig.get().toCloudJobConfiguration();
     }
-    
+
     private static class LackConfigException extends Exception {
-        
+
         private static final long serialVersionUID = -3340824363577154813L;
-        
+
         LackConfigException(final String scope, final String configName) {
             super(String.format("Lack %s's config %s", scope, configName));
         }

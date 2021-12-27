@@ -30,25 +30,25 @@ import java.util.List;
  * Default filter chain.
  */
 public final class DefaultFilterChain implements FilterChain {
-    
+
     private final Filter[] filters;
-    
+
     private final ChannelHandlerContext ctx;
-    
+
     private final HandleContext<?> handleContext;
-    
+
     private int current;
-    
+
     private boolean passedThrough;
-    
+
     private boolean replied;
-    
+
     public DefaultFilterChain(final List<Filter> filterInstances, final ChannelHandlerContext ctx, final HandleContext<?> handleContext) {
         filters = filterInstances.toArray(new Filter[0]);
         this.ctx = ctx;
         this.handleContext = handleContext;
     }
-    
+
     @Override
     public void next(final FullHttpRequest httpRequest) {
         Preconditions.checkState(!passedThrough && !replied, "FilterChain has already finished.");
@@ -62,7 +62,7 @@ public final class DefaultFilterChain implements FilterChain {
         passedThrough = true;
         ctx.fireChannelRead(handleContext);
     }
-    
+
     private void doResponse() {
         try {
             ctx.writeAndFlush(handleContext.getHttpResponse());

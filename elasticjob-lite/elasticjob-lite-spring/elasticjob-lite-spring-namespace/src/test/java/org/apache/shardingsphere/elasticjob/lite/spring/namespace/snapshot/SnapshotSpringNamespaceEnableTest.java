@@ -27,7 +27,7 @@ import static org.junit.Assert.assertNull;
 
 @ContextConfiguration(locations = "classpath:META-INF/snapshot/snapshotEnabled.xml")
 public final class SnapshotSpringNamespaceEnableTest extends AbstractZookeeperJUnit4SpringContextTests {
-    
+
     @Test
     public void assertSnapshotEnable() throws IOException {
         assertNull(SocketUtils.sendCommand("unknown_command", 9988));

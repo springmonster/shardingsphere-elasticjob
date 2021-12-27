@@ -25,7 +25,7 @@ import org.apache.shardingsphere.elasticjob.tracing.api.TracingStorageConfigurat
  * @param <T> storage type
  */
 public interface TracingStorageConverter<T> {
-    
+
     /**
      * Convert storage to {@link TracingStorageConfiguration}.
      *
@@ -33,7 +33,7 @@ public interface TracingStorageConverter<T> {
      * @return instance of {@link TracingStorageConfiguration}
      */
     TracingStorageConfiguration<T> convertObjectToConfiguration(T storage);
-    
+
     /**
      * Storage type.
      *

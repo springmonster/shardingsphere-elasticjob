@@ -17,29 +17,24 @@
 
 package org.apache.shardingsphere.elasticjob.restful.wrapper;
 
-import java.util.AbstractMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * Wrap a multi-value map. Helps handle method receiving all query parameters.
  */
 public final class QueryParameterMap extends AbstractMap<String, List<String>> {
-    
+
     private final Map<String, List<String>> queryMap;
-    
+
     public QueryParameterMap() {
         queryMap = new LinkedHashMap<>();
     }
-    
+
     public QueryParameterMap(final Map<String, List<String>> map) {
         queryMap = new LinkedHashMap<>(map);
     }
-    
+
     /**
      * Get values by parameter name.
      *
@@ -49,7 +44,7 @@ public final class QueryParameterMap extends AbstractMap<String, List<String>> {
     public List<String> get(final String parameterName) {
         return queryMap.get(parameterName);
     }
-    
+
     /**
      * Get the first from values.
      *
@@ -64,22 +59,22 @@ public final class QueryParameterMap extends AbstractMap<String, List<String>> {
         }
         return firstValue;
     }
-    
+
     @Override
     public boolean isEmpty() {
         return queryMap.isEmpty();
     }
-    
+
     @Override
     public Set<Entry<String, List<String>>> entrySet() {
         return queryMap.entrySet();
     }
-    
+
     /**
      * Add value.
      *
      * @param parameterName parameter name
-     * @param value value
+     * @param value         value
      */
     public void add(final String parameterName, final String value) {
         List<String> values = queryMap.get(parameterName);
@@ -89,12 +84,12 @@ public final class QueryParameterMap extends AbstractMap<String, List<String>> {
         values.add(value);
         put(parameterName, values);
     }
-    
+
     @Override
     public List<String> put(final String parameterName, final List<String> value) {
         return queryMap.put(parameterName, value);
     }
-    
+
     /**
      * Convert to a single value map, abandon values except the first of each parameter.
      *

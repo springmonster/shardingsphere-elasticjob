@@ -40,13 +40,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class ReconcileService extends AbstractScheduledService {
-    
+
     private final SchedulerDriver schedulerDriver;
-    
+
     private final FacadeService facadeService;
-    
+
     private final ReentrantLock lock = new ReentrantLock();
-    
+
     @Override
     protected void runOneIteration() {
         lock.lock();
@@ -57,7 +57,7 @@ public class ReconcileService extends AbstractScheduledService {
             lock.unlock();
         }
     }
-    
+
     /**
      * Explicit reconcile service.
      */
@@ -72,15 +72,15 @@ public class ReconcileService extends AbstractScheduledService {
                 return;
             }
             log.info("Requesting {} tasks reconciliation with the Mesos master", runningTask.size());
-            schedulerDriver.reconcileTasks(runningTask.stream().map(each -> 
-                TaskStatus.newBuilder().setTaskId(Protos.TaskID.newBuilder().setValue(each.getId()).build())
-                        .setSlaveId(Protos.SlaveID.newBuilder().setValue(each.getSlaveId()).build())
-                        .setState(Protos.TaskState.TASK_RUNNING).build()).collect(Collectors.toList()));
+            schedulerDriver.reconcileTasks(runningTask.stream().map(each ->
+                    TaskStatus.newBuilder().setTaskId(Protos.TaskID.newBuilder().setValue(each.getId()).build())
+                            .setSlaveId(Protos.SlaveID.newBuilder().setValue(each.getSlaveId()).build())
+                            .setState(Protos.TaskState.TASK_RUNNING).build()).collect(Collectors.toList()));
         } finally {
             lock.unlock();
         }
     }
-    
+
     /**
      * Implicit reconcile service.
      */
@@ -92,7 +92,7 @@ public class ReconcileService extends AbstractScheduledService {
             lock.unlock();
         }
     }
-    
+
     @Override
     protected Scheduler scheduler() {
         FrameworkConfiguration configuration = BootstrapEnvironment.getINSTANCE().getFrameworkConfiguration();

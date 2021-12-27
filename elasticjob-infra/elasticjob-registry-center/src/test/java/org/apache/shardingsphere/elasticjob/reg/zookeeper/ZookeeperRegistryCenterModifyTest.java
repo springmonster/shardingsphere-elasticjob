@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,17 +30,14 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public final class ZookeeperRegistryCenterModifyTest {
-    
+
     private static final ZookeeperConfiguration ZOOKEEPER_CONFIGURATION = new ZookeeperConfiguration(EmbedTestingServer.getConnectionString(), ZookeeperRegistryCenterModifyTest.class.getName());
-    
+
     private static ZookeeperRegistryCenter zkRegCenter;
-    
+
     @BeforeClass
     public static void setUp() {
         EmbedTestingServer.start();
@@ -49,12 +46,12 @@ public final class ZookeeperRegistryCenterModifyTest {
         zkRegCenter.init();
         ZookeeperRegistryCenterTestUtil.persist(zkRegCenter);
     }
-    
+
     @AfterClass
     public static void tearDown() {
         zkRegCenter.close();
     }
-    
+
     @Test
     public void assertPersist() {
         zkRegCenter.persist("/test", "test_update");
@@ -62,14 +59,14 @@ public final class ZookeeperRegistryCenterModifyTest {
         assertThat(zkRegCenter.get("/test"), is("test_update"));
         assertThat(zkRegCenter.get("/persist/new"), is("new_value"));
     }
-    
+
     @Test
     public void assertUpdate() {
         zkRegCenter.persist("/update", "before_update");
         zkRegCenter.update("/update", "after_update");
         assertThat(zkRegCenter.getDirectly("/update"), is("after_update"));
     }
-    
+
     @Test
     public void assertPersistEphemeral() throws Exception {
         zkRegCenter.persist("/persist", "persist_value");
@@ -84,7 +81,7 @@ public final class ZookeeperRegistryCenterModifyTest {
         assertNull(client.checkExists().forPath("/" + ZookeeperRegistryCenterModifyTest.class.getName() + "/ephemeral"));
         zkRegCenter.init();
     }
-    
+
     @Test
     public void assertPersistSequential() throws Exception {
         assertThat(zkRegCenter.persistSequential("/sequential/test_sequential", "test_value"), startsWith("/sequential/test_sequential"));
@@ -101,7 +98,7 @@ public final class ZookeeperRegistryCenterModifyTest {
         zkRegCenter.remove("/sequential");
         assertFalse(zkRegCenter.isExisted("/sequential"));
     }
-    
+
     @Test
     public void assertPersistEphemeralSequential() throws Exception {
         zkRegCenter.persistEphemeralSequential("/sequential/test_ephemeral_sequential");
@@ -119,7 +116,7 @@ public final class ZookeeperRegistryCenterModifyTest {
         assertTrue(actual.isEmpty());
         zkRegCenter.init();
     }
-    
+
     @Test
     public void assertRemove() {
         zkRegCenter.remove("/test");

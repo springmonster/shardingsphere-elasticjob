@@ -32,13 +32,13 @@ import java.util.Properties;
  */
 @Slf4j
 public final class JobErrorHandlerReloadable implements Reloadable<JobErrorHandler>, ReloadablePostProcessor {
-    
+
     private String jobErrorHandlerType;
-    
+
     private Properties props;
-    
+
     private JobErrorHandler jobErrorHandler;
-    
+
     @Override
     public void init(final JobConfiguration jobConfig) {
         jobErrorHandlerType = Strings.isNullOrEmpty(jobConfig.getJobErrorHandlerType()) ? JobErrorHandlerFactory.DEFAULT_HANDLER : jobConfig.getJobErrorHandlerType();
@@ -46,7 +46,7 @@ public final class JobErrorHandlerReloadable implements Reloadable<JobErrorHandl
         jobErrorHandler = JobErrorHandlerFactory.createHandler(jobErrorHandlerType, props)
                 .orElseThrow(() -> new JobConfigurationException("Cannot find job error handler type '%s'.", jobErrorHandlerType));
     }
-    
+
     @Override
     public synchronized void reloadIfNecessary(final JobConfiguration jobConfig) {
         String newJobErrorHandlerType = Strings.isNullOrEmpty(jobConfig.getJobErrorHandlerType()) ? JobErrorHandlerFactory.DEFAULT_HANDLER : jobConfig.getJobErrorHandlerType();
@@ -60,7 +60,7 @@ public final class JobErrorHandlerReloadable implements Reloadable<JobErrorHandl
 
         reload(newJobErrorHandlerType, jobConfig.getProps());
     }
-    
+
     private void reload(final String jobErrorHandlerType, final Properties props) {
         jobErrorHandler.close();
 
@@ -70,17 +70,17 @@ public final class JobErrorHandlerReloadable implements Reloadable<JobErrorHandl
         jobErrorHandler = JobErrorHandlerFactory.createHandler(jobErrorHandlerType, props)
                 .orElseThrow(() -> new JobConfigurationException("Cannot find job error handler type '%s'.", jobErrorHandlerType));
     }
-    
+
     @Override
     public JobErrorHandler getInstance() {
         return jobErrorHandler;
     }
-    
+
     @Override
     public String getType() {
         return JobErrorHandler.class.getName();
     }
-    
+
     @Override
     public void close() {
         Optional.ofNullable(jobErrorHandler).ifPresent(JobErrorHandler::close);

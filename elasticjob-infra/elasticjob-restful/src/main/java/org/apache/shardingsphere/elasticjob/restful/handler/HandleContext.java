@@ -33,12 +33,12 @@ import org.apache.shardingsphere.elasticjob.restful.mapping.MappingContext;
 @Getter
 @Setter
 public final class HandleContext<T> {
-    
+
     private final FullHttpRequest httpRequest;
-    
+
     private final FullHttpResponse httpResponse;
-    
+
     private MappingContext<T> mappingContext;
-    
+
     private Object[] args = new Object[0];
 }

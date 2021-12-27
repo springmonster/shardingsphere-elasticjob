@@ -23,11 +23,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.apache.shardingsphere.elasticjob.restful.handler.ExceptionHandler;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Configuration for {@link NettyRestfulService}.
@@ -35,24 +31,24 @@ import java.util.Map;
 @Getter
 @RequiredArgsConstructor
 public final class NettyRestfulServiceConfiguration {
-    
+
     private final int port;
-    
+
     @Setter
     private String host;
-    
+
     /**
      * If trailing slash sensitive, <code>/foo/bar</code> is not equals to <code>/foo/bar/</code>.
      */
     @Setter
     private boolean trailingSlashSensitive;
-    
+
     private final List<Filter> filterInstances = new LinkedList<>();
-    
+
     private final List<RestfulController> controllerInstances = new LinkedList<>();
-    
+
     private final Map<Class<? extends Throwable>, ExceptionHandler<? extends Throwable>> exceptionHandlers = new HashMap<>();
-    
+
     /**
      * Add instances of {@link Filter}.
      *
@@ -61,7 +57,7 @@ public final class NettyRestfulServiceConfiguration {
     public void addFilterInstances(final Filter... instances) {
         filterInstances.addAll(Arrays.asList(instances));
     }
-    
+
     /**
      * Add instances of RestfulController.
      *
@@ -70,7 +66,7 @@ public final class NettyRestfulServiceConfiguration {
     public void addControllerInstances(final RestfulController... instances) {
         controllerInstances.addAll(Arrays.asList(instances));
     }
-    
+
     /**
      * Add an instance of ExceptionHandler for specific exception.
      *

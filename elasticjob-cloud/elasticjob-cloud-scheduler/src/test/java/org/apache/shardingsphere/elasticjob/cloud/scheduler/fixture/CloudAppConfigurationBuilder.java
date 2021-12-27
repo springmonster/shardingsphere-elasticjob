@@ -27,6 +27,7 @@ public final class CloudAppConfigurationBuilder {
 
     /**
      * Create cloud app configuration.
+     *
      * @param appName app name
      * @return CloudAppConfiguration
      */

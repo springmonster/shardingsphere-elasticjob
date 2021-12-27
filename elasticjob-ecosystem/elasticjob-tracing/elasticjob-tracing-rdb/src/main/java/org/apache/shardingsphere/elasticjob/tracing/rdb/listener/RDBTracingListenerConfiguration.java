@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,7 +28,7 @@ import java.sql.SQLException;
  * RDB tracing listener configuration.
  */
 public final class RDBTracingListenerConfiguration implements TracingListenerConfiguration<DataSource> {
-    
+
     @Override
     public TracingListener createTracingListener(final DataSource storage) throws TracingConfigurationException {
         try {
@@ -37,7 +37,7 @@ public final class RDBTracingListenerConfiguration implements TracingListenerCon
             throw new TracingConfigurationException(ex);
         }
     }
-    
+
     @Override
     public String getType() {
         return "RDB";

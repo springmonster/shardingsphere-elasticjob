@@ -1,8 +1,5 @@
-+++
-title = "使用 Spring 命名空间"
-weight = 3
-chapter = true
-+++
++++ title = "使用 Spring 命名空间"
+weight = 3 chapter = true +++
 
 ## 监听器配置
 

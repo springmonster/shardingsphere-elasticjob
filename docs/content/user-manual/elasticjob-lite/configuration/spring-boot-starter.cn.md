@@ -1,8 +1,5 @@
-+++
-title = "Spring Boot Starter"
-weight = 2
-chapter = true
-+++
++++ title = "Spring Boot Starter"
+weight = 2 chapter = true +++
 
 使用 Spring-boot 需在 pom.xml 文件中添加 elasticjob-lite-spring-boot-starter 模块的依赖。
 
@@ -34,6 +31,7 @@ chapter = true
 配置格式参考：
 
 **YAML**
+
 ```yaml
 elasticjob:
   regCenter:
@@ -42,6 +40,7 @@ elasticjob:
 ```
 
 **Properties**
+
 ```
 elasticjob.reg-center.namespace=elasticjob-lite-springboot
 elasticjob.reg-center.server-lists=localhost:6181
@@ -78,13 +77,13 @@ elasticjob.reg-center.server-lists=localhost:6181
 
 **elasticJobClass 与 elasticJobType 互斥，每项作业只能有一种类型**
 
-如果配置了 cron 属性则为定时调度作业，Starter 会在应用启动时自动启动；
-否则为一次性调度作业，需要通过 jobBootstrapBeanName 指定 OneOffJobBootstrap Bean 的名称，
-在触发点注入 OneOffJobBootstrap 的实例并手动调用 execute() 方法。
+如果配置了 cron 属性则为定时调度作业，Starter 会在应用启动时自动启动； 否则为一次性调度作业，需要通过 jobBootstrapBeanName 指定 OneOffJobBootstrap Bean 的名称， 在触发点注入
+OneOffJobBootstrap 的实例并手动调用 execute() 方法。
 
 配置格式参考：
 
 **YAML**
+
 ```yaml
 elasticjob:
   jobs:
@@ -109,6 +108,7 @@ elasticjob:
 ```
 
 **Properties**
+
 ```
 elasticjob.jobs.simpleJob.elastic-job-class=org.apache.shardingsphere.elasticjob.lite.example.job.SpringBootSimpleJob
 elasticjob.jobs.simpleJob.cron=0/5 * * * * ?
@@ -139,12 +139,12 @@ elasticjob.jobs.manualScriptJob.props.script.command.line=echo Manual SCRIPT Job
 
 **includeJobNames 与 excludeJobNames 都为空时，默认为所有作业加载事件追踪**
 
-目前仅提供了 RDB 类型的事件追踪数据源实现。
-Spring IoC 容器中存在 DataSource 类型的 bean 且配置数据源类型为 RDB 时会自动配置事件追踪，无须显式创建。
+目前仅提供了 RDB 类型的事件追踪数据源实现。 Spring IoC 容器中存在 DataSource 类型的 bean 且配置数据源类型为 RDB 时会自动配置事件追踪，无须显式创建。
 
 配置格式参考：
 
 **YAML**
+
 ```yaml
 elasticjob:
   tracing:
@@ -153,6 +153,7 @@ elasticjob:
 ```
 
 **Properties**
+
 ```
 elasticjob.tracing.type=RDB
 elasticjob.tracing.excludeJobNames=[ job-name ]
@@ -167,12 +168,12 @@ elasticjob.tracing.excludeJobNames=[ job-name ]
 | enabled          | true          | 否       |
 | port             |               | 是       |
 
-Spring Boot 提供了作业信息导出端口快速配置，只需在配置中指定导出所用的端口号即可启用导出功能。
-如果没有指定端口号，导出功能不会生效。
+Spring Boot 提供了作业信息导出端口快速配置，只需在配置中指定导出所用的端口号即可启用导出功能。 如果没有指定端口号，导出功能不会生效。
 
 配置参考：
 
 **YAML**
+
 ```yaml
 elasticjob:
   dump:
@@ -180,6 +181,7 @@ elasticjob:
 ```
 
 **Properties**
+
 ```
 elasticjob.dump.port=9888
 ```

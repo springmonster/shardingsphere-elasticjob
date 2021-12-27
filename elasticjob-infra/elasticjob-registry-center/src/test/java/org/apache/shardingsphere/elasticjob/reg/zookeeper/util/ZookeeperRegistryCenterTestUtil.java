@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,7 +23,7 @@ import org.apache.shardingsphere.elasticjob.reg.zookeeper.ZookeeperRegistryCente
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ZookeeperRegistryCenterTestUtil {
-    
+
     /**
      * Persist the data to registry center.
      *
@@ -33,5 +33,5 @@ public class ZookeeperRegistryCenterTestUtil {
         zookeeperRegistryCenter.persist("/test", "test");
         zookeeperRegistryCenter.persist("/test/deep/nested", "deepNested");
         zookeeperRegistryCenter.persist("/test/child", "child");
-    } 
+    }
 }

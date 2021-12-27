@@ -29,27 +29,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TestStatisticJob extends AbstractStatisticJob {
-    
+
     @Override
     public JobDetail buildJobDetail() {
         return JobBuilder.newJob(this.getClass()).withIdentity(getJobName()).build();
     }
-    
+
     @Override
     public Trigger buildTrigger() {
         return TriggerBuilder.newTrigger()
                 .withIdentity(getTriggerName())
                 .withSchedule(CronScheduleBuilder.cronSchedule(StatisticInterval.MINUTE.getCron())
-                .withMisfireHandlingInstructionDoNothing()).build();
+                        .withMisfireHandlingInstructionDoNothing()).build();
     }
-    
+
     @Override
     public Map<String, Object> getDataMap() {
         Map<String, Object> result = new HashMap<>(2);
         result.put("key", "value");
         return result;
     }
-    
+
     @Override
     public void execute(final JobExecutionContext context) {
         System.out.println("do something...");

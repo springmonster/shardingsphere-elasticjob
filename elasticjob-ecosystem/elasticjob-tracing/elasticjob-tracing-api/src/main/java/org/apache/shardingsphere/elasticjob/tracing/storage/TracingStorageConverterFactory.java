@@ -30,13 +30,13 @@ import java.util.ServiceLoader;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TracingStorageConverterFactory {
-    
+
     private static final List<TracingStorageConverter<?>> CONVERTERS = new LinkedList<>();
-    
+
     static {
         ServiceLoader.load(TracingStorageConverter.class).forEach(CONVERTERS::add);
     }
-    
+
     /**
      * Find {@link TracingStorageConverter} for specific storage type.
      *

@@ -35,10 +35,10 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MesosStateServiceTest extends AbstractCloudControllerTest {
-    
+
     @Mock
     private CoordinatorRegistryCenter registryCenter;
-    
+
     @Test
     public void assertSandbox() {
         when(registryCenter.getDirectly(HANode.FRAMEWORK_ID_NODE)).thenReturn("d8701508-41b7-471e-9b32-61cf824a660d-0000");
@@ -49,7 +49,7 @@ public class MesosStateServiceTest extends AbstractCloudControllerTest {
         assertThat(sandbox.iterator().next().get("path"), is("/slaves/d8701508-41b7-471e-9b32-61cf824a660d-S0/"
                 + "frameworks/d8701508-41b7-471e-9b32-61cf824a660d-0000/executors/foo_app@-@d8701508-41b7-471e-9b32-61cf824a660d-S0/runs/53fb4af7-aee2-44f6-9e47-6f418d9f27e1"));
     }
-    
+
     @Test
     public void assertExecutors() {
         when(registryCenter.getDirectly(HANode.FRAMEWORK_ID_NODE)).thenReturn("d8701508-41b7-471e-9b32-61cf824a660d-0000");
@@ -60,7 +60,7 @@ public class MesosStateServiceTest extends AbstractCloudControllerTest {
         assertThat(executor.getId(), is("foo_app@-@d8701508-41b7-471e-9b32-61cf824a660d-S0"));
         assertThat(executor.getSlaveId(), is("d8701508-41b7-471e-9b32-61cf824a660d-S0"));
     }
-    
+
     @Test
     public void assertAllExecutors() {
         when(registryCenter.getDirectly(HANode.FRAMEWORK_ID_NODE)).thenReturn("d8701508-41b7-471e-9b32-61cf824a660d-0000");

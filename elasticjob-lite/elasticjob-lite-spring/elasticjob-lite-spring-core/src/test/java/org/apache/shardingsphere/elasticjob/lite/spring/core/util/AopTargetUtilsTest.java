@@ -17,18 +17,16 @@
 
 package org.apache.shardingsphere.elasticjob.lite.spring.core.util;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-
 import org.apache.shardingsphere.elasticjob.api.ElasticJob;
 import org.junit.Test;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.support.AopUtils;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.*;
+
 public final class AopTargetUtilsTest {
-    
+
     @Test
     public void assertJdkDynamicProxyForGetTarget() {
         ElasticJob target = new TargetJob();
@@ -38,7 +36,7 @@ public final class AopTargetUtilsTest {
         assertTrue(AopUtils.isJdkDynamicProxy(proxy));
         assertThat(AopTargetUtils.getTarget(proxy), is(target));
     }
-    
+
     @Test
     public void assertCglibProxyForGetTarget() {
         ElasticJob target = new TargetJob();
@@ -48,7 +46,7 @@ public final class AopTargetUtilsTest {
         assertTrue(AopUtils.isCglibProxy(proxy));
         assertThat(AopTargetUtils.getTarget(proxy), is(target));
     }
-    
+
     @Test
     public void assertNoneProxyForGetTarget() {
         ElasticJob proxy = new TargetJob();

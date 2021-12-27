@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,23 +19,23 @@ package org.apache.shardingsphere.elasticjob.reg.base;
 
 /**
  * Election candidate.
- * 
+ *
  * <p>
- *     Guarantee {@link #startLeadership()} and {@link #stopLeadership()} method run in same thread.
+ * Guarantee {@link #startLeadership()} and {@link #stopLeadership()} method run in same thread.
  * </p>
  */
 public interface ElectionCandidate {
-    
+
     /**
      * Start leadership.
-     * 
+     *
      * @throws Exception exception
      */
     void startLeadership() throws Exception;
-    
+
     /**
      * Stop leadership.
-     * 
+     *
      * <p>Should not throw any exception for the implementation class.</p>
      */
     void stopLeadership();

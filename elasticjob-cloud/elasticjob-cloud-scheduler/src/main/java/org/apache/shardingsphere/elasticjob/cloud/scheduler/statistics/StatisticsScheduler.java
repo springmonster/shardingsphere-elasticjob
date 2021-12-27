@@ -32,9 +32,9 @@ import java.util.Properties;
  * Statistic scheduler.
  */
 final class StatisticsScheduler {
-    
+
     private final StdSchedulerFactory factory;
-    
+
     private Scheduler scheduler;
 
     StatisticsScheduler() {
@@ -45,7 +45,7 @@ final class StatisticsScheduler {
             throw new JobStatisticException(ex);
         }
     }
-    
+
     private Properties getQuartzProperties() {
         Properties result = new Properties();
         result.put("org.quartz.threadPool.class", SimpleThreadPool.class.getName());
@@ -55,7 +55,7 @@ final class StatisticsScheduler {
         result.put("org.quartz.plugin.shutdownhook.cleanShutdown", Boolean.TRUE.toString());
         return result;
     }
-    
+
     /**
      * Start.
      */
@@ -67,10 +67,10 @@ final class StatisticsScheduler {
             throw new JobStatisticException(ex);
         }
     }
-    
+
     /**
      * Register statistic job.
-     * 
+     *
      * @param statisticJob statistic job
      */
     void register(final StatisticJob statisticJob) {
@@ -82,7 +82,7 @@ final class StatisticsScheduler {
             throw new JobStatisticException(ex);
         }
     }
-    
+
     /**
      * Shutdown.
      */

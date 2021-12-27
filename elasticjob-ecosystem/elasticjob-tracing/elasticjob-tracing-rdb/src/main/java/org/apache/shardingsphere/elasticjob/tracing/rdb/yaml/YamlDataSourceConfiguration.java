@@ -33,13 +33,13 @@ import java.util.Map;
 @Setter
 @Getter
 public final class YamlDataSourceConfiguration implements YamlTracingStorageConfiguration<DataSource> {
-    
+
     private static final long serialVersionUID = -8013707594458676772L;
-    
+
     private String dataSourceClassName;
-    
+
     private Map<String, Object> props = new LinkedHashMap<>();
-    
+
     @Override
     public TracingStorageConfiguration<DataSource> toConfiguration() {
         DataSourceConfiguration result = new DataSourceConfiguration(dataSourceClassName);
