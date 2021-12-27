@@ -456,6 +456,7 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>${maven-javadoc-plugin.version}</version>
+                    <!--                    kuanghaochuan 不去检查doc的语法-->
                     <configuration>
                         <doclint>none</doclint>
                     </configuration>

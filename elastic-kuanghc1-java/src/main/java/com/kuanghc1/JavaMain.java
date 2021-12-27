@@ -18,6 +18,9 @@ package com.kuanghc1;/*
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.shardingsphere.elasticjob.api.JobConfiguration;
 import org.apache.shardingsphere.elasticjob.dataflow.props.DataflowJobProperties;
+import org.apache.shardingsphere.elasticjob.error.handler.dingtalk.DingtalkPropertiesConstants;
+import org.apache.shardingsphere.elasticjob.error.handler.email.EmailPropertiesConstants;
+import org.apache.shardingsphere.elasticjob.error.handler.wechat.WechatPropertiesConstants;
 import org.apache.shardingsphere.elasticjob.http.props.HttpJobProperties;
 import org.apache.shardingsphere.elasticjob.lite.api.bootstrap.impl.OneOffJobBootstrap;
 import org.apache.shardingsphere.elasticjob.lite.api.bootstrap.impl.ScheduleJobBootstrap;
@@ -58,7 +61,7 @@ public final class JavaMain {
 //        setUpScriptJob(regCenter, tracingConfig);
 //        setUpOneOffJob(regCenter, tracingConfig);
         setUpSQLJob(regCenter, tracingConfig);
-//        setUpOneOffJobWithEmail(regCenter, tracingConfig);
+        setUpOneOffJobWithEmail(regCenter, tracingConfig);
 //        setUpOneOffJobWithDingtalk(regCenter, tracingConfig);
 //        setUpOneOffJobWithWechat(regCenter, tracingConfig);
     }
@@ -141,7 +144,6 @@ public final class JavaMain {
                 .setProperty(HttpJobProperties.URI_KEY, "https://github.com")
                 .setProperty(HttpJobProperties.METHOD_KEY, "GET")
                 .cron("0/5 * * * * ?").shardingItemParameters("0=Beijing,1=Shanghai,2=Guangzhou").addExtraConfigurations(tracingConfig).build()).schedule();
-
     }
 
     /**
@@ -211,13 +213,13 @@ public final class JavaMain {
         new ScheduleJobBootstrap(regCenter, "SCRIPT", JobConfiguration.newBuilder("scriptElasticJob", 3)
                 .cron("0/5 * * * * ?").setProperty(ScriptJobProperties.SCRIPT_KEY, buildScriptCommandLine()).addExtraConfigurations(tracingConfig).build()).schedule();
     }
-//
-//    private static void setUpOneOffJobWithEmail(final CoordinatorRegistryCenter regCenter, final TracingConfiguration<DataSource> tracingConfig) {
-//        JobConfiguration jobConfig = JobConfiguration.newBuilder("javaOccurErrorOfEmailJob", 3)
-//                .shardingItemParameters("0=Beijing,1=Shanghai,2=Guangzhou").jobErrorHandlerType("EMAIL").addExtraConfigurations(tracingConfig).build();
-//        setEmailProperties(jobConfig);
-//        new OneOffJobBootstrap(regCenter, new JavaOccurErrorJob(), jobConfig).execute();
-//    }
+
+    private static void setUpOneOffJobWithEmail(final CoordinatorRegistryCenter regCenter, final TracingConfiguration<DataSource> tracingConfig) {
+        JobConfiguration jobConfig = JobConfiguration.newBuilder("javaOccurErrorOfEmailJob", 3)
+                .shardingItemParameters("0=Beijing,1=Shanghai,2=Guangzhou").jobErrorHandlerType("EMAIL").addExtraConfigurations(tracingConfig).build();
+        setEmailProperties(jobConfig);
+        new OneOffJobBootstrap(regCenter, new JavaOccurErrorJob(), jobConfig).execute();
+    }
 
 //    private static void setUpOneOffJobWithDingtalk(final CoordinatorRegistryCenter regCenter, final TracingConfiguration<DataSource> tracingConfig) {
 //        JobConfiguration jobConfig = JobConfiguration.newBuilder("javaOccurErrorOfDingtalkJob", 3)
@@ -233,25 +235,25 @@ public final class JavaMain {
 //        new OneOffJobBootstrap(regCenter, new JavaOccurErrorJob(), jobConfig).execute();
 //    }
 //
-//    private static void setEmailProperties(final JobConfiguration jobConfig) {
-//        jobConfig.getProps().setProperty(EmailPropertiesConstants.HOST, "host");
-//        jobConfig.getProps().setProperty(EmailPropertiesConstants.PORT, "465");
-//        jobConfig.getProps().setProperty(EmailPropertiesConstants.USERNAME, "username");
-//        jobConfig.getProps().setProperty(EmailPropertiesConstants.PASSWORD, "password");
-//        jobConfig.getProps().setProperty(EmailPropertiesConstants.FROM, "from@xxx.xx");
-//        jobConfig.getProps().setProperty(EmailPropertiesConstants.TO, "to1@xxx.xx,to1@xxx.xx");
-//    }
+    private static void setEmailProperties(final JobConfiguration jobConfig) {
+        jobConfig.getProps().setProperty(EmailPropertiesConstants.HOST, "host");
+        jobConfig.getProps().setProperty(EmailPropertiesConstants.PORT, "465");
+        jobConfig.getProps().setProperty(EmailPropertiesConstants.USERNAME, "username");
+        jobConfig.getProps().setProperty(EmailPropertiesConstants.PASSWORD, "password");
+        jobConfig.getProps().setProperty(EmailPropertiesConstants.FROM, "from@xxx.xx");
+        jobConfig.getProps().setProperty(EmailPropertiesConstants.TO, "to1@xxx.xx,to1@xxx.xx");
+    }
 
-    //    private static void setDingtalkProperties(final JobConfiguration jobConfig) {
-//        jobConfig.getProps().setProperty(DingtalkPropertiesConstants.WEBHOOK, "https://oapi.dingtalk.com/robot/send?access_token=token");
-//        jobConfig.getProps().setProperty(DingtalkPropertiesConstants.KEYWORD, "keyword");
-//        jobConfig.getProps().setProperty(DingtalkPropertiesConstants.SECRET, "secret");
-//    }
-//
-//    private static void setWechatProperties(final JobConfiguration jobConfig) {
-//        jobConfig.getProps().setProperty(WechatPropertiesConstants.WEBHOOK, "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=key");
-//    }
-//
+        private static void setDingtalkProperties(final JobConfiguration jobConfig) {
+        jobConfig.getProps().setProperty(DingtalkPropertiesConstants.WEBHOOK, "https://oapi.dingtalk.com/robot/send?access_token=token");
+        jobConfig.getProps().setProperty(DingtalkPropertiesConstants.KEYWORD, "keyword");
+        jobConfig.getProps().setProperty(DingtalkPropertiesConstants.SECRET, "secret");
+    }
+
+    private static void setWechatProperties(final JobConfiguration jobConfig) {
+        jobConfig.getProps().setProperty(WechatPropertiesConstants.WEBHOOK, "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=key");
+    }
+
     private static String buildScriptCommandLine() throws IOException {
         if (System.getProperties().getProperty("os.name").contains("Windows")) {
             return Paths.get(com.kuanghc1.JavaMain.class.getResource("/script/demo.bat").getPath().substring(1)).toString();
