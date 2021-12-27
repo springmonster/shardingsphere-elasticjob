@@ -17,14 +17,21 @@ package com.kuanghc1;/*
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.shardingsphere.elasticjob.api.JobConfiguration;
+import org.apache.shardingsphere.elasticjob.dataflow.props.DataflowJobProperties;
+import org.apache.shardingsphere.elasticjob.http.props.HttpJobProperties;
 import org.apache.shardingsphere.elasticjob.lite.api.bootstrap.impl.ScheduleJobBootstrap;
 import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
 import org.apache.shardingsphere.elasticjob.reg.zookeeper.ZookeeperConfiguration;
 import org.apache.shardingsphere.elasticjob.reg.zookeeper.ZookeeperRegistryCenter;
+import org.apache.shardingsphere.elasticjob.script.props.ScriptJobProperties;
 import org.apache.shardingsphere.elasticjob.tracing.api.TracingConfiguration;
 
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.PosixFilePermissions;
 
 public final class JavaMain {
 
@@ -44,10 +51,10 @@ public final class JavaMain {
 
         // kuanghc1:配置Database，这里是通过数据库记录log
         TracingConfiguration<DataSource> tracingConfig = new TracingConfiguration<>("RDB", setUpEventTraceDataSource());
-//        setUpHttpJob(regCenter, tracingConfig);
+        setUpHttpJob(regCenter, tracingConfig);
         setUpSimpleJob(regCenter, tracingConfig);
-//        setUpDataflowJob(regCenter, tracingConfig);
-//        setUpScriptJob(regCenter, tracingConfig);
+        setUpDataflowJob(regCenter, tracingConfig);
+        setUpScriptJob(regCenter, tracingConfig);
 //        setUpOneOffJob(regCenter, tracingConfig);
 //        setUpOneOffJobWithEmail(regCenter, tracingConfig);
 //        setUpOneOffJobWithDingtalk(regCenter, tracingConfig);
@@ -119,15 +126,17 @@ public final class JavaMain {
         return result;
     }
 
-//    private static void setUpHttpJob(final CoordinatorRegistryCenter regCenter, final TracingConfiguration<DataSource> tracingConfig) {
-//        new ScheduleJobBootstrap(regCenter, "HTTP", JobConfiguration.newBuilder("javaHttpJob", 3)
-//                .setProperty(HttpJobProperties.URI_KEY, "https://github.com")
-//                .setProperty(HttpJobProperties.METHOD_KEY, "GET")
-//                .cron("0/5 * * * * ?").shardingItemParameters("0=Beijing,1=Shanghai,2=Guangzhou").addExtraConfigurations(tracingConfig).build()).schedule();
-//
-//    }
+    private static void setUpHttpJob(final CoordinatorRegistryCenter regCenter, final TracingConfiguration<DataSource> tracingConfig) {
+        new ScheduleJobBootstrap(regCenter, "HTTP", JobConfiguration.newBuilder("javaHttpJob", 3)
+                .setProperty(HttpJobProperties.URI_KEY, "https://github.com")
+                .setProperty(HttpJobProperties.METHOD_KEY, "GET")
+                .cron("0/5 * * * * ?").shardingItemParameters("0=Beijing,1=Shanghai,2=Guangzhou").addExtraConfigurations(tracingConfig).build()).schedule();
+
+    }
 
     /**
+     * Java的
+     *
      * @param regCenter
      * @param tracingConfig
      */
@@ -144,21 +153,43 @@ public final class JavaMain {
         new ScheduleJobBootstrap(regCenter, new JavaSimpleJob(), jobConfiguration).schedule();
     }
 
-//    private static void setUpDataflowJob(final CoordinatorRegistryCenter regCenter, final TracingConfiguration<DataSource> tracingConfig) {
-//        new ScheduleJobBootstrap(regCenter, new JavaDataflowJob(), JobConfiguration.newBuilder("javaDataflowElasticJob", 3)
-//                .cron("0/5 * * * * ?").shardingItemParameters("0=Beijing,1=Shanghai,2=Guangzhou")
-//                .setProperty(DataflowJobProperties.STREAM_PROCESS_KEY, Boolean.TRUE.toString()).addExtraConfigurations(tracingConfig).build()).schedule();
-//    }
-//
+    /**
+     * Dataflow的
+     * 另一种数据类型
+     *
+     * @param regCenter
+     * @param tracingConfig
+     */
+    private static void setUpDataflowJob(final CoordinatorRegistryCenter regCenter, final TracingConfiguration<DataSource> tracingConfig) {
+        new ScheduleJobBootstrap(regCenter, new JavaDataflowJob(),
+                JobConfiguration
+                        .newBuilder("javaDataflowElasticJob", 3)
+                        .cron("0/5 * * * * ?")
+                        .shardingItemParameters("0=Beijing,1=Shanghai,2=Guangzhou")
+                        .setProperty(DataflowJobProperties.STREAM_PROCESS_KEY, Boolean.TRUE.toString())
+                        .addExtraConfigurations(tracingConfig)
+                        .build())
+                .schedule();
+    }
+
+    //
 //    private static void setUpOneOffJob(final CoordinatorRegistryCenter regCenter, final TracingConfiguration<DataSource> tracingConfig) {
 //        new OneOffJobBootstrap(regCenter, new com.kuanghc1.JavaSimpleJob(), JobConfiguration.newBuilder("javaOneOffSimpleJob", 3)
 //                .shardingItemParameters("0=Beijing,1=Shanghai,2=Guangzhou").addExtraConfigurations(tracingConfig).build()).execute();
 //    }
 //
-//    private static void setUpScriptJob(final CoordinatorRegistryCenter regCenter, final TracingConfiguration<DataSource> tracingConfig) throws IOException {
-//        new ScheduleJobBootstrap(regCenter, "SCRIPT", JobConfiguration.newBuilder("scriptElasticJob", 3)
-//                .cron("0/5 * * * * ?").setProperty(ScriptJobProperties.SCRIPT_KEY, buildScriptCommandLine()).addExtraConfigurations(tracingConfig).build()).schedule();
-//    }
+
+    /**
+     * Script的
+     *
+     * @param regCenter
+     * @param tracingConfig
+     * @throws IOException
+     */
+    private static void setUpScriptJob(final CoordinatorRegistryCenter regCenter, final TracingConfiguration<DataSource> tracingConfig) throws IOException {
+        new ScheduleJobBootstrap(regCenter, "SCRIPT", JobConfiguration.newBuilder("scriptElasticJob", 3)
+                .cron("0/5 * * * * ?").setProperty(ScriptJobProperties.SCRIPT_KEY, buildScriptCommandLine()).addExtraConfigurations(tracingConfig).build()).schedule();
+    }
 //
 //    private static void setUpOneOffJobWithEmail(final CoordinatorRegistryCenter regCenter, final TracingConfiguration<DataSource> tracingConfig) {
 //        JobConfiguration jobConfig = JobConfiguration.newBuilder("javaOccurErrorOfEmailJob", 3)
@@ -190,7 +221,7 @@ public final class JavaMain {
 //        jobConfig.getProps().setProperty(EmailPropertiesConstants.TO, "to1@xxx.xx,to1@xxx.xx");
 //    }
 
-//    private static void setDingtalkProperties(final JobConfiguration jobConfig) {
+    //    private static void setDingtalkProperties(final JobConfiguration jobConfig) {
 //        jobConfig.getProps().setProperty(DingtalkPropertiesConstants.WEBHOOK, "https://oapi.dingtalk.com/robot/send?access_token=token");
 //        jobConfig.getProps().setProperty(DingtalkPropertiesConstants.KEYWORD, "keyword");
 //        jobConfig.getProps().setProperty(DingtalkPropertiesConstants.SECRET, "secret");
@@ -200,12 +231,12 @@ public final class JavaMain {
 //        jobConfig.getProps().setProperty(WechatPropertiesConstants.WEBHOOK, "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=key");
 //    }
 //
-//    private static String buildScriptCommandLine() throws IOException {
-//        if (System.getProperties().getProperty("os.name").contains("Windows")) {
-//            return Paths.get(com.kuanghc1.JavaMain.class.getResource("/script/demo.bat").getPath().substring(1)).toString();
-//        }
-//        Path result = Paths.get(com.kuanghc1.JavaMain.class.getResource("/script/demo.sh").getPath());
-//        Files.setPosixFilePermissions(result, PosixFilePermissions.fromString("rwxr-xr-x"));
-//        return result.toString();
-//    }
+    private static String buildScriptCommandLine() throws IOException {
+        if (System.getProperties().getProperty("os.name").contains("Windows")) {
+            return Paths.get(com.kuanghc1.JavaMain.class.getResource("/script/demo.bat").getPath().substring(1)).toString();
+        }
+        Path result = Paths.get(com.kuanghc1.JavaMain.class.getResource("/script/demo.sh").getPath());
+        Files.setPosixFilePermissions(result, PosixFilePermissions.fromString("rwxr-xr-x"));
+        return result.toString();
+    }
 }

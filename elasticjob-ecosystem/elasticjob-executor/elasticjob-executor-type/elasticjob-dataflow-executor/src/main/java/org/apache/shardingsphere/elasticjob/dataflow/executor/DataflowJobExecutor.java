@@ -7,7 +7,7 @@
  * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,7 +30,7 @@ import java.util.List;
  * Dataflow job executor.
  */
 public final class DataflowJobExecutor implements ClassedJobItemExecutor<DataflowJob> {
-    
+
     @Override
     public void process(final DataflowJob elasticJob, final JobConfiguration jobConfig, final JobFacade jobFacade, final ShardingContext shardingContext) {
         if (Boolean.parseBoolean(jobConfig.getProps().getOrDefault(DataflowJobProperties.STREAM_PROCESS_KEY, false).toString())) {
@@ -39,7 +39,7 @@ public final class DataflowJobExecutor implements ClassedJobItemExecutor<Dataflo
             oneOffExecute(elasticJob, shardingContext);
         }
     }
-    
+
     private void streamingExecute(final DataflowJob elasticJob, final JobConfiguration jobConfig, final JobFacade jobFacade, final ShardingContext shardingContext) {
         List<Object> data = fetchData(elasticJob, shardingContext);
         while (null != data && !data.isEmpty()) {
@@ -50,28 +50,42 @@ public final class DataflowJobExecutor implements ClassedJobItemExecutor<Dataflo
             data = fetchData(elasticJob, shardingContext);
         }
     }
-    
+
+    /**
+     * 有资格运行作业
+     *
+     * @param jobConfig
+     * @param jobFacade
+     * @return
+     */
     private boolean isEligibleForJobRunning(final JobConfiguration jobConfig, final JobFacade jobFacade) {
         return !jobFacade.isNeedSharding() && Boolean.parseBoolean(jobConfig.getProps().getOrDefault(DataflowJobProperties.STREAM_PROCESS_KEY, false).toString());
     }
-    
+
+    /**
+     * 一次性的作业
+     * 获取数据，处理数据
+     *
+     * @param elasticJob
+     * @param shardingContext
+     */
     private void oneOffExecute(final DataflowJob elasticJob, final ShardingContext shardingContext) {
         List<Object> data = fetchData(elasticJob, shardingContext);
         if (null != data && !data.isEmpty()) {
             processData(elasticJob, shardingContext, data);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     private List<Object> fetchData(final DataflowJob elasticJob, final ShardingContext shardingContext) {
         return elasticJob.fetchData(shardingContext);
     }
-    
+
     @SuppressWarnings("unchecked")
     private void processData(final DataflowJob elasticJob, final ShardingContext shardingContext, final List<Object> data) {
         elasticJob.processData(shardingContext, data);
     }
-    
+
     @Override
     public Class<DataflowJob> getElasticJobClass() {
         return DataflowJob.class;

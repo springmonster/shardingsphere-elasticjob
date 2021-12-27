@@ -115,17 +115,36 @@ public final class JobScheduler {
         jobScheduleController = createJobScheduleController();
     }
 
+    /**
+     * ElasticJob 的作业可划分为基于 class 类型和基于 type 类型两种。
+     * <p>
+     * Class 类型的作业由开发者直接使用，需要由开发者实现该作业接口实现业务逻辑。
+     * 典型代表：Simple 类型、Dataflow 类型。
+     * <p>
+     * Type 类型的作业只需提供类型名称即可，开发者无需实现该作业接口，而是通过外置配置的方式使用。
+     * 典型代表：Script 类型、HTTP 类型。
+     *
+     * @param regCenter
+     * @param elasticJobType 这里就是不同的类型了，type
+     * @param jobConfig
+     */
     public JobScheduler(final CoordinatorRegistryCenter regCenter, final String elasticJobType, final JobConfiguration jobConfig) {
         Preconditions.checkArgument(!Strings.isNullOrEmpty(elasticJobType), "Elastic job type cannot be null or empty.");
+
         this.coordinatorRegistryCenter = regCenter;
         Collection<ElasticJobListener> jobListeners = getElasticJobListeners(jobConfig);
         setUpFacade = new SetUpFacade(regCenter, jobConfig.getJobName(), jobListeners);
         this.jobConfiguration = setUpFacade.setUpJobConfiguration(elasticJobType, jobConfig);
+
         schedulerFacade = new SchedulerFacade(regCenter, jobConfig.getJobName());
+
         liteJobFacade = new LiteJobFacade(regCenter, jobConfig.getJobName(), jobListeners, findTracingConfiguration().orElse(null));
         validateJobProperties();
+
         elasticJobExecutor = new ElasticJobExecutor(elasticJobType, this.jobConfiguration, liteJobFacade);
+
         setGuaranteeServiceForElasticJobListeners(regCenter, jobListeners);
+
         jobScheduleController = createJobScheduleController();
     }
 

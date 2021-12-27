@@ -30,11 +30,7 @@ import org.apache.shardingsphere.elasticjob.infra.exception.JobConfigurationExce
 import org.apache.shardingsphere.elasticjob.infra.exception.JobExecutionException;
 import org.apache.shardingsphere.elasticjob.infra.json.GsonFactory;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -42,11 +38,13 @@ import java.util.Arrays;
 import java.util.Properties;
 
 /**
+ * kuanghaochuan ------> 这里如果遇到https怎么做？
+ * <p>
  * Http job executor.
  */
 @Slf4j
 public final class HttpJobExecutor implements TypedJobItemExecutor {
-    
+
     @Override
     public void process(final ElasticJob elasticJob, final JobConfiguration jobConfig, final JobFacade jobFacade, final ShardingContext shardingContext) {
         HttpParam httpParam = getHttpParam(jobConfig.getProps());
@@ -97,7 +95,7 @@ public final class HttpJobExecutor implements TypedJobItemExecutor {
             }
         }
     }
-    
+
     private HttpParam getHttpParam(final Properties props) {
         String url = props.getProperty(HttpJobProperties.URI_KEY);
         if (Strings.isNullOrEmpty(url)) {
@@ -113,15 +111,15 @@ public final class HttpJobExecutor implements TypedJobItemExecutor {
         String contentType = props.getProperty(HttpJobProperties.CONTENT_TYPE_KEY);
         return new HttpParam(url, method, data, connectTimeout, readTimeout, contentType);
     }
-    
+
     private boolean isWriteMethod(final String method) {
         return Arrays.asList("POST", "PUT", "DELETE").contains(method.toUpperCase());
     }
-    
+
     private boolean isRequestSucceed(final int httpStatusCode) {
         return HttpURLConnection.HTTP_BAD_REQUEST > httpStatusCode;
     }
-    
+
     @Override
     public String getType() {
         return "HTTP";

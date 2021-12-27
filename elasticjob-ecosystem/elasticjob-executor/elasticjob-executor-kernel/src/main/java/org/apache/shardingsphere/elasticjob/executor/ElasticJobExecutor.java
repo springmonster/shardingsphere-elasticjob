@@ -231,7 +231,10 @@ public final class ElasticJobExecutor {
         JobExecutionEvent completeEvent;
 
         try {
-            // 这里就到了SimpleJob了
+            // 这里就到了SimpleJob
+            // httpjob
+            // script
+            // http
             jobItemExecutor.process(elasticJob, jobConfig, jobFacade, shardingContexts.createShardingContext(item));
             // 这里如果没问题，那么就产生一个成功的消息
             completeEvent = startEvent.executionSuccess();
