@@ -40,13 +40,19 @@ import java.nio.file.attribute.PosixFilePermissions;
 public final class JavaMain {
 
     // Zookeeper相关
-    private static final String ZOOKEEPER_CONNECTION_STRING = "127.0.0.1:2181";
+    private static final String ZOOKEEPER_CONNECTION_STRING = "10.122.111.97:2181";
     private static final String JOB_NAMESPACE = "elastic-job-mysql";
 
-    // MySQL相关
-    private static final String EVENT_RDB_STORAGE_DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String EVENT_RDB_STORAGE_URL = "jdbc:mysql://10.122.111.97:3306/elasticjob?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true";
-    private static final String EVENT_RDB_STORAGE_USERNAME = "appadmin";
+//    // MySQL相关
+//    private static final String EVENT_RDB_STORAGE_DRIVER = "com.mysql.cj.jdbc.Driver";
+//    private static final String EVENT_RDB_STORAGE_URL = "jdbc:mysql://10.122.111.97:3306/elasticjob?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true";
+//    private static final String EVENT_RDB_STORAGE_USERNAME = "appadmin";
+//    private static final String EVENT_RDB_STORAGE_PASSWORD = "appadmin";
+
+    // PG相关
+    private static final String EVENT_RDB_STORAGE_DRIVER = "org.postgresql.Driver";
+    private static final String EVENT_RDB_STORAGE_URL = "jdbc:postgresql://10.122.111.102:5432/elasticjob";
+    private static final String EVENT_RDB_STORAGE_USERNAME = "postgres";
     private static final String EVENT_RDB_STORAGE_PASSWORD = "appadmin";
 
     public static void main(final String[] args) throws IOException {
@@ -56,12 +62,12 @@ public final class JavaMain {
         // kuanghc1:配置Database，这里是通过数据库记录log
         TracingConfiguration<DataSource> tracingConfig = new TracingConfiguration<>("RDB", setUpEventTraceDataSource());
 //        setUpHttpJob(regCenter, tracingConfig);
-//        setUpSimpleJob(regCenter, tracingConfig);
+        setUpSimpleJob(regCenter, tracingConfig);
 //        setUpDataflowJob(regCenter, tracingConfig);
 //        setUpScriptJob(regCenter, tracingConfig);
 //        setUpOneOffJob(regCenter, tracingConfig);
         setUpSQLJob(regCenter, tracingConfig);
-        setUpOneOffJobWithEmail(regCenter, tracingConfig);
+//        setUpOneOffJobWithEmail(regCenter, tracingConfig);
 //        setUpOneOffJobWithDingtalk(regCenter, tracingConfig);
 //        setUpOneOffJobWithWechat(regCenter, tracingConfig);
     }
